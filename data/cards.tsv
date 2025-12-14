@@ -76,7 +76,7 @@ Soft, Contact	Possessive	ei (his) … e/fe	gwasg	noun-fem	Dyna ei	ef yn y dref.	
 None	Possessive	eu … nhw	deddf	noun-fem	Cyhoeddwyd testun eu	nhw.	deddf	NONE	No mutation after eu in the standard system (note: many learners expect SM here).
 None	Possessive	dy … di	senedd	noun-fem	Dyma dy	di.	senedd	NONE	dy normally triggers SM, but ‘s’ is unmutionable: no change.
 None	Possessive	eu … nhw	mynediad	noun-masc	Diweddarwyd y manylion am eu	nhw.	mynediad	NONE	eu ‘their’ does not mutate in GK’s modern standard; optional h- before vowels only.
-Soft, Contact	Preposition	o	tanseilio	verb-noun	Ac o gofio'r peryglon o	hyder yn cig eidion Cymru	danseilio	SM	Preposition "o" causes SM on following verb-noun
+Soft	Preposition	o	tanseilio	verb-noun	Ac o gofio'r peryglon o	hyder yn cig eidion Cymru	danseilio	SM	Preposition ‘o’ causes SM on following verb-noun.
 Soft, Contact	Preposition	o	bywyd	noun-masc	Does dim llawer o	eleni.	fywyd	SM	“o” soft-mutates: b→f.
 Soft, Contact	Preposition	o	cig	noun-masc	Mae’r cawl yn cynnwys llawer o	.	gig	SM	“o” soft-mutates: c→g.
 Soft, Contact	Preposition	o	pryd	noun-masc	Rydyn ni’n cwrdd o	i’w gilydd.	bryd	SM	“o” soft-mutates: p→b (“o bryd i’w gilydd”).
@@ -406,3 +406,4 @@ None	Possessive	ein	caru	verb-noun	Rydyn ni’n ein	ni bob dydd.	caru	NONE	Reinf
 None	Possessive	eich	gweld	verb-noun	Rydyn ni’n eich	chi’n aml.	gweld	NONE	eich → NONE (g- stays).
 
 None	Possessive	eu	poeni	verb-noun	Peidiwch â eu	nhw.	poeni	NONE	eu → NONE; good contrast with ei (her) → phoeni.
+
