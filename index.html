@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welsh Mutation Trainer — Vanilla JS</title>
+  <!-- Tailwind via CDN for quick, no-build styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- PapaParse for CSV loading -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
+    .chip { display:inline-block; border-radius:12px; padding:6px 10px; font-size:15px; font-weight:500; border:1px solid var(--chip-bd,#bae6fd); background:var(--chip-bg,#eff6ff); color:var(--chip-fg,#0369a1); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .glass{background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);} 
+  @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
+  .animate-pop{animation:pop .18s ease-out both}
+  .chip{box-shadow:0 1px 0 0 #dbeafe inset,0 1px 2px rgba(2,6,23,.06)}
+</style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-cyan-50 text-slate-900">
+  <div id="app" class="min-h-screen flex flex-col text-[17px] md:text-[18px]">
+    <header class="sticky top-0 z-10 bg-gradient-to-r from-indigo-100 via-sky-50 to-cyan-100 border-b border-slate-200">
+      <div class="max-w-6xl mx-auto p-4 flex flex-col gap-3 md:flex-row md:items-end md:gap-4">
+        <div class="grow">
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">Welsh Mutation Trainer</h1>
+          <p class="text-base md:text-lg text-slate-600">Practise Welsh mutations with instant feedback. Choose a focus with <b>Filters</b>, type the correct form, press <b>Check</b>, then read the rule and example.<span id="itemCount" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">0 items</span><span id="adminBadge" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 border">Admin</span></p>
+        </div>
+        <div class="flex gap-2">
+          <button id="btnPractice" title="Practice" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white">Practice</button>
+          <button id="btnBrowse" title="Browse (table)" class="hidden px-3 py-1.5 rounded-xl bg-slate-100">Browse</button>
+          <button id="btnStats" title="Stats" class="px-3 py-1.5 rounded-xl bg-slate-100">Stats</button>
+          <button id="btnFilters" title="Filters (F)" class="px-3 py-1.5 rounded-xl bg-slate-100">Filters</button>
+          <button id="btnHelp" title="Help" class="hidden px-3 py-1.5 rounded-xl bg-slate-100">Help</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Onboarding -->
+    <section id="onboard" class="max-w-6xl mx-auto p-4 mt-3">
+      <div class="bg-white rounded-2xl border shadow-sm p-4 flex items-start gap-3">
+        <div class="text-2xl">💡</div>
+        <div class="text-sm text-slate-700"><div class="font-medium mb-1">Welcome! How to use this trainer.</div><ol class="list-decimal ml-5 leading-relaxed"><li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li><li>Read the sentence and type the correct form in the box.</li><li>Press <b>Check</b> to mark your answer.</li><li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li></ol>
+          <div class="mt-3 flex gap-2">
+            <button id="onboardFilters" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white shadow">Open filters</button>
+            <button id="onboardDismiss" class="px-3 py-1.5 rounded-xl bg-slate-100">Got it</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section id="controls" class="hidden max-w-6xl mx-auto p-4 grid md:grid-cols-3 gap-4">
+      <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border p-4">
+        <div class="text-sm font-medium mb-1">Quick start</div>
+        <p class="text-sm text-slate-600 mb-2">Choose a rule category (nil cases are included automatically).</p>
+        <div id="qs" class="flex flex-wrap gap-2 mb-4"></div>
+
+        <div id="adminPanel" class="hidden border-t pt-4 mt-4">
+          <div class="text-sm font-medium mb-2">Admin tools</div>
+          <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
+          <div class="mt-2 flex gap-2">
+            <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
+            <button id="btnLoadUrl" class="px-3 py-2 rounded-xl bg-blue-600 text-white">LOAD</button>
+          </div>
+          <div class="mt-2 flex flex-wrap gap-2 text-sm">
+            <button id="btnShareable" class="px-3 py-1.5 rounded-xl bg-slate-100">Shareable link</button>
+            <button id="btnExportMisses" class="px-3 py-1.5 rounded-xl bg-slate-100">Export misses</button>
+          </div>
+          <div class="mt-3">
+            <div class="text-sm font-medium mb-1">Load local CSV</div>
+            <input id="fileCsv" type="file" accept=".csv" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border p-4">
+        <div class="text-sm font-medium mb-2">Focus</div>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
+            <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
+            <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+          </div>
+          <div class="col-span-2">
+            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
+            <div id="catBtns" class="flex flex-wrap gap-1"></div>
+          </div>
+          <div class="col-span-2">
+            <label class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
+            <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
+          </div>
+          <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
+            <input id="nilOnly" type="checkbox" />
+            Nil‑cases only (no mutation expected)
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main panels -->
+    <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
+      <div id="practiceView" class="grid md:grid-cols-3 gap-4">
+        <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border p-10">
+          <div id="practiceCard"></div>
+        </div>
+        <aside class="bg-white rounded-2xl shadow-sm border p-4">
+          <div class="text-sm font-medium mb-2">Session</div>
+          <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
+          <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
+          <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
+          <div class="mt-4 text-sm">
+            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By outcome</div>
+            <ul id="byOutcome" class="space-y-1"></ul>
+            <div class="mt-3 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
+          </div>
+          <div class="mt-4 flex gap-2">
+            <button id="btnResetStats" class="px-3 py-1.5 rounded-xl bg-slate-100">Reset stats</button>
+          </div>
+        </aside>
+      </div>
+
+      <div id="browseView" class="hidden bg-white rounded-2xl shadow-sm border overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr id="browseHead"></tr>
+          </thead>
+          <tbody id="browseBody"></tbody>
+        </table>
+      </div>
+
+      <div id="statsView" class="hidden grid md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-2xl shadow-sm border p-6">
+          <h2 class="text-lg font-medium mb-2">Accuracy</h2>
+          <div id="statsAcc" class="text-5xl font-bold">0%</div>
+          <div id="statsText" class="text-slate-600">0 correct out of 0</div>
+          <button id="btnResetStats2" class="mt-4 px-3 py-1.5 rounded-xl bg-slate-100">Reset</button>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border p-6">
+          <h2 class="text-lg font-medium mb-2">By outcome</h2>
+          <ul id="statsByOutcome" class="space-y-1 text-sm"></ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile action bar -->
+    <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
+      <div class="max-w-6xl mx-auto flex gap-2">
+        <button id="mbHint" title="Hint (H)" class="flex-1 px-3 py-2 rounded-xl bg-slate-100">Hint</button>
+        <button id="mbCheck" title="Check (Enter)" class="flex-1 px-3 py-2 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700">Check</button>
+        <button id="mbNext" title="Next (Enter)" class="flex-1 px-3 py-2 rounded-xl bg-slate-100">Next</button>
+      </div>
+    </div>
+
+    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+      <div class="flex flex-wrap gap-4 items-center">
+        <span>© Welsh Mutation Trainer</span>
+        <span>Data columns: RuleFamily · RuleCategory · Trigger · Base · WordCategory · Before · After · Answer · Outcome · Why</span>
+        <button id="btnTop" class="ml-auto px-2 py-1 rounded-lg bg-slate-100">Back to top</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+  // ---------- Utilities ----------
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  function normalize(s){
+    return (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\s+/g,' ');
+  }
+  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+  function download(text, filename, type='text/plain'){
+    const blob = new Blob([text], {type});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+  }
+  function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
+
+  // ---------- Data coercion ----------
+  const PREP = new Set(["am","ar","at","dan","dros","tros","drwy","trwy","gan","heb","hyd","i","o","tan","wrth","yng","yn","gyda","hefo","â"]);
+  function getVal(row, names){
+    const keys = Object.keys(row || {});
+    for (const key of keys){
+      if (names.some(n => key.trim().toLowerCase() === n.trim().toLowerCase())){
+        return (row[key] ?? "").toString().trim();
+      }
+    }
+    return "";
+  }
+  function familyFromOutcome(outcome){
+    const o = (outcome||"").toUpperCase();
+    if (o==='SM') return 'Soft';
+    if (o==='AM') return 'Aspirate';
+    if (o==='NM') return 'Nasal';
+    if (o==='NONE') return 'None';
+    return '';
+  }
+  function coerceRow(row){
+    const r = row || {};
+    const o = getVal(r, ["Outcome","Result","Mutation","Mut"]).toUpperCase();
+    const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
+    return {
+      RuleFamily: getVal(r, ["RuleFamily","Rule Family","Family"]) || familyFromOutcome(o),
+      RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig||'').toLowerCase()) ? 'Preposition' : ''),
+      Trigger: trig,
+      Base: getVal(r, ["Base","Radical","Word","Base word","BaseWord"]),
+      WordCategory: getVal(r, ["WordCategory","Word Category","POS","Part of speech"]),
+      Before: getVal(r, ["Before","PromptBefore","Left","SentenceBefore"]),
+      After: getVal(r, ["After","PromptAfter","Right","SentenceAfter"]),
+      Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
+      Outcome: o,
+      Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"])
+    };
+  }
+
+  // ---------- App State ----------
+  const state = {
+    rows: [],
+    filtered: [],
+    families: loadLS('wm_families',["Soft","Aspirate","Nasal","None"]),
+    categories: loadLS('wm_categories',["Preposition"]),
+    outcomes: loadLS('wm_outcomes',["SM","AM","NM","NONE"]),
+    triggerQuery: loadLS('wm_trig',''),
+    nilOnly: loadLS('wm_nil', false),
+    mode: loadLS('wm_mode','practice'),
+    deck: [],
+    p: 0,
+    guess: '',
+    revealed: false,
+    lastResult: null, // 'correct' | 'wrong' | null
+    history: loadLS('wm_hist',[]),
+    admin: getParam('admin') === '1'
+  };
+
+  // ---------- Data loading ----------
+  const DEFAULT_SOURCES = [
+    'data/prepositions.csv',
+    'data/numerals.csv',
+    'data/possessive.csv',
+    'data/article.csv',
+    'data/adjective.csv',
+    'data/blocking.csv',
+    'data/mutations.csv'
+  ];
+
+  const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
+Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
+Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
+Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
+Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
+Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
+None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
+Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
+Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
+Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
+Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
+Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
+Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
+Aspirate,Possessive,ei (her),rhiant,noun-masc,"Siaradodd hi â’i ","am y trip.",rhiant,NONE,"rh- does not undergo AM."
+Aspirate,Possessive,ei (her),ysgol,noun-fem,"Soniodd hi am ei ","ddoe.",ysgol,NONE,"Vowel-initial words show no visible AM."
+Aspirate,Possessive,ei (her),awyr,noun-fem,"Mae hi’n hoffi ei ","agored.",awyr,NONE,"Vowel-initial nouns are unchanged by AM."
+Aspirate,Conjunction,a,car,noun-masc,"Te a ","ar y ffordd.",char,AM,"a ‘and’ triggers AM on following p/t/c (standard/literary)."
+Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (c→ch)."
+`;
+
+  async function loadCsvUrl(u){
+    return new Promise((resolve, reject) => {
+      Papa.parse(u, { download:true, header:true, skipEmptyLines:true,
+        complete: (res) => resolve(res.data), error: reject });
+    });
+  }
+
+  async function loadAllDefault(){
+    let merged = [];
+    // optional registry
+    try{
+      const r = await fetch('data/index.json');
+      if (r.ok){
+        const list = await r.json();
+        if (Array.isArray(list)){
+          for (const p of list){
+            try{ const d = await loadCsvUrl(p); merged = merged.concat(d); }catch{}
+          }
+        }
+      }
+    }catch{}
+    // built-in list
+    for (const p of DEFAULT_SOURCES){
+      try{ const d = await loadCsvUrl(p); merged = merged.concat(d); }catch{}
+    }
+    if (merged.length) return merged;
+    // fallback demo
+    return new Promise((resolve)=>{
+      Papa.parse(demoCsv, { header:true, complete:(r)=> resolve(r.data) });
+    });
+  }
+
+  async function initData(){
+    const sheet = getParam('sheet');
+    let rows = [];
+    try{
+      if (sheet){ rows = await loadCsvUrl(sheet); }
+      else { rows = await loadAllDefault(); }
+    }catch(e){ console.warn('Data load failed, using demo', e); rows = await loadAllDefault(); }
+    // coerce & clean
+    const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"]; 
+    const cleaned = rows.map(r => {
+      const m = coerceRow(r); const o = {};
+      for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
+      return o;
+    });
+    // dedupe
+    const seen = new Set(); const uniq=[];
+    for (const o of cleaned){
+      const key = [o.RuleCategory,o.Trigger,o.Base,o.Before,o.After,o.Answer].map(v => (v||'').toLowerCase().trim()).join('|');
+      if (!seen.has(key)){ seen.add(key); uniq.push(o); }
+    }
+    state.rows = uniq;
+    $('#itemCount').textContent = `${state.rows.length} items`;
+    buildFilters();
+    applyFilters();
+    rebuildDeck();
+    render();
+  }
+
+  // ---------- Filters & Deck ----------
+  function buildFilters(){
+    const fams = new Set(); const cats = new Set();
+    for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
+    const outcomes = ["SM","AM","NM","NONE"];
+
+    // Quick start
+    const qs = $('#qs'); qs.innerHTML = '';
+    const allBtn = btn('All categories','bg-slate-100',()=>{ state.categories=[]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render(); });
+    qs.appendChild(allBtn);
+    for (const c of Array.from(cats).sort()){
+      const count = state.rows.filter(r=>r.RuleCategory===c).length;
+      qs.appendChild(btn(`${c} (${count})`,'bg-emerald-600 text-white',()=>{ state.categories=[c]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render(); }));
+    }
+
+    // Family buttons
+    const famEl = $('#familyBtns'); famEl.innerHTML='';
+    for (const f of ["Soft","Aspirate","Nasal","None"]) {
+      famEl.appendChild(toggleBtn(f, state.families.includes(f), (on)=>{
+        state.families = on? Array.from(new Set([...state.families, f])) : state.families.filter(x=>x!==f);
+        saveLS('wm_families',state.families); applyFilters(); rebuildDeck(); render();
+      }));
+    }
+
+    // Outcome buttons
+    const outEl = $('#outcomeBtns'); outEl.innerHTML='';
+    for (const o of outcomes){
+      outEl.appendChild(toggleBtn(o, state.outcomes.includes(o), (on)=>{
+        state.outcomes = on? Array.from(new Set([...state.outcomes, o])) : state.outcomes.filter(x=>x!==o);
+        saveLS('wm_outcomes',state.outcomes); applyFilters(); rebuildDeck(); render();
+      }));
+    }
+
+    // Category buttons
+    const catEl = $('#catBtns'); catEl.innerHTML='';
+    for (const c of Array.from(cats).sort()){
+      catEl.appendChild(toggleBtn(c, state.categories.includes(c), (on)=>{
+        state.categories = on? Array.from(new Set([...state.categories, c])) : state.categories.filter(x=>x!==c);
+        saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render();
+      }));
+    }
+
+    // Trigger filter + nil only
+    $('#triggerFilter').value = state.triggerQuery;
+    $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); render(); };
+    $('#nilOnly').checked = !!state.nilOnly;
+    $('#nilOnly').onchange = (e)=>{ state.nilOnly = e.target.checked; saveLS('wm_nil',state.nilOnly); applyFilters(); rebuildDeck(); render(); };
+  }
+
+  function applyFilters(){
+    let list = state.rows.filter(r =>
+      (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
+      (state.categories.length ? state.categories.includes(r.RuleCategory) : true) &&
+      (state.outcomes.length ? state.outcomes.includes((r.Outcome||'').toUpperCase()) : true)
+    );
+    if (state.nilOnly) list = list.filter(r => (r.Outcome||'').toUpperCase()==='NONE');
+    if ((state.triggerQuery||'').trim()){
+      const q = normalize(state.triggerQuery);
+      list = list.filter(r => normalize(r.Trigger).includes(q));
+    }
+    state.filtered = list;
+  }
+
+  function rebuildDeck(){
+    const n = state.filtered.length; const d = Array.from({length:n}, (_,i)=>i);
+    for (let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+    state.deck = d; state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
+  }
+
+  // ---------- Render ----------
+  function btn(label, extraClass, onClick){
+    const b = document.createElement('button');
+    b.className = `px-3 py-1.5 rounded-xl ${extraClass}`; b.textContent = label; b.onclick = onClick; return b;
+  }
+  function toggleBtn(label, active, onToggle){
+    const b = document.createElement('button'); b.textContent = label;
+    b.className = `px-2 py-1 rounded-lg border ${active? 'bg-emerald-600 text-white border-emerald-600':'bg-white'}`;
+    b.onclick = ()=> onToggle(!active);
+    return b;
+  }
+
+  function renderPractice(){
+    const host = $('#practiceCard'); host.innerHTML='';
+    const n = state.filtered.length;
+    if (!n){ host.innerHTML = `<div class=\"text-slate-700 bg-white rounded-xl border p-4\">No cards match your filters. <button id=\"btnClearFilters\" class=\"ml-2 px-2 py-1 rounded-lg bg-slate-100 border\">Clear filters</button></div>`; 
+      const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{ 
+        state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false; 
+        saveLS('wm_families',state.families); saveLS('wm_categories',state.categories); saveLS('wm_outcomes',state.outcomes); saveLS('wm_trig',state.triggerQuery); saveLS('wm_nil',state.nilOnly);
+        buildFilters(); applyFilters(); rebuildDeck(); render();
+      }); }
+      return; }
+    const idx = state.deck[state.p % state.deck.length];
+    const card = state.filtered[idx];
+
+    $('#cardPos').textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
+
+    const wrap = document.createElement('div');
+    const header = document.createElement('div'); header.className='text-slate-500 text-xs mb-2';
+    header.textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
+
+    const chips = document.createElement('div'); chips.className = 'mb-4 text-2xl md:text-3xl font-medium';
+    chips.innerHTML = `<div class=\"inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm\"><span class=\"text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight\">${esc(card.Base||'—')}</span></div>`;
+
+    const instruction = document.createElement('div'); instruction.className='text-lg md:text-xl text-slate-700 mb-5';
+    instruction.innerHTML = `Type the correct form. If no change is needed, repeat the base form.`;
+
+    const row = document.createElement('div'); 
+    row.className = 'mt-2';
+    row.innerHTML = `
+      <div class=\"grid gap-3 md:gap-6 md:grid-cols-[auto,1fr,auto] items-center\"> 
+        <div class=\"text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap\">${card.Before||''}</div>
+        <input id=\"answerBox\" class=\"w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]\" placeholder=\"Type your answer\" aria-label=\"Type your answer\" />
+        <div class=\"text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap\">${card.After||''}</div>
+      </div>
+    `;
+
+    const actions = document.createElement('div'); actions.className='flex flex-wrap gap-2';
+    const btnCheck = btn('Check','text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title='Check (Enter)';
+    const btnHint  = btn('Hint','bg-slate-100', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title='Hint (H)';
+    const btnReveal= btn('Reveal','bg-slate-100', ()=>{ state.revealed = !state.revealed; render(); });
+    const btnSkip  = btn('Skip','bg-slate-100', ()=>{ nextCard(1); });
+
+    const hint = document.createElement('div'); hint.className='hidden mb-3 text-sm text-slate-600';
+    hint.innerHTML = `Hint: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
+
+    const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
+    if (state.revealed){
+      const ok = state.lastResult === 'correct';
+      feedback.className = `mt-8 p-6 rounded-2xl shadow-sm animate-pop ${ok? 'bg-indigo-50 ring-1 ring-indigo-200':'bg-rose-50 ring-1 ring-rose-200'}`;
+      const statusIcon = ok? '✅' : '❌';
+      const statusColor = ok? 'text-indigo-900' : 'text-rose-900';
+      feedback.innerHTML = `
+        <div class=\"flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold\">${statusIcon} ${ok? 'Correct!' : 'Not quite'}</div>
+        ${!ok? `<div class=\\"mt-1 text-slate-700\\">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`:''}
+        <div class=\"mt-3 text-slate-800 text-xl md:text-2xl\">${esc(card.Before||'')} <span class=\\"font-semibold underline decoration-indigo-400\\">${esc(card.Answer)}</span> ${esc(card.After||'')}</div>
+        <div class=\"mt-2 text-slate-700\">Answer: <b>${esc(card.Answer)}</b></div>
+        <div class=\"mt-1 text-slate-700\">Trigger: <b>${esc(card.Trigger || '—')}</b></div>
+        <div class=\"mt-1 text-slate-700\"><span class=\"font-medium\">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome||'').toUpperCase()}</div>
+        ${card.Why ? `<p class=\\"mt-2 text-slate-700\\">${esc(card.Why)}</p>` : ''}
+      `;
+      const nb = document.createElement('button');
+      nb.id = 'inlineNext';
+      nb.className = 'mt-3 px-3 py-1.5 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow transition'; nb.title='Next (Enter)';
+      nb.textContent = 'Next';
+      nb.onclick = ()=> nextCard(1);
+      feedback.appendChild(nb);
+    }
+    wrap.append(header, chips, instruction, row, hint, actions, feedback);
+    host.appendChild(wrap);
+
+    const ab = $('#answerBox');
+    ab.value = state.guess; ab.focus();
+    ab.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { e.preventDefault(); e.stopPropagation(); onCheck(); } });
+    ab.addEventListener('input', (e)=>{ state.guess = e.target.value; });
+
+    function onCheck(){
+      const ok = normalize(state.guess) === normalize(card.Answer);
+      state.revealed = true; state.lastResult = ok? 'correct':'wrong';
+      // log history
+      const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, expected: card.Answer, got: state.guess };
+      state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
+      const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
+      setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
+      // re-queue if wrong
+      if (!ok){
+        const deckIdx = state.p % state.deck.length; const idxVal = state.deck[deckIdx];
+        const newDeck = state.deck.slice(); newDeck.splice(deckIdx, 1);
+        const insertAt = Math.min(deckIdx + 3, newDeck.length);
+        newDeck.splice(insertAt, 0, idxVal); state.deck = newDeck;
+      } else {
+        /* no auto-advance; click Next */
+      }
+      render();
+    }
+  }
+
+  function renderBrowse(){
+    const head = $('#browseHead'); const body = $('#browseBody');
+    head.innerHTML = ''; body.innerHTML = '';
+    const cols = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+    for (const h of cols){ const th = document.createElement('th'); th.className='text-left p-2 border-b'; th.textContent = h; head.appendChild(th); }
+    state.filtered.forEach((r,i)=>{
+      const tr = document.createElement('tr'); tr.className = (i%2? 'bg-white':'bg-slate-50');
+      for (const k of cols){ const td = document.createElement('td'); td.className='p-2 align-top'; td.textContent = (k==='Outcome'? (r[k]||'').toUpperCase(): r[k]); if (k==='Answer') td.classList.add('font-semibold'); if (k==='Why') td.classList.add('text-slate-600'); tr.appendChild(td); }
+      body.appendChild(tr);
+    });
+  }
+
+  function computeStats(){
+    const total = state.history.length; const correct = state.history.filter(h=>h.ok).length;
+    const acc = total? Math.round((correct/total)*100) : 0;
+    const by = {};
+    for (const h of state.history){
+      const r = state.rows.find(r => `${r.RuleCategory}:${r.Trigger}:${r.Base}`===h.key); const out = (r?.Outcome||'?').toUpperCase();
+      by[out] = by[out] || { total:0, ok:0 }; by[out].total++; if (h.ok) by[out].ok++;
+    }
+    return { total, correct, acc, by };
+  }
+
+  function renderStatsPanels(){
+    const s = computeStats();
+    $('#accBig').textContent = `${s.acc}%`;
+    $('#accText').textContent = `${s.correct} / ${s.total} correct`;
+    $('#statsAcc').textContent = `${s.acc}%`;
+    $('#statsText').textContent = `${s.correct} correct out of ${s.total}`;
+
+    const ul1 = $('#byOutcome'); ul1.innerHTML='';
+    const ul2 = $('#statsByOutcome'); ul2.innerHTML='';
+    for (const [k,v] of Object.entries(s.by)){
+      const li1 = document.createElement('li'); li1.className='flex justify-between'; li1.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul1.appendChild(li1);
+      const li2 = document.createElement('li'); li2.className='flex justify-between'; li2.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul2.appendChild(li2);
+    }
+  }
+
+  function render(){
+    // Views
+    $('#practiceView').classList.toggle('hidden', state.mode!=='practice');
+    $('#browseView').classList.toggle('hidden', state.mode!=='browse');
+    $('#statsView').classList.toggle('hidden', state.mode!=='stats');
+
+    renderPractice();
+    if (state.mode==='browse') renderBrowse();
+    renderStatsPanels();
+  }
+
+  function nextCard(offset=1){
+    if (!state.deck.length) return;
+    state.p = (state.p + offset + state.deck.length) % state.deck.length;
+    state.guess=''; state.revealed=false; state.lastResult=null; render();
+  }
+
+  // ---------- Event wiring ----------
+  function wireUi(){
+    $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
+    $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
+    $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
+    $('#btnFilters').onclick  = ()=>{ $('#controls').classList.toggle('hidden'); };
+    $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
+    
+    $('#btnResetStats').onclick = $('#btnResetStats2').onclick = ()=>{ state.history=[]; saveLS('wm_hist',state.history); render(); };
+    $('#btnTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e)=>{
+      const tag = (e.target && e.target.tagName) || '';
+      if (['INPUT','TEXTAREA'].includes(tag.toUpperCase())) return;
+      if (state.mode !== 'practice') return;
+      const k = e.key;
+      if (k === 'Enter') {
+        e.preventDefault();
+        if (!state.revealed) { document.getElementById('btnCheck')?.click(); }
+        else { document.getElementById('inlineNext')?.click(); }
+      } else if (k.toLowerCase() === 'n') {
+        document.getElementById('inlineNext')?.click();
+      } else if (k.toLowerCase() === 'h') {
+        document.getElementById('btnHint')?.click();
+      } else if (k.toLowerCase() === 's') {
+        nextCard(1);
+      } else if (k.toLowerCase() === 'f') {
+        document.getElementById('btnFilters')?.click();
+      }
+    });
+
+    // Mobile action bar wiring
+    $('#mbCheck')?.addEventListener('click', ()=> document.getElementById('btnCheck')?.click());
+    $('#mbNext')?.addEventListener('click', ()=> document.getElementById('inlineNext')?.click() || nextCard(1));
+    $('#mbHint')?.addEventListener('click', ()=> document.getElementById('btnHint')?.click());
+
+    if (state.admin){
+      $('#adminBadge').classList.remove('hidden');
+      $('#adminPanel').classList.remove('hidden');
+      $('#dataUrl').value = getParam('sheet') || '';
+      $('#btnLoadUrl').onclick = async ()=>{
+        const u = $('#dataUrl').value.trim(); if (!u) return;
+        const d = await loadCsvUrl(u); state.rows = d.map(coerceRow);
+        applyFilters(); rebuildDeck(); render();
+      };
+      $('#btnShareable').onclick = ()=>{
+        const u = $('#dataUrl').value.trim(); if (!u) return alert('Enter a URL first.');
+        const link = location.origin + location.pathname + `?sheet=${encodeURIComponent(u)}`;
+        navigator.clipboard?.writeText(link); alert('Copied: '+link);
+      };
+      $('#btnExportMisses').onclick = ()=>{
+        const misses = state.history.filter(h=>!h.ok);
+        const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"]; 
+        for (const m of misses){
+          const [cat,trig,base] = m.key.split(':');
+          lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`"${(s||'').replaceAll('"','""')}"`).join(','));
+        }
+        download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
+      };
+      $('#fileCsv').onchange = (e)=>{
+        const f = e.target.files?.[0]; if (!f) return;
+        Papa.parse(f, { header:true, skipEmptyLines:true, complete:(res)=>{ state.rows = res.data.map(coerceRow); applyFilters(); rebuildDeck(); render(); } });
+      };
+    }
+
+    // Preset: prepositions
+    if (getParam('preset')==='prepositions'){
+      state.categories=['Preposition']; saveLS('wm_categories',state.categories);
+    }
+  }
+
+  // ---------- Boot ----------
+  (async function(){
+    wireUi();
+    await initData();
+  })();
+
+  </script>
+</body>
+</html>
