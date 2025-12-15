@@ -346,17 +346,18 @@ None,Numerals,deg,car,noun-masc,Gwelais deg,mewn rhes.,car,NONE,deg → NONE.
 None,Numerals,tri (m),llanc,noun-masc,Gwelson ni tri,ger y lan.,llanc,NONE,ll- doesn’t aspirate: deliberate NIL after tri.
 None,Numerals,tri (m),rhestr,noun-fem,Darllenon ni tri,yn y dosbarth.,rhestr,NONE,rh- doesn’t aspirate: NIL after tri.
 None,Numerals,tri (m),afal,noun-masc,Brynodd e tri,i’r plant.,afal,NONE,Vowel-initial: no visible AM after tri.
-"Aspirate, Contact",Negation,Negative short past structure,clywais,verb,,i ddim.,Chlywais,AM,Negative short past → aspirates initial c/p/t of the finite verb.
-"Aspirate, Contact",Negation,Negative short past structure,brynodd,verb,Tom,ddim.,Phrynodd,AM,Negative short past → p→ph.
-"Aspirate, Contact",Negation,Negative short past structure,talon,verb,Nhw,ddim.,Thalon,AM,Negative short past → t→th.
-"Aspirate, Contact",Negation,Negative short past structure,torrais,verb,,i ddim ddoe.,Thorrais,AM,Negative short past → t→th.
-"Aspirate, Contact",Negation,Negative short past structure,tyfodd,verb,E,ddim eleni.,Thyfodd,AM,Negative short past → t→th.
-"Aspirate, Contact",Negation,Negative short past structure,prynon,verb,Ni,ddim y tocynnau.,Phrynon,AM,Negative short past → p→ph.
-"Aspirate, Contact",Negation,Negative short future structure,clywaf,verb,,i ddim fory.,Chlywaf,AM,Negative short future → aspirates initial c/p/t of the finite verb.
-"Aspirate, Contact",Negation,Negative short future structure,pryniff,verb,Tom,ddim yfory.,Phryniff,AM,Negative short future → p→ph.
-"Aspirate, Contact",Negation,Negative short future structure,talan,verb,Nhw,ddim am dalu.,Thalan,AM,Negative short future → t→th.
-"Aspirate, Contact",Negation,Negative short future structure,torraf,verb,,i ddim heddiw.,Thorraf,AM,Negative short future → t→th.
-"Aspirate, Contact",Negation,Negative short future structure,tyfa,verb,E,ddim yma.,Thyfa,AM,Negative short future → t→th.
+RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
+"Aspirate, Contact",Negation,Negative short past structure,clywais,verb,,i ddim.,Chlywais,AM,Negative short past → c→ch; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short past structure,brynodd,verb,,Tom ddim.,Phrynodd,AM,Negative short past → p→ph; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short past structure,talon,verb,,nhw ddim.,Thalon,AM,Negative short past → t→th; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short past structure,torrais,verb,,i ddim ddoe.,Thorrais,AM,Negative short past → t→th; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short past structure,tyfodd,verb,,e ddim eleni.,Thyfodd,AM,Negative short past → t→th; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short past structure,prynon,verb,,ni ddim y tocynnau.,Phrynon,AM,Negative short past → p→ph; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short future structure,clywaf,verb,,i ddim fory.,Chlywaf,AM,Negative short future → c→ch; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short future structure,pryniff,verb,,Tom ddim yfory.,Phryniff,AM,Negative short future → p→ph; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short future structure,talan,verb,,nhw ddim am dalu.,Thalan,AM,Negative short future → t→th; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short future structure,torraf,verb,,i ddim heddiw.,Thorraf,AM,Negative short future → t→th; verb precedes subject + ddim.
+"Aspirate, Contact",Negation,Negative short future structure,tyfa,verb,,e ddim yma.,Thyfa,AM,Negative short future → t→th; verb precedes subject + ddim.
 "Aspirate, Contact",Conjunction,â,parot,noun-masc,mor swnllyd â,.,pharot,AM,â (“as”) causes AM on next c/p/t (here p→ph).
 "Aspirate, Contact",Conjunction,â,Pontypridd,placename,mor bell â,.,Phontypridd,AM,â (“as”) → p→ph.
 "Aspirate, Contact",Conjunction,â,tacsi,noun-masc,mor gyflym â,.,thacsi,AM,â (“as”) → t→th.
@@ -406,6 +407,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
