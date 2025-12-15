@@ -126,7 +126,7 @@ None,Preposition,ar,bwrdd,noun-masc,Rhowch y llythyr ar y gadair neu'r,ger y ffe
 "Soft, Contact",Preposition,i,dinas,noun-fem,Aethon ni i,brynhawn Sadwrn,ddinas,SM,“i” causes SM: dinas→ddinas.
 "Soft, Contact",Preposition,o,gardd,noun-fem,Cymerodd y bachgen lunia o,ger y tŷ,ardd,SM,“o” + g-deletion: gardd→ardd.
 "Soft, Contact",Preposition,tan,mis,noun-masc,Bydd y gwaith yn parhau tan,Tachwedd,fis,SM,“tan” causes SM: mis→fis.
-"Soft, Contact",Preposition,trwy,rhew,noun-masc,Cerddon ni trwy,i gyrraedd y car,rew,SM,“trwy” causes SM; rh→r: rhew→rew.
+"Soft, Contact",Preposition,trwy,rhew,noun-masc,Cerddon ni drwy,i gyrraedd y car,rew,SM,“trwy” causes SM; rh→r: rhew→rew.
 "Soft, Contact",Preposition,wrth,desg,noun-fem,Roedd y llythyr yn aros wrth,y swyddfa ers ddoe,ddesg,SM,“wrth” causes SM: desg→ddesg.
 "Soft, Contact",Preposition,gan,canu,verb-noun,Aeth y criw rownd y neuadd gan,yn uchel,ganu,SM,VN after “gan”: c→g (canu→ganu).
 "Soft, Contact",Preposition,wrth,gweiddi,verb-noun,Fe ddaeth y ci ataf wrth,ar y stryd,weiddi,SM,VN after “wrth”: g-deletion in SM (gweiddi→weiddi).
@@ -470,6 +470,7 @@ None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
 None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant)."
+
 
 
 
