@@ -100,10 +100,10 @@ None,Possessive,eu … nhw,mynediad,noun-masc,Diweddarwyd y manylion am eu,nhw.,
 "Soft, Contact",Preposition,am,munud,noun-masc,Aros,", plis.",funud,SM,“am” commonly soft-mutates: m→f.
 "Soft, Contact",Preposition,o,mater,noun-masc,Roedd yn fater bach o,personol.,fater,SM,“o” soft-mutates: m→f.
 "Soft, Contact",Preposition,o,cefndir,noun-masc,Daw hi o,gwledig.,gefndir,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,am,dyfodol,noun-masc,Rydyn ni’n ymgyrchu,gwell.,am ddyfodol,SM,“am” commonly soft-mutates: d→dd.
+"Soft, Contact",Preposition,am,dyfodol,noun-masc,Rydyn ni’n ymgyrchu am,gwell.,ddyfodol,SM,“am” commonly soft-mutates: d→dd.
 "Soft, Contact",Preposition,o,tir,noun-masc,Prynwyd darn o,fferm.,dir,SM,“o” soft-mutates: t→d.
-"Soft, Contact",Preposition,o,gweinidog,noun-masc,Daeth y neges,heddiw.,o weinidog,SM,“o” soft-mutates: g→∅.
-"Soft, Contact",Preposition,am,tywydd,noun-masc,Mae pawb yn siarad,gwael.,am dywydd,SM,“am” commonly soft-mutates: t→d.
+"Soft, Contact",Preposition,o,gweinidog,noun-masc,Daeth y neges o,heddiw.,weinidog,SM,“o” soft-mutates: g→∅.
+"Soft, Contact",Preposition,am,tywydd,noun-masc,Mae pawb yn siarad am,gwael.,dywydd,SM,“am” commonly soft-mutates: t→d.
 "Soft, Contact",Preposition,ar,cadair,noun-fem,Roedd y ci'n eistedd ar,ger y ffenest,gadair,SM,Preposition “ar” immediately before a word triggers soft mutation.
 "Soft, Contact",Preposition,am,bachgen,noun-masc,Siaradon ni am,neithiwr wrth y drws,fachgen,SM,“am” causes SM on the following noun.
 "Soft, Contact",Preposition,at,tad,noun-masc,Anfonodd y ferch lun at,ar Whatsapp,dad,SM,“at” causes SM: tad→dad.
@@ -405,6 +405,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
