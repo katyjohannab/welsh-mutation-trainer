@@ -357,33 +357,40 @@
   }
 
   // ---------- Filters & Deck ----------
-  function buildFilters(){
-    const fams = new Set(); const cats = new Set();
-    for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
-    const outcomes = ["SM","AM","NM","NONE"];
+function buildFilters() {
+  // ...
+  // build outcome buttons
+  const outEl = $('#outcomeBtns');
+  outEl.innerHTML = '';
+  // Count outcomes in the current filtered list
+  const outcomeCounts = {};
+  state.filtered.forEach(r => {
+    const o = (r.Outcome || '').toUpperCase();
+    outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
+  });
+  ['SM','AM','NM','NONE'].forEach(o => {
+    const count = outcomeCounts[o] || 0;
+    const active = state.outcomes.includes(o);
+    outEl.appendChild(
+      toggleBtn(
+        `${o} (${count})`,
+        active,
+        on => {
+          state.outcomes = on
+            ? Array.from(new Set([...state.outcomes, o]))
+            : state.outcomes.filter(x => x !== o);
+          saveLS('wm_outcomes', state.outcomes);
+          applyFilters();
+          rebuildDeck();
+          buildFilters(); // rebuild all buttons with new counts
+          render();
+        }
+      )
+    );
+  });
+  // ...
+}
 
-  // Quick start
-  const qs = $('#qs');
-  qs.innerHTML = '';
-  // derive a list of unique rule categories from the data; this ensures quick-start shows only relevant categories
-  const categories = Array.from(new Set(state.rows.map(r => r.RuleCategory)));
-  // Determine if no specific category is selected (all categories active)
-  const allActive = !state.categories.length;
-  // “All categories” button: highlight when no specific category is selected
-  qs.appendChild(
-    btn(
-      `All categories`,
-      allActive ? 'bg-emerald-600 text-white' : 'bg-slate-100',
-      () => {
-        state.categories = [];
-        saveLS('wm_categories', state.categories);
-        applyFilters();
-        rebuildDeck();
-        buildFilters();  // re-render the filter buttons to reflect new state
-        render();
-      }
-    )
-  );
   // One button per rule category: highlight when that single category is selected
   for (const c of categories.sort()) {
     const count = state.rows.filter(r => r.RuleCategory === c).length;
