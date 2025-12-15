@@ -305,7 +305,6 @@ None,Adjective+Noun,fem sg noun → adj,rhyfedd,adj,Cawson ni gwers,heddiw.,rhyf
 "Soft, Contact",Adjective+Noun,prif (preposed) → noun,gweinidog,noun-masc,Cafodd y prif,ei ethol ddoe.,weinidog,SM,Preposed prif causes SM on the noun (g→∅).
 "Soft, Contact",Adjective+Noun,prif (preposed) → noun,dinas,noun-fem,Dyma’r brif,yng Nghymru.,ddinas,SM,prif/brif before noun → SM (d→dd).
 "Soft, Contact",Adjective+Noun,prif (preposed) → noun,pwynt,noun-masc,Beth yw’r prif,yn y ddadl?,bwynt,SM,prif before noun → SM (p→b).
-None,Adjective+Noun,None,rhiant,noun-masc,Siaradaethon ni â hen,ar ôl y cyngerdd.,rhiant,NONE,rh is immune after preposed hen.
 None,Adjective+Noun,None,ysgol,noun-fem,Mae’r hen,wedi cau ers tro.,ysgol,NONE,Vowel-initial nouns show no visible SM with preposed adjectives.
 None,Adjective+Noun,None,llyfr,noun-masc,Dyma’r prif,ar y cwrs.,llyfr,NONE,ll does not mutate after prif.
 None,Adjective+Noun,None,rheswm,noun-masc,Beth yw’r prif,dros y newid?,rheswm,NONE,rh does not mutate after prif.
@@ -405,6 +404,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
