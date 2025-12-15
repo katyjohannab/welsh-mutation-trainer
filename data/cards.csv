@@ -414,14 +414,14 @@ None,Article,"y (def. art., masc sg)",prynhawn,noun-masc,"Te yn y ",bob dydd.,pr
 None,Article,"yr (def. art., masc sg)",bore,noun-masc,"Symud y cyfarfod i’r ",yfory.,bore,NONE,Masculine sg after the article: no mutation (yr bore).
 None,Article,"y (def. art., masc sg)",bachgen,noun-masc,"Roedd y ",yn hapus.,bachgen,NONE,Masculine sg after the article: no mutation (y bachgen).
 None,Article,"y (def. art., masc sg)",dyn,noun-masc,"Gwelais y ",neithiwr.,dyn,NONE,Masculine sg after the article: no mutation (y dyn).
-None,Article,y (def. art., fem sg),swydd,noun-fem,Mae hi yn y ,newydd.,swydd,NONE,s- is not affected by SM; fem sg NIL (y swydd).
-"Soft, Contact",Article,y (def. art., fem sg),cân,noun-fem,Clod i’r ,orau.,gân,SM,Fem sg after y → SM: c→g (y gân).
-"Soft, Contact",Article,y (def. art., fem sg),cerddoriaeth,noun-fem,Wrando ar y ,yng nghyngerdd.,gerddoriaeth,SM,Fem sg after y → SM: c→g (y gerddoriaeth).
-None,Article,y (def. art., masc sg),prynhawn,noun-masc,Te yn y ,bob dydd.,prynhawn,NONE,Masculine sg after the article: no mutation (y prynhawn).
-None,Article,y (def. art., masc sg),bore,noun-masc,Symud y cyfarfod i’r ,yfory.,bore,NONE,Masculine sg after the article: no mutation (y bore).
-None,Article,y (def. art., masc sg),bachgen,noun-masc,Roedd y ,yn hapus.,bachgen,NONE,Masculine sg after the article: no mutation (y bachgen).
-None,Article,y (def. art., masc sg),dyn,noun-masc,Gwelais y ,neithiwr.,dyn,NONE,Masculine sg after the article: no mutation (y dyn).
-None,Article,y (def. art., masc sg),dosbarth,noun-masc,Dechrau yn y ,am ddeg.,dosbarth,NONE,Masculine sg after the article: no mutation (y dosbarth).
+None,Article,"y (def. art., fem sg)",swydd,noun-fem,"Mae hi yn y ",newydd.,swydd,NONE,s- is not affected by SM; fem sg NIL (y swydd).
+"Soft, Contact",Article,"yr (def. art., fem sg)",cân,noun-fem,"Clod i’r ",orau.,gân,SM,Fem sg after yr → SM: c→g (yr gân).
+"Soft, Contact",Article,"y (def. art., fem sg)",cerddoriaeth,noun-fem,"Wrando ar y ",yng nghyngerdd.,gerddoriaeth,SM,Fem sg after y → SM: c→g (y gerddoriaeth).
+None,Article,"y (def. art., masc sg)",prynhawn,noun-masc,"Te yn y ",bob dydd.,prynhawn,NONE,Masculine sg after the article: no mutation (y prynhawn).
+None,Article,"yr (def. art., masc sg)",bore,noun-masc,"Symud y cyfarfod i’r ",yfory.,bore,NONE,Masculine sg after the article: no mutation (yr bore).
+None,Article,"y (def. art., masc sg)",bachgen,noun-masc,"Roedd y ",yn hapus.,bachgen,NONE,Masculine sg after the article: no mutation (y bachgen).
+None,Article,"y (def. art., masc sg)",dyn,noun-masc,"Gwelais y ",neithiwr.,dyn,NONE,Masculine sg after the article: no mutation (y dyn).
+None,Article,"y (def. art., masc sg)",dosbarth,noun-masc,"Dechrau yn y ",am ddeg.,dosbarth,NONE,Masculine sg after the article: no mutation (y dosbarth).
 None,Article,y (def. art., masc sg),clwb,noun-masc,Mae y ,yn cyfarfod heno.,clwb,NONE,Masculine sg after the article: no mutation (y clwb).
 None,Article,y (def. art., masc sg),cwmni,noun-masc,Mae’r swydd yn y ,lleol.,cwmni,NONE,Masculine sg after the article: no mutation (y cwmni).
 None,Article,y (def. art., masc sg),papur,noun-masc,Daliwch y ,yn dwt.,papur,NONE,Masculine sg after the article: no mutation (y papur).
@@ -471,6 +471,7 @@ None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
 None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant)."
+
 
 
 
