@@ -349,68 +349,65 @@
     // assign the unique rows back into state; if you want no deduplication at all,
     // replace `uniq` with `cleaned` in the next line
     state.rows = uniq;
+    // Update item count display
     $('#itemCount').textContent = `${state.rows.length} items`;
-    buildFilters();
+    // Apply the current filter settings to generate state.filtered first, then build UI
     applyFilters();
+    // Build a shuffled deck based on the filtered list
     rebuildDeck();
+    // Build the filter controls using the up-to-date filtered list (needed for accurate outcome counts)
+    buildFilters();
+    // Finally render the practice/browse/stats view
     render();
   }
 
   // ---------- Filters & Deck ----------
-function buildFilters() {
-  // ...
-  // build outcome buttons
-  const outEl = $('#outcomeBtns');
-  outEl.innerHTML = '';
-  // Count outcomes in the current filtered list
-  const outcomeCounts = {};
-  state.filtered.forEach(r => {
-    const o = (r.Outcome || '').toUpperCase();
-    outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
-  });
-  ['SM','AM','NM','NONE'].forEach(o => {
-    const count = outcomeCounts[o] || 0;
-    const active = state.outcomes.includes(o);
-    outEl.appendChild(
-      toggleBtn(
-        `${o} (${count})`,
-        active,
-        on => {
-          state.outcomes = on
-            ? Array.from(new Set([...state.outcomes, o]))
-            : state.outcomes.filter(x => x !== o);
-          saveLS('wm_outcomes', state.outcomes);
-          applyFilters();
-          rebuildDeck();
-          buildFilters(); // rebuild all buttons with new counts
-          render();
-        }
-      )
-    );
-  });
-  // ...
-}
+  function buildFilters(){
+    const fams = new Set(); const cats = new Set();
+    for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
+    const outcomes = ["SM","AM","NM","NONE"];
 
-  // One button per rule category: highlight when that single category is selected
-  for (const c of categories.sort()) {
-    const count = state.rows.filter(r => r.RuleCategory === c).length;
-    const active = state.categories.length === 1 && state.categories[0] === c;
+    // Quick start
+    const qs = $('#qs');
+    qs.innerHTML = '';
+    // derive a list of unique rule categories from the data; this ensures quick-start shows only relevant categories
+    const categories = Array.from(new Set(state.rows.map(r => r.RuleCategory)));
+    // Determine if no specific category is selected (all categories active)
+    const allActive = !state.categories.length;
+    // "All categories" button: highlight when no specific category is selected
     qs.appendChild(
       btn(
-        `${c} (${count})`,
-        active ? 'bg-emerald-600 text-white' : 'bg-slate-100',
+        `All categories`,
+        allActive ? 'bg-emerald-600 text-white' : 'bg-slate-100',
         () => {
-          state.categories = [c];
+          state.categories = [];
           saveLS('wm_categories', state.categories);
           applyFilters();
           rebuildDeck();
-          buildFilters();  // ensure buttons re-render with correct colours
+          buildFilters();  // re-render the filter buttons to reflect new state
           render();
         }
       )
     );
-  }
-
+    // One button per rule category: highlight when that single category is selected
+    for (const c of categories.sort()) {
+      const count = state.rows.filter(r => r.RuleCategory === c).length;
+      const active = state.categories.length === 1 && state.categories[0] === c;
+      qs.appendChild(
+        btn(
+          `${c} (${count})`,
+          active ? 'bg-emerald-600 text-white' : 'bg-slate-100',
+          () => {
+            state.categories = [c];
+            saveLS('wm_categories', state.categories);
+            applyFilters();
+            rebuildDeck();
+            buildFilters();  // ensure buttons re-render with correct colours
+            render();
+          }
+        )
+      );
+    }
 
     // Family buttons
     const famEl = $('#familyBtns'); famEl.innerHTML='';
@@ -422,12 +419,32 @@ function buildFilters() {
     }
 
     // Outcome buttons
-    const outEl = $('#outcomeBtns'); outEl.innerHTML='';
-    for (const o of outcomes){
-      outEl.appendChild(toggleBtn(o, state.outcomes.includes(o), (on)=>{
-        state.outcomes = on? Array.from(new Set([...state.outcomes, o])) : state.outcomes.filter(x=>x!==o);
-        saveLS('wm_outcomes',state.outcomes); applyFilters(); rebuildDeck(); buildFilters(); render();
-      }));
+    // Show counts based on the currently filtered list so users see how many cards
+    // are available for each outcome given the current family/category selections.
+    const outEl = $('#outcomeBtns');
+    outEl.innerHTML = '';
+    // tally outcomes in the filtered data (before applying outcome filter)
+    const outcomeCounts = {};
+    state.filtered.forEach(r => {
+      const o = (r.Outcome || '').toUpperCase();
+      if (!o) return;
+      outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
+    });
+    for (const o of outcomes) {
+      const count = outcomeCounts[o] || 0;
+      const label = `${o} (${count})`;
+      outEl.appendChild(
+        toggleBtn(label, state.outcomes.includes(o), (on) => {
+          state.outcomes = on
+            ? Array.from(new Set([...state.outcomes, o]))
+            : state.outcomes.filter((x) => x !== o);
+          saveLS('wm_outcomes', state.outcomes);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();
+          render();
+        })
+      );
     }
 
     // Category buttons
@@ -745,5 +762,4 @@ function buildFilters() {
 </body>
 </html>
 
-</html>
 
