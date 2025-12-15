@@ -40,25 +40,27 @@ None,Numerals,pedair,blynedd,noun-fem,Bydd y les yn para pedair,.,blynedd,NONE,D
 "Nasal, Contact",Numerals,pum … ar hugain,blynedd,noun-fem,Prynwyd y tŷ pum,ar hugain yn ôl.,mlynedd,NM,Mewn cyfansoddion “ar”: yr enw cyn “ar” → “pum mlynedd ar hugain”.
 "Soft, Contact",Numerals,dau,teulu,noun-masc,Mae,yn byw yn y tŷ mawr.,dau deulu,SM,“dau” (m.) soft-mutates: t→d.
 "Soft, Contact",Numerals,dau,cwmni,noun-masc,Cawsom gynnig gan,eleni.,dau gwmni,SM,“dau” (m.) soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cynllun,noun-masc,Cyflwynwyd,i’r pwyllgor.,dau gynllun,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,dyn,noun-masc,Gwelon ni,yn aros wrth y drws.,dau ddyn,SM,“dau” soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,mudiad,noun-masc,Mae,yn cefnogi’r achos.,dau fudiad,SM,“dau” soft-mutates: m→f.
-"Soft, Contact",Numerals,dau,tîm,noun-masc,Gêm rhwng,neithiwr.,dau dîm,SM,“dau” soft-mutates: t→d.
-"Soft, Contact",Numerals,dau,polisi,noun-masc,Cawsom,newydd gan y cwmni.,dau bolisi,SM,“dau” soft-mutates: p→b.
-"Soft, Contact",Numerals,dau,cyfrwng,noun-masc,Dewison nhw,cyfathrebu.,dau gyfrwng,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cwestiwn,noun-masc,Atebais,yn ystod y drafodaeth.,dau gwestiwn,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,bore,noun-masc,Cawsom gyfarfodydd,yn olynol.,dau fore,SM,“dau” soft-mutates: b→f.
-"Soft, Contact",Numerals,dau,cynnig,noun-masc,Daeth,ar gyfer y swydd.,dau gynnig,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cofnod,noun-masc,Cedwir,ar y system.,dau gofnod,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cyfarfod,noun-masc,Mae,wedi’u trefnu bore yma.,dau gyfarfod,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,digwyddiad,noun-masc,Cafodd,eu gohirio.,dau ddigwyddiad,SM,“dau” soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,dewis,noun-masc,Roedden ni’n cael,yn y ffurflen.,dau ddewis,SM,“dau” soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,prosiect,noun-masc,Mae’r adran yn rhedeg,eleni.,dau brosiect,SM,“dau” soft-mutates: p→b.
-"Soft, Contact",Numerals,dau,grŵp,noun-masc,Mae’r dosbarth wedi’i rannu’n,.,dau rŵp,SM,“dau” soft-mutates: g→∅.
-"Soft, Contact",Numerals,dau,papur,noun-masc,Mae gen i dau,i’w argraffu.,bapur,SM,“dau” soft-mutates the noun: p→b.
-"Soft, Contact",Numerals,dau,clwb,noun-masc,Mae,pêl-droed yn y dref.,dau glwb,SM,“dau” soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,dosbarth,noun-masc,Rydyn ni’n rhedeg,bob prynhawn.,dau ddosbarth,SM,“dau” soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,tad,noun-masc,Mae ganddi,", un biolegol ac un cam.",dau dad,SM,“dau” soft-mutates: t→d.
+"Soft, Contact","Numerals","dau","teulu","noun-masc","Mae dau ","yn byw yn y tŷ mawr.","deulu","SM","'dau' (m.) soft-mutates: t→d."
+"Soft, Contact","Numerals","dau","cwmni","noun-masc","Cawsom gynnig gan dau ","eleni.","gwmni","SM","'dau' (m.) soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","cynllun","noun-masc","Cyflwynwyd dau ","i’r pwyllgor.","gynllun","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","dyn","noun-masc","Gwelon ni dau ","yn aros wrth y drws.","ddyn","SM","'dau' soft-mutates: d→dd."
+"Soft, Contact","Numerals","dau","mudiad","noun-masc","Mae dau ","yn cefnogi’r achos.","fudiad","SM","'dau' soft-mutates: m→f."
+"Soft, Contact","Numerals","dau","tîm","noun-masc","Gêm rhwng dau ","neithiwr.","dîm","SM","'dau' soft-mutates: t→d."
+"Soft, Contact","Numerals","dau","polisi","noun-masc","Cawsom dau ","newydd gan y cwmni.","bolisi","SM","'dau' soft-mutates: p→b."
+"Soft, Contact","Numerals","dau","cyfrwng","noun-masc","Dewison nhw dau ","cyfathrebu.","gyfrwng","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","cwestiwn","noun-masc","Atebais dau ","yn ystod y drafodaeth.","gwestiwn","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","bore","noun-masc","Cawsom gyfarfodydd dau ","yn olynol.","fore","SM","'dau' soft-mutates: b→f."
+"Soft, Contact","Numerals","dau","cynnig","noun-masc","Daeth dau ","ar gyfer y swydd.","gynnig","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","cofnod","noun-masc","Cedwir dau ","ar y system.","gofnod","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","cyfarfod","noun-masc","Mae dau ","wedi’u trefnu bore yma.","gyfarfod","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","digwyddiad","noun-masc","Cafodd dau ","eu gohirio.","ddigwyddiad","SM","'dau' soft-mutates: d→dd."
+"Soft, Contact","Numerals","dau","dewis","noun-masc","Roedden ni’n cael dau ","yn y ffurflen.","ddewis","SM","'dau' soft-mutates: d→dd."
+"Soft, Contact","Numerals","dau","prosiect","noun-masc","Mae’r adran yn rhedeg dau ","eleni.","brosiect","SM","'dau' soft-mutates: p→b."
+"Soft, Contact","Numerals","dau","grŵp","noun-masc","Mae’r dosbarth wedi’i rannu’n dau ",".","rŵp","SM","'dau' soft-mutates: g→∅."
+"Soft, Contact","Numerals","dau","papur","noun-masc","Mae gen i dau ","i’w argraffu.","bapur","SM","'dau' soft-mutates the noun: p→b."
+"Soft, Contact","Numerals","dau","clwb","noun-masc","Mae dau ","pêl-droed yn y dref.","glwb","SM","'dau' soft-mutates: c→g."
+"Soft, Contact","Numerals","dau","dosbarth","noun-masc","Rydyn ni’n rhedeg dau ","bob prynhawn.","ddosbarth","SM","'dau' soft-mutates: d→dd."
+"Soft, Contact","Numerals","dau","tad","noun-masc","Mae ganddi dau ","— un biolegol ac un cam.","dad","SM","'dau' soft-mutates: t→d."
 "Nasal, Contact",Possessive,fy … i,pwyllgor,noun-masc,Dyma fy,i.,mhwyllgor,NM,fy ‘my’ triggers NM (p→mh): fy mhwyllgor i.
 "Soft, Contact",Possessive,dy … di,pwyllgor,noun-masc,Pryd yw dy,di’n cyfarfod?,bwyllgor,SM,dy ‘your (sg)’ triggers SM (p→b).
 "Soft, Contact",Possessive,ei (his) … e/fe,pwyllgor,noun-masc,Cyhoeddodd ef restr ei,.,bwyllgor,SM,ei (his) triggers SM on the noun (p→b).
@@ -405,4 +407,5 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
