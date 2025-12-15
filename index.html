@@ -49,64 +49,63 @@
       </div>
     </section>
 
-    <!-- Controls -->
-    <section id="controls" class="hidden max-w-6xl mx-auto p-4 grid md:grid-cols-3 gap-4">
-      <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border p-4">
-        <div class="text-sm font-medium mb-1 hidden">Quick start</div>
-        <p class="text-sm text-slate-600 mb-2 hidden">Choose a rule category (nil cases are included automatically).</p>
-        <div id="qs" class="flex flex-wrap gap-2 mb-4"></div>
-
-        <div id="adminPanel" class="hidden border-t pt-4 mt-4">
-          <div class="text-sm font-medium mb-2">Admin tools</div>
-          <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
-          <div class="mt-2 flex gap-2">
-            <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
-            <button id="btnLoadUrl" class="px-3 py-2 rounded-xl bg-blue-600 text-white">LOAD</button>
-          </div>
-          <div class="mt-2 flex flex-wrap gap-2 text-sm">
-            <button id="btnShareable" class="px-3 py-1.5 rounded-xl bg-slate-100">Shareable link</button>
-            <button id="btnExportMisses" class="px-3 py-1.5 rounded-xl bg-slate-100">Export misses</button>
-          </div>
-          <div class="mt-3">
-            <div class="text-sm font-medium mb-1">Load local CSV</div>
-            <input id="fileCsv" type="file" accept=".csv" />
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl shadow-sm border p-4">
-        <div class="text-sm font-medium mb-2">Focus</div>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <div>
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
-            <div id="familyBtns" class="flex flex-wrap gap-1"></div>
-          </div>
-          <div>
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
-            <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
-          </div>
-          <div class="col-span-2">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
-            <div id="catBtns" class="flex flex-wrap gap-1"></div>
-          </div>
-          <div class="col-span-2">
-            <label class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
-            <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
-          </div>
-          <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
-            <input id="nilOnly" type="checkbox" />
-            Nil‑cases only (no mutation expected)
-          </label>
-        </div>
-      </div>
-    </section>
+    <!-- Controls section removed from here.  Filter controls will appear in the
+         practice grid on the right-hand side, above the session panel.  The
+         admin panel will also live in that area when admin=1. -->
 
     <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
-      <div id="practiceView" class="grid md:grid-cols-3 gap-4">
-        <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border p-10">
+      <div id="practiceView" class="grid md:grid-cols-2 md:grid-rows-2 gap-4">
+        <!-- Left column: practice card spans both rows on medium screens -->
+        <div class="md:row-span-2 bg-white rounded-2xl shadow-sm border p-10">
           <div id="practiceCard"></div>
         </div>
+        <!-- Top-right: filter controls (previously in the controls section).  Hidden by default; toggled via Filters button. -->
+        <div id="filtersPanel" class="bg-white rounded-2xl shadow-sm border p-4 hidden">
+          <!-- Admin / Data panel: only visible when admin=1 -->
+          <div id="adminPanel" class="hidden mb-4">
+            <div class="text-sm font-medium mb-2">Admin tools</div>
+            <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
+            <div class="mt-2 flex gap-2">
+              <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
+              <button id="btnLoadUrl" class="px-3 py-2 rounded-xl bg-blue-600 text-white">LOAD</button>
+            </div>
+            <div class="mt-2 flex flex-wrap gap-2 text-sm">
+              <button id="btnShareable" class="px-3 py-1.5 rounded-xl bg-slate-100">Shareable link</button>
+              <button id="btnExportMisses" class="px-3 py-1.5 rounded-xl bg-slate-100">Export misses</button>
+            </div>
+            <div class="mt-3">
+              <div class="text-sm font-medium mb-1">Load local CSV</div>
+              <input id="fileCsv" type="file" accept=".csv" />
+            </div>
+            <hr class="my-4" />
+          </div>
+          <!-- Focus filters -->
+          <div class="text-sm font-medium mb-2">Focus</div>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div>
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
+              <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+            </div>
+            <div>
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
+              <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+            </div>
+            <div class="col-span-2">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
+              <div id="catBtns" class="flex flex-wrap gap-1"></div>
+            </div>
+            <div class="col-span-2">
+              <label class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
+              <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
+            </div>
+            <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
+              <input id="nilOnly" type="checkbox" />
+              Nil‑cases only (no mutation expected)
+            </label>
+          </div>
+        </div>
+        <!-- Bottom-right: session / stats panel -->
         <aside class="bg-white rounded-2xl shadow-sm border p-4">
           <div class="text-sm font-medium mb-2">Session</div>
           <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
@@ -208,8 +207,17 @@
     const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
     const o = (rawOutcome || '').replace(/["']/g, '').toUpperCase();
     const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
+    // Normalise rule family: the CSV often stores values like "Soft,Contact" or "Aspirate, Contact".
+    // We take the portion before the comma for filtering purposes.  If it’s missing,
+    // derive from the outcome (e.g. SM → Soft).
+    let famRaw = getVal(r, ["RuleFamily","Rule Family","Family"]).trim();
+    if (!famRaw) famRaw = familyFromOutcome(o);
+    let fam = famRaw;
+    if (famRaw.includes(',')) {
+      fam = famRaw.split(',')[0].trim();
+    }
     return {
-      RuleFamily: getVal(r, ["RuleFamily","Rule Family","Family"]) || familyFromOutcome(o),
+      RuleFamily: fam,
       RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig||'').toLowerCase()) ? 'Preposition' : ''),
       Trigger: trig,
       Base: getVal(r, ["Base","Radical","Word","Base word","BaseWord"]),
@@ -683,7 +691,8 @@
     $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
     $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
     $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
-    $('#btnFilters').onclick  = ()=>{ $('#controls').classList.toggle('hidden'); };
+    // Toggle the filters panel (top-right of the practice grid) when clicking the Filters button
+    $('#btnFilters').onclick  = ()=>{ $('#filtersPanel')?.classList.toggle('hidden'); };
     $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
 
     // Onboarding buttons: allow users to quickly open filters or dismiss the welcome message.
@@ -691,8 +700,9 @@
       // Hide the onboarding card
       const onboard = $('#onboard');
       if (onboard) onboard.classList.add('hidden');
-      // Show the controls panel so users can immediately select filters
-      $('#controls')?.classList.remove('hidden');
+      // Show the filters panel so users can immediately select filters
+      // Show the filters panel so users can immediately select filters
+      $('#filtersPanel')?.classList.remove('hidden');
       // Scroll to top to ensure filters are visible
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -774,5 +784,6 @@
   </script>
 </body>
 </html>
+
 
 
