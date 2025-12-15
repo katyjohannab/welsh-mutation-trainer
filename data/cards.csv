@@ -422,11 +422,11 @@ None,Article,"yr (def. art., masc sg)",bore,noun-masc,"Symud y cyfarfod i’r ",
 None,Article,"y (def. art., masc sg)",bachgen,noun-masc,"Roedd y ",yn hapus.,bachgen,NONE,Masculine sg after the article: no mutation (y bachgen).
 None,Article,"y (def. art., masc sg)",dyn,noun-masc,"Gwelais y ",neithiwr.,dyn,NONE,Masculine sg after the article: no mutation (y dyn).
 None,Article,"y (def. art., masc sg)",dosbarth,noun-masc,"Dechrau yn y ",am ddeg.,dosbarth,NONE,Masculine sg after the article: no mutation (y dosbarth).
-None,Article,y (def. art., masc sg),clwb,noun-masc,Mae y ,yn cyfarfod heno.,clwb,NONE,Masculine sg after the article: no mutation (y clwb).
-None,Article,y (def. art., masc sg),cwmni,noun-masc,Mae’r swydd yn y ,lleol.,cwmni,NONE,Masculine sg after the article: no mutation (y cwmni).
-None,Article,y (def. art., masc sg),papur,noun-masc,Daliwch y ,yn dwt.,papur,NONE,Masculine sg after the article: no mutation (y papur).
-None,Article,y (def. art., masc sg),ffrind,noun-masc,Galwodd y ,drosodd.,ffrind,NONE,ff- is unaffected; masculine sg shows NIL (y ffrind).
-None,Article,yr (def. art., masc sg),afal,noun-masc,Bwyta’r ,yn gyntaf.,afal,NONE,Vowel-initial noun: article = ‘yr’; no mutation with masc sg (yr afal).
+None,Article,"y (def. art., masc sg)",clwb,noun-masc,"Mae y ",yn cyfarfod heno.,clwb,NONE,Masculine sg after the article: no mutation (y clwb).
+None,Article,"y (def. art., masc sg)",cwmni,noun-masc,"Mae’r swydd yn y ",lleol.,cwmni,NONE,Masculine sg after the article: no mutation (y cwmni).
+None,Article,"y (def. art., masc sg)",papur,noun-masc,"Daliwch y ",yn dwt.,papur,NONE,Masculine sg after the article: no mutation (y papur).
+None,Article,"y (def. art., masc sg)",ffrind,noun-masc,"Galwodd y ",drosodd.,ffrind,NONE,ff- is unaffected; masculine sg shows NIL (y ffrind).
+None,Article,"yr (def. art., masc sg)",afal,noun-masc,"Bwyta’r ",yn gyntaf.,afal,NONE,Vowel-initial noun: article = ‘yr’; no mutation with masc sg (yr afal).
 "Soft, Contact",Article,"y (def. art., fem sg)",celf,noun-fem,"Astudio'r hanes a'r damcaniaeth yn y ",.,gelf,SM,"Fem. sg. after y → SM: c→g (y gelf)."
 "Soft, Contact",Article,"y (def. art., fem sg)",cyfraith,noun-fem,"Maen nhw'n trafod y ",heno.,gyfraith,SM,"Fem. sg. after y → SM: c→g (y gyfraith)."
 "Soft, Contact",Article,"y (def. art., fem sg)",tref,noun-fem,"Byw yn y ",ers blynyddoedd.,dref,SM,"Fem. sg. after y → SM: t→d (y dref)."
@@ -466,17 +466,11 @@ None,Article,"yr (def. art., fem sg)",afon,noun-fem,"Cerdded ar hyd yr ",heddiw.
 None,Article,"y (def. art., masc sg)",cariad,noun-masc,"Siarad am y ",yn aml.,cariad,NONE,"Masculine sg after the article: no mutation (y cariad)."
 None,Article,"y (def. art., masc sg)",map,noun-masc,"Edrych ar y ",cyn gadael.,map,NONE,"Masculine sg after the article: no mutation (y map)."
 None,Article,"y (def. art., masc sg)",cydweithiwr,noun-masc,"Cyfarfod â’r ",yn ddiweddarach.,cydweithiwr,NONE,"Masculine sg after the article: no mutation (y cydweithiwr)."
-None,Article,"y (def. art., masc sg)",tywysog,noun-masc,"Gwelon nhw y ",ar y teledu.,tywysog,NONE,"Masculine sg after the article: no mutation (y tywysog)."
+None,Article,"y (def. art., masc sg)",tywysog,noun-masc,"Gwelon nhw y ",ar y teledu.,tywysog,NONE,"Masculine sg after the article: no mutation (y tywysog).
 None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.,enw,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr enw)."
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
-None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant)."
-
-
-
-
-
-
+None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant).
 
 
 
