@@ -179,7 +179,7 @@ None,Conjunction,neu,ffenestr,noun-fem,Drws neu,oedd ar agor?,ffenestr,NONE,Here
 "Soft, Contact",Numerals,ddau,ci,noun-masc,Gwelais i ddau,mawr yn y parc,gi,SM,“dau” triggers SM on a following masc. noun (ci→gi).
 "Soft, Contact",Numerals,dwy,cegin,noun-fem,Mae dwy,yn y fflat,gegin,SM,“dwy” triggers SM on a following fem. noun (cegin→gegin).
 "Soft, Contact",Numerals,un,cadair,noun-fem,Cymerwch un,at y bwrdd,gadair,SM,“un” before a fem. noun causes SM (not with ll/rh).
-None,Numerals,un,llyfr,noun-masc,Dw i eisiau un,llyfr,llyfr,NONE,No contact mutation with “un” + masculine noun.
+None,Numerals,un,llyfr,noun-masc,Dw i eisiau un,nawr plîs,llyfr,NONE,No contact mutation with “un” + masculine noun.
 "Soft, Complement",Complement,yn (comp marker),tew,adj,Mae’r ci yn,meddai'r milfeddyg.,dew,SM,Complement marker ‘yn’ soft-mutates adjectives (tew→dew).
 "Soft, Complement",Complement,yn (comp marker),clir,adj,Mae’r neges yn,i bawb.,glir,SM,‘yn’ + adjective: SM (clir→glir).
 "Soft, Complement",Complement,yn (comp marker),drud,adj,Mae’r tocynnau’n,eleni.,ddrud,SM,‘yn’ + adjective: SM (drud→ddrud).
@@ -404,6 +404,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
