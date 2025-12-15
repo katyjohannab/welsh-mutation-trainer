@@ -204,7 +204,9 @@
   }
   function coerceRow(row){
     const r = row || {};
-    const o = getVal(r, ["Outcome","Result","Mutation","Mut"]).toUpperCase();
+    // Pull outcome value and normalise: strip quotes and apostrophes, trim and uppercase
+    const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
+    const o = (rawOutcome || '').replace(/["']/g, '').toUpperCase();
     const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
     return {
       RuleFamily: getVal(r, ["RuleFamily","Rule Family","Family"]) || familyFromOutcome(o),
@@ -323,37 +325,17 @@
       for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
       return o;
     });
-    // dedupe
-    // By default we deduplicate cards based on a subset of fields.  If you want to retain
-    // all rows as-is, simply assign `state.rows = cleaned` and skip the dedupe logic below.
-    // To expand the dedupe key to include more fields, add them to the array below.
-    const seen = new Set();
-    const uniq = [];
-    for (const o of cleaned) {
-      // include additional fields like WordCategory and Why to consider them when de-duplicating
-      const keyParts = [
-        // use RuleCategory, Trigger, Base, Before, After and Answer as before
-        o.RuleCategory,
-        o.Trigger,
-        o.Base,
-        o.Before,
-        o.After,
-        o.Answer,
-        // include the word category and explanation to differentiate rows with the same base/trigger but different notes
-        o.WordCategory,
-        o.Why,
-        // include Outcome in the dedupe key so that SM/AM/NM variants aren’t lost when another outcome has the same structure
-        o.Outcome
-      ];
-      const key = keyParts.map(v => (v || '').toLowerCase().trim()).join('|');
-      if (!seen.has(key)) {
-        seen.add(key);
-        uniq.push(o);
-      }
-    }
-    // assign the unique rows back into state; if you want no deduplication at all,
-    // replace `uniq` with `cleaned` in the next line
-    state.rows = uniq;
+    /*
+     * Previously the trainer attempted to de‑duplicate cards by combining several fields
+     * (RuleCategory, Trigger, Base, Before, After, Answer, WordCategory, Why, Outcome)
+     * into a single key.  This often removed legitimate cards (e.g. soft‑mutated vs.
+     * unmutated examples) because the sentences happened to share the same structure.
+     * Many users prefer to practise every sentence individually, even if the rule
+     * parameters overlap.  To honour that, skip deduplication entirely and keep
+     * every row from the source data.  If you later decide to reintroduce
+     * deduplication, consider including all distinguishing fields in the key.
+     */
+    state.rows = cleaned;
     // Update item count display
     $('#itemCount').textContent = `${state.rows.length} items`;
     // Apply the current filter settings to generate state.filtered first, then build UI
@@ -546,13 +528,19 @@
 
     const row = document.createElement('div');
     row.className = 'mt-2';
-    // Use a flexible layout that stacks on small screens and aligns horizontally on larger screens.
-    // This prevents long text from breaking awkwardly across lines.
+    /*
+     * Arrange the before text, answer box and after text in a responsive flex
+     * container.  On small screens (mobile), the elements stack vertically so
+     * everything remains readable.  On medium+ screens, they align horizontally
+     * with the answer box taking a modest fixed width and the surrounding text
+     * flexing to fill the available space.  This preserves visual hierarchy and
+     * avoids awkward line breaks without forcing the sentence onto a single line.
+     */
     row.innerHTML = `
-      <div class="flex flex-col gap-3">
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${esc(card.Before || '')}</div>
-        <input id="answerBox" class="w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]" placeholder="Type your answer" aria-label="Type your answer" />
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${esc(card.After || '')}</div>
+      <div class="flex flex-col md:flex-row md:items-baseline gap-4">
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words md:flex-1">${esc(card.Before || '')}</div>
+        <input id="answerBox" class="w-full md:w-72 border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-4 py-3 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm flex-shrink-0" placeholder="Answer" aria-label="Answer" />
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words md:flex-1">${esc(card.After || '')}</div>
       </div>
     `;
 
