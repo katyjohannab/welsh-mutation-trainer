@@ -466,11 +466,11 @@ None,Article,"yr (def. art., fem sg)",afon,noun-fem,"Cerdded ar hyd yr ",heddiw.
 None,Article,"y (def. art., masc sg)",cariad,noun-masc,"Siarad am y ",yn aml.,cariad,NONE,"Masculine sg after the article: no mutation (y cariad)."
 None,Article,"y (def. art., masc sg)",map,noun-masc,"Edrych ar y ",cyn gadael.,map,NONE,"Masculine sg after the article: no mutation (y map)."
 None,Article,"y (def. art., masc sg)",cydweithiwr,noun-masc,"Cyfarfod â’r ",yn ddiweddarach.,cydweithiwr,NONE,"Masculine sg after the article: no mutation (y cydweithiwr)."
-None,Article,"y (def. art., masc sg)",tywysog,noun-masc,"Gwelon nhw y ",ar y teledu.,tywysog,NONE,"Masculine sg after the article: no mutation (y tywysog).
 None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.,enw,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr enw)."
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
 None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant).
+
 
 
 
