@@ -52,8 +52,8 @@
     <!-- Controls -->
     <section id="controls" class="hidden max-w-6xl mx-auto p-4 grid md:grid-cols-3 gap-4">
       <div class="md:col-span-2 bg-white rounded-2xl shadow-sm border p-4">
-        <div class="text-sm font-medium mb-1">Quick start</div>
-        <p class="text-sm text-slate-600 mb-2">Choose a rule category (nil cases are included automatically).</p>
+        <div class="text-sm font-medium mb-1 hidden">Quick start</div>
+        <p class="text-sm text-slate-600 mb-2 hidden">Choose a rule category (nil cases are included automatically).</p>
         <div id="qs" class="flex flex-wrap gap-2 mb-4"></div>
 
         <div id="adminPanel" class="hidden border-t pt-4 mt-4">
@@ -354,46 +354,13 @@
     for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
     const outcomes = ["SM","AM","NM","NONE"];
 
-    // Quick start
+    // Hide the Quick start section entirely.  Previously this duplicated the
+    // functionality of the categories filter and confused users.  We'll simply
+    // clear its contents and add a hidden class so it doesn’t take up space.
     const qs = $('#qs');
-    qs.innerHTML = '';
-    // derive a list of unique rule categories from the data; this ensures quick-start shows only relevant categories
-    const categories = Array.from(new Set(state.rows.map(r => r.RuleCategory)));
-    // Determine if no specific category is selected (all categories active)
-    const allActive = !state.categories.length;
-    // "All categories" button: highlight when no specific category is selected
-    qs.appendChild(
-      btn(
-        `All categories`,
-        allActive ? 'bg-emerald-600 text-white' : 'bg-slate-100',
-        () => {
-          state.categories = [];
-          saveLS('wm_categories', state.categories);
-          applyFilters();
-          rebuildDeck();
-          buildFilters();  // re-render the filter buttons to reflect new state
-          render();
-        }
-      )
-    );
-    // One button per rule category: highlight when that single category is selected
-    for (const c of categories.sort()) {
-      const count = state.rows.filter(r => r.RuleCategory === c).length;
-      const active = state.categories.length === 1 && state.categories[0] === c;
-      qs.appendChild(
-        btn(
-          `${c} (${count})`,
-          active ? 'bg-emerald-600 text-white' : 'bg-slate-100',
-          () => {
-            state.categories = [c];
-            saveLS('wm_categories', state.categories);
-            applyFilters();
-            rebuildDeck();
-            buildFilters();  // ensure buttons re-render with correct colours
-            render();
-          }
-        )
-      );
+    if (qs) {
+      qs.innerHTML = '';
+      qs.classList.add('hidden');
     }
 
     // Family buttons
@@ -435,12 +402,46 @@
     }
 
     // Category buttons
-    const catEl = $('#catBtns'); catEl.innerHTML='';
-    for (const c of Array.from(cats).sort()){
-      catEl.appendChild(toggleBtn(c, state.categories.includes(c), (on)=>{
-        state.categories = on? Array.from(new Set([...state.categories, c])) : state.categories.filter(x=>x!==c);
-        saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render();
-      }));
+    const catEl = $('#catBtns');
+    catEl.innerHTML = '';
+    // Insert an "All" button first.  When no specific categories are selected, treat it as all.
+    const allCatsActive = !state.categories.length;
+    catEl.appendChild(
+      toggleBtn(
+        'All',
+        allCatsActive,
+        (on) => {
+          // If toggled on, clear categories (show all). If toggled off, do nothing.
+          if (on) {
+            state.categories = [];
+          } else {
+            // When untoggling "All", retain current selection (which is empty)
+            // so nothing changes.
+            state.categories = [];
+          }
+          saveLS('wm_categories', state.categories);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();
+          render();
+        }
+      )
+    );
+    // Then one button per specific category.  Active if that category is in the selection.
+    for (const c of Array.from(cats).sort()) {
+      const active = state.categories.includes(c);
+      catEl.appendChild(
+        toggleBtn(c, active, (on) => {
+          state.categories = on
+            ? Array.from(new Set([...state.categories, c]))
+            : state.categories.filter((x) => x !== c);
+          saveLS('wm_categories', state.categories);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();
+          render();
+        })
+      );
     }
 
     // Trigger filter + nil only
@@ -529,18 +530,18 @@
     const row = document.createElement('div');
     row.className = 'mt-2';
     /*
-     * Arrange the before text, answer box and after text in a responsive flex
-     * container.  On small screens (mobile), the elements stack vertically so
-     * everything remains readable.  On medium+ screens, they align horizontally
-     * with the answer box taking a modest fixed width and the surrounding text
-     * flexing to fill the available space.  This preserves visual hierarchy and
-     * avoids awkward line breaks without forcing the sentence onto a single line.
+     * Present the before text, answer input and after text in a single wrapping row.
+     * flex-wrap ensures the sequence flows naturally across lines when space is
+     * limited. Each segment wraps as needed but preserves the logical order of
+     * the sentence. The answer box has a modest width on desktop but can expand
+     * on smaller screens.  By using <span> for the text segments we avoid the
+     * unintended block-level breaks observed earlier.
      */
     row.innerHTML = `
-      <div class="flex flex-col md:flex-row md:items-baseline gap-4">
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words md:flex-1">${esc(card.Before || '')}</div>
-        <input id="answerBox" class="w-full md:w-72 border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-4 py-3 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm flex-shrink-0" placeholder="Answer" aria-label="Answer" />
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words md:flex-1">${esc(card.After || '')}</div>
+      <div class="flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
+        <span class="text-slate-500">${esc(card.Before || '')}</span>
+        <input id="answerBox" class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0" placeholder="Answer" aria-label="Answer" />
+        <span class="text-slate-500">${esc(card.After || '')}</span>
       </div>
     `;
 
