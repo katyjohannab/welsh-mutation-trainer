@@ -228,18 +228,18 @@ None,Article,"y (def. art., pl)",pobl,noun-pl,Casglodd y,ger y llwyfan.,pobl,NON
 "Aspirate, Contact",Conjunction,a,cadair,noun-fem,Bwrdd a,yn yr ystafell.,chadair,AM,a → AM (c→ch).
 "Aspirate, Contact",Preposition,â (with),car,noun-masc,Daeth e â,i’r dosbarth.,char,AM,"Preposition â ‘with’ triggers AM (c→ch, p→ph, t→th)."
 "Aspirate, Contact",Preposition,â (with),ci,noun-masc,Cerddodd hi â,bob bore.,chi,AM,â → AM (c→ch).
-"Aspirate, Contact",Preposition,Preposition,gyda’n,car,noun-masc,Rydyn ni’n teithio gyda’n,heddiw.,char,AM
-"Aspirate, Contact",Preposition,gyda’n,cath,noun-fem,Rydyn ni’n byw gyda’n,ers mis.,chath,AM,gyda’n → AM (c→ch).
-"Aspirate, Contact",Conjunction,a,pen,noun-masc,Silff a,pren.,phen,AM,a → AM (p→ph).
-"Aspirate, Contact",Conjunction,a,tŷ,noun-masc,Gardd a,mawr.,thŷ,AM,a → AM (t→th).
-"Aspirate, Contact",Preposition,â (with),papur,noun-masc,Cyflwynodd hi’r gwaith â,trefnus.,phapur,AM,â → AM (p→ph).
-"Aspirate, Contact",Preposition,â (with),tad,noun-masc,Siaradais i â,neithiwr.,thad,AM,â → AM (t→th).
-"Aspirate, Contact",Preposition,gyda’n,plant,noun-pl,Aethon ni allan gyda’n,heno.,phlant,AM,gyda’n → AM (p→ph).
-"Aspirate, Contact",Preposition,gyda’n,tocyn,noun-masc,Rydyn ni’n cyrraedd gyda’n,barod.,thocyn,AM,gyda’n → AM (t→th).
-None,Conjunction,a,llyfr,noun-masc,Pensil a,ar y ddesg.,llyfr,NONE,ll- does not aspirate; show NIL case after a.
-None,Conjunction,a,rhestr,noun-fem,Ffeil a,hir.,rhestr,NONE,rh- does not aspirate.
-None,Preposition,â (with),ysgol,noun-fem,Es i â,ddoe.,ysgol,NONE,Vowel-initial noun: no visible AM after â.
-None,Preposition,gyda’n,afal,noun-masc,Daethon ni gyda’n,i’r trip.,afal,NONE,Vowel-initial nouns are unchanged (training NIL).
+None,Possessive,gyda’n,car,noun-masc,"Rydyn ni’n teithio gyda’n ",heddiw.,car,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; prepositional AM blocked."
+None,Possessive,gyda’n,cath,noun-fem,"Rydyn ni’n byw gyda’n ",ers mis.,cath,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; noun stays radical."
+"Aspirate, Contact",Conjunction,a,pren,noun-masc,"Silff a ",pren.,phren,AM,"'a' triggers AM on p/t/c; pren→phren."
+"Aspirate, Contact",Conjunction,a,tŷ,noun-masc,"Gardd a ",mawr.,thŷ,AM,"'a' triggers AM on p/t/c; tŷ→thŷ."
+"Aspirate, Contact",Preposition,â (with),papur,noun-masc,"Cyflwynodd hi’r gwaith â ",trefnus.,phapur,AM,"â triggers AM on p/t/c; papur→phapur."
+"Aspirate, Contact",Preposition,â (with),tad,noun-masc,"Siaradais i â ",neithiwr.,thad,AM,"â triggers AM on p/t/c; tad→thad."
+None,Possessive,gyda’n,plant,noun-pl,"Aethon ni allan gyda’n ",heno.,plant,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; noun stays radical."
+None,Possessive,gyda’n,tocyn,noun-masc,"Rydyn ni’n cyrraedd gyda’n ",barod.,tocyn,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; noun stays radical."
+None,Conjunction,a,llyfr,noun-masc,"Pensil a ",ar y ddesg.,llyfr,NONE,"ll is not affected by AM after 'a' (nil case)."
+None,Conjunction,a,rhestr,noun-fem,"Ffeil a ",hir.,rhestr,NONE,"rh is not affected by AM after 'a' (nil case)."
+None,Preposition,â (with),ysgol,noun-fem,"Es i â ",ddoe.,ysgol,NONE,"Vowel-initial noun shows no visible AM after â."
+None,Possessive,gyda’n,afal,noun-masc,"Daethon ni gyda’n ",i’r trip.,afal,NONE,"Vowel-initial noun unchanged; BLOCKER: 'ein' causes no mutation."
 "Aspirate, Contact",Numerals,tri,car,noun-masc,Gwelais,ger y tŷ.,char,AM,tri before a noun triggers AM on p/t/c.
 "Aspirate, Contact",Numerals,tri,papur,noun-masc,Mae,ar y ddesg.,phapur,AM,tri → AM (p→ph).
 "Aspirate, Contact",Numerals,tri,tŷ,noun-masc,Prynon ni,y lôn hon.,thŷ,AM,tri → AM (t→th).
@@ -405,6 +405,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
