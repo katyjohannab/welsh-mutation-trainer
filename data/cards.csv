@@ -383,7 +383,7 @@ None,Possessive,eu,caru,verb-noun,Dw i’n eu,nhw.,caru,NONE,eu (their) → no m
 "Soft, Contact",Possessive,dy,talu,verb-noun,Wnei di dy,di heddiw?,dalu,SM,dy: t→d (talu→dalu).
 None,Possessive,eich,talu,verb-noun,Wnewch chi eich,chi heddiw?,talu,NONE,eich → no mutation.
 "Aspirate, Contact",Possessive,ei (her),prynu,verb-noun,A wnei di ei,hi yfory?,phrynu,AM,ei (her): p→ph.
-"Soft, Contact",Possessive,ei (his),talu,verb-noun,Gofynnodd hi ei,fe ar y safle.,dalu,SM,ei (his): t→d.
+"Soft, Contact",Possessive,ei (his),cyflog,verb-noun,Gofynnodd e am ei,yn gynnar.,gyflog,SM,ei (his): t→d.
 "Nasal, Contact",Possessive,fy,talu,verb-noun,Mae hi’n fy,i arlein.,nhalu,NM,fy: t→nh.
 None,Possessive,ein,gweld,verb-noun,Maen nhw’n ein,ni ar Teams.,gweld,NONE,ein → NONE.
 None,Possessive,eu,talu,verb-noun,Rhaid iddyn nhw eu,nhw heno.,talu,NONE,eu → NONE.
@@ -404,6 +404,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
