@@ -406,7 +406,7 @@ None,Possessive,eich,gweld,verb-noun,"Rydyn ni’n eich ",chi’n aml.,gweld,NON
 "Soft, Contact",Article,"y (def. art., fem sg)",canolfan,noun-fem,"Cwrdd yn y ",bore fory.,ganolfan,SM,Feminine sg after y → SM: c→g (y ganolfan).
 "Soft, Contact",Article,"y (def. art., fem sg)",cymdeithas,noun-fem,"Mai’r cyfarfod gyda’r ",lleol.,gymdeithas,SM,Fem sg after y → SM: c→g (y gymdeithas).
 "Soft, Contact",Article,"yr (def. art., fem sg)",gorsaf,noun-fem,"Cwrdd yn yr ",heno.,orsaf,SM,Fem sg after yr → SM: g→∅; vowel onset requires ‘yr’ (yr orsaf).
-"Soft, Contact",Article,"y (def. art., fem sg)",marchnad,noun-fem,"X prynodd ffrwythau yn y ",ddoe.,farchnad,SM,Fem sg after y → SM: m→f (y farchnad).
+"Soft, Contact",Article,"y (def. art., fem sg)",marchnad,noun-fem,"Prynodd ffrwythau yn y ",ddoe.,farchnad,SM,Fem sg after y → SM: m→f (y farchnad).
 None,Article,"y (def. art., fem sg)",swydd,noun-fem,"Mae hi yn y ",newydd.,swydd,NONE,s- is not affected by SM; fem sg NIL (y swydd).
 "Soft, Contact",Article,"yr (def. art., fem sg)",cân,noun-fem,"Clod i’r ",orau.,gân,SM,Fem sg after yr → SM: c→g (yr gân).
 "Soft, Contact",Article,"y (def. art., fem sg)",cerddoriaeth,noun-fem,"Wrando ar y ",yng nghyngerdd.,gerddoriaeth,SM,Fem sg after y → SM: c→g (y gerddoriaeth).
@@ -470,6 +470,7 @@ None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
 None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant)."
+
 
 
 
