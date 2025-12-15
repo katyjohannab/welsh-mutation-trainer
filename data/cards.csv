@@ -9,18 +9,18 @@ RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Wh
 None,Article,y (def. art.),senedd,noun-fem,Mae’r,yn cyfarfod heddiw.,senedd,NONE,‘s’ isn’t a mutable consonant in SM; article doesn’t change it (y senedd).
 None,Article,yr (def. art. before vowel),amrywiaeth,noun-fem,Mae’r,o opsiynau yn eang.,amrywiaeth,NONE,Initial vowels don’t undergo SM; article form is yr before vowels (yr amrywiaeth).
 None,Article,yr (def. art. before vowel),ymgyrch,noun-fem,Siaradwyd am yr,newydd.,ymgyrch,NONE,Begins with a vowel sound; no SM of vowels (yr ymgyrch).
-"Soft, Contact",Article,"y (def. art., fem sg)",gwefan,noun-fem,Darllenais i’r erthygl ar y,swyddogol.,wefan,SM,Fem. sg. after y: g→∅ (y wefan).
-"Soft, Contact",Article,"y (def. art., fem sg)",mam,noun-fem,Mae,yn gweithio yn y ysbyty.,y fam,SM,Fem. sg. after y: m→f (y fam).
-"Soft, Contact",Article,"y (def. art., fem sg)",taith,noun-fem,Mae’r trên yn aros ar,nesaf.,y daith,SM,Fem. sg. after y: t→d (y daith).
-"Soft, Contact",Article,"y (def. art., fem sg)",merch,noun-fem,Dyma,sy’n arwain y prosiect.,y ferch,SM,Fem. sg. after y: m→f (y ferch).
-"Soft, Contact",Article,"y (def. art., fem sg)",cerddoriaeth,noun-fem,Roedd,yn fyw a phwerus.,y gerddoriaeth,SM,Fem. sg. after y: c→g.
-"Soft, Contact",Article,"y (def. art., fem sg)",cyfres,noun-fem,A yw,newydd yn dechrau heno?,y gyfres,SM,Fem. sg. after y: c→g.
-"Soft, Contact",Article,"y (def. art., fem sg)",cymdeithas,noun-fem,Mae,yn cynnal cyfarfod blynyddol.,y gymdeithas,SM,Fem. sg. after y: c→g.
-"Soft, Contact",Article,"y (def. art., fem sg)",problem,noun-fem,Sut y gallwn ni ddatrys,hon?,y broblem,SM,Fem. sg. after y: p→b.
-"Soft, Contact",Article,"y (def. art., fem sg)",prifysgol,noun-fem,Mae,yn agos at y ddinas.,y brifysgol,SM,Fem. sg. after y: p→b.
-"Soft, Contact",Article,"y (def. art., fem sg)",cymuned,noun-fem,Mae,yn gryf iawn yma.,y gymuned,SM,Fem. sg. after y: c→g.
-"Soft, Contact",Article,"y (def. art., fem sg)",canolfan,noun-fem,Mae’r bws yn stopio ger,.,y ganolfan,SM,Fem. sg. after y: c→g.
-"Soft, Contact",Article,"y (def. art., fem sg)",canrif,noun-fem,Yn,diwethaf gwelwyd newidiadau mawr.,y ganrif,SM,Fem. sg. after y: c→g.
+"Soft, Contact","Article","y (def. art., fem sg)","gwefan","noun-fem","Darllenais i’r erthygl ar y ","swyddogol.","wefan","SM","Fem. sg. after y: g→∅ (y wefan)."
+"Soft, Contact","Article","y (def. art., fem sg)","mam","noun-fem","Mae y ","yn gweithio yn y ysbyty.","fam","SM","Fem. sg. after y: m→f (y fam)."
+"Soft, Contact","Article","y (def. art., fem sg)","taith","noun-fem","Mae’r trên yn aros ar y ","nesaf.","daith","SM","Fem. sg. after y: t→d (y daith)."
+"Soft, Contact","Article","y (def. art., fem sg)","merch","noun-fem","Dyma y ","sy’n arwain y prosiect.","ferch","SM","Fem. sg. after y: m→f (y ferch)."
+"Soft, Contact","Article","y (def. art., fem sg)","cerddoriaeth","noun-fem","Roedd y ","yn fyw a phwerus.","gerddoriaeth","SM","Fem. sg. after y: c→g."
+"Soft, Contact","Article","y (def. art., fem sg)","cyfres","noun-fem","A yw y ","newydd yn dechrau heno?","gyfres","SM","Fem. sg. after y: c→g."
+"Soft, Contact","Article","y (def. art., fem sg)","cymdeithas","noun-fem","Mae y ","yn cynnal cyfarfod blynyddol.","gymdeithas","SM","Fem. sg. after y: c→g."
+"Soft, Contact","Article","y (def. art., fem sg)","problem","noun-fem","Sut y gallwn ni ddatrys y ","hon?","broblem","SM","Fem. sg. after y: p→b."
+"Soft, Contact","Article","y (def. art., fem sg)","prifysgol","noun-fem","Mae y ","yn agos at y ddinas.","brifysgol","SM","Fem. sg. after y: p→b."
+"Soft, Contact","Article","y (def. art., fem sg)","cymuned","noun-fem","Mae y ","yn gryf iawn yma.","gymuned","SM","Fem. sg. after y: c→g."
+"Soft, Contact","Article","y (def. art., fem sg)","canolfan","noun-fem","Mae’r bws yn stopio ger y ",".","ganolfan","SM","Fem. sg. after y: c→g."
+"Soft, Contact","Article","y (def. art., fem sg)","canrif","noun-fem","Yn y ","diwethaf gwelwyd newidiadau mawr.","ganrif","SM","Fem. sg. after y: c→g."
 "Soft, Contact",Numerals,un (f),blwyddyn,noun-fem,Dyna un,yn unig.,flwyddyn,SM,“Un” yn treiglo enwau benywaidd.
 "Soft, Contact",Numerals,dwy,blynedd,noun-fem,Arhoson ni yno am dwy,.,flynedd,SM,“Dwy” yn achosi SM; defnyddir y ffurf “blynedd” yn y patrwm blynyddoedd.
 None,Numerals,tair,blynedd,noun-fem,Mae’r cwrs yn para tair,.,blynedd,NONE,Dim SM ar ôl “tair” yn y patrwm blynyddoedd.
@@ -407,6 +407,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
