@@ -403,8 +403,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 "Soft, Contact",Preposition,iddi hi,cymryd,verb-noun,Mae’n bryd iddi hi,seibiant.,gymryd,SM,iddi + VN: c→g.
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
-None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
-"Soft, Contact",Article,y (def. art., fem sg),canolfan,noun-fem,Cwrdd yn y ,bore fory.,ganolfan,SM,Feminine sg after y → SM: c→g (y ganolfan).
+"Soft, Contact",Article,y (def. art., fem sg),canolfan,noun-fem,Cwrdd yn y,bore fory.,ganolfan,SM,Feminine sg after y → SM: c→g (y ganolfan).
 "Soft, Contact",Article,y (def. art., fem sg),cymdeithas,noun-fem,Mai’r cyfarfod gyda’r ,lleol.,gymdeithas,SM,Fem sg after y → SM: c→g (y gymdeithas).
 None,Article,y (def. art., fem sg),siop,noun-fem,Ras i’r ,yn y prynhawn.,siop,NONE,s- is not affected by SM; fem sg shows NIL here (y siop).
 "Soft, Contact",Article,y (def. art., fem sg),tafarn,noun-fem,Ceisiwch y ,ar y gornel.,dafarn,SM,Fem sg after y → SM: t→d (y dafarn).
@@ -469,6 +468,7 @@ None,Article,"yr (def. art., masc sg)",enw,noun-masc,"Ysgrifennwch yr ",yn glir.
 None,Article,"yr (def. art., masc sg)",oed,noun-masc,"Nodwch yr ",ar y ffurflen.,oed,NONE,"Vowel-initial masc noun: article = ‘yr’; no mutation (yr oed)."
 None,Article,"y (def. art., masc sg; ll-/rh exceptions)",llun,noun-masc,"Edrych ar y ",yn y llyfr.,llun,NONE,"ll- not affected by SM; masc sg NIL (y llun)."
 None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd y ",â’r athro.,rhiant,NONE,"rh- not affected by SM; masc sg NIL (y rhiant)."
+
 
 
 
