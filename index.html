@@ -170,9 +170,9 @@
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
   function normalize(s){
-    return (s||"").toString().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\\s+/g,' ');
+    return (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\s+/g,' ');
   }
-  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[ch])); }
+  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
   function download(text, filename, type='text/plain'){
     const blob = new Blob([text], {type});
     const url = URL.createObjectURL(blob);
@@ -237,7 +237,10 @@
     lastResult: null, // 'correct' | 'wrong' | null
     history: loadLS('wm_hist',[]),
     admin: getParam('admin') === '1',
-    // freeze current card and position while feedback is displayed
+    // when a card has been checked but feedback is still displayed, freezeIdx
+    // holds the index of the underlying card in state.filtered. This prevents
+    // the deck from jumping ahead while showing feedback. freezePos stores
+    // the position of that card in the current deck when it was answered.
     freezeIdx: null,
     freezePos: null
   };
@@ -245,7 +248,6 @@
   // ---------- Data loading ----------
   const DEFAULT_SOURCES = [
     'data/prepositions.csv',
-    'data/cards.csv',
     'data/numerals.csv',
     'data/possessive.csv',
     'data/article.csv',
@@ -255,15 +257,15 @@
   ];
 
   const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
- Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
- Soft,Preposition,wrth,prynu,verb-noun,"wrth "," llaeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
- Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
+ Soft,Preposition,o,bara,noun,"darn o ",",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
+ Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
+ Soft,Adjective,(fem noun),mawr,adj,"y dorth ",",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
  Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
  Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
  None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
  Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
- Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
- Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
+ Soft,Preposition,i,pedwar,number,"pum munud i ",",bedwar,SM,"SM after ‘i’ in time expressions."
+ Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ",",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
  Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
@@ -321,11 +323,31 @@
       return o;
     });
     // dedupe
-    const seen = new Set(); const uniq=[];
-    for (const o of cleaned){
-      const key = [o.RuleCategory,o.Trigger,o.Base,o.Before,o.After,o.Answer].map(v => (v||'').toLowerCase().trim()).join('|');
-      if (!seen.has(key)){ seen.add(key); uniq.push(o); }
+    // By default we deduplicate cards based on a subset of fields.  If you want to retain
+    // all rows as-is, simply assign `state.rows = cleaned` and skip the dedupe logic below.
+    // To expand the dedupe key to include more fields, add them to the array below.
+    const seen = new Set();
+    const uniq = [];
+    for (const o of cleaned) {
+      // include additional fields like WordCategory and Why to consider them when de-duplicating
+      const keyParts = [
+        o.RuleCategory,
+        o.Trigger,
+        o.Base,
+        o.Before,
+        o.After,
+        o.Answer,
+        o.WordCategory,
+        o.Why
+      ];
+      const key = keyParts.map(v => (v || '').toLowerCase().trim()).join('|');
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniq.push(o);
+      }
     }
+    // assign the unique rows back into state; if you want no deduplication at all,
+    // replace `uniq` with `cleaned` in the next line
     state.rows = uniq;
     $('#itemCount').textContent = `${state.rows.length} items`;
     buildFilters();
@@ -340,14 +362,48 @@
     for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
     const outcomes = ["SM","AM","NM","NONE"];
 
-    // Quick start
-    const qs = $('#qs'); qs.innerHTML = '';
-    const allBtn = btn('All categories','bg-slate-100',()=>{ state.categories=[]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render(); });
-    qs.appendChild(allBtn);
-    for (const c of Array.from(cats).sort()){
-      const count = state.rows.filter(r=>r.RuleCategory===c).length;
-      qs.appendChild(btn(`${c} (${count})`,'bg-emerald-600 text-white',()=>{ state.categories=[c]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render(); }));
-    }
+  // Quick start
+  const qs = $('#qs');
+  qs.innerHTML = '';
+  // derive a list of unique rule categories from the data; this ensures quick-start shows only relevant categories
+  const categories = Array.from(new Set(state.rows.map(r => r.RuleCategory)));
+  // Determine if no specific category is selected (all categories active)
+  const allActive = !state.categories.length;
+  // “All categories” button: highlight when no specific category is selected
+  qs.appendChild(
+    btn(
+      `All categories`,
+      allActive ? 'bg-emerald-600 text-white' : 'bg-slate-100',
+      () => {
+        state.categories = [];
+        saveLS('wm_categories', state.categories);
+        applyFilters();
+        rebuildDeck();
+        buildFilters();  // re-render the filter buttons to reflect new state
+        render();
+      }
+    )
+  );
+  // One button per rule category: highlight when that single category is selected
+  for (const c of categories.sort()) {
+    const count = state.rows.filter(r => r.RuleCategory === c).length;
+    const active = state.categories.length === 1 && state.categories[0] === c;
+    qs.appendChild(
+      btn(
+        `${c} (${count})`,
+        active ? 'bg-emerald-600 text-white' : 'bg-slate-100',
+        () => {
+          state.categories = [c];
+          saveLS('wm_categories', state.categories);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();  // ensure buttons re-render with correct colours
+          render();
+        }
+      )
+    );
+  }
+
 
     // Family buttons
     const famEl = $('#familyBtns'); famEl.innerHTML='';
@@ -653,12 +709,12 @@
       };
       $('#btnExportMisses').onclick = ()=>{
         const misses = state.history.filter(h=>!h.ok);
-        const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"]; 
+        const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
         for (const m of misses){
           const [cat,trig,base] = m.key.split(':');
           lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`"${(s||'').replaceAll('"','""')}"`).join(','));
         }
-        download(lines.join('\\n'), 'mutation-trainer-misses.csv', 'text/csv');
+        download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
       };
       $('#fileCsv').onchange = (e)=>{
         const f = e.target.files?.[0]; if (!f) return;
@@ -680,5 +736,7 @@
 
   </script>
 </body>
+</html>
+
 </html>
 
