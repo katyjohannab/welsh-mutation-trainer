@@ -225,7 +225,8 @@
     rows: [],
     filtered: [],
     families: loadLS('wm_families',["Soft","Aspirate","Nasal","None"]),
-    categories: loadLS('wm_categories',["Preposition"]),
+    // By default don't pre-select any categories so users see all cards on first load.
+    categories: loadLS('wm_categories',[]),
     outcomes: loadLS('wm_outcomes',["SM","AM","NM","NONE"]),
     triggerQuery: loadLS('wm_trig',''),
     nilOnly: loadLS('wm_nil', false),
@@ -257,15 +258,15 @@
   ];
 
   const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
- Soft,Preposition,o,bara,noun,"darn o ",",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
+ Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
  Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
- Soft,Adjective,(fem noun),mawr,adj,"y dorth ",",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
+ Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
  Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
  Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
  None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
  Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
- Soft,Preposition,i,pedwar,number,"pum munud i ",",bedwar,SM,"SM after ‘i’ in time expressions."
- Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ",",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
+ Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
+ Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
  Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
@@ -468,10 +469,12 @@
   }
 
   function applyFilters(){
+    // If no specific outcomes are selected (e.g. user deselected all), treat it as all outcomes to avoid filtering out every card.
+    const allowedOutcomes = state.outcomes && state.outcomes.length ? state.outcomes : ['SM','AM','NM','NONE'];
     let list = state.rows.filter(r =>
       (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
       (state.categories.length ? state.categories.includes(r.RuleCategory) : true) &&
-      (state.outcomes.length ? state.outcomes.includes((r.Outcome||'').toUpperCase()) : true)
+      (allowedOutcomes.includes((r.Outcome||'').toUpperCase()))
     );
     if (state.nilOnly) list = list.filter(r => (r.Outcome||'').toUpperCase()==='NONE');
     if ((state.triggerQuery||'').trim()){
@@ -541,13 +544,15 @@
     const instruction = document.createElement('div'); instruction.className='text-lg md:text-xl text-slate-700 mb-5';
     instruction.innerHTML = `Type the correct form. If no change is needed, repeat the base form.`;
 
-    const row = document.createElement('div'); 
+    const row = document.createElement('div');
     row.className = 'mt-2';
+    // Use a flexible layout that stacks on small screens and aligns horizontally on larger screens.
+    // This prevents long text from breaking awkwardly across lines.
     row.innerHTML = `
-      <div class="grid gap-3 md:gap-6 md:grid-cols-[auto,1fr,auto] items-center"> 
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${card.Before||''}</div>
+      <div class="flex flex-col gap-3">
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${esc(card.Before || '')}</div>
         <input id="answerBox" class="w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]" placeholder="Type your answer" aria-label="Type your answer" />
-        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${card.After||''}</div>
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${esc(card.After || '')}</div>
       </div>
     `;
 
@@ -691,6 +696,21 @@
     $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
     $('#btnFilters').onclick  = ()=>{ $('#controls').classList.toggle('hidden'); };
     $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
+
+    // Onboarding buttons: allow users to quickly open filters or dismiss the welcome message.
+    $('#onboardFilters')?.addEventListener('click', () => {
+      // Hide the onboarding card
+      const onboard = $('#onboard');
+      if (onboard) onboard.classList.add('hidden');
+      // Show the controls panel so users can immediately select filters
+      $('#controls')?.classList.remove('hidden');
+      // Scroll to top to ensure filters are visible
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    $('#onboardDismiss')?.addEventListener('click', () => {
+      const onboard = $('#onboard');
+      if (onboard) onboard.classList.add('hidden');
+    });
     
     $('#btnResetStats').onclick = $('#btnResetStats2').onclick = ()=>{ state.history=[]; saveLS('wm_hist',state.history); render(); };
     $('#btnTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
