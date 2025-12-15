@@ -331,14 +331,18 @@
     for (const o of cleaned) {
       // include additional fields like WordCategory and Why to consider them when de-duplicating
       const keyParts = [
+        // use RuleCategory, Trigger, Base, Before, After and Answer as before
         o.RuleCategory,
         o.Trigger,
         o.Base,
         o.Before,
         o.After,
         o.Answer,
+        // include the word category and explanation to differentiate rows with the same base/trigger but different notes
         o.WordCategory,
-        o.Why
+        o.Why,
+        // include Outcome in the dedupe key so that SM/AM/NM variants aren’t lost when another outcome has the same structure
+        o.Outcome
       ];
       const key = keyParts.map(v => (v || '').toLowerCase().trim()).join('|');
       if (!seen.has(key)) {
@@ -541,9 +545,9 @@
     row.className = 'mt-2';
     row.innerHTML = `
       <div class="grid gap-3 md:gap-6 md:grid-cols-[auto,1fr,auto] items-center"> 
-        <div class="text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap">${card.Before||''}</div>
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${card.Before||''}</div>
         <input id="answerBox" class="w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]" placeholder="Type your answer" aria-label="Type your answer" />
-        <div class="text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap">${card.After||''}</div>
+        <div class="text-slate-500 font-medium text-xl md:text-2xl break-words">${card.After||''}</div>
       </div>
     `;
 
