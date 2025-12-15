@@ -248,7 +248,6 @@ None,Preposition,gyda’n,afal,noun-masc,Daethon ni gyda’n,i’r trip.,afal,NO
 "Aspirate, Contact",Numerals,chwe,pen,noun-masc,Cawsom,i’w rhannu.,phen,AM,chwe → AM (p→ph).
 "Aspirate, Contact",Preposition,tua,tafarn,noun-fem,Aeth e tua,ar ôl gwaith.,thafarn,AM,tua/tuag (towards) can trigger AM on p/t/c.
 "Aspirate, Contact",Preposition,tua,car,noun-masc,Rhedodd y bachgen tua,yn sydyn.,char,AM,tua → AM (c→ch).
-"Aspirate, Contact",Preposition,tua,pobl,noun-pl,Cerddodd hi tua’r,ar y sgwâr.,phobl,AM,tua → AM (p→ph).
 "Nasal, Contact",Possessive,fy,car,noun-masc,Collais i fy,ddoe.,nghar,NM,fy triggers NM: c→ngh (car → fy nghar).
 "Nasal, Contact",Possessive,fy,cath,noun-fem,Ces i fy,o’r stryd.,nghath,NM,fy → NM: c→ngh (cath → fy nghath).
 "Nasal, Contact",Possessive,fy,ci,noun-masc,Fe gollais i fy,yn y parc.,nghi,NM,fy → NM: c→ngh (ci → fy nghi).
@@ -407,5 +406,6 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
