@@ -400,13 +400,14 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 "Soft, Contact",Preposition,iddo fe,mynd,verb-noun,Mae’n hen bryd iddo fe,adref.,fynd,SM,i/idd- causes SM on VN (m→f).
 "Soft, Contact",Preposition,iddi hi,dod,verb-noun,Mae’n bwysig iddi hi,yn gynnar.,ddod,SM,iddi + VN → SM (d→dd).
 "Soft, Contact",Preposition,iddyn nhw,prynu,verb-noun,Mae’n well iddyn nhw,tocynnau nawr.,brynu,SM,iddyn + VN → SM (p→b).
-"Soft, Contact",Preposition,i ni,gyrraedd,verb-noun,Mae’n ddoeth i ni,erbyn wyth.,gyrraedd,SM,i + VN → SM (c/g/… as applicable: c→g).
+"Soft, Contact",Preposition,i ni,cyrraedd,verb-noun,Mae’n ddoeth i ni,erbyn wyth.,gyrraedd,SM,i + VN → SM (c/g/… as applicable: c→g).
 "Soft, Contact",Preposition,i chi,talu,verb-noun,Mae’n rhaid i chi,heddiw.,dalu,SM,i + VN → SM (t→d).
 "Soft, Contact",Preposition,iddo fe,gweld,verb-noun,Mae’n anodd iddo fe,y gwir.,weld,SM,i/idd- + VN: g-deletes (gweld→weld).
 "Soft, Contact",Preposition,iddi hi,cymryd,verb-noun,Mae’n bryd iddi hi,seibiant.,gymryd,SM,iddi + VN: c→g.
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
