@@ -13,10 +13,10 @@
     .chip { display:inline-block; border-radius:12px; padding:6px 10px; font-size:15px; font-weight:500; border:1px solid var(--chip-bd,#bae6fd); background:var(--chip-bg,#eff6ff); color:var(--chip-fg,#0369a1); }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
     .glass{background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);} 
-  @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
-  .animate-pop{animation:pop .18s ease-out both}
-  .chip{box-shadow:0 1px 0 0 #dbeafe inset,0 1px 2px rgba(2,6,23,.06)}
-</style>
+ @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
+   .animate-pop{animation:pop .18s ease-out both}
+   .chip{box-shadow:0 1px 0 0 #dbeafe inset,0 1px 2px rgba(2,6,23,.06)}
+  </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-cyan-50 text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[17px] md:text-[18px]">
@@ -170,9 +170,9 @@
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
   function normalize(s){
-    return (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\s+/g,' ');
+    return (s||"").toString().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\\s+/g,' ');
   }
-  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>\"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[ch])); }
   function download(text, filename, type='text/plain'){
     const blob = new Blob([text], {type});
     const url = URL.createObjectURL(blob);
@@ -236,7 +236,10 @@
     revealed: false,
     lastResult: null, // 'correct' | 'wrong' | null
     history: loadLS('wm_hist',[]),
-    admin: getParam('admin') === '1'
+    admin: getParam('admin') === '1',
+    // freeze current card and position while feedback is displayed
+    freezeIdx: null,
+    freezePos: null
   };
 
   // ---------- Data loading ----------
@@ -251,24 +254,24 @@
   ];
 
   const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
-Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
-Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
-Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
-Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
-Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
-None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
-Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
-Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
-Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
-Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
-Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
-Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
-Aspirate,Possessive,ei (her),rhiant,noun-masc,"Siaradodd hi â’i ","am y trip.",rhiant,NONE,"rh- does not undergo AM."
-Aspirate,Possessive,ei (her),ysgol,noun-fem,"Soniodd hi am ei ","ddoe.",ysgol,NONE,"Vowel-initial words show no visible AM."
-Aspirate,Possessive,ei (her),awyr,noun-fem,"Mae hi’n hoffi ei ","agored.",awyr,NONE,"Vowel-initial nouns are unchanged by AM."
-Aspirate,Conjunction,a,car,noun-masc,"Te a ","ar y ffordd.",char,AM,"a ‘and’ triggers AM on following p/t/c (standard/literary)."
-Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (c→ch)."
-`;
+ Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
+ Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
+ Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
+ Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
+ Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
+ None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
+ Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
+ Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
+ Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
+ Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
+ Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
+ Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
+ Aspirate,Possessive,ei (her),rhiant,noun-masc,"Siaradodd hi â’i ","am y trip.",rhiant,NONE,"rh- does not undergo AM."
+ Aspirate,Possessive,ei (her),ysgol,noun-fem,"Soniodd hi am ei ","ddoe.",ysgol,NONE,"Vowel-initial words show no visible AM."
+ Aspirate,Possessive,ei (her),awyr,noun-fem,"Mae hi’n hoffi ei ","agored.",awyr,NONE,"Vowel-initial nouns are unchanged by AM."
+ Aspirate,Conjunction,a,car,noun-masc,"Te a ","ar y ffordd.",char,AM,"a ‘and’ triggers AM on following p/t/c (standard/literary)."
+ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (c→ch)."
+ `;
 
   async function loadCsvUrl(u){
     return new Promise((resolve, reject) => {
@@ -310,7 +313,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
       else { rows = await loadAllDefault(); }
     }catch(e){ console.warn('Data load failed, using demo', e); rows = await loadAllDefault(); }
     // coerce & clean
-    const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"]; 
+    const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
     const cleaned = rows.map(r => {
       const m = coerceRow(r); const o = {};
       for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
@@ -338,11 +341,11 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
 
     // Quick start
     const qs = $('#qs'); qs.innerHTML = '';
-    const allBtn = btn('All categories','bg-slate-100',()=>{ state.categories=[]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render(); });
+    const allBtn = btn('All categories','bg-slate-100',()=>{ state.categories=[]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render(); });
     qs.appendChild(allBtn);
     for (const c of Array.from(cats).sort()){
       const count = state.rows.filter(r=>r.RuleCategory===c).length;
-      qs.appendChild(btn(`${c} (${count})`,'bg-emerald-600 text-white',()=>{ state.categories=[c]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render(); }));
+      qs.appendChild(btn(`${c} (${count})`,'bg-emerald-600 text-white',()=>{ state.categories=[c]; saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render(); }));
     }
 
     // Family buttons
@@ -350,7 +353,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     for (const f of ["Soft","Aspirate","Nasal","None"]) {
       famEl.appendChild(toggleBtn(f, state.families.includes(f), (on)=>{
         state.families = on? Array.from(new Set([...state.families, f])) : state.families.filter(x=>x!==f);
-        saveLS('wm_families',state.families); applyFilters(); rebuildDeck(); render();
+        saveLS('wm_families',state.families); applyFilters(); rebuildDeck(); buildFilters(); render();
       }));
     }
 
@@ -359,7 +362,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     for (const o of outcomes){
       outEl.appendChild(toggleBtn(o, state.outcomes.includes(o), (on)=>{
         state.outcomes = on? Array.from(new Set([...state.outcomes, o])) : state.outcomes.filter(x=>x!==o);
-        saveLS('wm_outcomes',state.outcomes); applyFilters(); rebuildDeck(); render();
+        saveLS('wm_outcomes',state.outcomes); applyFilters(); rebuildDeck(); buildFilters(); render();
       }));
     }
 
@@ -368,15 +371,15 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     for (const c of Array.from(cats).sort()){
       catEl.appendChild(toggleBtn(c, state.categories.includes(c), (on)=>{
         state.categories = on? Array.from(new Set([...state.categories, c])) : state.categories.filter(x=>x!==c);
-        saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); render();
+        saveLS('wm_categories',state.categories); applyFilters(); rebuildDeck(); buildFilters(); render();
       }));
     }
 
     // Trigger filter + nil only
     $('#triggerFilter').value = state.triggerQuery;
-    $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); render(); };
+    $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); buildFilters(); render(); };
     $('#nilOnly').checked = !!state.nilOnly;
-    $('#nilOnly').onchange = (e)=>{ state.nilOnly = e.target.checked; saveLS('wm_nil',state.nilOnly); applyFilters(); rebuildDeck(); render(); };
+    $('#nilOnly').onchange = (e)=>{ state.nilOnly = e.target.checked; saveLS('wm_nil',state.nilOnly); applyFilters(); rebuildDeck(); buildFilters(); render(); };
   }
 
   function applyFilters(){
@@ -397,6 +400,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     const n = state.filtered.length; const d = Array.from({length:n}, (_,i)=>i);
     for (let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
     state.deck = d; state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
+    state.freezeIdx = null; state.freezePos = null;
   }
 
   // ---------- Render ----------
@@ -414,15 +418,21 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
   function renderPractice(){
     const host = $('#practiceCard'); host.innerHTML='';
     const n = state.filtered.length;
-    if (!n){ host.innerHTML = `<div class=\"text-slate-700 bg-white rounded-xl border p-4\">No cards match your filters. <button id=\"btnClearFilters\" class=\"ml-2 px-2 py-1 rounded-lg bg-slate-100 border\">Clear filters</button></div>`; 
+    if (!n){ host.innerHTML = `<div class="text-slate-700 bg-white rounded-xl border p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 px-2 py-1 rounded-lg bg-slate-100 border">Clear filters</button></div>`; 
       const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{ 
         state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false; 
         saveLS('wm_families',state.families); saveLS('wm_categories',state.categories); saveLS('wm_outcomes',state.outcomes); saveLS('wm_trig',state.triggerQuery); saveLS('wm_nil',state.nilOnly);
         buildFilters(); applyFilters(); rebuildDeck(); render();
       }); }
       return; }
-    const idx = state.deck[state.p % state.deck.length];
+    // determine which card to show. freezeIdx holds the index in filtered when feedback is displayed
+    const deckIdx = state.p % state.deck.length;
+    const idxNow = state.deck[deckIdx];
+    const idx = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
     const card = state.filtered[idx];
+    // record current positions for use when checking
+    state.currentIdx = idxNow;
+    state.currentDeckPos = deckIdx;
 
     $('#cardPos').textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
 
@@ -430,8 +440,18 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     const header = document.createElement('div'); header.className='text-slate-500 text-xs mb-2';
     header.textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
 
+    // Active filters summary
+    const summary = document.createElement('div');
+    summary.className = 'text-xs text-slate-500 mb-3';
+    const fams = state.families.length ? state.families.join(', ') : 'All';
+    const outs = state.outcomes.length ? state.outcomes.join(', ') : 'All';
+    const cats = state.categories.length ? state.categories.join(', ') : 'All';
+    const trig = (state.triggerQuery||'').trim() ? state.triggerQuery : 'Any';
+    const nil = state.nilOnly ? 'On' : 'Off';
+    summary.textContent = `Active: Families [${fams}] • Outcomes [${outs}] • Categories [${cats}] • Trigger '${trig}' • Nil cases: ${nil}`;
+
     const chips = document.createElement('div'); chips.className = 'mb-4 text-2xl md:text-3xl font-medium';
-    chips.innerHTML = `<div class=\"inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm\"><span class=\"text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight\">${esc(card.Base||'—')}</span></div>`;
+    chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
 
     const instruction = document.createElement('div'); instruction.className='text-lg md:text-xl text-slate-700 mb-5';
     instruction.innerHTML = `Type the correct form. If no change is needed, repeat the base form.`;
@@ -439,10 +459,10 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     const row = document.createElement('div'); 
     row.className = 'mt-2';
     row.innerHTML = `
-      <div class=\"grid gap-3 md:gap-6 md:grid-cols-[auto,1fr,auto] items-center\"> 
-        <div class=\"text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap\">${card.Before||''}</div>
-        <input id=\"answerBox\" class=\"w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]\" placeholder=\"Type your answer\" aria-label=\"Type your answer\" />
-        <div class=\"text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap\">${card.After||''}</div>
+      <div class="grid gap-3 md:gap-6 md:grid-cols-[auto,1fr,auto] items-center"> 
+        <div class="text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap">${card.Before||''}</div>
+        <input id="answerBox" class="w-full border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-5 py-4 rounded-2xl text-2xl md:text-3xl leading-tight shadow-sm min-w-[14ch]" placeholder="Type your answer" aria-label="Type your answer" />
+        <div class="text-slate-500 font-medium text-xl md:text-2xl md:whitespace-nowrap">${card.After||''}</div>
       </div>
     `;
 
@@ -462,13 +482,13 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
       const statusIcon = ok? '✅' : '❌';
       const statusColor = ok? 'text-indigo-900' : 'text-rose-900';
       feedback.innerHTML = `
-        <div class=\"flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold\">${statusIcon} ${ok? 'Correct!' : 'Not quite'}</div>
-        ${!ok? `<div class=\\"mt-1 text-slate-700\\">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`:''}
-        <div class=\"mt-3 text-slate-800 text-xl md:text-2xl\">${esc(card.Before||'')} <span class=\\"font-semibold underline decoration-indigo-400\\">${esc(card.Answer)}</span> ${esc(card.After||'')}</div>
-        <div class=\"mt-2 text-slate-700\">Answer: <b>${esc(card.Answer)}</b></div>
-        <div class=\"mt-1 text-slate-700\">Trigger: <b>${esc(card.Trigger || '—')}</b></div>
-        <div class=\"mt-1 text-slate-700\"><span class=\"font-medium\">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome||'').toUpperCase()}</div>
-        ${card.Why ? `<p class=\\"mt-2 text-slate-700\\">${esc(card.Why)}</p>` : ''}
+        <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">${statusIcon} ${ok? 'Correct!' : 'Not quite'}</div>
+        ${!ok? `<div class=\"mt-1 text-slate-700\">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`:''}
+        <div class="mt-3 text-slate-800 text-xl md:text-2xl">${esc(card.Before||'')} <span class=\"font-semibold underline decoration-indigo-400\">${esc(card.Answer)}</span> ${esc(card.After||'')}</div>
+        <div class="mt-2 text-slate-700">Answer: <b>${esc(card.Answer)}</b></div>
+        <div class="mt-1 text-slate-700">Trigger: <b>${esc(card.Trigger || '—')}</b></div>
+        <div class="mt-1 text-slate-700"><span class="font-medium">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome||'').toUpperCase()}</div>
+        ${card.Why ? `<p class=\"mt-2 text-slate-700\">${esc(card.Why)}</p>` : ''}
       `;
       const nb = document.createElement('button');
       nb.id = 'inlineNext';
@@ -477,7 +497,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
       nb.onclick = ()=> nextCard(1);
       feedback.appendChild(nb);
     }
-    wrap.append(header, chips, instruction, row, hint, actions, feedback);
+    wrap.append(header, summary, chips, instruction, row, hint, actions, feedback);
     host.appendChild(wrap);
 
     const ab = $('#answerBox');
@@ -486,22 +506,18 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
     ab.addEventListener('input', (e)=>{ state.guess = e.target.value; });
 
     function onCheck(){
+      // compute correctness based on the frozen card
       const ok = normalize(state.guess) === normalize(card.Answer);
       state.revealed = true; state.lastResult = ok? 'correct':'wrong';
+      // freeze current card index and deck position for display and future requeue
+      state.freezeIdx = state.currentIdx;
+      state.freezePos = state.currentDeckPos;
       // log history
       const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, expected: card.Answer, got: state.guess };
       state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
       const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
       setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
-      // re-queue if wrong
-      if (!ok){
-        const deckIdx = state.p % state.deck.length; const idxVal = state.deck[deckIdx];
-        const newDeck = state.deck.slice(); newDeck.splice(deckIdx, 1);
-        const insertAt = Math.min(deckIdx + 3, newDeck.length);
-        newDeck.splice(insertAt, 0, idxVal); state.deck = newDeck;
-      } else {
-        /* no auto-advance; click Next */
-      }
+      // no deck mutation here; requeue handled on nextCard
       render();
     }
   }
@@ -557,8 +573,30 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
 
   function nextCard(offset=1){
     if (!state.deck.length) return;
+    // if previous answer was wrong and freeze positions recorded, requeue the card ahead
+    if (state.lastResult === 'wrong' && state.freezeIdx != null && state.freezePos != null){
+      // remove the entry at freezePos
+      const idxVal = state.freezeIdx;
+      const pos = state.freezePos;
+      // Ensure the card at pos is still the same index; if not, find it
+      let deckPos = pos;
+      if (state.deck[deckPos] !== idxVal){
+        deckPos = state.deck.indexOf(idxVal);
+      }
+      if (deckPos >= 0){
+        const newDeck = state.deck.slice();
+        newDeck.splice(deckPos, 1);
+        const insertAt = Math.min(deckPos + 3, newDeck.length);
+        newDeck.splice(insertAt, 0, idxVal);
+        state.deck = newDeck;
+      }
+    }
+    // clear freeze pointers
+    state.freezeIdx = null; state.freezePos = null;
+    // advance pointer
     state.p = (state.p + offset + state.deck.length) % state.deck.length;
-    state.guess=''; state.revealed=false; state.lastResult=null; render();
+    state.guess=''; state.revealed=false; state.lastResult=null;
+    render();
   }
 
   // ---------- Event wiring ----------
@@ -619,7 +657,7 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
           const [cat,trig,base] = m.key.split(':');
           lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`"${(s||'').replaceAll('"','""')}"`).join(','));
         }
-        download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
+        download(lines.join('\\n'), 'mutation-trainer-misses.csv', 'text/csv');
       };
       $('#fileCsv').onchange = (e)=>{
         const f = e.target.files?.[0]; if (!f) return;
@@ -642,3 +680,4 @@ Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (
   </script>
 </body>
 </html>
+
