@@ -64,7 +64,7 @@ None,Numerals,pedair,blynedd,noun-fem,Bydd y les yn para pedair,.,blynedd,NONE,D
 "Nasal, Contact",Possessive,fy … i,pwyllgor,noun-masc,Dyma fy,i.,mhwyllgor,NM,fy ‘my’ triggers NM (p→mh): fy mhwyllgor i.
 "Soft, Contact",Possessive,dy … di,pwyllgor,noun-masc,Pryd yw dy,di’n cyfarfod?,bwyllgor,SM,dy ‘your (sg)’ triggers SM (p→b).
 "Soft, Contact",Possessive,ei (his) … e/fe,pwyllgor,noun-masc,Cyhoeddodd ef restr ei,.,bwyllgor,SM,ei (his) triggers SM on the noun (p→b).
-"Aspirate, Contact",Possessive,ei (her) … hi,pwyllgor,noun-masc,Cyhoeddodd hi rest ei,.,phwyllgor,AM,ei (her) triggers AM (p→ph; t→th; c→ch).
+"Aspirate, Contact",Possessive,ei (her) … hi,arian,noun-masc,Roedd hi'n aros am ei,poced,harian,AM,ei (her) triggers AM - +h with words beginning with a.
 None,Possessive,eich … chi,pwyllgor,noun-masc,Faint o waith sydd ar eich,chi?,pwyllgor,NONE,No mutation after eich in the standard system.
 "Nasal, Contact",Possessive,fy … i,comisiynydd,noun-masc,Dyma fy,i heddiw.,nghomisiynydd,NM,fy causes NM (c→ngh): fy nghomisiynydd i.
 "Soft, Contact",Possessive,dy … di,comisiynydd,noun-masc,Dyma dy,di.,gomisiynydd,SM,dy triggers SM (c→g).
@@ -75,9 +75,9 @@ None,Possessive,eich … chi,pwyllgor,noun-masc,Faint o waith sydd ar eich,chi?,
 "Nasal, Contact",Possessive,fy … i,gwasg,noun-fem,Mae gen i brofiad yn fy,i.,ngwasg,NM,fy causes NM (g→ng).
 "Soft, Contact",Possessive,dy … di,gwasg,noun-fem,Rwyt ti’n rhedeg dy,di?,wasg,SM,dy causes SM; g disappears (g→∅).
 "Soft, Contact",Possessive,ei (his) … e/fe,gwasg,noun-fem,Dyna ei,ef yn y dref.,wasg,SM,ei (his) causes SM; g→∅ (ei wasg ef).
-None,Possessive,eu … nhw,deddf,noun-fem,Cyhoeddwyd testun eu,nhw.,deddf,NONE,No mutation after eu in the standard system (note: many learners expect SM here).
+None,Possessive,eu … nhw,deddf,noun-fem,Cyhoeddwyd testun eu,nhw.,deddf,NONE,No mutation after eu in the standard system.
 None,Possessive,dy … di,senedd,noun-fem,Dyma dy,di.,senedd,NONE,"dy normally triggers SM, but ‘s’ is unmutionable: no change."
-None,Possessive,eu … nhw,mynediad,noun-masc,Diweddarwyd y manylion am eu,nhw.,mynediad,NONE,eu ‘their’ does not mutate in GK’s modern standard; optional h- before vowels only.
+None,Possessive,eu … nhw,mynediad,noun-masc,Diweddarwyd y manylion am eu,nhw.,mynediad,NONE,eu ‘their’ does not mutate; optional h- before vowels only.
 "Soft, Contact",Preposition,o,tanseilio,verb-noun,Ac o gofio'r peryglon o,hyder yn cig eidion Cymru,danseilio,SM,"Preposition ""o"" causes SM on following verb-noun"
 "Soft, Contact",Preposition,o,bywyd,noun-masc,Does dim llawer o,eleni.,fywyd,SM,“o” soft-mutates: b→f.
 "Soft, Contact",Preposition,o,cig,noun-masc,Mae’r cawl yn cynnwys llawer o,.,gig,SM,“o” soft-mutates: c→g.
@@ -407,6 +407,7 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
 
 
 
