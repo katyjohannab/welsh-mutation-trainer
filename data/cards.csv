@@ -55,7 +55,7 @@ None,Numerals,pedair,blynedd,noun-fem,Bydd y les yn para pedair,.,blynedd,NONE,D
 "Soft, Contact",Numerals,dau,dewis,noun-masc,Roedden ni’n cael,yn y ffurflen.,dau ddewis,SM,“dau” soft-mutates: d→dd.
 "Soft, Contact",Numerals,dau,prosiect,noun-masc,Mae’r adran yn rhedeg,eleni.,dau brosiect,SM,“dau” soft-mutates: p→b.
 "Soft, Contact",Numerals,dau,grŵp,noun-masc,Mae’r dosbarth wedi’i rannu’n,.,dau rŵp,SM,“dau” soft-mutates: g→∅.
-"Soft, Contact",Numerals,dau,papur,noun-masc,Mae gen i,i’w argraffu.,dau bapur,SM,“dau” soft-mutates: p→b.
+"Soft, Contact",Numerals,dau,papur,noun-masc,Mae gen i dau,i’w argraffu.,bapur,SM,“dau” soft-mutates the noun: p→b.
 "Soft, Contact",Numerals,dau,clwb,noun-masc,Mae,pêl-droed yn y dref.,dau glwb,SM,“dau” soft-mutates: c→g.
 "Soft, Contact",Numerals,dau,dosbarth,noun-masc,Rydyn ni’n rhedeg,bob prynhawn.,dau ddosbarth,SM,“dau” soft-mutates: d→dd.
 "Soft, Contact",Numerals,dau,tad,noun-masc,Mae ganddi,", un biolegol ac un cam.",dau dad,SM,“dau” soft-mutates: t→d.
@@ -405,3 +405,4 @@ None,Possessive,eu,cartref,noun-masc,Es i i eu,nhw.,cartref,NONE,eu + noun → N
 None,Possessive,ein,caru,verb-noun,Rydyn ni’n ein,ni bob dydd.,caru,NONE,Reinforces that ein never mutates the VN.
 None,Possessive,eich,gweld,verb-noun,Rydyn ni’n eich,chi’n aml.,gweld,NONE,eich → NONE (g- stays).
 None,Possessive,eu,poeni,verb-noun,Peidiwch â eu,nhw.,poeni,NONE,eu → NONE; good contrast with ei (her) → phoeni.
+
