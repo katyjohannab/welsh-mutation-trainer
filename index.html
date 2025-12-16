@@ -14,32 +14,93 @@
   <style>
     html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
     body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /* Theme variables */
+    :root {
+      /* primary gradient colours */
+      --primary-from: #6366f1; /* indigo-500 */
+      --primary-to:   #0ea5e9; /* cyan-500 */
+      /* chip colour palette (muted rainbow accent) */
+      --chip-bg: rgba(236, 72, 153, 0.1); /* fuchsia tinted */
+      --chip-bd: rgba(236, 72, 153, 0.3);
+      --chip-fg: #be185d;
+    }
+
     .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
-    .chip { display:inline-block; border-radius:12px; padding:6px 10px; font-size:15px; font-weight:500; border:1px solid var(--chip-bd,#bae6fd); background:var(--chip-bg,#eff6ff); color:var(--chip-fg,#0369a1); }
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:6px 12px;
+      font-size:14px;
+      font-weight:500;
+      border:1px solid var(--chip-bd);
+      background:var(--chip-bg);
+      color:var(--chip-fg);
+      box-shadow:0 1px 2px rgba(0,0,0,.05);
+      cursor:default;
+    }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .glass{background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);} 
- @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
-   .animate-pop{animation:pop .18s ease-out both}
-   .chip{box-shadow:0 1px 0 0 #dbeafe inset,0 1px 2px rgba(2,6,23,.06)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
-    padding:.55rem .9rem;border-radius:14px;font-weight:600;
-    transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    /* Glass panel used for cards, filters and stats */
+    .panel {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.3);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
+    .animate-pop{animation:pop .18s ease-out both}
+
+    /* Button styles */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      padding:.5rem .9rem;
+      border-radius:12px;
+      font-weight:600;
+      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+      cursor:pointer;
     }
     .btn:active{transform:translateY(1px)}
     .btn:focus-visible{outline:3px solid rgba(34,211,238,.35); outline-offset:2px}
-    
-    .btn-primary{color:#fff;background:linear-gradient(90deg,#4f46e5,#06b6d4); box-shadow:0 8px 20px rgba(2,6,23,.10)}
-    .btn-primary:hover{background:linear-gradient(90deg,#4338ca,#0891b2)}
-    
-    .btn-ghost{background:rgba(255,255,255,.7); border:1px solid rgba(148,163,184,.55)}
-    .btn-ghost:hover{background:rgba(255,255,255,.95)}
-    
-    .pill{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;
-      padding:.35rem .6rem;font-weight:600;font-size:12px;border:1px solid rgba(148,163,184,.45);
-      background:rgba(255,255,255,.7)
-    }
-    .pill-on{background:rgba(16,185,129,.15); border-color:rgba(16,185,129,.35)}
 
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(to right, var(--primary-from), var(--primary-to));
+      box-shadow:0 2px 4px rgba(2,6,23,.1);
+    }
+    .btn-primary:hover{
+      background:linear-gradient(to right, #4f46e5, #0891b2);
+    }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.8);
+      border:1px solid rgba(203,213,225,.5);
+      color:#334155;
+    }
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.95);
+    }
+
+    /* Toggle pill used in filter selectors */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      border-radius:999px;
+      padding:.4rem .8rem;
+      font-weight:600;
+      font-size:12px;
+      border:1px solid rgba(148,163,184,.35);
+      background:rgba(255,255,255,.75);
+      cursor:pointer;
+    }
+    .pill-on{
+      background:rgba(99,102,241,.15);
+      border-color:rgba(99,102,241,.35);
+    }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-cyan-50 text-slate-900">
@@ -48,56 +109,52 @@
       <div class="max-w-6xl mx-auto p-4 flex flex-col gap-3 md:flex-row md:items-end md:gap-4">
         <div class="grow">
           <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight">Hyfforddwr Treiglad</h1>
-          <p class="text-base md:text-lg text-slate-600">Practise Welsh mutations<span id="itemCount" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">0 items</span><span id="adminBadge" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 border">Admin</span></p>
+          <p class="text-sm md:text-base text-slate-600">Practise Welsh mutations<span id="itemCount" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">0 items</span><span id="adminBadge" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 border">Admin</span></p>
         </div>
-  <div class="flex flex-wrap gap-2">
-      <button id="btnPractice" title="Practice" class="btn btn-primary">Practice</button>
-      <button id="btnBrowse" title="Browse (table)" class="btn btn-ghost hidden">Browse</button>
-      <button id="btnStats" title="Stats" class="btn btn-ghost">Stats</button>
-      <button id="btnFilters" title="Filters (F)" class="btn btn-ghost">Filters</button>
-      <button id="btnHelp" title="Help" class="btn btn-ghost hidden">Help</button>
-  </div>
+    <div class="flex flex-wrap gap-2">
+        <button id="btnPractice" title="Practice" class="btn btn-primary">Practice</button>
+        <button id="btnBrowse" title="Browse (table)" class="btn btn-ghost hidden">Browse</button>
+        <button id="btnStats" title="Stats" class="btn btn-ghost">Stats</button>
+        <button id="btnFilters" title="Filters (F)" class="btn btn-ghost">Filters</button>
+        <button id="btnHelp" title="Help" class="btn btn-ghost hidden">Help</button>
+    </div>
 
       </div>
     </header>
 
     <!-- Onboarding -->
     <section id="onboard" class="max-w-6xl mx-auto p-4 mt-3">
-      <div class="bg-white rounded-2xl border shadow-sm p-4 flex items-start gap-3">
+      <div class="panel rounded-2xl p-4 flex items-start gap-3">
         <div class="text-2xl">💡</div>
         <div class="text-sm text-slate-700"><div class="font-medium mb-1">Welcome! How to use this trainer.</div><ol class="list-decimal ml-5 leading-relaxed"><li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li><li>Read the sentence and type the correct form in the box.</li><li>Press <b>Check</b> to mark your answer.</li><li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li></ol>
           <div class="mt-3 flex gap-2">
-            <button id="onboardFilters" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white shadow">Open filters</button>
-            <button id="onboardDismiss" class="px-3 py-1.5 rounded-xl bg-slate-100">Got it</button>
+            <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
+            <button id="onboardDismiss" class="btn btn-ghost">Got it</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Controls section removed from here.  Filter controls will appear in the
-         practice grid on the right-hand side, above the session panel.  The
-         admin panel will also live in that area when admin=1. -->
-
     <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
-      <div id="practiceView" class="grid md:grid-cols-2 md:grid-rows-2 gap-4">
+      <div id="practiceView" class="grid md:grid-cols-3 md:grid-rows-2 gap-4">
         <!-- Left column: practice card spans both rows on medium screens -->
-        <div class="md:row-span-2 bg-white rounded-2xl shadow-sm border p-10">
+        <div class="md:col-span-2 md:row-span-2 panel rounded-2xl p-10">
           <div id="practiceCard"></div>
         </div>
         <!-- Top-right: filter controls (previously in the controls section).  Hidden by default; toggled via Filters button. -->
-        <div id="filtersPanel" class="bg-white rounded-2xl shadow-sm border p-4 hidden">
+        <div id="filtersPanel" class="panel rounded-2xl p-6 hidden">
           <!-- Admin / Data panel: only visible when admin=1 -->
           <div id="adminPanel" class="hidden mb-4">
             <div class="text-sm font-medium mb-2">Admin tools</div>
             <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
             <div class="mt-2 flex gap-2">
               <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
-              <button id="btnLoadUrl" class="px-3 py-2 rounded-xl bg-blue-600 text-white">LOAD</button>
+              <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
             </div>
             <div class="mt-2 flex flex-wrap gap-2 text-sm">
-              <button id="btnShareable" class="px-3 py-1.5 rounded-xl bg-slate-100">Shareable link</button>
-              <button id="btnExportMisses" class="px-3 py-1.5 rounded-xl bg-slate-100">Export misses</button>
+              <button id="btnShareable" class="btn btn-ghost px-3 py-1.5">Shareable link</button>
+              <button id="btnExportMisses" class="btn btn-ghost px-3 py-1.5">Export misses</button>
             </div>
             <div class="mt-3">
               <div class="text-sm font-medium mb-1">Load local CSV</div>
@@ -131,7 +188,7 @@
           </div>
         </div>
         <!-- Bottom-right: session / stats panel -->
-        <aside class="bg-white rounded-2xl shadow-sm border p-4">
+        <aside class="panel rounded-2xl p-4">
           <div class="text-sm font-medium mb-2">Session</div>
           <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
           <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
@@ -142,12 +199,12 @@
             <div class="mt-3 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
           </div>
           <div class="mt-4 flex gap-2">
-            <button id="btnResetStats" class="px-3 py-1.5 rounded-xl bg-slate-100">Reset stats</button>
+            <button id="btnResetStats" class="btn btn-ghost px-3 py-1.5">Reset stats</button>
           </div>
         </aside>
       </div>
 
-      <div id="browseView" class="hidden bg-white rounded-2xl shadow-sm border overflow-hidden">
+      <div id="browseView" class="hidden panel rounded-2xl overflow-hidden">
         <table class="w-full text-sm">
           <thead class="bg-slate-100 text-slate-700">
             <tr id="browseHead"></tr>
@@ -157,13 +214,13 @@
       </div>
 
       <div id="statsView" class="hidden grid md:grid-cols-2 gap-4">
-        <div class="bg-white rounded-2xl shadow-sm border p-6">
+        <div class="panel rounded-2xl p-6">
           <h2 class="text-lg font-medium mb-2">Accuracy</h2>
           <div id="statsAcc" class="text-5xl font-bold">0%</div>
           <div id="statsText" class="text-slate-600">0 correct out of 0</div>
-          <button id="btnResetStats2" class="mt-4 px-3 py-1.5 rounded-xl bg-slate-100">Reset</button>
+          <button id="btnResetStats2" class="mt-4 btn btn-ghost px-3 py-1.5">Reset</button>
         </div>
-        <div class="bg-white rounded-2xl shadow-sm border p-6">
+        <div class="panel rounded-2xl p-6">
           <h2 class="text-lg font-medium mb-2">By outcome</h2>
           <ul id="statsByOutcome" class="space-y-1 text-sm"></ul>
         </div>
@@ -173,9 +230,9 @@
     <!-- Mobile action bar -->
     <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
       <div class="max-w-6xl mx-auto flex gap-2">
-        <button id="mbHint" title="Hint (H)" class="flex-1 px-3 py-2 rounded-xl bg-slate-100">Hint</button>
-        <button id="mbCheck" title="Check (Enter)" class="flex-1 px-3 py-2 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700">Check</button>
-        <button id="mbNext" title="Next (Enter)" class="flex-1 px-3 py-2 rounded-xl bg-slate-100">Next</button>
+        <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
+        <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
+        <button id="mbNext" title="Next (Enter)" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
       </div>
     </div>
 
@@ -183,7 +240,7 @@
       <div class="flex flex-wrap gap-4 items-center">
         <span>© Welsh Mutation Trainer</span>
         <span>Data columns: RuleFamily · RuleCategory · Trigger · Base · WordCategory · Before · After · Answer · Outcome · Why</span>
-        <button id="btnTop" class="ml-auto px-2 py-1 rounded-lg bg-slate-100">Back to top</button>
+        <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">Back to top</button>
       </div>
     </footer>
   </div>
@@ -228,13 +285,9 @@
   }
   function coerceRow(row){
     const r = row || {};
-    // Pull outcome value and normalise: strip quotes and apostrophes, trim and uppercase
     const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
     const o = (rawOutcome || '').replace(/["']/g, '').toUpperCase();
     const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
-    // Normalise rule family: the CSV often stores values like "Soft,Contact" or "Aspirate, Contact".
-    // We take the portion before the comma for filtering purposes.  If it’s missing,
-    // derive from the outcome (e.g. SM → Soft).
     let famRaw = getVal(r, ["RuleFamily","Rule Family","Family"]).trim();
     if (!famRaw) famRaw = familyFromOutcome(o);
     let fam = famRaw;
@@ -260,7 +313,6 @@
     rows: [],
     filtered: [],
     families: loadLS('wm_families',["Soft","Aspirate","Nasal","None"]),
-    // By default don't pre-select any categories so users see all cards on first load.
     categories: loadLS('wm_categories',[]),
     outcomes: loadLS('wm_outcomes',["SM","AM","NM","NONE"]),
     triggerQuery: loadLS('wm_trig',''),
@@ -270,13 +322,9 @@
     p: 0,
     guess: '',
     revealed: false,
-    lastResult: null, // 'correct' | 'wrong' | null
+    lastResult: null,
     history: loadLS('wm_hist',[]),
     admin: getParam('admin') === '1',
-    // when a card has been checked but feedback is still displayed, freezeIdx
-    // holds the index of the underlying card in state.filtered. This prevents
-    // the deck from jumping ahead while showing feedback. freezePos stores
-    // the position of that card in the current deck when it was answered.
     freezeIdx: null,
     freezePos: null
   };
@@ -293,15 +341,15 @@
   ];
 
   const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
- Soft,Preposition,o,bara,noun,"darn o ","",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
+ Soft,Preposition,o,bara,noun,"darn o ",",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
  Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
- Soft,Adjective,(fem noun),mawr,adj,"y dorth ","",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
+ Soft,Adjective,(fem noun),mawr,adj,"y dorth ",",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
  Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
  Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
  None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
  Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
- Soft,Preposition,i,pedwar,number,"pum munud i ","",bedwar,SM,"SM after ‘i’ in time expressions."
- Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ","",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
+ Soft,Preposition,i,pedwar,number,"pum munud i ",",bedwar,SM,"SM after ‘i’ in time expressions."
+ Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ",",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
  Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
  Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
@@ -321,7 +369,6 @@
 
   async function loadAllDefault(){
     let merged = [];
-    // optional registry
     try{
       const r = await fetch('data/index.json');
       if (r.ok){
@@ -333,12 +380,10 @@
         }
       }
     }catch{}
-    // built-in list
     for (const p of DEFAULT_SOURCES){
       try{ const d = await loadCsvUrl(p); merged = merged.concat(d); }catch{}
     }
     if (merged.length) return merged;
-    // fallback demo
     return new Promise((resolve)=>{
       Papa.parse(demoCsv, { header:true, complete:(r)=> resolve(r.data) });
     });
@@ -351,33 +396,17 @@
       if (sheet){ rows = await loadCsvUrl(sheet); }
       else { rows = await loadAllDefault(); }
     }catch(e){ console.warn('Data load failed, using demo', e); rows = await loadAllDefault(); }
-    // coerce & clean
     const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
     const cleaned = rows.map(r => {
       const m = coerceRow(r); const o = {};
       for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
       return o;
     });
-    /*
-     * Previously the trainer attempted to de‑duplicate cards by combining several fields
-     * (RuleCategory, Trigger, Base, Before, After, Answer, WordCategory, Why, Outcome)
-     * into a single key.  This often removed legitimate cards (e.g. soft‑mutated vs.
-     * unmutated examples) because the sentences happened to share the same structure.
-     * Many users prefer to practise every sentence individually, even if the rule
-     * parameters overlap.  To honour that, skip deduplication entirely and keep
-     * every row from the source data.  If you later decide to reintroduce
-     * deduplication, consider including all distinguishing fields in the key.
-     */
     state.rows = cleaned;
-    // Update item count display
     $('#itemCount').textContent = `${state.rows.length} items`;
-    // Apply the current filter settings to generate state.filtered first, then build UI
     applyFilters();
-    // Build a shuffled deck based on the filtered list
     rebuildDeck();
-    // Build the filter controls using the up-to-date filtered list (needed for accurate outcome counts)
     buildFilters();
-    // Finally render the practice/browse/stats view
     render();
   }
 
@@ -387,16 +416,12 @@
     for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
     const outcomes = ["SM","AM","NM","NONE"];
 
-    // Hide the Quick start section entirely.  Previously this duplicated the
-    // functionality of the categories filter and confused users.  We'll simply
-    // clear its contents and add a hidden class so it doesn’t take up space.
     const qs = $('#qs');
     if (qs) {
       qs.innerHTML = '';
       qs.classList.add('hidden');
     }
 
-    // Family buttons
     const famEl = $('#familyBtns'); famEl.innerHTML='';
     for (const f of ["Soft","Aspirate","Nasal","None"]) {
       famEl.appendChild(toggleBtn(f, state.families.includes(f), (on)=>{
@@ -405,12 +430,8 @@
       }));
     }
 
-    // Outcome buttons
-    // Show counts based on the currently filtered list so users see how many cards
-    // are available for each outcome given the current family/category selections.
     const outEl = $('#outcomeBtns');
     outEl.innerHTML = '';
-    // tally outcomes in the filtered data (before applying outcome filter)
     const outcomeCounts = {};
     state.filtered.forEach(r => {
       const o = (r.Outcome || '').toUpperCase();
@@ -434,22 +455,17 @@
       );
     }
 
-    // Category buttons
     const catEl = $('#catBtns');
     catEl.innerHTML = '';
-    // Insert an "All" button first.  When no specific categories are selected, treat it as all.
     const allCatsActive = !state.categories.length;
     catEl.appendChild(
       toggleBtn(
         'All',
         allCatsActive,
         (on) => {
-          // If toggled on, clear categories (show all). If toggled off, do nothing.
           if (on) {
             state.categories = [];
           } else {
-            // When untoggling "All", retain current selection (which is empty)
-            // so nothing changes.
             state.categories = [];
           }
           saveLS('wm_categories', state.categories);
@@ -460,7 +476,6 @@
         }
       )
     );
-    // Then one button per specific category.  Active if that category is in the selection.
     for (const c of Array.from(cats).sort()) {
       const active = state.categories.includes(c);
       catEl.appendChild(
@@ -477,7 +492,6 @@
       );
     }
 
-    // Trigger filter + nil only
     $('#triggerFilter').value = state.triggerQuery;
     $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); buildFilters(); render(); };
     $('#nilOnly').checked = !!state.nilOnly;
@@ -485,7 +499,6 @@
   }
 
   function applyFilters(){
-    // If no specific outcomes are selected (e.g. user deselected all), treat it as all outcomes to avoid filtering out every card.
     const allowedOutcomes = state.outcomes && state.outcomes.length ? state.outcomes : ['SM','AM','NM','NONE'];
     let list = state.rows.filter(r =>
       (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
@@ -510,70 +523,93 @@
   // ---------- Render ----------
   function btn(label, extraClass, onClick){
     const b = document.createElement('button');
-    b.className = `px-3 py-1.5 rounded-xl ${extraClass}`; b.textContent = label; b.onclick = onClick; return b;
-  }
-    
-  function toggleBtn(label, active, onToggle){
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = `pill ${active ? 'pill-on' : ''}`;
-  b.textContent = label;
-  b.onclick = ()=> onToggle(!active);
-  return b;
+    b.className = `btn ${extraClass}`; b.textContent = label; b.onclick = onClick; return b;
   }
 
+  function toggleBtn(label, active, onToggle){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `pill ${active ? 'pill-on' : ''}`;
+    b.textContent = label;
+    b.onclick = ()=> onToggle(!active);
+    return b;
+  }
 
   function renderPractice(){
     const host = $('#practiceCard'); host.innerHTML='';
     const n = state.filtered.length;
-    if (!n){ host.innerHTML = `<div class="text-slate-700 bg-white rounded-xl border p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 px-2 py-1 rounded-lg bg-slate-100 border">Clear filters</button></div>`; 
-      const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{ 
-        state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false; 
+    if (!n){ host.innerHTML = `<div class="text-slate-700 panel rounded-xl p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button></div>`;
+      const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{
+        state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false;
         saveLS('wm_families',state.families); saveLS('wm_categories',state.categories); saveLS('wm_outcomes',state.outcomes); saveLS('wm_trig',state.triggerQuery); saveLS('wm_nil',state.nilOnly);
         buildFilters(); applyFilters(); rebuildDeck(); render();
       }); }
       return; }
-    // determine which card to show. freezeIdx holds the index in filtered when feedback is displayed
     const deckIdx = state.p % state.deck.length;
     const idxNow = state.deck[deckIdx];
     const idx = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
     const card = state.filtered[idx];
-    // record current positions for use when checking
     state.currentIdx = idxNow;
     state.currentDeckPos = deckIdx;
-
     $('#cardPos').textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
-
     const wrap = document.createElement('div');
     const header = document.createElement('div'); header.className='text-slate-500 text-xs mb-2';
     header.textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
-
-    // Active filters summary
+    // Active filters summary as chips
     const summary = document.createElement('div');
-    summary.className = 'text-xs text-slate-500 mb-3';
-    const fams = state.families.length ? state.families.join(', ') : 'All';
-    const outs = state.outcomes.length ? state.outcomes.join(', ') : 'All';
-    const cats = state.categories.length ? state.categories.join(', ') : 'All';
-    const trig = (state.triggerQuery||'').trim() ? state.triggerQuery : 'Any';
-    const nil = state.nilOnly ? 'On' : 'Off';
-    summary.textContent = `Active: Families [${fams}] • Outcomes [${outs}] • Categories [${cats}] • Trigger '${trig}' • Nil cases: ${nil}`;
-
+    summary.className = 'flex flex-wrap items-center gap-2 mb-4';
+    const addChip = (label, onClear) => {
+      const c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'chip';
+      c.innerHTML = `<span>${esc(label)}</span>`;
+      if (onClear) {
+        const x = document.createElement('span');
+        x.className = 'ml-1';
+        x.textContent = '✕';
+        c.appendChild(x);
+        c.onclick = onClear;
+      }
+      return c;
+    };
+    // families
+    if (state.families.length && state.families.length < 4) {
+      state.families.forEach(f => summary.appendChild(addChip(f)));
+    } else {
+      summary.appendChild(addChip('All families'));
+    }
+    // outcomes
+    if (state.outcomes.length && state.outcomes.length < 4) {
+      state.outcomes.forEach(o => summary.appendChild(addChip(o)));
+    }
+    // categories
+    if (state.categories.length) {
+      state.categories.forEach(ca => summary.appendChild(addChip(ca)));
+    }
+    // trigger
+    if (state.triggerQuery && state.triggerQuery.trim()) {
+      summary.appendChild(addChip(`Trigger: ${state.triggerQuery}`));
+    }
+    // nil only
+    if (state.nilOnly) {
+      summary.appendChild(addChip('Nil only'));
+    }
+    // Clear all chip
+    summary.appendChild(addChip('Clear', () => {
+      state.families = ["Soft","Aspirate","Nasal","None"];
+      state.categories = [];
+      state.outcomes = ["SM","AM","NM","NONE"];
+      state.triggerQuery = '';
+      state.nilOnly = false;
+      saveLS('wm_families', state.families); saveLS('wm_categories', state.categories); saveLS('wm_outcomes', state.outcomes); saveLS('wm_trig', state.triggerQuery); saveLS('wm_nil', state.nilOnly);
+      applyFilters(); rebuildDeck(); buildFilters(); render();
+    }));
     const chips = document.createElement('div'); chips.className = 'mb-4 text-2xl md:text-3xl font-medium';
     chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
-
     const instruction = document.createElement('div'); instruction.className='text-lg md:text-xl text-slate-700 mb-5';
     instruction.innerHTML = `Type the correct form. If no change is needed, repeat the base form.`;
-
     const row = document.createElement('div');
     row.className = 'mt-2';
-    /*
-     * Present the before text, answer input and after text in a single wrapping row.
-     * flex-wrap ensures the sequence flows naturally across lines when space is
-     * limited. Each segment wraps as needed but preserves the logical order of
-     * the sentence. The answer box has a modest width on desktop but can expand
-     * on smaller screens.  By using <span> for the text segments we avoid the
-     * unintended block-level breaks observed earlier.
-     */
     row.innerHTML = `
       <div class="flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
         <span class="text-slate-500">${esc(card.Before || '')}</span>
@@ -581,20 +617,17 @@
         <span class="text-slate-500">${esc(card.After || '')}</span>
       </div>
     `;
-
     const actions = document.createElement('div'); actions.className='flex flex-wrap gap-2';
-    const btnCheck = btn('Check','text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title='Check (Enter)';
-    const btnHint  = btn('Hint','bg-slate-100', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title='Hint (H)';
-    const btnReveal= btn('Reveal','bg-slate-100', ()=>{ state.revealed = !state.revealed; render(); });
-    const btnSkip  = btn('Skip','bg-slate-100', ()=>{ nextCard(1); });
-
+    const btnCheck = btn('Check','btn-primary shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title='Check (Enter)';
+    const btnHint  = btn('Hint','btn-ghost', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title='Hint (H)';
+    const btnReveal= btn('Reveal','btn-ghost', ()=>{ state.revealed = !state.revealed; render(); });
+    const btnSkip  = btn('Skip','btn-ghost', ()=>{ nextCard(1); });
     const hint = document.createElement('div'); hint.className='hidden mb-3 text-sm text-slate-600';
     hint.innerHTML = `Hint: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
-
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     if (state.revealed){
       const ok = state.lastResult === 'correct';
-      feedback.className = `mt-8 p-6 rounded-2xl shadow-sm animate-pop ${ok? 'bg-indigo-50 ring-1 ring-indigo-200':'bg-rose-50 ring-1 ring-rose-200'}`;
+      feedback.className = `mt-8 p-6 rounded-2xl animate-pop ${ok? 'bg-indigo-50 ring-1 ring-indigo-200':'bg-rose-50 ring-1 ring-rose-200'}`;
       const statusIcon = ok? '✅' : '❌';
       const statusColor = ok? 'text-indigo-900' : 'text-rose-900';
       feedback.innerHTML = `
@@ -608,32 +641,26 @@
       `;
       const nb = document.createElement('button');
       nb.id = 'inlineNext';
-      nb.className = 'mt-3 px-3 py-1.5 rounded-xl text-white bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-700 hover:to-cyan-700 shadow transition'; nb.title='Next (Enter)';
+      nb.className = 'mt-3 btn btn-primary shadow transition'; nb.title='Next (Enter)';
       nb.textContent = 'Next';
       nb.onclick = ()=> nextCard(1);
       feedback.appendChild(nb);
     }
     wrap.append(header, summary, chips, instruction, row, hint, actions, feedback);
     host.appendChild(wrap);
-
     const ab = $('#answerBox');
     ab.value = state.guess; ab.focus();
     ab.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { e.preventDefault(); e.stopPropagation(); onCheck(); } });
     ab.addEventListener('input', (e)=>{ state.guess = e.target.value; });
-
     function onCheck(){
-      // compute correctness based on the frozen card
       const ok = normalize(state.guess) === normalize(card.Answer);
       state.revealed = true; state.lastResult = ok? 'correct':'wrong';
-      // freeze current card index and deck position for display and future requeue
       state.freezeIdx = state.currentIdx;
       state.freezePos = state.currentDeckPos;
-      // log history
       const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, expected: card.Answer, got: state.guess };
       state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
       const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
       setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
-      // no deck mutation here; requeue handled on nextCard
       render();
     }
   }
@@ -667,7 +694,6 @@
     $('#accText').textContent = `${s.correct} / ${s.total} correct`;
     $('#statsAcc').textContent = `${s.acc}%`;
     $('#statsText').textContent = `${s.correct} correct out of ${s.total}`;
-
     const ul1 = $('#byOutcome'); ul1.innerHTML='';
     const ul2 = $('#statsByOutcome'); ul2.innerHTML='';
     for (const [k,v] of Object.entries(s.by)){
@@ -677,11 +703,9 @@
   }
 
   function render(){
-    // Views
     $('#practiceView').classList.toggle('hidden', state.mode!=='practice');
     $('#browseView').classList.toggle('hidden', state.mode!=='browse');
     $('#statsView').classList.toggle('hidden', state.mode!=='stats');
-
     renderPractice();
     if (state.mode==='browse') renderBrowse();
     renderStatsPanels();
@@ -689,13 +713,9 @@
 
   function nextCard(offset=1){
     if (!state.deck.length) return;
-    // if previous answer was wrong and freeze positions recorded, requeue the card ahead
     if (state.lastResult === 'wrong' && state.freezeIdx != null && state.freezePos != null){
-      // remove the entry at freezePos
       const idxVal = state.freezeIdx;
-      const pos = state.freezePos;
-      // Ensure the card at pos is still the same index; if not, find it
-      let deckPos = pos;
+      let deckPos = state.freezePos;
       if (state.deck[deckPos] !== idxVal){
         deckPos = state.deck.indexOf(idxVal);
       }
@@ -707,9 +727,7 @@
         state.deck = newDeck;
       }
     }
-    // clear freeze pointers
     state.freezeIdx = null; state.freezePos = null;
-    // advance pointer
     state.p = (state.p + offset + state.deck.length) % state.deck.length;
     state.guess=''; state.revealed=false; state.lastResult=null;
     render();
@@ -720,30 +738,20 @@
     $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
     $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
     $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
-    // Toggle the filters panel (top-right of the practice grid) when clicking the Filters button
     $('#btnFilters').onclick  = ()=>{ $('#filtersPanel')?.classList.toggle('hidden'); };
     $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
-
-    // Onboarding buttons: allow users to quickly open filters or dismiss the welcome message.
     $('#onboardFilters')?.addEventListener('click', () => {
-      // Hide the onboarding card
       const onboard = $('#onboard');
       if (onboard) onboard.classList.add('hidden');
-      // Show the filters panel so users can immediately select filters
-      // Show the filters panel so users can immediately select filters
       $('#filtersPanel')?.classList.remove('hidden');
-      // Scroll to top to ensure filters are visible
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     $('#onboardDismiss')?.addEventListener('click', () => {
       const onboard = $('#onboard');
       if (onboard) onboard.classList.add('hidden');
     });
-    
     $('#btnResetStats').onclick = $('#btnResetStats2').onclick = ()=>{ state.history=[]; saveLS('wm_hist',state.history); render(); };
     $('#btnTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
-
-    // Keyboard shortcuts
     document.addEventListener('keydown', (e)=>{
       const tag = (e.target && e.target.tagName) || '';
       if (['INPUT','TEXTAREA'].includes(tag.toUpperCase())) return;
@@ -763,12 +771,9 @@
         document.getElementById('btnFilters')?.click();
       }
     });
-
-    // Mobile action bar wiring
     $('#mbCheck')?.addEventListener('click', ()=> document.getElementById('btnCheck')?.click());
     $('#mbNext')?.addEventListener('click', ()=> document.getElementById('inlineNext')?.click() || nextCard(1));
     $('#mbHint')?.addEventListener('click', ()=> document.getElementById('btnHint')?.click());
-
     if (state.admin){
       $('#adminBadge').classList.remove('hidden');
       $('#adminPanel').classList.remove('hidden');
@@ -788,7 +793,7 @@
         const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
         for (const m of misses){
           const [cat,trig,base] = m.key.split(':');
-          lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`"${(s||'').replaceAll('"','""')}"`).join(','));
+          lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`\"${(s||'').replaceAll('\"','\"\"')}\"`).join(','));
         }
         download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
       };
@@ -797,19 +802,15 @@
         Papa.parse(f, { header:true, skipEmptyLines:true, complete:(res)=>{ state.rows = res.data.map(coerceRow); applyFilters(); rebuildDeck(); render(); } });
       };
     }
-
-    // Preset: prepositions
     if (getParam('preset')==='prepositions'){
       state.categories=['Preposition']; saveLS('wm_categories',state.categories);
     }
   }
-
   // ---------- Boot ----------
   (async function(){
     wireUi();
     await initData();
   })();
-
   </script>
 </body>
 </html>
