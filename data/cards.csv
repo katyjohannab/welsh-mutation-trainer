@@ -97,7 +97,7 @@ None,Possessive,eu … nhw,mynediad,noun-masc,Diweddarwyd y manylion am eu,nhw.,
 "Soft, Contact",Preposition,o,cymorth,noun-masc,Fe ddylai hynny fod o,i’r teulu.,gymorth,SM,“o” soft-mutates: c→g.
 "Soft, Contact",Preposition,o,canlyniad,noun-masc,O,", penderfynwyd cau’r ffordd.",ganlyniad,SM,Set phrase “o ganlyniad”: c→g.
 "Soft, Contact",Preposition,o,popeth,noun-masc,Rydyn ni’n dysgu o,bob dydd.,bopeth,SM,“o” soft-mutates: p→b.
-"Soft, Contact",Preposition,am,munud,noun-masc,Aros,", plis.",funud,SM,“am” commonly soft-mutates: m→f.
+"Soft, Contact",Preposition,am,munud,noun-masc,Aros am,", plis.",funud,SM,“am” commonly soft-mutates: m→f.
 "Soft, Contact",Preposition,o,mater,noun-masc,Roedd yn fater bach o,personol.,fater,SM,“o” soft-mutates: m→f.
 "Soft, Contact",Preposition,o,cefndir,noun-masc,Daw hi o,gwledig.,gefndir,SM,“o” soft-mutates: c→g.
 "Soft, Contact",Preposition,am,dyfodol,noun-masc,Rydyn ni’n ymgyrchu am,gwell.,ddyfodol,SM,“am” commonly soft-mutates: d→dd.
@@ -657,6 +657,32 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Blocked","Complement","yn","dynes","noun-fem","Mae hi’n ","garedig iawn.","ddynes","SM","With yn plus a predicative noun, softening can appear (d→dd). Dynes is feminine, and the pattern triggers the change; nothing blocks it."
 "Soft, Blocked","Article","y","cangen","noun-fem","Cwrddon ni yn y ganolfan ac wedyn yn y ","leol.","gangen","SM","A preposition before this is blocked by y, but because cangen is feminine, the article causes softening (c→g). The visible change is from y."
 "Soft, Blocked","Preposition","am","llaw","noun-fem","Mae angen trefniant am y ","ar unwaith.","llaw","NONE","am would soften ll→l on contact, but the article y blocks it. Llaw is feminine, yet the visible change is prevented by the blocking article."
+"Soft, Fixed","Complement","ddoe","doe","time-adv","Wnes i ddod ","—roedd hi’n bwrw glaw!","ddoe","SM","Ddoe is the fixed ‘yesterday’ form. It always starts with dd- in this time meaning. It’s not caused by a nearby word; it’s just the standard form in this use."
+"None","Complement","heddiw","heddiw","time-adv","Dw i’n brysur "," ond mi wnawn ni siarad fory.","heddiw","NONE","Heddiw (‘today’) doesn’t change at the start. There’s no softening here—this is its normal form."
+"None","Complement","yfory","yfory","time-adv","Awn ni at y dref "," os bydd amser.","yfory","NONE","Yfory (‘tomorrow’) shows no softening. In phrases like bore fory you’ll see fory (spelling without the y), but that isn’t a mutation."
+"Soft, Fixed","Complement","ddoe","doe","time-adv","Bues i yn y llyfrgell bore "," .","ddoe","SM","In bore ddoe (‘yesterday morning’), doe is always ddoe in this time phrase. It’s a fixed soft form, not triggered by the word bore."
+"Soft, Fixed","Complement","ddoe","doe","time-adv","Cawsom gyfarfod prynhawn "," cyn cau’r swyddfa.","ddoe","SM","In prynhawn ddoe, doe appears as ddoe by convention. Think of it as the set time adverb ‘yesterday’."
+"None","Complement","heddiw","heddiw","time-adv","Roedd yr arholiad bore "," .","heddiw","NONE","Bore heddiw uses the unchanged form heddiw; there’s no softening in this phrase."
+"None","Complement","heddiw","heddiw","time-adv","Rydyn ni’n cyfarfod prynhawn "," yn y ganolfan.","heddiw","NONE","Prynhawn heddiw has no softening; heddiw stays as it is."
+"None","Complement","fory","yfory","time-adv","Mae gen i apwyntiad bore "," .","fory","NONE","You’ll usually see bore fory (spelt fory here). That’s standard spelling in this phrase, not a mutation of yfory."
+"None","Complement","fory","yfory","time-adv","Cawn ni alwad Teams prynhawn "," i drafod y camau nesaf.","fory","NONE","Prynhawn fory (spelt fory) is the usual form; again, that spelling is conventional here, not soft mutation."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Llun byddwn ni’n cyfarfod am ddeg.","Ddydd","SM","In time phrases like Ddydd Llun (‘on Monday’), dydd appears as Ddydd. Historically ar (‘on’) is left out, but the soft start on dydd remains."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Mawrth mae’r cwrs yn dechrau.","Ddydd","SM","Ddydd Mawrth = ‘on Tuesday’. The soft start belongs to the time expression (not to the following word)."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Mercher maen nhw’n hyfforddi.","Ddydd","SM","Ddydd Mercher keeps the soft dd- on dydd in this fixed time frame."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Iau byddwn ni allan o’r swyddfa.","Ddydd","SM","Ddydd Iau shows the same pattern: Ddydd + day name = ‘on Thursday’. The soft start is fixed in this usage."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Gwener bydd y canlyniadau allan.","Ddydd","SM","Ddydd Gwener = ‘on Friday’. The soft dd- on dydd is part of the time expression."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Sadwrn mae’r gêm fawr.","Ddydd","SM","Ddydd Sadwrn = ‘on Saturday’. Think ‘(Ar) ddydd …’ with ar left out but the softening kept."
+"Soft, Fixed","Complement","dydd","dydd","noun-masc"," ","Sul mae’r gwasanaeth arbennig.","Ddydd","SM","Ddydd Sul = ‘on Sunday’. Again, the dd- on dydd is the normal fixed form in this time meaning."
+"Soft, Contact","Preposition","ar","dechrau","noun-masc","Cawn ni gyfarfod "," ","ddechrau’r mis","SM","Ar often causes soft mutation. In the time phrase ar ddechrau’r mis (‘at the start of the month’), dechrau (masc. noun) softens to ddechrau."
+"Soft, Contact","Preposition","ar","diwedd","noun-masc","Bydd y ffurflenni’n barod "," ","ddiwedd y mis","SM","Ar ddiwedd y mis (‘at the end of the month’): ar softens diwedd (masc. noun) to ddiwedd."
+"Soft, Contact","Preposition","ar","dechrau","noun-masc","Mae’r tymor yn cychwyn "," ","ddechrau’r wythnos","SM","Ar + dechrau (masc.) → ddechrau: ar ddechrau’r wythnos (‘at the start of the week’)."
+"Soft, Contact","Preposition","ar","diwedd","noun-masc","Cawn ni wyliau "," ","ddiwedd y flwyddyn","SM","Ar ddiwedd y flwyddyn (‘at the end of the year’): diwedd softens to ddiwedd after ar."
+"Soft, Contact","Preposition","tan","diwedd","noun-masc","Bydd y prosiect yn parhau "," ","ddiwedd y mis","SM","Tan (‘until’) softens on contact: diwedd (masc.) → ddiwedd in tan ddiwedd y mis."
+"Soft, Contact","Preposition","at","diwedd","noun-masc","Anfonwch yr adroddiad "," ","ddiwedd yr wythnos","SM","At (‘by/towards’) also softens: at ddiwedd gives ddiwedd (masc.) in at ddiwedd yr wythnos."
+"Soft, Contact","Preposition","hyd","diwedd","noun-masc","Bydd y cynnig yn ddilys "," ","ddiwedd y chwarter","SM","Hyd (‘up to’) softens the following noun: diwedd (masc.) → ddiwedd in hyd ddiwedd y chwarter."
+"Soft, Contact","Preposition","ar","canol","noun-masc","Daethon ni at ei gilydd "," ","ganol dydd","SM","Ar + canol (masc.) → ganol: ar ganol dydd (‘at midday’)."
+"Soft, Fixed","Complement","ddoe","doe","time-adv","Rhedais i 10km ","—dw i’n flin heddiw!","ddoe","SM","Ddoe is the set ‘yesterday’ adverb. It keeps the soft dd- even at the start of a sentence or after other words, there’s no ‘unmutated’ version here."
+"None","Complement","heddiw","heddiw","time-adv","Bu’r tîm yn ymarfer prynhawn "," , a gêm fory.","heddiw","NONE","Heddiw and fory in time phrases don’t soften; they appear as themselves. Save your softening for the fixed ones like ddoe and the ar + noun patterns above."
 
 
 
