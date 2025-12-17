@@ -240,10 +240,10 @@ None,Conjunction,a,llyfr,noun-masc,"Pensil a ",ar y ddesg.,llyfr,NONE,"ll is not
 None,Conjunction,a,rhestr,noun-fem,"Ffeil a ",hir.,rhestr,NONE,"rh is not affected by AM after 'a' (nil case)."
 None,Preposition,â (with),ysgol,noun-fem,"Es i â ",ddoe.,ysgol,NONE,"Vowel-initial noun shows no visible AM after â."
 None,Possessive,gyda’n,afal,noun-masc,"Daethon ni gyda’n ",i’r trip.,afal,NONE,"Vowel-initial noun unchanged; BLOCKER: 'ein' causes no mutation."
-"Aspirate, Contact",Numerals,tri,car,noun-masc,Gwelais,ger y tŷ.,char,AM,tri before a noun triggers AM on p/t/c.
-"Aspirate, Contact",Numerals,tri,papur,noun-masc,Mae,ar y ddesg.,phapur,AM,tri → AM (p→ph).
-"Aspirate, Contact",Numerals,tri,tŷ,noun-masc,Prynon ni,y lôn hon.,thŷ,AM,tri → AM (t→th).
-"Aspirate, Contact",Numerals,chwe,cath,noun-fem,Roedd,yn yr ystafell.,chath,AM,chwe (form before noun) triggers AM on p/t/c.
+"Aspirate, Contact",Numerals,tri,car,noun-masc,Gwelais tri,ger y tŷ.,char,AM,tri before a noun triggers AM on p/t/c.
+"Aspirate, Contact",Numerals,tri,papur,noun-masc,Mae tri,ar y ddesg.,phapur,AM,tri causes a mutation on the following noun → AM (p→ph).
+"Aspirate, Contact",Numerals,tri,tŷ,noun-masc,Prynon ni tri,y lôn hon.,thŷ,AM,tri → AM (t→th).
+"Aspirate, Contact",Numerals,chwe,cath,noun-fem,Roedd chwe,yn yr ystafell.,chath,AM,chwe (form before noun) triggers AM on p/t/c.
 "Aspirate, Contact",Numerals,chwe,pen,noun-masc,Cawsom,i’w rhannu.,phen,AM,chwe → AM (p→ph).
 "Aspirate, Contact",Preposition,tua,tafarn,noun-fem,Aeth e tua,ar ôl gwaith.,thafarn,AM,tua/tuag (towards) can trigger AM on p/t/c.
 "Aspirate, Contact",Preposition,tua,car,noun-masc,Rhedodd y bachgen tua,yn sydyn.,char,AM,tua → AM (c→ch).
@@ -515,6 +515,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Structure","SubjectBoundary","Subject boundary (after subject)","papur","noun-masc","Mi gawson ni ","dda heddiw!","bapur","SM","After the subject ni the first complement word soft-mutates (p→b): papur→bapur. Particle mi doesn’t change the rule. "
 "Soft, Structure","SubjectBoundary","Subject boundary (after subject)","darllen","verb-noun","Wnaeth y plant ","y llyfr ddoe.","ddarllen","SM","Non-bod auxiliary + subject → VN takes SM (d→dd): darllen→ddarllen. "
 "None","SubjectBoundary","Subject boundary (immutable initial)","siop","noun-fem","Gwelodd e ","fawr ar y gornel.","siop","NONE","s- does not soft-mutate in Welsh; after the subject boundary there’s no visible change. "
+
 
 
 
