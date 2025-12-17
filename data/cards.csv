@@ -775,10 +775,10 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Preposition","gan","canu","verb-noun","Aethon nhw adref "," yn dawel.","ganu","SM","After gan, c→g: canu → ganu. Natural ‘went home, singing …’ description."
 "None","Preposition","cyn","gorffen","verb-noun"," "," y wers, gad i ni adolygu.","gorffen","NONE","cyn ‘before’ does not soften a following action word: gorffen stays the same. The lack of change is normal here."
 "None","Subordinator","cyn","bod","verb","Cyrhaeddwn ni "," hir.","bo","NONE","Set expression cyn bo hir ‘before long’. The bo form is just how this phrase is said, there’s no mutation happening."
-"None","Negation","Paid","torri","verb-noun"," "," y rhaff!","torri","NONE","Paid on its own makes a negative command but doesn’t change the next word: torri stays radical here."
-"Aspirate, Contact","Preposition","â","torri","verb-noun","Paid "," y rhaff!","thorri","AM","With the linker â (‘with’ in this pattern), p/t/c → ph/th/ch. So torri → thorri in Paid â thorri!"
+"None","Negation","Paid","torri","verb-noun","Paid"," y rhaff!","torri","NONE","Paid on its own makes a negative command but doesn’t change the next word: torri stays radical here."
+"Aspirate, Contact","Preposition","â","torri","verb-noun","Paid â"," y rhaff!","thorri","AM","With the linker â (‘with’ in this pattern), p/t/c → ph/th/ch. So torri → thorri in Paid â thorri!"
 "None","Negation","Peidiwch","talu","verb-noun"," "," ar y safle.","talu","NONE","Peidiwch (plural/polite) makes the command negative but causes no change to the action word: talu unchanged."
-"Aspirate, Contact","Preposition","â","talu","verb-noun","Peidiwch "," ar y safle.","â thalu","AM","Add â and you get aspirate mutation (t→th): Peidiwch â thalu. It’s â that causes the change, not ‘Peidiwch’."
+"Aspirate, Contact","Preposition","â","talu","verb-noun","Peidiwch â"," ar y safle.","thalu","AM","Add â and you get aspirate mutation (t→th): Peidiwch â thalu. It’s â that causes the change, not ‘Peidiwch’."
 "Soft, Contact","TimeExpressions","ar","dechrau","noun-masc","Mae cyfarfod ar ","’r wythnos.","ddechrau","SM","ar softens the following time noun. Dechrau is masculine, so d→dd gives ar ddechrau’r wythnos. The apostrophe + r is just the article and does not block this."
 "Soft, Contact","TimeExpressions","ar","dechrau","noun-masc","Cawn ni ddatganiad ar ","’r mis nesaf.","ddechrau","SM","In time phrases, ar causes soft mutation on the next noun. Dechrau (masc) becomes ddechrau."
 "Soft, Contact","TimeExpressions","ar","diwedd","noun-masc","Bydd taliad ar "," y mis.","ddiwedd","SM","ar triggers soft mutation on diwedd (masc). d→dd gives ar ddiwedd y mis."
@@ -856,6 +856,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
+
 
 
 
