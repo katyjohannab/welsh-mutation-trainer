@@ -8,9 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
   <style>
     html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
     body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -21,14 +22,13 @@
       font-weight: 400;
       font-style: normal;
     }
-    
+
     .bbh-hegarty-regular {
       font-family: "BBH Hegarty", sans-serif;
       font-weight: 400;
       font-style: normal;
     }
 
-    
     .merriweather-title {
       font-family: "Merriweather", serif;
       font-optical-sizing: auto;
@@ -38,7 +38,6 @@
         "wdth" 100;
     }
 
-    
     .inter-body {
       font-family: "Inter", sans-serif;
       font-optical-sizing: auto;
@@ -54,17 +53,24 @@
       font-variation-settings:
         "wdth" 100;
     }
-    
-    /* Theme variables */
+
+    /* -------------------------
+       Theme: clean paper + Cymru accents
+       - No gradient header background
+       - Keep gradients as accents only
+    ------------------------- */
     :root {
-      /* primary gradient colours */
+      /* primary button gradient (emerald) */
+      --primary-from: #0b7a5a; /* lighter title-green */
+      --primary-mid:  #065f46; /* title-green mid */
+      --primary-to:   #064e3b; /* title ink */
+
       /* page */
       --page: #fbfbf7;                 /* warm paper */
       --page-tint: rgba(6,95,70,0.04); /* faint green wash */
 
       /* surfaces */
       --surface: rgba(255,255,255,0.94);
-      --surface-2: rgba(255,255,255,0.86);
       --border: rgba(15,23,42,0.10);
       --shadow: 0 12px 30px rgba(15,23,42,0.06);
 
@@ -72,42 +78,110 @@
       --text: #0f172a;
       --muted: #475569;
 
-      /* Cymru-ish accents */
-      --emerald-ink: #064e3b;  /* deep green text */
-      --emerald-1:  #047857;   /* emerald */
-      --emerald-2:  #065f46;   /* deeper emerald */
+      /* accents */
+      --emerald-ink: #064e3b;
+      --gold: #d97706;
+      --cymru-red: #b91c1c;      /* red-700 */
+      --cymru-red-ink: #991b1b;  /* red-800 */
 
-      --gold: #d97706;         /* Cymru gold accent (sparingly) */
-      
-      /* Cymry red (use for errors + tiny accents) */
-      --red-1: #dc2626;      /* red-600 */
-      --red-2: #b91c1c;      /* red-700 */
-      --gold-ink: #92400e;
-
-      /* state */
-      --danger: #b91c1c;
-      --danger-ink: #7f1d1d;
-
-      /* focus */
-      --focus: rgba(4,120,87,0.35);
-
-      
-      /* chip colour palette */
+      /* chips */
       --chip-bg: rgba(4,120,87,0.10);
       --chip-bd: rgba(4,120,87,0.22);
       --chip-fg: #065f46;
 
-      --chip-gold-bg: rgba(217,119,6,0.10);
-      --chip-gold-bd: rgba(217,119,6,0.25);
-      --chip-gold-fg: #92400e;
-
-      --success-bg: rgba(16,185,129,0.10);
-      --success-bd: rgba(16,185,129,0.25);
-      --success-fg: #065f46;
-
-      --danger-bg: rgba(185,28,28,0.08);
-      --danger-bd: rgba(185,28,28,0.22);
+      --focus: rgba(4,120,87,0.35);
     }
+
+    body{
+      background: var(--page);
+      background-image:
+        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.03), transparent 55%),
+        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.02), transparent 60%);
+      color: var(--text);
+    }
+
+    /* Glass panel used for cards, filters and stats */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    /* red gradient bar under header */
+    .cymru-red-bar{
+      height: 3px;
+      /* Tie the brand together: emerald → Cymru red */
+      background: linear-gradient(to right,
+        transparent 0%,
+        rgba(4,120,87,0.20) 12%,
+        rgba(4,120,87,0.92) 28%,
+        rgba(4,120,87,1.00) 40%,
+        rgba(185,28,28,1.00) 60%,
+        rgba(185,28,28,0.92) 72%,
+        rgba(185,28,28,0.20) 88%,
+        transparent 100%
+      );
+    }
+
+    /* Brand lockup (icon + title) */
+    .brand-lockup{
+      display:flex;
+      align-items:center;
+      gap:.65rem;
+      min-width:0;
+    }
+
+    /* Title colours + dot separator (green → red) */
+    .brand-title{
+      display:flex;
+      align-items:center;
+      gap:0;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .title-hy{ color: var(--emerald-ink); }
+    .title-trei{ color: var(--cymru-red-ink); margin-left: .06em; }
+    .cymru-dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--cymru-red-ink);
+      margin: 0 .55rem;
+      flex: 0 0 auto;
+      display: inline-block;
+      align-self: center;
+    }
+    @media (min-width: 768px){
+      .cymru-dot{ width: 9px; height: 9px; margin: 0 .65rem; }
+    }
+
+    .brand-dragon{
+      width: 34px;
+      height: 34px;
+      display:block;
+      flex: 0 0 auto;
+      background: transparent;
+      border: 0;
+      filter: drop-shadow(0 10px 18px rgba(2,6,23,0.10));
+      transform: translateY(-1px);
+    }
+    @media (min-width: 768px){
+      .brand-dragon{ width: 44px; height: 44px; }
+      .cymru-dot{
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--cymru-red-ink);
+      box-shadow: 0 0 0 4px rgba(153,27,27,0.10);
+      flex: 0 0 auto;
+      align-self: center;
+    }
+    }
+
+@keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
+    .animate-pop{animation:pop .18s ease-out both}
 
     .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
     .chip {
@@ -115,24 +189,17 @@
       align-items:center;
       border-radius:999px;
       padding:6px 12px;
-      font-size:14px;
-      font-weight:500;
-      border:1px solid var(--chip-bd);
-      background:var(--chip-bg);
-      color:var(--chip-fg);
-      box-shadow:0 1px 2px rgba(0,0,0,.05);
+      font-size:11.5px;
+      font-weight:750;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(217,119,6,0.28);
+      background:rgba(217,119,6,0.08);
+      color:rgba(15,23,42,0.86);
+      box-shadow:0 1px 2px rgba(0,0,0,.04);
       cursor:default;
     }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    /* Glass panel used for cards, filters and stats */
-    .panel {
-      background: rgba(255,255,255,0.8);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
-    .animate-pop{animation:pop .18s ease-out both}
 
     /* Button styles */
     .btn{
@@ -140,31 +207,56 @@
       align-items:center;
       justify-content:center;
       gap:.5rem;
-      padding:.5rem .9rem;
-      border-radius:12px;
+      padding:.55rem .95rem;
+      border-radius:999px;
+      border:1px solid transparent;
       font-weight:600;
-      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+      line-height:1;
+      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
       cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     .btn:active{transform:translateY(1px)}
-    .btn:focus-visible{outline:3px solid rgba(34,211,238,.35); outline-offset:2px}
+    .btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
 
     .btn-primary{
       color:#fff;
-      background:linear-gradient(to right, var(--primary-from), var(--primary-to));
-      box-shadow:0 2px 4px rgba(2,6,23,.1);
+      font-weight:600;
+      background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+      background-size: 140% 140%;
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      overflow:hidden;
+      box-shadow: 0 10px 20px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
     }
     .btn-primary:hover{
-      background:linear-gradient(to right, #4f46e5, #0891b2);
+      transform: translateY(-1px);
+      filter: saturate(1.06) brightness(1.02);
+      box-shadow:0 14px 28px rgba(2,6,23,.16);
     }
+    .btn-primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+      pointer-events:none;
+    }
+    .btn-primary:hover::after{ transform: translateX(120%); }
 
     .btn-ghost{
-      background:rgba(255,255,255,.8);
-      border:1px solid rgba(203,213,225,.5);
-      color:#334155;
+      background:rgba(255,255,255,.76);
+      border:1px solid var(--border);
+      color:#0f172a;
+      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
     }
     .btn-ghost:hover{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.94);
+      border-color: rgba(185,28,28,0.22); /* sparing Cymru red echo */
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(2,6,23,0.08);
     }
 
     /* Toggle pill used in filter selectors */
@@ -173,87 +265,506 @@
       align-items:center;
       gap:.35rem;
       border-radius:999px;
-      padding:.4rem .8rem;
-      font-weight:600;
-      font-size:12px;
-      border:1px solid rgba(148,163,184,.35);
-      background:rgba(255,255,255,.75);
+      padding:.32rem .62rem;
+      font-weight:650;
+      font-size:10.5px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(255,255,255,.82);
       cursor:pointer;
     }
     .pill-on{
-      background:rgba(99,102,241,.15);
-      border-color:rgba(99,102,241,.35);
+      background:rgba(4,120,87,.12);
+      border-color:rgba(4,120,87,.26);
+      box-shadow: inset 0 0 0 1px rgba(217,119,6,0.14);
+    }
+
+    /* --------- Theme overrides for Tailwind utilities used in JS output ---------
+    */
+    .bg-indigo-100{ background-color: rgba(4,120,87,0.12) !important; }
+    .ring-indigo-300{ --tw-ring-color: rgba(4,120,87,0.30) !important; }
+    .text-indigo-900{ color: var(--emerald-ink) !important; }
+
+    .bg-indigo-50{ background-color: rgba(16,185,129,0.10) !important; }
+    .ring-indigo-200{ --tw-ring-color: rgba(16,185,129,0.25) !important; }
+
+    .bg-rose-50{ background-color: rgba(185,28,28,0.06) !important; }
+    .ring-rose-200{ --tw-ring-color: rgba(185,28,28,0.22) !important; }
+    .text-rose-900{ color: rgba(127,29,29,0.95) !important; }
+
+    .decoration-indigo-400{ text-decoration-color: rgba(4,120,87,0.55) !important; }
+
+    /* Make the base word a touch bigger (JS outputs it inside the emerald capsule) */
+    #practiceCard .bg-indigo-100 span{
+      font-size: clamp(2.55rem, 4.6vw, 3.55rem) !important;
+      letter-spacing: -0.02em;
+    }
+
+    /* Practice: sentence row alignment + action spacing */
+    #practiceCard .mt-2 > .flex.items-baseline{
+      align-items: center !important;
+    }
+    #practiceCard .mt-2 > .flex.items-baseline span{
+      line-height: 1.45;
+    }
+    /* Actions live immediately after the sentence row (row has class mt-2) */
+    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
+      margin-top: 1.1rem !important;
+      gap: .85rem !important;
+    }
+
+/* Answer box: very faint gold, emerald focus */
+    #answerBox{
+      background: rgba(217,119,6,0.08) !important;
+      border-color: rgba(148,163,184,0.55) !important;
+    }
+    #answerBox::placeholder{ color: rgba(100,116,139,0.85); }
+    #answerBox:focus{
+      border-color: rgba(4,120,87,0.72) !important;
+      box-shadow: 0 0 0 4px rgba(4,120,87,0.12) !important;
     }
 
 
-    body{
-      background: var(--page);
-      /* subtle “paper wash” behind content, not a full-page gradient */
-      background-image:
-        radial-gradient(900px 500px at 20% -10%, var(--page-tint), transparent 60%),
-        radial-gradient(900px 600px at 90% 0%, rgba(217,119,6,0.03), transparent 55%),
-        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%);
-        color: var(--text);
-    }
-    
-   .muted{ color: var(--muted); }
-
-    /* Panels: paper cards */
-    .panel{
-        background: var(--surface);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow);
-        backdrop-filter: none;
-   }
-
-     /* -------------------------
-       Header / Nav
-       Clean + a little graphic: badge + accent rule.
-    ------------------------- */
-    header{
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      background: rgba(255,255,255,0.88); /* solid-ish, not gradient */
-      backdrop-filter: blur(10px);
+    /* Header: clean, lightly glassy */
+    #siteHeader{
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
-    /* thin “Cymru” accent line under header*/
-    header::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:-1px;
-      height: 3px;
-      /* Cymru ribbon: green → gold → red (kept subtle) */
-      background: linear-gradient(to right,
-        transparent,
-        rgba(220, 38, 38, 1),
-        rgba(185, 28, 28, 1),
-        transparent
+    /* Slightly tighter subtitle colour */
+    .subtle{ color: var(--muted); }
+
+    /* -------------------------
+       2025-12 tweaks: make Practice card feel centred + stronger Cymru palette
+       (CSS-only overrides; JS untouched)
+    ------------------------- */
+
+    /* Reduce gold in the page wash: keep it ultra-sparing */
+    body{
+      background-image:
+        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%),
+        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.015), transparent 55%);
+    }
+
+    /* Centre the practice content within the big left panel so it doesn't feel "lost" */
+    #practiceCard > div{
+      max-width: 46rem;
+      margin-inline: auto;
+    }
+
+    /* Card counter: make it feel designed (tiny caps + tracking) */
+    #practiceCard .text-slate-500.text-xs.mb-2{
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* Base word capsule: centred focal point, slightly more intentional */
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      display: flex !important;
+      width: fit-content;
+      margin: 0 auto;
+      box-shadow:
+        0 12px 26px rgba(2,6,23,0.08),
+        inset 0 -2px 0 rgba(185,28,28,0.20);
+    }
+
+    /* Keep sentence alignment feeling "text-like" */
+    #practiceCard .mt-2 > .flex.items-baseline{
+      align-items: baseline !important;
+    }
+
+    /* Answer box: allow it to flex so long sentences wrap more naturally */
+    #answerBox{
+      width: clamp(10rem, 22vw, 16rem) !important;
+      flex: 0 1 clamp(10rem, 22vw, 16rem) !important;
+      flex-shrink: 1 !important;
+      line-height: 1.15;
+    }
+
+    /* Give the action buttons a clearer "breath" from the sentence row */
+    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
+      margin-top: 1.45rem !important;
+      gap: 1rem !important;
+    }
+
+    /* Active filter chips: red-tinted (echo the red bar) while staying subtle */
+    .chip{
+      background: rgba(185,28,28,0.055) !important;
+      border-color: rgba(185,28,28,0.20) !important;
+      color: rgba(15,23,42,0.88) !important;
+    }
+
+    /* Make the final "Clear" chip your main gold accent (sparingly used) */
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
+      background: rgba(217,119,6,0.085) !important;
+      border-color: rgba(217,119,6,0.30) !important;
+    }
+
+    /* Gold should be rare: remove the gold-ish inner stroke from active filter pills */
+    .pill-on{
+      box-shadow: none !important;
+    }
+
+    /* -------------------------
+       Polish pass: alignment + hover (CSS-only)
+       Goal: green + red primary palette, gold only as a subtle accent (answer box / badges)
+    ------------------------- */
+
+    /* Base word capsule: true visual centring + calmer shadow */
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      align-items:center !important;
+      justify-content:center !important;
+      padding-top: .9rem !important;
+      padding-bottom: .9rem !important;
+      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
+    }
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
+      line-height: 1 !important;
+      display: block !important;
+      transform: translateY(0px);
+    }
+
+    /* Sentence → actions: give the controls a clear "breath" and a subtle red divider */
+    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
+      margin-top: 1.55rem !important;
+      padding-top: 1.05rem !important;
+      gap: 1rem !important;
+      border-top: 1px solid rgba(185,28,28,0.14);
+    }
+
+    /* Chips: keep active filters subtly red-tinted, but make CLEAR green */
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip{ cursor: default; }
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
+      cursor: pointer;
+      background: rgba(4,120,87,0.10) !important;
+      border-color: rgba(4,120,87,0.28) !important;
+      color: rgba(6,78,59,0.95) !important;
+    }
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+      filter: saturate(1.02) brightness(1.01);
+    }
+
+    /* Filter pills: add hover so they feel interactive */
+    .pill{
+      transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .pill:hover{
+      background: rgba(255,255,255,0.96);
+      border-color: rgba(4,120,87,0.24);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+    }
+    .pill:active{
+      transform: translateY(0px);
+      box-shadow: 0 6px 12px rgba(2,6,23,0.05);
+    }
+    .pill-on:hover{
+      background: rgba(4,120,87,0.15);
+      border-color: rgba(4,120,87,0.34);
+    }
+
+  
+
+    /* -------------------------
+       Layout tightening (fixes excess whitespace on desktop)
+       - Stop grid rows stretching panels to 1fr heights
+       - Keep Filters (row 1) and Session (row 2) stable
+    ------------------------- */
+    @media (min-width: 768px){
+      #practiceView{
+        grid-template-rows: auto auto !important;
+        align-items: start !important;
+      }
+      #filtersPanel{
+        grid-row: 1 / 2 !important;
+        align-self: start !important;
+      }
+      #practiceView > aside{
+        grid-row: 2 / 3 !important;
+        align-self: start !important;
+        height: fit-content;
+      }
+      /* Left practice panel */
+      #practiceView > div:nth-child(1){
+        align-self: start !important;
+      }
+    }
+    /* -------------------------
+       Practice layout polish (left-aligned copy, centred base word)
+       - Keeps the header + filter chips left
+       - Centres the base word capsule
+       - Adds consistent breathing room before action buttons
+    ------------------------- */
+
+    /* Keep the content column a sensible width, but don't centre the text itself */
+    #practiceCard > div{
+      max-width: 46rem;
+      margin-inline: auto;
+    }
+
+    /* Copy should read like copy: left aligned */
+    #practiceCard .practice-instruction{
+      text-align: left;
+      text-wrap: pretty;
+    }
+
+    /* Base word capsule: centred focal point + calmer shadow */
+    #practiceCard .practice-base{
+      display:flex;
+      justify-content:center;
+      margin: .35rem 0 1.65rem;
+    }
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: .95rem 1.25rem !important;
+      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
+    }
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
+      line-height: 1 !important;
+      display:block;
+    }
+
+    /* Sentence line: keep it left aligned, but with a bit more air under the base word */
+    #practiceCard .practice-sentence{
+      margin-top: .25rem;
+    }
+
+    /* Buttons: clear separation + consistent spacing */
+    #practiceCard .practice-actions{
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(185,28,28,0.14);
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    /* Remove any lingering centring from older CSS experiments */
+    #practiceCard > div > div.text-lg.md\:text-xl.text-slate-700{ text-align:left !important; }
+    #practiceCard > div > div.mt-2 > div.flex{ justify-content:flex-start !important; text-align:left !important; }
+    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{ justify-content:flex-start !important; }
+
+
+    /* Header nav buttons: slightly lighter weight + clearer gradient hero */
+    #siteHeader .btn{ font-weight: 600; }
+
+    /* --- Header nav buttons: make Practice the hero, Stats/Filters secondary (red) --- */
+    #btnStats, #btnFilters{
+      padding: .5rem .9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      background: rgba(185,28,28,0.08);
+      border-color: rgba(185,28,28,0.24);
+      color: rgba(127,29,29,0.96);
+    }
+    #btnStats:hover, #btnFilters:hover{
+      background: linear-gradient(to right, rgba(185,28,28,0.96), rgba(153,27,27,0.96));
+      border-color: rgba(185,28,28,0.55);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.14);
+    }
+
+    /* --- Filters: hide redundant Outcome column (JS untouched, state still applies) --- */
+    #outcomeCol{ display:none; }
+    #familyCol{ grid-column: 1 / -1; }
+
+    /* --- Filters panel: stop it forcing huge page height on desktop --- */
+    @media (min-width: 768px){
+      #filtersPanel{
+        max-height: calc(100vh - 190px);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      #filtersPanel::-webkit-scrollbar{ width: 10px; }
+      #filtersPanel::-webkit-scrollbar-thumb{
+        background: rgba(15,23,42,0.12);
+        border-radius: 999px;
+        border: 3px solid rgba(255,255,255,0.70);
+      }
+    }
+
+    /* --- Practice sentence line: baseline can feel 'wonky' with the big input; centre it --- */
+    #practiceCard .practice-sentenceLine{ align-items: center !important; }
+
+    /* Slightly tighter right panels (reduces dead space) */
+    #sessionPanel{ padding-bottom: 1.05rem !important; }
+
+
+
+    /* -------------------------
+       Final polish pass (alignment + palette cohesion)
+       - Desktop: align the base word capsule with the left text edge
+       - Mobile: keep the base word centred
+       - Use a subtle Cymru green→red divider and header ribbon
+    ------------------------- */
+
+    /* Ribbon: match the exact inks used in the title */
+    .cymru-red-bar{
+      background: linear-gradient(90deg,
+        rgba(6,78,59,0) 0%,
+        rgba(6,78,59,1) 30%,
+        rgba(153,27,27,1) 70%,
+        rgba(153,27,27,0) 100%
+      ) !important;
+    }
+
+    /* Instruction reads like copy, not a banner */
+    #practiceCard .practice-instruction{
+      max-width: 42rem;
+      margin-bottom: 1.15rem !important;
+    }
+
+    /* Base word: centred on mobile, aligned on desktop */
+    #practiceCard .practice-base{
+      justify-content: center;
+      margin: .8rem 0 2.35rem !important;
+    }
+    @media (min-width: 768px){
+      #practiceCard .practice-base{ justify-content: flex-start; }
+    }
+
+    /* Base capsule: calm shadow, no weird baseline wobble */
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      box-shadow: 0 5px 12px rgba(2,6,23,0.06) !important;
+    }
+
+    /* Actions row: gradient divider instead of a plain rule */
+    #practiceCard .practice-actions{
+      position: relative;
+      border-top: 0 !important;
+      padding-top: 1.05rem !important;
+      margin-top: 1.35rem !important;
+    }
+    #practiceCard .practice-actions::before{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        rgba(6,78,59,0.24),
+        rgba(153,27,27,0.24)
       );
     }
 
-  </style>
-</head>
-<body class="min-h-screen bg-gradient-to-b from-indigo-50 via-sky-50 to-cyan-50 text-slate-900">
-  <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
-    <header class="sticky top-0 z-10 bg-gradient-to-r from-indigo-100 via-sky-50 to-cyan-100 border-b border-slate-200">
-      <div class="max-w-6xl mx-auto p-4 flex flex-col gap-3 md:flex-row md:items-end md:gap-4">
-        <div class="grow">
-          <h1 class="bbh-bogle-regular text-3xl md:text-4xl lg:text-5xl tracking-tight">Hyfforddwr Treiglad</h1>
+    /* Buttons: centred on mobile feels intentional, left on desktop */
+    #practiceCard .practice-actions{ justify-content: center; }
+    @media (min-width: 768px){
+      #practiceCard .practice-actions{ justify-content: flex-start; }
+    }
 
-          <p class="text-sm md:text-base text-slate-600">Practise Welsh mutations<span id="itemCount" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">0 items</span><span id="adminBadge" class="hidden ml-2 inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-700 border">Admin</span></p>
+
+
+    /* --- Brand dot: tighter spacing + vertical centring (dot replaces the word-space) --- */
+    .cymru-dot{
+      width: 8px !important;
+      height: 8px !important;
+      margin: 0 .18rem !important; /* much tighter than before */
+      background: var(--cymru-red-ink) !important; /* must match Treiglad */
+      box-shadow: none !important;
+      transform: translateY(-0.06em);
+    }
+    @media (min-width: 768px){
+      .cymru-dot{
+        width: 9px !important;
+        height: 9px !important;
+        margin: 0 .22rem !important;
+      }
+    }
+
+
+
+    /* =========================
+       2025-12-17 polish tweaks
+       - Cleaner Cymru ribbon (no muddy mid-colour)
+       - More obvious (but on-brand) green gradient on primary buttons
+       - Tighter practice action buttons spacing
+       ========================= */
+
+    /* Keep primary button green closer to the Hyfforddwr title ink */
+    :root{
+      --primary-from: #0a6b52;
+      --primary-mid:  #075a44;
+      --primary-to:   #064e3b;
+    }
+
+    /* Ribbon: cleaner green→red (short transition, no transparent ends) */
+    .cymru-red-bar{
+      background: linear-gradient(90deg,
+        rgba(6,78,59,1) 0%,
+        rgba(6,78,59,1) 46%,
+        rgba(153,27,27,1) 54%,
+        rgba(153,27,27,1) 100%
+      ) !important;
+    }
+
+/* Title: rely on colour change as the separator (no extra spacing) */
+    .title-trei{ margin-left: 0 !important; }
+
+    /* Primary button: make the gradient feel intentional (subtle motion on hover) */
+    .btn-primary{
+      background-size: 220% 220% !important;
+      background-position: 0% 50% !important;
+    }
+    .btn-primary:hover{ background-position: 100% 50% !important; }
+
+    /* Header nav: slightly lighter weight on secondary buttons */
+    #btnStats, #btnFilters{ font-weight: 500 !important; }
+
+    /* Filter pills: a touch smaller/tighter */
+    .pill{
+      padding: .28rem .56rem !important;
+      font-size: 10px !important;
+    }
+
+    /* Practice actions row: reduce spacing + pull it slightly closer to the sentence */
+    #practiceCard .practice-actions{
+      margin-top: 1.05rem !important;
+      padding-top: .75rem !important;
+      gap: .65rem !important;
+    }
+    #practiceCard .practice-actions .btn{
+      padding: .5rem .85rem !important;
+    }
+
+    /* Base word capsule: left-align (always) */
+    #practiceCard .practice-base{
+      justify-content: flex-start !important;
+    }
+
+</style>
+</head>
+
+<body class="min-h-screen text-slate-900">
+  <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
+
+    <header id="siteHeader" class="sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+
+        <div class="brand-lockup grow min-w-0">
+          <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyfforddwr</span><span class="title-trei">Treiglad</span></h1>
         </div>
-    <div class="flex flex-wrap gap-2">
-        <button id="btnPractice" title="Practice" class="btn btn-primary">Practice</button>
-        <button id="btnBrowse" title="Browse (table)" class="btn btn-ghost hidden">Browse</button>
-        <button id="btnStats" title="Stats" class="btn btn-ghost">Stats</button>
-        <button id="btnFilters" title="Filters (F)" class="btn btn-ghost">Filters</button>
-        <button id="btnHelp" title="Help" class="btn btn-ghost hidden">Help</button>
-    </div>
+
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2">
+          <span id="itemCount" class="hidden ml-1 px-2.5 py-1 rounded-full text-xs bg-amber-50 text-amber-900 border border-amber-200/70">0 items</span>
+          <span id="adminBadge" class="hidden ml-1 px-2.5 py-1 rounded-full text-xs bg-amber-50 text-amber-800 border border-amber-200/70">Admin</span>
+
+          <button id="btnPractice" title="Practice" class="btn btn-primary">Practice</button>
+          <button id="btnBrowse" title="Browse (table)" class="btn btn-ghost hidden">Browse</button>
+          <button id="btnStats" title="Stats" class="btn btn-ghost">Stats</button>
+          <button id="btnFilters" title="Filters (F)" class="btn btn-ghost">Filters</button>
+          <button id="btnHelp" title="Help" class="btn btn-ghost hidden">Help</button>
+        </div>
 
       </div>
+      <div class="cymru-red-bar" aria-hidden="true"></div>
     </header>
 
     <!-- Onboarding -->
@@ -271,71 +782,76 @@
 
     <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
-      <div id="practiceView" class="grid md:grid-cols-3 md:grid-rows-2 gap-4">
-        <!-- Left column: practice card spans both rows on medium screens -->
-        <div class="md:col-span-2 md:row-span-2 panel rounded-2xl p-10">
+      <div id="practiceView" class="grid md:grid-cols-3 gap-4 items-start">
+        <!-- Left: practice card -->
+        <div class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
           <div id="practiceCard"></div>
         </div>
-        <!-- Top-right: filter controls (previously in the controls section).  Hidden by default; toggled via Filters button. -->
-        <div id="filtersPanel" class="panel rounded-2xl p-6 hidden">
-          <!-- Admin / Data panel: only visible when admin=1 -->
-          <div id="adminPanel" class="hidden mb-4">
-            <div class="text-sm font-medium mb-2">Admin tools</div>
-            <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
-            <div class="mt-2 flex gap-2">
-              <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
-              <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
+
+        <!-- Right: filters + session (stacked so layout never "jumps" when filters are hidden) -->
+        <div class="md:col-span-1 flex flex-col gap-4">
+          <!-- Filter controls (hidden by default; toggled via Filters button) -->
+          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+            <!-- Admin / Data panel: only visible when admin=1 -->
+            <div id="adminPanel" class="hidden mb-4">
+              <div class="text-sm font-medium mb-2">Admin tools</div>
+              <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
+              <div class="mt-2 flex gap-2">
+                <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
+                <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
+              </div>
+              <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                <button id="btnShareable" class="btn btn-ghost px-3 py-1.5">Shareable link</button>
+                <button id="btnExportMisses" class="btn btn-ghost px-3 py-1.5">Export misses</button>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-medium mb-1">Load local CSV</div>
+                <input id="fileCsv" type="file" accept=".csv" />
+              </div>
+              <hr class="my-4" />
             </div>
-            <div class="mt-2 flex flex-wrap gap-2 text-sm">
-              <button id="btnShareable" class="btn btn-ghost px-3 py-1.5">Shareable link</button>
-              <button id="btnExportMisses" class="btn btn-ghost px-3 py-1.5">Export misses</button>
+            <!-- Focus filters -->
+            <div class="text-sm font-medium mb-2">Focus</div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div id="familyCol">
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
+                <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div id="outcomeCol">
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
+                <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div class="col-span-2">
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
+                <div id="catBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div class="col-span-2">
+                <label class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
+                <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
+              </div>
+              <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
+                <input id="nilOnly" type="checkbox" />
+                Nil‑cases only (no mutation expected)
+              </label>
             </div>
-            <div class="mt-3">
-              <div class="text-sm font-medium mb-1">Load local CSV</div>
-              <input id="fileCsv" type="file" accept=".csv" />
-            </div>
-            <hr class="my-4" />
           </div>
-          <!-- Focus filters -->
-          <div class="text-sm font-medium mb-2">Focus</div>
-          <div class="grid grid-cols-2 gap-2 text-sm">
-            <div>
-              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
-              <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+
+          <!-- Session / stats panel -->
+          <aside id="sessionPanel" class="panel rounded-2xl p-4">
+            <div class="text-sm font-medium mb-2">Session</div>
+            <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
+            <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
+            <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
+            <div class="mt-2 text-sm">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By outcome</div>
+              <ul id="byOutcome" class="space-y-1"></ul>
+              <div class="mt-2 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
             </div>
-            <div>
-              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
-              <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+            <div class="mt-3 flex gap-2">
+              <button id="btnResetStats" class="btn btn-ghost px-3 py-1.5">Reset stats</button>
             </div>
-            <div class="col-span-2">
-              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
-              <div id="catBtns" class="flex flex-wrap gap-1"></div>
-            </div>
-            <div class="col-span-2">
-              <label class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
-              <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
-            </div>
-            <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
-              <input id="nilOnly" type="checkbox" />
-              Nil‑cases only (no mutation expected)
-            </label>
-          </div>
+          </aside>
         </div>
-        <!-- Bottom-right: session / stats panel -->
-        <aside class="panel rounded-2xl p-4">
-          <div class="text-sm font-medium mb-2">Session</div>
-          <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
-          <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
-          <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
-          <div class="mt-4 text-sm">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By outcome</div>
-            <ul id="byOutcome" class="space-y-1"></ul>
-            <div class="mt-3 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
-          </div>
-          <div class="mt-4 flex gap-2">
-            <button id="btnResetStats" class="btn btn-ghost px-3 py-1.5">Reset stats</button>
-          </div>
-        </aside>
       </div>
 
       <div id="browseView" class="hidden panel rounded-2xl overflow-hidden">
@@ -464,72 +980,83 @@
   };
 
   // ---------- Data loading ----------
-  const DEFAULT_SOURCES = [
-    'data/prepositions.csv',
-    'data/numerals.csv',
-    'data/possessive.csv',
-    'data/article.csv',
-    'data/adjective.csv',
-    'data/blocking.csv',
-    'data/mutations.csv'
-  ];
+// Loads ONLY the sources listed in data/index.json (e.g. ["data/cards.csv"]).
+// In GitHub Pages this works via relative paths. In canvas preview, relative fetches may not resolve,
+// so we also try your live URLs as a fallback (NOT a demo dataset).
 
-  const demoCsv = `RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
- Soft,Preposition,o,bara,noun,"darn o ",",fara,SM,"Preposition ‘o’ soft‑mutates the following word."
- Soft,Preposition,wrth,prynu,verb-noun,"wrth "," laeth",brynu,SM,"‘Wrth’ causes SM on the following VN."
- Soft,Adjective,(fem noun),mawr,adj,"y dorth ",",fawr,SM,"Adjective after a feminine singular noun soft‑mutates."
- Aspirate,Numerals,tri,ci,noun,"tri "," yn rhedeg",chi,AM,"‘Tri’ triggers AM on c/p/t in many set combinations."
- Soft,Numerals,dwy,cath,noun,"dwy "," yn y tŷ",gath,SM,"‘Dwy’ causes SM on the following noun."
- None,Article,y (ll/rh exception),llaw,noun,"y "," chwith",llaw,NONE,"Feminine singular with article usually SM, but ll‑ and rh‑ are exceptions."
- Soft,Grammatical,subject→verb,mynd,verb-noun,"Naethon nhw "," adre",fynd,SM,"SM after the (notional) subject with inflected verb patterns."
- Soft,Preposition,i,pedwar,number,"pum munud i ",",bedwar,SM,"SM after ‘i’ in time expressions."
- Soft,Blocking,neu + ’r,drws,noun,"y ffenest neu’r ",",drws,NONE,"‘neu’ would cause SM, but ’r blocks it — no mutation."
- Aspirate,Possessive,ei (her),tŷ,noun-masc,"Mae hi’n paentio ei ","ar hyn o bryd.",thŷ,AM,"ei (her) → AM (t→th)."
- Aspirate,Possessive,ei (her),tocyn,noun-masc,"Collodd hi ei ","ar y platfform.",thocyn,AM,"ei (her) → AM (t→th)."
- Aspirate,Possessive,ei (her),llyfr,noun-masc,"Dychwelodd hi ei ","i’r llyfrgell.",llyfr,NONE,"ll and rh are immune to AM; vowels also show no change."
- Aspirate,Possessive,ei (her),rhiant,noun-masc,"Siaradodd hi â’i ","am y trip.",rhiant,NONE,"rh- does not undergo AM."
- Aspirate,Possessive,ei (her),ysgol,noun-fem,"Soniodd hi am ei ","ddoe.",ysgol,NONE,"Vowel-initial words show no visible AM."
- Aspirate,Possessive,ei (her),awyr,noun-fem,"Mae hi’n hoffi ei ","agored.",awyr,NONE,"Vowel-initial nouns are unchanged by AM."
- Aspirate,Conjunction,a,car,noun-masc,"Te a ","ar y ffordd.",char,AM,"a ‘and’ triggers AM on following p/t/c (standard/literary)."
- Aspirate,Conjunction,a,ci,noun-masc,"Bara a ","i’r picnic.",chi,AM,"a → AM (c→ch)."
- `;
+const FALLBACK_INDEX_URL = 'https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json';
+const FALLBACK_SITE_ROOT = 'https://katyjohannab.github.io/welsh-mutation-trainer/';
 
-  async function loadCsvUrl(u){
-    return new Promise((resolve, reject) => {
-      Papa.parse(u, { download:true, header:true, skipEmptyLines:true,
-        complete: (res) => resolve(res.data), error: reject });
+async function loadCsvUrl(u){
+  return new Promise((resolve, reject) => {
+    Papa.parse(u, {
+      download:true,
+      header:true,
+      skipEmptyLines:true,
+      complete: (res) => resolve(res.data),
+      error: reject
     });
-  }
+  });
+}
 
-  async function loadAllDefault(){
-    let merged = [];
+function isAbsUrl(u){ return /^https?:\/\//i.test(u || ''); }
+function resolveFromRoot(path, root){
+  const p = (path || '').toString().trim();
+  if (!p) return '';
+  if (isAbsUrl(p)) return p;
+  // treat entries like "data/cards.csv" as site-root relative
+  return new URL(p.replace(/^\/+/, ''), root).toString();
+}
+
+async function fetchIndexList(url){
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error('Failed to fetch index: ' + url);
+  const j = await r.json();
+  if (!Array.isArray(j)) throw new Error('Index JSON is not an array: ' + url);
+  return j;
+}
+
+async function loadAllDefault(){
+  let list = null;
+  let usingFallbackRoot = false;
+
+  // Try local relative first (works on your deployed site)
+  try{
+    list = await fetchIndexList('data/index.json');
+  }catch(e){
+    // Canvas preview often needs absolute
     try{
-      const r = await fetch('data/index.json');
-      if (r.ok){
-        const list = await r.json();
-        if (Array.isArray(list)){
-          for (const p of list){
-            try{ const d = await loadCsvUrl(p); merged = merged.concat(d); }catch{}
-          }
-        }
-      }
-    }catch{}
-    for (const p of DEFAULT_SOURCES){
-      try{ const d = await loadCsvUrl(p); merged = merged.concat(d); }catch{}
+      list = await fetchIndexList(FALLBACK_INDEX_URL);
+      usingFallbackRoot = true;
+    }catch(e2){
+      console.warn('Failed to load both local and fallback index.json', e, e2);
+      return [];
     }
-    if (merged.length) return merged;
-    return new Promise((resolve)=>{
-      Papa.parse(demoCsv, { header:true, complete:(r)=> resolve(r.data) });
-    });
   }
 
-  async function initData(){
+  const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL('.', location.href).toString();
+  let merged = [];
+  for (const p of list){
+    const url = resolveFromRoot(p, root);
+    if (!url) continue;
+    try{
+      const d = await loadCsvUrl(url);
+      merged = merged.concat(d);
+    }catch(err){
+      console.warn('Failed to load source:', url, err);
+    }
+  }
+  return merged;
+}
+
+async function initData(){
+
     const sheet = getParam('sheet');
     let rows = [];
     try{
       if (sheet){ rows = await loadCsvUrl(sheet); }
       else { rows = await loadAllDefault(); }
-    }catch(e){ console.warn('Data load failed, using demo', e); rows = await loadAllDefault(); }
+    }catch(e){ console.warn('Data load failed; no demo fallback configured.', e); rows = await loadAllDefault(); }
     const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
     const cleaned = rows.map(r => {
       const m = coerceRow(r); const o = {};
@@ -738,25 +1265,26 @@
       saveLS('wm_families', state.families); saveLS('wm_categories', state.categories); saveLS('wm_outcomes', state.outcomes); saveLS('wm_trig', state.triggerQuery); saveLS('wm_nil', state.nilOnly);
       applyFilters(); rebuildDeck(); buildFilters(); render();
     }));
-    const chips = document.createElement('div'); chips.className = 'mb-4 text-2xl md:text-3xl font-medium';
+    const chips = document.createElement('div'); chips.className = 'practice-base text-2xl md:text-3xl font-medium';
     chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
-    const instruction = document.createElement('div'); instruction.className='text-lg md:text-xl text-slate-700 mb-5';
+    const instruction = document.createElement('div'); instruction.className='practice-instruction text-lg md:text-xl text-slate-700 mb-6';
     instruction.innerHTML = `Type the correct form. If no change is needed, repeat the base form.`;
     const row = document.createElement('div');
-    row.className = 'mt-2';
+    row.className = 'practice-sentence mt-2';
     row.innerHTML = `
-      <div class="flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
-        <span class="text-slate-500">${esc(card.Before || '')}</span>
+      <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
+        <span class="text-slate-600">${esc(card.Before || '')}</span>
         <input id="answerBox" class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0" placeholder="Answer" aria-label="Answer" />
-        <span class="text-slate-500">${esc(card.After || '')}</span>
+        <span class="text-slate-600">${esc(card.After || '')}</span>
       </div>
     `;
-    const actions = document.createElement('div'); actions.className='flex flex-wrap gap-2';
+    const actions = document.createElement('div'); actions.className='practice-actions flex flex-wrap gap-3';
     const btnCheck = btn('Check','btn-primary shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title='Check (Enter)';
     const btnHint  = btn('Hint','btn-ghost', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title='Hint (H)';
     const btnReveal= btn('Reveal','btn-ghost', ()=>{ state.revealed = !state.revealed; render(); });
     const btnSkip  = btn('Skip','btn-ghost', ()=>{ nextCard(1); });
-    const hint = document.createElement('div'); hint.className='hidden mb-3 text-sm text-slate-600';
+    actions.append(btnCheck, btnHint, btnReveal, btnSkip);
+    const hint = document.createElement('div'); hint.className='hidden mt-3 text-sm text-slate-600';
     hint.innerHTML = `Hint: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     if (state.revealed){
@@ -780,7 +1308,7 @@
       nb.onclick = ()=> nextCard(1);
       feedback.appendChild(nb);
     }
-    wrap.append(header, summary, chips, instruction, row, hint, actions, feedback);
+    wrap.append(header, summary, instruction, chips, row, actions, hint, feedback);
     host.appendChild(wrap);
     const ab = $('#answerBox');
     ab.value = state.guess; ab.focus();
