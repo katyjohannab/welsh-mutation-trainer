@@ -713,6 +713,21 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Intensifier","rhy","boeth","adj","Mae’r ystafell yn rhy "," i gysgu’n dda.","boeth","SM","rhy softens: p→b here, so poeth → boeth."
 "Soft, Contact","Intensifier","rhy","mawr","adj","Mae’r siwt yn rhy "," i’r parti.","fawr","SM","rhy softens m→f: mawr → fawr. This is part of the rhy + adjective meaning ‘too ...’."
 "Soft, Contact","Intensifier","rhy","cyflym","adj","Roedd y trên yn rhy "," i’r plant ddal i fyny.","gyflym","SM","rhy softens c→g on the adjective: cyflym → gyflym."
+"Aspirate, Contact","Conjunction","a","car","noun-masc","Bu damwain rhwng bws a ","ger y groesfan.","char","AM","Use a before a consonant. It turns p/t/c → ph/th/ch. Car is masculine, so a changes it to char."
+"Aspirate, Contact","Conjunction","a","tŷ","noun-masc","Mae gardd a ","mewn rhes.","thŷ","AM","a before a consonant causes aspirate mutation. Tŷ is masculine; t→th gives thŷ."
+"Aspirate, Contact","Conjunction","a","papur","noun-masc","Roedd pensil a ","ar y ddesg.","phapur","AM","a triggers p→ph. Papur is masculine, so after a it becomes phapur."
+"Aspirate, Contact","Conjunction","a","cath","noun-fem","Roedd ci a ","yn yr ardd.","chath","AM","a triggers c→ch. Cath is feminine; after a it becomes chath."
+"Aspirate, Contact","Conjunction","a","tocyn","noun-masc","Cefais archeb a ","ar-lein.","thocyn","AM","a causes t→th. Tocyn is masculine; so a thocyn is the correct form."
+"Aspirate, Contact","Conjunction","a","tad","noun-masc","Daw mam a ","yn ddiweddarach.","thad","AM","a before a consonant causes t→th. Tad is masculine; a thad is right."
+"Aspirate, Contact","Conjunction","a","cymorth","noun-masc","Cafwyd arian a ","gan y cyngor.","chymorth","AM","a turns c→ch. Cymorth is masculine; write a chymorth."
+"Aspirate, Contact","Conjunction","a","pen","noun-masc","Gadawodd e het a ","ar y bwrdd.","phen","AM","a changes p→ph. Pen is masculine; after a it’s phen."
+"None","Conjunction","a","llun","noun-masc","Roedd map a ","ar y wal.","llun","NONE","a does not change ll or rh. Llun is masculine; there’s no mutation here—llun stays the same."
+"None","Conjunction","a","rhestr","noun-fem","Gad i ni gael taflen a ","ar y ddesg.","rhestr","NONE","a doesn’t affect rh. Rhestr is feminine, but with rh there’s no change: still rhestr."
+"None","Conjunction","ac","afal","noun-masc","Roedd dŵr ac ","ar y bwrdd.","afal","NONE","Use ac before a vowel or h-. ac does not mutate. Afall is masculine; it stays afal."
+"None","Conjunction","ac","amser","noun-masc","Mae arian ac ","ar gael i’r prosiect.","amser","NONE","ac is used before a vowel and doesn’t mutate. Amser is masculine; unchanged after ac."
+"None","Conjunction","ac","hawl","noun-fem","Darllenwch y canllawiau ac ","i wneud cais.","hawl","NONE","Before h-, choose ac (not a). ac causes no mutation. Hawl is feminine; it stays hawl."
+"None","Conjunction","ac","enw","noun-masc","Llenwch y llythyr ac ","ar waelod y dudalen.","enw","NONE","Use ac before a vowel; it doesn’t mutate. Enw is masculine; remains enw."
+"None","Conjunction","ac","eitem","noun-fem","Mae dau gategori ac ","ychwanegol i’w hychwanegu.","eitem","NONE","ac comes before a vowel and does not cause mutation. Eitem is feminine; it stays eitem."
 
 
 
