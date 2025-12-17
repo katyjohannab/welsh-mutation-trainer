@@ -343,7 +343,6 @@ None,Numerals,deg,car,noun-masc,Gwelais deg,mewn rhes.,car,NONE,deg → NONE.
 None,Numerals,tri (m),llanc,noun-masc,Gwelson ni tri,ger y lan.,llanc,NONE,ll- doesn’t aspirate: deliberate NIL after tri.
 None,Numerals,tri (m),rhestr,noun-fem,Darllenon ni tri,yn y dosbarth.,rhestr,NONE,rh- doesn’t aspirate: NIL after tri.
 None,Numerals,tri (m),afal,noun-masc,Brynodd e tri,i’r plant.,afal,NONE,Vowel-initial: no visible AM after tri.
-RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
 "Aspirate, Contact",Negation,Negative short past structure,clywais,verb,,i ddim.,Chlywais,AM,Negative short past → c→ch; verb precedes subject + ddim.
 "Aspirate, Contact",Negation,Negative short past structure,brynodd,verb,,Tom ddim.,Phrynodd,AM,Negative short past → p→ph; verb precedes subject + ddim.
 "Aspirate, Contact",Negation,Negative short past structure,talon,verb,,nhw ddim.,Thalon,AM,Negative short past → t→th; verb precedes subject + ddim.
@@ -540,6 +539,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None","Subordinator","pe … na (if … not)","byddai","verb (bod)","Pe na","byddai e’n cytuno, byddai’n anodd.","byddai","NONE","Another closed negative: pe na fyddai…. Focus is the conditional form; no mutation from pe/na here. "
 "None","Subordinator","pe (spoken alt. with t-)","tase","verb (bod)","Tase","hi’n barod, âsem ni ar unwaith.","tase","NONE","Spoken tase/tasai are common in many areas (= pe bai). They’re forms of bod; the connector doesn’t mutate. "
 "None","Subordinator","pe (closed/hypothetical)","bai","verb (bod)","Pe","bai dim ots gen ti, arhoswn ni ychydig.","bai","NONE","Classic pe bai… frame for a hypothetical. Remember: pe signals unreality; it isn’t a mutation trigger. "
+
 
 
 
