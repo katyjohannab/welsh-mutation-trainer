@@ -1,153 +1,153 @@
 RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
-"Soft,Contact",Adjective+Noun,trefn,penodol,adj,Mae trefn,ar gyfer rheoli diogelwch,benodol,SM,An adjective following a feminine singular noun soft-mutates (ll/rh excluded): penodol→benodol
-"Soft, Structure",Adjective+Noun,ardal,preswyl,,Mae'r ardal,hon yn dawel.,breswyl,SM,"Ansoddair yn dilyn enw benywaidd unigol yn treiglo'n feddal; p→b, felly “ardal breswyl”."
-"Soft, Contact",Adjective+Noun,fem noun → adj,mawr,adj,Sgorion nhw yn y gêm,.,fawr,SM,Adjective after fem. sg. noun soft-mutates: m→f (“gêm fawr”).
-"Soft, Contact",Article,"y (def. art., fem sg)",cynulleidfa,noun-fem,Roedd y,yn frwdfrydig.,gynulleidfa,SM,Feminine singular nouns soft-mutate after the definite article: c→g (y gynulleidfa).
-"Soft, Contact",Article,"y (def. art., fem sg)",gwasg,noun-fem,Cyhoeddwyd y llyfr gan y,.,wasg,SM,Feminine singular after y; g drops under SM (y wasg).
-"Soft, Contact",Article,"y (def. art., fem sg)",deddf,noun-fem,Pasiodd y,yn 2020.,ddeddf,SM,Feminine singular after y; d→dd (y ddeddf).
-"Soft, Contact",Article,"y (def. art., fem sg)",masnach,noun-fem,Mae’r,ryngwladol yn tyfu.,fasnach,SM,Feminine singular after y; m→f (y fasnach).
-None,Article,y (def. art.),senedd,noun-fem,Mae’r,yn cyfarfod heddiw.,senedd,NONE,‘s’ isn’t a mutable consonant in SM; article doesn’t change it (y senedd).
-None,Article,yr (def. art. before vowel),amrywiaeth,noun-fem,Mae’r,o opsiynau yn eang.,amrywiaeth,NONE,Initial vowels don’t undergo SM; article form is yr before vowels (yr amrywiaeth).
-None,Article,yr (def. art. before vowel),ymgyrch,noun-fem,Siaradwyd am yr,newydd.,ymgyrch,NONE,Begins with a vowel sound; no SM of vowels (yr ymgyrch).
-"Soft, Contact","Article","y (def. art., fem sg)","gwefan","noun-fem","Darllenais i’r erthygl ar y ","swyddogol.","wefan","SM","Fem. sg. after y: g→∅ (y wefan)."
-"Soft, Contact","Article","y (def. art., fem sg)","mam","noun-fem","Mae y ","yn gweithio yn y ysbyty.","fam","SM","Fem. sg. after y: m→f (y fam)."
-"Soft, Contact","Article","y (def. art., fem sg)","taith","noun-fem","Mae’r trên yn aros ar y ","nesaf.","daith","SM","Fem. sg. after y: t→d (y daith)."
-"Soft, Contact","Article","y (def. art., fem sg)","merch","noun-fem","Dyma y ","sy’n arwain y prosiect.","ferch","SM","Fem. sg. after y: m→f (y ferch)."
-"Soft, Contact","Article","y (def. art., fem sg)","cerddoriaeth","noun-fem","Roedd y ","yn fyw a phwerus.","gerddoriaeth","SM","Fem. sg. after y: c→g."
-"Soft, Contact","Article","y (def. art., fem sg)","cyfres","noun-fem","A yw y ","newydd yn dechrau heno?","gyfres","SM","Fem. sg. after y: c→g."
-"Soft, Contact","Article","y (def. art., fem sg)","cymdeithas","noun-fem","Mae y ","yn cynnal cyfarfod blynyddol.","gymdeithas","SM","Fem. sg. after y: c→g."
-"Soft, Contact","Article","y (def. art., fem sg)","problem","noun-fem","Sut y gallwn ni ddatrys y ","hon?","broblem","SM","Fem. sg. after y: p→b."
-"Soft, Contact","Article","y (def. art., fem sg)","prifysgol","noun-fem","Mae y ","yn agos at y ddinas.","brifysgol","SM","Fem. sg. after y: p→b."
-"Soft, Contact","Article","y (def. art., fem sg)","cymuned","noun-fem","Mae y ","yn gryf iawn yma.","gymuned","SM","Fem. sg. after y: c→g."
-"Soft, Contact","Article","y (def. art., fem sg)","canolfan","noun-fem","Mae’r bws yn stopio ger y ",".","ganolfan","SM","Fem. sg. after y: c→g."
-"Soft, Contact","Article","y (def. art., fem sg)","canrif","noun-fem","Yn y ","diwethaf gwelwyd newidiadau mawr.","ganrif","SM","Fem. sg. after y: c→g."
-"Soft, Contact",Numerals,un (f),blwyddyn,noun-fem,Dyna un,yn unig.,flwyddyn,SM,“Un” yn treiglo enwau benywaidd.
-"Soft, Contact",Numerals,dwy,blynedd,noun-fem,Arhoson ni yno am dwy,.,flynedd,SM,“Dwy” yn achosi SM; defnyddir y ffurf “blynedd” yn y patrwm blynyddoedd.
-None,Numerals,tair,blynedd,noun-fem,Mae’r cwrs yn para tair,.,blynedd,NONE,Dim SM ar ôl “tair” yn y patrwm blynyddoedd.
-None,Numerals,pedair,blynedd,noun-fem,Bydd y les yn para pedair,.,blynedd,NONE,Dim SM ar ôl “pedair”.
-"Nasal, Contact",Numerals,pum,blynedd,noun-fem,Buon nhw yno am bum,.,mlynedd,NM,5–10 yn rhoi NM: blynedd → mlynedd.
-"Nasal, Contact",Numerals,chwe,blynedd,noun-fem,Cafodd y cynllun ei ohirio am chwe,.,mlynedd,NM,NM ar ôl “chwe”; ceir “chwe blynedd” ar lafar hefyd.
-"Nasal, Contact",Numerals,saith,blynedd,noun-fem,Ar ôl saith,", fe ddychwelon nhw adref.",mlynedd,NM,NM ar ôl “saith”.
-"Nasal, Contact",Numerals,wyth,blynedd,noun-fem,Roeddan nhw’n briod ers wyth,.,mlynedd,NM,NM ar ôl “wyth”.
-"Nasal, Contact",Numerals,naw,blynedd,noun-fem,Buodd y prosiect yn rhedeg am naw,.,mlynedd,NM,NM ar ôl “naw”.
-"Nasal, Contact",Numerals,deg/deng,blynedd,noun-fem,Roedd y contract yn ddilys am deng,.,mlynedd,NM,“Deg” → “deng” cyn geiriau amser m-; blynedd → mlynedd.
-"Nasal, Contact",Numerals,deuddeg,blynedd,noun-fem,Symudon nhw ar ôl deuddeg,.,mlynedd,NM,12 yn dilyn y patrwm NM gyda “blynedd”.
-"Nasal, Contact",Numerals,pymtheg,blynedd,noun-fem,Aroson ni am bymtheg,cyn newid gwaith.,mlynedd,NM,15 yn cymryd NM gyda “blynedd”.
-"Nasal, Contact",Numerals,deunaw,blynedd,noun-fem,Cafodd y cwmni ei werthu ar ôl deunaw,.,mlynedd,NM,18 yn cymryd NM gyda “blynedd”.
-"Nasal, Contact",Numerals,ugain,blynedd,noun-fem,Bywodd y teulu dramor am ugain,.,mlynedd,NM,20 + “blynedd” → “mlynedd”.
-"Nasal, Contact",Numerals,deugain,blynedd,noun-fem,Rhys gafodd seibiant o ddeugain,.,mlynedd,NM,40 + “blynedd” → “mlynedd”.
-"Nasal, Contact",Numerals,can,blynedd,noun-fem,Mae’r bont yn sefyll ers can,.,mlynedd,NM,100 + “blynedd” → “mlynedd”.
-"Nasal, Contact",Numerals,pum … ar hugain,blynedd,noun-fem,Prynwyd y tŷ pum,ar hugain yn ôl.,mlynedd,NM,Mewn cyfansoddion “ar”: yr enw cyn “ar” → “pum mlynedd ar hugain”.
-"Soft, Contact",Numerals,dau,cwmni,noun-masc,Cawsom gynnig gan dau ,eleni.,gwmni,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,teulu,noun-masc,Mae dau ,yn byw yn y tŷ mawr.,deulu,SM,'dau' soft-mutates: t→d.
-"Soft, Contact",Numerals,dau,cwmni,noun-masc,Cawsom gynnig gan dau ,eleni.,gwmni,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cynllun,noun-masc,Cyflwynwyd dau ,i’r pwyllgor.,gynllun,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,dyn,noun-masc,Gwelon ni dau ,yn aros wrth y drws.,ddyn,SM,'dau' soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,mudiad,noun-masc,Mae dau ,yn cefnogi’r achos.,fudiad,SM,'dau' soft-mutates: m→f.
-"Soft, Contact",Numerals,dau,tîm,noun-masc,Gêm rhwng dau ,neithiwr.,dîm,SM,'dau' soft-mutates: t→d.
-"Soft, Contact",Numerals,dau,polisi,noun-masc,Cawsom dau ,newydd gan y cwmni.,bolisi,SM,'dau' soft-mutates: p→b.
-"Soft, Contact",Numerals,dau,cyfrwng,noun-masc,Dewison nhw dau ,cyfathrebu.,gyfrwng,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cwestiwn,noun-masc,Atebais dau ,yn ystod y drafodaeth.,gwestiwn,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,bore,noun-masc,Cawsom gyfarfodydd dau ,yn olynol.,fore,SM,'dau' soft-mutates: b→f.
-"Soft, Contact",Numerals,dau,cynnig,noun-masc,Daeth dau ,ar gyfer y swydd.,gynnig,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cofnod,noun-masc,Cedwir dau ,ar y system.,gofnod,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,cyfarfod,noun-masc,Mae dau ,wedi’u trefnu bore yma.,gyfarfod,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,digwyddiad,noun-masc,Cafodd dau ,eu gohirio.,ddigwyddiad,SM,'dau' soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,dewis,noun-masc,Roedden ni’n cael dau ,yn y ffurflen.,ddewis,SM,'dau' soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,prosiect,noun-masc,Mae’r adran yn rhedeg dau ,eleni.,brosiect,SM,'dau' soft-mutates: p→b.
-"Soft, Contact",Numerals,dau,grŵp,noun-masc,Mae’r dosbarth wedi’i rannu’n dau ,.,rŵp,SM,'dau' soft-mutates: g→∅.
-"Soft, Contact",Numerals,dau,papur,noun-masc,Mae gen i dau ,i’w argraffu.,bapur,SM,'dau' soft-mutates: p→b.
-"Soft, Contact",Numerals,dau,clwb,noun-masc,Mae dau ,pêl-droed yn y dref.,glwb,SM,'dau' soft-mutates: c→g.
-"Soft, Contact",Numerals,dau,dosbarth,noun-masc,Rydyn ni’n rhedeg dau ,bob prynhawn.,ddosbarth,SM,'dau' soft-mutates: d→dd.
-"Soft, Contact",Numerals,dau,tad,noun-masc,Mae ganddi dau ,— un biolegol ac un cam.,dad,SM,'dau' soft-mutates: t→d.
-"Nasal, Contact",Possessive,fy … i,pwyllgor,noun-masc,Dyma fy,i.,mhwyllgor,NM,fy ‘my’ triggers NM (p→mh): fy mhwyllgor i.
-"Soft, Contact",Possessive,dy … di,pwyllgor,noun-masc,Pryd yw dy,di’n cyfarfod?,bwyllgor,SM,dy ‘your (sg)’ triggers SM (p→b).
-"Soft, Contact",Possessive,ei (his) … e/fe,pwyllgor,noun-masc,Cyhoeddodd ef restr ei,.,bwyllgor,SM,ei (his) triggers SM on the noun (p→b).
-"Aspirate, Contact",Possessive,ei (her) … hi,arian,noun-masc,Roedd hi'n aros am ei,poced,harian,AM,ei (her) triggers AM - +h with words beginning with a.
-None,Possessive,eich … chi,pwyllgor,noun-masc,Faint o waith sydd ar eich,chi?,pwyllgor,NONE,No mutation after eich in the standard system.
-"Nasal, Contact",Possessive,fy … i,comisiynydd,noun-masc,Dyma fy,i heddiw.,nghomisiynydd,NM,fy causes NM (c→ngh): fy nghomisiynydd i.
-"Soft, Contact",Possessive,dy … di,comisiynydd,noun-masc,Dyma dy,di.,gomisiynydd,SM,dy triggers SM (c→g).
-"Aspirate, Contact",Possessive,ei (her) … hi,comisiynydd,noun-masc,Dyma ei,hi.,chomisiynydd,AM,ei (her) triggers AM (c→ch).
-"Soft, Contact",Possessive,ei (his) … e/fe,comisiynydd,noun-masc,Dyma ei,ef.,gomisiynydd,SM,ei (his) triggers SM (c→g).
-"Aspirate, Contact",Possessive,ei (her) … hi,cynulleidfa,noun-fem,Cafodd hi gefnogaeth ei,.,chynulleidfa,AM,ei (her) → AM (c→ch).
-"Soft, Contact",Possessive,ei (his) … e/fe,cynulleidfa,noun-fem,Cafodd ef gefnogaeth ei,.,gynulleidfa,SM,ei (his) → SM (c→g).
-"Nasal, Contact",Possessive,fy … i,gwasg,noun-fem,Mae gen i brofiad yn fy,i.,ngwasg,NM,fy causes NM (g→ng).
-"Soft, Contact",Possessive,dy … di,gwasg,noun-fem,Rwyt ti’n rhedeg dy,di?,wasg,SM,dy causes SM; g disappears (g→∅).
-"Soft, Contact",Possessive,ei (his) … e/fe,gwasg,noun-fem,Dyna ei,ef yn y dref.,wasg,SM,ei (his) causes SM; g→∅ (ei wasg ef).
-None,Possessive,eu … nhw,deddf,noun-fem,Cyhoeddwyd testun eu,nhw.,deddf,NONE,No mutation after eu in the standard system.
-None,Possessive,dy … di,senedd,noun-fem,Dyma dy,di.,senedd,NONE,"dy normally triggers SM, but ‘s’ is unmutionable: no change."
-None,Possessive,eu … nhw,mynediad,noun-masc,Diweddarwyd y manylion am eu,nhw.,mynediad,NONE,eu ‘their’ does not mutate; optional h- before vowels only.
-"Soft, Contact",Preposition,o,tanseilio,verb-noun,Ac o gofio'r peryglon o,hyder yn cig eidion Cymru,danseilio,SM,"Preposition ""o"" causes SM on following verb-noun"
-"Soft, Contact",Preposition,o,bywyd,noun-masc,Does dim llawer o,eleni.,fywyd,SM,“o” soft-mutates: b→f.
-"Soft, Contact",Preposition,o,cig,noun-masc,Mae’r cawl yn cynnwys llawer o,.,gig,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,o,pryd,noun-masc,Rydyn ni’n cwrdd o,i’w gilydd.,bryd,SM,“o” soft-mutates: p→b (“o bryd i’w gilydd”).
-"Soft, Contact",Preposition,o,tu,noun-masc,Rydyn ni,’r tîm lleol.,o du,SM,“o” soft-mutates: t→d (“o du”).
-"Soft, Contact",Preposition,o,diwedd,noun-masc,Mae’r rheolau’n weithredol o,y flwyddyn.,ddiwedd,SM,“o” soft-mutates: d→dd.
-"Soft, Contact",Preposition,o,dechrau,noun-masc,Newidiwyd y rheolau o,’r tymor.,ddechrau,SM,“o” soft-mutates: d→dd.
-"Soft, Contact",Preposition,o,cyngor,noun-masc,Mae angen rhywfaint o,arnom ni.,gyngor,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,o,bwyd,noun-masc,Mae angen prynu mwy o,cyn y penwythnos.,fwyd,SM,“o” soft-mutates: b→f.
-"Soft, Contact",Preposition,o,busnes,noun-masc,Dw i ddim eisiau trafod pethau o,yn gyhoeddus.,fusnes,SM,“o” soft-mutates: b→f.
-"Soft, Contact",Preposition,o,maes,noun-masc,Mae hwn yn rhan o,ymchwil diddorol.,faes,SM,“o” soft-mutates: m→f.
-"Soft, Contact",Preposition,o,digon,noun-masc,Doedden ni ddim yn cael,o amser.,digon,SM,Fixed phrase “o ddigon/yn ddigon”; here keep baseline (no change needed).
-"Soft, Contact",Preposition,o,duw,noun-masc,O,! Gobeithio nad yw’n wir.,Dduw,SM,Vocative/exclamation with “o” gives SM: d→dd.
-"Soft, Contact",Preposition,o,canol,noun-masc,Daeth y sŵn o,y ddinas.,ganol,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,o,profiad,noun-masc,Dw i’n siarad o,personol.,brofiad,SM,“o” soft-mutates: p→b.
-"Soft, Contact",Preposition,o,cartref,noun-masc,Maen nhw’n gweithio o,ddwywaith yr wythnos.,gartref,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,o,gogledd,noun-masc,Daethon nhw o,Cymru.,ogledd,SM,“o” soft-mutates: g→∅.
-"Soft, Contact",Preposition,o,cymorth,noun-masc,Fe ddylai hynny fod o,i’r teulu.,gymorth,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,o,canlyniad,noun-masc,O,", penderfynwyd cau’r ffordd.",ganlyniad,SM,Set phrase “o ganlyniad”: c→g.
-"Soft, Contact",Preposition,o,popeth,noun-masc,Rydyn ni’n dysgu o,bob dydd.,bopeth,SM,“o” soft-mutates: p→b.
-"Soft, Contact",Preposition,am,munud,noun-masc,Aros am,", plis.",funud,SM,“am” commonly soft-mutates: m→f.
-"Soft, Contact",Preposition,o,mater,noun-masc,Roedd yn fater bach o,personol.,fater,SM,“o” soft-mutates: m→f.
-"Soft, Contact",Preposition,o,cefndir,noun-masc,Daw hi o,gwledig.,gefndir,SM,“o” soft-mutates: c→g.
-"Soft, Contact",Preposition,am,dyfodol,noun-masc,Rydyn ni’n ymgyrchu am,gwell.,ddyfodol,SM,“am” commonly soft-mutates: d→dd.
-"Soft, Contact",Preposition,o,tir,noun-masc,Prynwyd darn o,fferm.,dir,SM,“o” soft-mutates: t→d.
-"Soft, Contact",Preposition,o,gweinidog,noun-masc,Daeth y neges o,heddiw.,weinidog,SM,“o” soft-mutates: g→∅.
-"Soft, Contact",Preposition,am,tywydd,noun-masc,Mae pawb yn siarad am,gwael.,dywydd,SM,“am” commonly soft-mutates: t→d.
-"Soft, Contact",Preposition,ar,cadair,noun-fem,Roedd y ci'n eistedd ar,ger y ffenest,gadair,SM,Preposition “ar” immediately before a word triggers soft mutation.
-"Soft, Contact",Preposition,am,bachgen,noun-masc,Siaradon ni am,neithiwr wrth y drws,fachgen,SM,“am” causes SM on the following noun.
-"Soft, Contact",Preposition,at,tad,noun-masc,Anfonodd y ferch lun at,ar Whatsapp,dad,SM,“at” causes SM: tad→dad.
-"Soft, Contact",Preposition,dan,pont,noun-fem,Byddaf yn aros o dan,yfory.,bont,SM,“dan” causes SM: pont→bont.
-"Soft, Contact",Preposition,dros,mis,noun-masc,Bydd y siop ar gau dros,.,fis,SM,“dros” causes SM: mis→fis.
-"Soft, Contact",Preposition,am,gardd,noun-fem,Roeddwn ni'n siarad am,ar y bws bore 'ma,ardd,SM,“am” + g-deletion under SM: gardd→ardd.
-"Soft, Contact",Preposition,at,merch,noun-fem,Aeth y neges at,yn syth ar ôl y cyfarfod,ferch,SM,“at” causes SM: merch→ferch.
-"Soft, Contact",Preposition,ar,llyfr,noun-masc,Cadwodd hi'r nodyn ar,drwy'r wythnos i gyd,lyfr,SM,“ar” causes SM; ll→l: llyfr→lyfr.
-"Soft, Contact",Preposition,dros,rhwyd,noun-fem,Taflodd y bêl dros,yn hawdd ac yn uchel,rwyd,SM,“dros” causes SM; rh→r: rhwyd→rwyd.
-None,Preposition,am,siop,noun-fem,Roedden nhw'n holi am,newydd yn y dref,siop,NONE,"“am” present, but initial s- is immutable (no visible SM)."
-None,Preposition,at,Mererid,name,Anfonwch y gwahoddiad at,erbyn dydd Gwener,Mererid,NONE,Personal names typically don’t mutate after prepositions.
-None,Preposition,dan,drws,noun-masc,Gwadawodd hi'r mat dan y,drwy'r haf,drws,NONE,"Article “y” intervenes after the preposition, blocking contact mutation."
-None,Preposition,dros,amser,noun-masc,Mae'r casgliad wedi tyfu dros,yn araf ers y llynedd,amser,NONE,Vowel-initial noun: no visible change under SM.
-None,Preposition,am,Berlin,placename,Roeddwn ni'n siarad am,rhaglen ddoe,Berlin,NONE,Non-Welsh place names usually left unmutated after prepositions.
-None,Preposition,ar,bwrdd,noun-masc,Rhowch y llythyr ar y gadair neu'r,ger y ffenest,bwrdd,NONE,Intervening “neu’r”: preposition not immediately before noun → no SM.
-"Soft, Article",Article,y (fem sg),gardd,noun-fem,Gadawodd hi'r peli ar yr,ar ôl y parti,ardd,SM,Feminine singular after the article soft-mutates with g-deletion (gardd→ardd).
-"Soft, Contact",Preposition,gan,plant,noun-masc,Cawson ni anogaeth gan,cyn y perfformiad,blant,SM,“gan” causes SM: plant→blant.
-"Soft, Contact",Preposition,heb,bwyd,noun-masc,Aethon nhw am awr heb,", ond roedd dŵr ganddyn nhw",fwyd,SM,“heb” causes SM: bwyd→fwyd.
-"Soft, Contact",Preposition,hyd,diwedd,noun-masc,Bydd y siop yn aros ar agor hyd,y mis,ddiwedd,SM,“hyd” causes SM: diwedd→ddiwedd.
-"Soft, Contact",Preposition,i,dinas,noun-fem,Aethon ni i,brynhawn Sadwrn,ddinas,SM,“i” causes SM: dinas→ddinas.
-"Soft, Contact",Preposition,o,gardd,noun-fem,Cymerodd y bachgen lunia o,ger y tŷ,ardd,SM,“o” + g-deletion: gardd→ardd.
-"Soft, Contact",Preposition,tan,mis,noun-masc,Bydd y gwaith yn parhau tan,Tachwedd,fis,SM,“tan” causes SM: mis→fis.
-"Soft, Contact",Preposition,trwy,rhew,noun-masc,Cerddon ni drwy,i gyrraedd y car,rew,SM,“trwy” causes SM; rh→r: rhew→rew.
-"Soft, Contact",Preposition,wrth,desg,noun-fem,Roedd y llythyr yn aros wrth,y swyddfa ers ddoe,ddesg,SM,“wrth” causes SM: desg→ddesg.
-"Soft, Contact",Preposition,gan,canu,verb-noun,Aeth y criw rownd y neuadd gan,yn uchel,ganu,SM,VN after “gan”: c→g (canu→ganu).
-"Soft, Contact",Preposition,wrth,gweiddi,verb-noun,Fe ddaeth y ci ataf wrth,ar y stryd,weiddi,SM,VN after “wrth”: g-deletion in SM (gweiddi→weiddi).
-"Soft, Contact",Preposition,o,plant,noun-masc,Wnaethoch chi glywed sŵn o,ar y maes?,blant,SM,“o” causes SM: plant→blant.
-"Soft, Contact",Preposition,hyd,llwybr,noun-masc,Cerddon ni hyd,cul i'r ffynnon,lwybr,SM,“hyd” causes SM; ll→l: llwybr→lwybr.
-"Soft, Contact",Preposition,heb,dŵr,noun-masc,Rydym wedi bod heb,ers tri diwrnod,ddŵr,SM,“heb” causes SM: dŵr→ddŵr.
-"Soft, Contact",Preposition,wrth,rhiant,noun-masc,Roedd y plentyn yn sefyll wrth,y bachgen,riant,SM,“wrth” causes SM; rh→r: rhiant→riant.
-None,Preposition,gan,Mererid,name,Cawson ni e-bost gan,ddoe,Mererid,NONE,Personal names normally remain unmutated after prepositions.
-None,Preposition,heb,clawr,noun-masc,Roedd y bagiau heb y,ar ôl y tân,clawr,NONE,Article “y” blocks contact mutation from the preposition.
-None,Preposition,hyd,yfory,day,Bydd y ffeiriau'n parhau hyd,os bydd y tywydd yn caniatáu,yfory,NONE,Vowel-initial word: no visible change under SM.
-None,Preposition,i,Berlin,placename,Es i i,ar gyfer y gynhadledd,Berlin,NONE,Non-Welsh place names typically don’t mutate after prepositions.
-None,Preposition,o,cadair,noun-fem,Tynnodd e'r siaced o'r,cyn eistedd,cadair,NONE,Intervening ’r blocks contact mutation from “o”.
-None,Preposition,tan,diwedd,noun-masc,Arhoswch tan y,nes bod pawb yn barod,diwedd,NONE,Article “y” cancels the preposition’s contact mutation.
-None,Preposition,drwy,drws,noun-masc,Edrychon ni drwy'r,ar ôl y sŵn,drws,NONE,Intervening ’r blocks contact mutation from “drwy”.
-None,Preposition,wrth,siop,noun-fem,Aroson nhw wrth,ar y gornel,siop,NONE,Initial s- is immutable under SM.
-None,Preposition,rhag,torri,verb-noun,Ceisiwch atal y plant rhag,y ffenestri,torri,NONE,“rhag” does not trigger contact mutation; VN stays radical.
-None,Preposition,rhwng,plant,noun-masc,Cafwyd trafodaeth onest rhwng,a'r athrawon,plant,NONE,“rhwng” does not cause contact mutation.
-None,Preposition,mewn,tŷ,noun-masc,Roedden nhw'n byw mewn,bach ar y bryn,tŷ,NONE,“mewn” (non-specific “in”) does not cause contact mutation.
-None,Preposition,ar ôl,cawod,noun-fem,"Ar ôl,",aeth pawb adref,cawod,NONE,Compound prepositions do not mutate a following noun.
-None,Preposition,ar draws,pont,noun-fem,Cerddon ni ar draws,i'r orsaf,pont,NONE,Compound preposition → no mutation.
-None,Preposition,ar gyfer,prosiect,noun-masc,Mae'r arian ar gyfer,lleol.,prosiect,NONE,Compound preposition → no mutation.
+RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
+"Soft, Contact","Adjective+Noun","trefn","penodol","adj","Mae trefn","ar gyfer rheoli diogelwch","benodol","SM","After a feminine singular noun, the following adjective softens (ll/rh don’t change): penodol → benodol."
+"Soft, Contact","Adjective+Noun","ardal","preswyl","adj","Mae’r ardal","hon yn dawel.","breswyl","SM","Adjective after a feminine singular noun softens: p → b, hence ardal breswyl."
+"Soft, Contact","Adjective+Noun","gêm","mawr","adj","Sgorion nhw yn y gêm","","fawr","SM","A feminine singular noun before an adjective makes it soften: mawr → fawr after gêm."
+"Soft, Contact","Article","y","cynulleidfa","noun-fem","Roedd y","yn frwdfrydig.","gynulleidfa","SM","Feminine singular nouns soften after the definite article: c → g (y gynulleidfa)."
+"Soft, Contact","Article","y","gwasg","noun-fem","Cyhoeddwyd y llyfr gan y","","wasg","SM","Feminine singular after y; initial g drops under soft mutation (y wasg)."
+"Soft, Contact","Article","y","deddf","noun-fem","Pasiodd y","yn 2020.","ddeddf","SM","Feminine singular after y: d → dd (y ddeddf)."
+"Soft, Contact","Article","y","masnach","noun-fem","Mae’r","ryngwladol yn tyfu.","fasnach","SM","Feminine singular after y: m → f (y fasnach)."
+"None","Article","y","senedd","noun-fem","Mae’r","yn cyfarfod heddiw.","senedd","NONE","s does not soften; the article doesn’t change it (y senedd)."
+"None","Article","yr","amrywiaeth","noun-fem","Mae’r","o opsiynau yn eang.","amrywiaeth","NONE","Vowel-initial nouns show no change; the article is yr before vowels (yr amrywiaeth)."
+"None","Article","yr","ymgyrch","noun-fem","Siaradwyd am yr","newydd.","ymgyrch","NONE","Vowel-initial; no soft mutation of vowels (yr ymgyrch)."
+"Soft, Contact","Article","y","gwefan","noun-fem","Darllenais i’r erthygl ar y","swyddogol.","wefan","SM","Feminine singular after y: g → ∅ (y wefan)."
+"Soft, Contact","Article","y","mam","noun-fem","Mae’r","yn gweithio yn yr ysbyty.","fam","SM","Feminine singular after y: m → f (y fam)."
+"Soft, Contact","Article","y","taith","noun-fem","Mae’r trên yn aros ar y","nesaf.","daith","SM","Feminine singular after y: t → d (y daith)."
+"Soft, Contact","Article","y","merch","noun-fem","Dyma’r","sy’n arwain y prosiect.","ferch","SM","Feminine singular after y: m → f (y ferch)."
+"Soft, Contact","Article","y","cerddoriaeth","noun-fem","Roedd y","yn fyw a phwerus.","gerddoriaeth","SM","Feminine singular after y: c → g."
+"Soft, Contact","Article","y","cyfres","noun-fem","A yw’r","newydd yn dechrau heno?","gyfres","SM","Feminine singular after y: c → g."
+"Soft, Contact","Article","y","cymdeithas","noun-fem","Mae’r","yn cynnal cyfarfod blynyddol.","gymdeithas","SM","Feminine singular after y: c → g."
+"Soft, Contact","Article","y","problem","noun-fem","Sut y gallwn ni ddatrys y","hon?","broblem","SM","Feminine singular after y: p → b."
+"Soft, Contact","Article","y","prifysgol","noun-fem","Mae’r","yn agos at y ddinas.","brifysgol","SM","Feminine singular after y: p → b."
+"Soft, Contact","Article","y","cymuned","noun-fem","Mae’r","yn gryf iawn yma.","gymuned","SM","Feminine singular after y: c → g."
+"Soft, Contact","Article","y","canolfan","noun-fem","Mae’r bws yn stopio ger y","","ganolfan","SM","Feminine singular after y: c → g."
+"Soft, Contact","Article","y","canrif","noun-fem","Yn y","diwethaf gwelwyd newidiadau mawr.","ganrif","SM","Feminine singular after y: c → g."
+"Soft, Contact","Numerals","un","blwyddyn","noun-fem","Dyna un","yn unig.","flwyddyn","SM","Un before a feminine noun softens it."
+"Soft, Contact","Numerals","dwy","blynedd","noun-fem","Arhoson ni yno am dwy","","flynedd","SM","Dwy causes soft mutation; the time-word shows its special form ‘blynedd’."
+"None","Numerals","tair","blynedd","noun-fem","Mae’r cwrs yn para tair","","blynedd","NONE","No softening after tair in this time pattern."
+"None","Numerals","pedair","blynedd","noun-fem","Bydd y les yn para pedair","","blynedd","NONE","No softening after pedair."
+"Nasal, Contact","Numerals","pum","blynedd","noun-fem","Buon nhw yno am bum","","mlynedd","NM","5–10 cause nasal mutation with ‘blynedd’: b → m (mlynedd)."
+"Nasal, Contact","Numerals","chwe","blynedd","noun-fem","Cafodd y cynllun ei ohirio am chwe","","mlynedd","NM","Chwe takes the NM pattern with blynedd."
+"Nasal, Contact","Numerals","saith","blynedd","noun-fem","Ar ôl saith","","mlynedd","NM","Saith gives NM before blynedd."
+"Nasal, Contact","Numerals","wyth","blynedd","noun-fem","Roedden nhw’n briod ers wyth","","mlynedd","NM","Wyth gives NM before blynedd."
+"Nasal, Contact","Numerals","naw","blynedd","noun-fem","Buodd y prosiect yn rhedeg am naw","","mlynedd","NM","Naw gives NM before blynedd."
+"Nasal, Contact","Numerals","deg","blynedd","noun-fem","Roedd y contract yn ddilys am deng","","mlynedd","NM","Deg appears as deng before m-, and blynedd shows NM → mlynedd."
+"Nasal, Contact","Numerals","deuddeg","blynedd","noun-fem","Symudon nhw ar ôl deuddeg","","mlynedd","NM","Deuddeg follows the same NM pattern with blynedd."
+"Nasal, Contact","Numerals","pymtheg","blynedd","noun-fem","Aroson ni am bymtheg","cyn newid gwaith.","mlynedd","NM","Pymtheg gives NM with blynedd."
+"Nasal, Contact","Numerals","deunaw","blynedd","noun-fem","Cafodd y cwmni ei werthu ar ôl deunaw","","mlynedd","NM","Deunaw gives NM with blynedd."
+"Nasal, Contact","Numerals","ugain","blynedd","noun-fem","Bywodd y teulu dramor am ugain","","mlynedd","NM","Ugain + blynedd → NM (mlynedd)."
+"Nasal, Contact","Numerals","deugain","blynedd","noun-fem","Rhys gafodd seibiant o ddeugain","","mlynedd","NM","Deugain + blynedd → NM (mlynedd)."
+"Nasal, Contact","Numerals","can","blynedd","noun-fem","Mae’r bont yn sefyll ers can","","mlynedd","NM","Can + blynedd → NM (mlynedd)."
+"Nasal, Contact","Numerals","pum","blynedd","noun-fem","Prynwyd y tŷ pum","ar hugain yn ôl.","mlynedd","NM","In compound numbers with ‘ar’, the noun before ‘ar’ shows NM: pum mlynedd ar hugain."
+"Soft, Contact","Numerals","dau","cwmni","noun-masc","Cawsom gynnig gan dau","","gwmni","SM","Dau softens a following masculine noun: c → g."
+"Soft, Contact","Numerals","dau","teulu","noun-masc","Mae dau","yn byw yn y tŷ mawr.","deulu","SM","Dau softens: t → d."
+"Soft, Contact","Numerals","dau","cynllun","noun-masc","Cyflwynwyd dau","i’r pwyllgor.","gynllun","SM","Dau softens: c → g."
+"Soft, Contact","Numerals","dau","dyn","noun-masc","Gwelon ni dau","yn aros wrth y drws.","ddyn","SM","Dau softens: d → dd."
+"Soft, Contact","Numerals","dau","mudiad","noun-masc","Mae dau","yn cefnogi’r achos.","fudiad","SM","Dau softens: m → f."
+"Soft, Contact","Numerals","dau","tîm","noun-masc","Gêm rhwng dau","","dîm","SM","Dau softens: t → d."
+"Soft, Contact","Numerals","dau","polisi","noun-masc","Cawsom dau","newydd gan y cwmni.","bolisi","SM","Dau softens: p → b."
+"Soft, Contact","Numerals","dau","cyfrwng","noun-masc","Dewison nhw dau","cyfathrebu.","gyfrwng","SM","Dau softens: c → g."
+"Soft, Contact","Numerals","dau","cwestiwn","noun-masc","Atebais dau","yn ystod y drafodaeth.","gwestiwn","SM","Dau softens: c → g."
+"Soft, Contact","Numerals","dau","bore","noun-masc","Cawsom gyfarfodydd dau","yn olynol.","fore","SM","dau + masculine noun → Soft Mutation. b→f: bore → fore."
+"Soft, Contact","Numerals","dau","cynnig","noun-masc","Daeth dau","ar gyfer y swydd.","gynnig","SM","dau softens c→g: cynnig → gynnig."
+"Soft, Contact","Numerals","dau","cofnod","noun-masc","Cedwir dau","ar y system.","gofnod","SM","dau softens c→g: cofnod → gofnod."
+"Soft, Contact","Numerals","dau","cyfarfod","noun-masc","Mae dau","wedi’u trefnu bore yma.","gyfarfod","SM","dau softens c→g: cyfarfod → gyfarfod."
+"Soft, Contact","Numerals","dau","digwyddiad","noun-masc","Cafodd dau","eu gohirio.","ddigwyddiad","SM","dau softens d→dd: digwyddiad → ddigwyddiad."
+"Soft, Contact","Numerals","dau","dewis","noun-masc","Roedden ni’n cael dau","yn y ffurflen.","ddewis","SM","dau softens d→dd: dewis → ddewis."
+"Soft, Contact","Numerals","dau","prosiect","noun-masc","Mae’r adran yn rhedeg dau","eleni.","brosiect","SM","dau softens p→b: prosiect → brosiect."
+"Soft, Contact","Numerals","dau","grŵp","noun-masc","Mae’r dosbarth wedi’i rannu’n dau"," .","rŵp","SM","dau softens g→∅: grŵp → rŵp (g drops)."
+"Soft, Contact","Numerals","dau","papur","noun-masc","Mae gen i dau","i’w argraffu.","bapur","SM","dau softens p→b: papur → bapur."
+"Soft, Contact","Numerals","dau","clwb","noun-masc","Mae dau","pêl-droed yn y dref.","glwb","SM","dau softens c→g: clwb → glwb."
+"Soft, Contact","Numerals","dau","dosbarth","noun-masc","Rydyn ni’n rhedeg dau","bob prynhawn.","ddosbarth","SM","dau softens d→dd: dosbarth → ddosbarth."
+"Soft, Contact","Numerals","dau","tad","noun-masc","Mae ganddi dau","(un biolegol ac un cam).","dad","SM","dau softens t→d: tad → dad."
+"Nasal, Contact","Possessive","fy","pwyllgor","noun-masc","Dyma fy","i.","mhwyllgor","NM","fy ‘my’ causes Nasal Mutation on p/t/c: p→mh, so pwyllgor → mhwyllgor (fy mhwyllgor i)."
+"Soft, Contact","Possessive","dy","pwyllgor","noun-masc","Pryd yw dy","di’n cyfarfod?","bwyllgor","SM","dy ‘your (sg.)’ triggers Soft Mutation: p→b, so pwyllgor → bwyllgor."
+"Soft, Contact","Possessive","ei","pwyllgor","noun-masc","Cyhoeddodd ef restr ei"," .","bwyllgor","SM","ei meaning ‘his’ causes Soft Mutation: p→b (ei bwyllgor ef). NB: ei ‘her’ behaves differently (aspirate)."
+"Aspirate, Contact","Possessive","ei","arian","noun-masc","Roedd hi’n aros am ei","hi.","harian","AM","ei meaning ‘her’ causes Aspirate Mutation; add h- with a-: arian → harian (ei harian hi)."
+"None","Possessive","eich","pwyllgor","noun-masc","Faint o waith sydd ar eich","chi?","pwyllgor","NONE","No mutation after eich in the standard language (eich pwyllgor chi)."
+"Nasal, Contact","Possessive","fy","comisiynydd","noun-masc","Dyma fy","i heddiw.","nghomisiynydd","NM","fy causes Nasal Mutation c→ngh: comisiynydd → nghomisiynydd."
+"Soft, Contact","Possessive","dy","comisiynydd","noun-masc","Dyma dy","di.","gomisiynydd","SM","dy triggers Soft Mutation c→g: comisiynydd → gomisiynydd."
+"Aspirate, Contact","Possessive","ei","comisiynydd","noun-masc","Dyma ei","hi.","chomisiynydd","AM","ei ‘her’ triggers Aspirate Mutation c→ch: comisiynydd → chomisiynydd."
+"Soft, Contact","Possessive","ei","comisiynydd","noun-masc","Dyma ei","ef.","gomisiynydd","SM","ei ‘his’ triggers Soft Mutation c→g: comisiynydd → gomisiynydd."
+"Aspirate, Contact","Possessive","ei","cynulleidfa","noun-fem","Cafodd hi gefnogaeth ei"," .","chynulleidfa","AM","ei ‘her’ → Aspirate Mutation c→ch: cynulleidfa → chynulleidfa."
+"Soft, Contact","Possessive","ei","cynulleidfa","noun-fem","Cafodd ef gefnogaeth ei"," .","gynulleidfa","SM","ei ‘his’ → Soft Mutation c→g: cynulleidfa → gynulleidfa."
+"Nasal, Contact","Possessive","fy","gwasg","noun-fem","Mae gen i brofiad yn fy"," .","ngwasg","NM","fy causes Nasal Mutation g→ng: gwasg → ngwasg."
+"Soft, Contact","Possessive","dy","gwasg","noun-fem","Rwyt ti’n rhedeg dy","di?","wasg","SM","dy triggers SM; initial g disappears under SM: gwasg → wasg."
+"Soft, Contact","Possessive","ei","gwasg","noun-fem","Dyna ei","ef yn y dref.","wasg","SM","ei ‘his’ + g-: g drops in SM → wasg (ei wasg ef)."
+"None","Possessive","eu","deddf","noun-fem","Cyhoeddwyd testun eu","nhw.","deddf","NONE","eu ‘their’ does not mutate in the standard system."
+"None","Possessive","dy","senedd","noun-fem","Dyma dy","di.","senedd","NONE","s is immune to Soft Mutation; no change after dy (dy senedd di)."
+"None","Possessive","eu","mynediad","noun-masc","Diweddarwyd y manylion am eu","nhw.","mynediad","NONE","eu ‘their’ doesn’t mutate; optional h- only before vowels (not relevant here)."
+"Soft, Contact","Preposition","o","tanseilio","verb-noun","Ac o gofio’r peryglon o","hyder mewn cig.","danseilio","SM","Preposition o causes Soft Mutation on the next word: t→d, tanseilio → danseilio."
+"Soft, Contact","Preposition","o","bywyd","noun-masc","Does dim llawer o","eleni.","fywyd","SM","o softens b→f: bywyd → fywyd."
+"Soft, Contact","Preposition","o","cig","noun-masc","Mae’r cawl yn cynnwys llawer o"," .","gig","SM","o softens c→g: cig → gig."
+"Soft, Contact","Preposition","o","pryd","noun-masc","Rydyn ni’n cwrdd o","i’w gilydd.","bryd","SM","o softens p→b: pryd → bryd (o bryd i’w gilydd)."
+"Soft, Contact","Preposition","o","tu","noun-masc","Rydyn ni o","’r tîm lleol.","du","SM","o softens t→d: tu → du (o du’r tîm ‘on the side of the team’)."
+"Soft, Contact","Preposition","o","diwedd","noun-masc","Mae’r rheolau’n weithredol o","y flwyddyn.","ddiwedd","SM","o softens d→dd: diwedd → ddiwedd."
+"Soft, Contact","Preposition","o","dechrau","noun-masc","Newidiwyd y rheolau o","’r tymor.","ddechrau","SM","o softens d→dd: dechrau → ddechrau."
+"Soft, Contact","Preposition","o","cyngor","noun-masc","Mae angen rhywfaint o","arnom ni.","gyngor","SM","o softens c→g: cyngor → gyngor."
+"Soft, Contact","Preposition","o","bwyd","noun-masc","Mae angen prynu mwy o","cyn y penwythnos.","fwyd","SM","o softens b→f: bwyd → fwyd."
+"Soft, Contact","Preposition","o","busnes","noun-masc","Dw i ddim eisiau trafod pethau o","yn gyhoeddus.","fusnes","SM","o softens b→f: busnes → fusnes."
+"Soft, Contact","Preposition","o","maes","noun-masc","Mae hwn yn rhan o","ymchwil diddorol.","faes","SM","o softens m→f: maes → faes."
+"None","Preposition","o","digon","noun-masc","Doedden ni ddim yn cael","o amser.","digon","NONE","In the pattern digon o …, nothing happens to digon; it’s the noun after o that may mutate."
+"Soft, Contact","Preposition","o","duw","noun-masc","O","! Gobeithio nad yw’n wir.","Dduw","SM","Vocative/exclamation with o gives SM: d→dd, Duw → Dduw."
+"Soft, Contact","Preposition","o","canol","noun-masc","Daeth y sŵn o","ganol y ddinas.","ganol","SM","o softens c→g: canol → ganol (o ganol y ddinas)."
+"Soft, Contact","Preposition","o","profiad","noun-masc","Dw i’n siarad o","personol.","brofiad","SM","o softens p→b: profiad → brofiad (o brofiad personol)."
+"Soft, Contact","Preposition","o","cartref","noun-masc","Maen nhw’n gweithio o","ddwywaith yr wythnos.","gartref","SM","o softens c→g: cartref → gartref."
+"Soft, Contact","Preposition","o","gogledd","noun-masc","Daethon nhw o","Gymru.","ogledd","SM","With g- the g disappears under SM: gogledd → ogledd (o ogledd Cymru)."
+"Soft, Contact","Preposition","o","cymorth","noun-masc","Fe ddylai hynny fod o","i’r teulu.","gymorth","SM","o softens c→g: cymorth → gymorth."
+"Soft, Contact","Preposition","o","canlyniad","noun-masc","O",", penderfynwyd cau’r ffordd.","ganlyniad","SM","Fixed phrase: o ganlyniad ‘as a result’ (c→g)."
+"Soft, Contact","Preposition","o","popeth","noun-masc","Rydyn ni’n dysgu o","bob dydd.","bopeth","SM","o softens p→b: popeth → bopeth."
+"Soft, Contact","Preposition","am","munud","noun-masc","Aros am",", plis.","funud","SM","am commonly causes SM on m→f: munud → funud."
+"Soft, Contact","Preposition","o","mater","noun-masc","Roedd yn achos o","personol.","fater","SM","o causes Soft Mutation on the next word: m→f (mater → fater)."
+"Soft, Contact","Preposition","o","cefndir","noun-masc","Daw hi o","gwledig.","gefndir","SM","o softens c→g (cefndir → gefndir)."
+"Soft, Contact","Preposition","am","dyfodol","noun-masc","Rydyn ni’n ymgyrchu am","gwell.","ddyfodol","SM","am often causes SM: d→dd (dyfodol → ddyfodol)."
+"Soft, Contact","Preposition","o","tir","noun-masc","Prynwyd darn o","fferm.","dir","SM","o softens t→d (tir → dir)."
+"Soft, Contact","Preposition","o","gweinidog","noun-masc","Daeth y neges o","heddiw.","weinidog","SM","With g-, SM deletes the g: g→∅ (gweinidog → weinidog)."
+"Soft, Contact","Preposition","am","tywydd","noun-masc","Mae pawb yn siarad am","gwael.","dywydd","SM","am softens t→d (tywydd → dywydd)."
+"Soft, Contact","Preposition","ar","cadair","noun-fem","Roedd y ci’n eistedd ar","ger y ffenest.","gadair","SM","ar directly before a noun triggers SM: c→g (cadair → gadair)."
+"Soft, Contact","Preposition","am","bachgen","noun-masc","Siaradon ni am","neithiwr wrth y drws.","fachgen","SM","am softens b→f (bachgen → fachgen)."
+"Soft, Contact","Preposition","at","tad","noun-masc","Anfonodd y ferch lun at","ar WhatsApp.","dad","SM","at causes SM: t→d (tad → dad)."
+"Soft, Contact","Preposition","dan","pont","noun-fem","Byddaf yn aros o dan","yfory.","bont","SM","dan causes SM: p→b (pont → bont)."
+"Soft, Contact","Preposition","dros","mis","noun-masc","Bydd y siop ar gau dros","nesaf.","fis","SM","dros causes SM: m→f (mis → fis)."
+"Soft, Contact","Preposition","am","gardd","noun-fem","Roedden ni’n siarad am","ar y bws bore ’ma.","ardd","SM","am + g-deletion under SM: g→∅ (gardd → ardd)."
+"Soft, Contact","Preposition","at","merch","noun-fem","Aeth y neges at","yn syth ar ôl y cyfarfod.","ferch","SM","at causes SM: m→f (merch → ferch)."
+"Soft, Contact","Preposition","ar","llyfr","noun-masc","Cadwodd hi’r nodyn ar","drwy’r wythnos i gyd.","lyfr","SM","ar causes SM; ll→l (llyfr → lyfr)."
+"Soft, Contact","Preposition","dros","rhwyd","noun-fem","Taflodd y bêl dros","yn hawdd ac yn uchel.","rwyd","SM","dros causes SM; rh→r (rhwyd → rwyd)."
+"None","Preposition","am","siop","noun-fem","Roedden nhw’n holi am","newydd yn y dref.","siop","NONE","Initial s- is immune to SM: no change (siop)."
+"None","Preposition","at","Mererid","name","Anfonwch y gwahoddiad at","erbyn dydd Gwener.","Mererid","NONE","Personal names are usually left unmutated after prepositions."
+"None","Preposition","dan","drws","noun-masc","Gadawodd hi’r mat dan y","drwy’r haf.","drws","NONE","The article y intervenes, so the preposition isn’t in contact → no mutation."
+"None","Preposition","dros","amser","noun-masc","Mae’r casgliad wedi tyfu dros","yn araf ers y llynedd.","amser","NONE","Vowel-initial noun shows no visible SM."
+"None","Preposition","am","Berlin","placename","Roedden ni’n siarad am","rhaglen ddoe.","Berlin","NONE","Non-Welsh place names are usually not mutated after prepositions."
+"None","Preposition","ar","bwrdd","noun-masc","Rhowch y llythyr ar y gadair neu’r","ger y ffenest.","bwrdd","NONE","Intervening neu’r breaks contact → no mutation."
+"Soft, Contact","Article","y","gardd","noun-fem","Gadawodd hi’r peli yn yr","ar ôl y parti.","ardd","SM","Fem. sg. noun after the definite article soft-mutates; g drops: gardd → ardd."
+"Soft, Contact","Preposition","gan","plant","noun-masc","Cawson ni anogaeth gan","cyn y perfformiad.","blant","SM","gan causes SM: p→b (plant → blant)."
+"Soft, Contact","Preposition","heb","bwyd","noun-masc","Aethon nhw am awr heb","— ond roedd dŵr ganddyn nhw.","fwyd","SM","heb causes SM: b→f (bwyd → fwyd)."
+"Soft, Contact","Preposition","hyd","diwedd","noun-masc","Bydd y siop yn aros ar agor hyd","y mis.","ddiwedd","SM","hyd causes SM: d→dd (diwedd → ddiwedd)."
+"Soft, Contact","Preposition","i","dinas","noun-fem","Aethon ni i","brynhawn Sadwrn.","ddinas","SM","i causes SM: d→dd (dinas → ddinas)."
+"Soft, Contact","Preposition","o","gardd","noun-fem","Cymerodd y bachgen luniau o","ger y tŷ.","ardd","SM","o + g-deletion under SM: gardd → ardd."
+"Soft, Contact","Preposition","tan","mis","noun-masc","Bydd y gwaith yn parhau tan","Tachwedd.","fis","SM","tan causes SM: m→f (mis → fis)."
+"Soft, Contact","Preposition","trwy","rhew","noun-masc","Cerddon ni trwy","i gyrraedd y car.","rew","SM","trwy causes SM; rh→r (rhew → rew)."
+"Soft, Contact","Preposition","wrth","desg","noun-fem","Roedd y llythyr yn aros wrth","y swyddfa ers ddoe.","ddesg","SM","wrth causes SM: d→dd (desg → ddesg)."
+"Soft, Contact","Preposition","gan","canu","verb-noun","Aeth y criw rownd y neuadd gan","yn uchel.","ganu","SM","Verb-noun after gan soft-mutates: c→g (canu → ganu)."
+"Soft, Contact","Preposition","wrth","gweiddi","verb-noun","Fe ddaeth y ci ataf wrth","ar y stryd.","weiddi","SM","Verb-noun after wrth soft-mutates; g drops: g→∅ (gweiddi → weiddi)."
+"Soft, Contact","Preposition","o","plant","noun-masc","Wnaethoch chi glywed sŵn o","ar y maes?","blant","SM","o causes SM: p→b (plant → blant)."
+"Soft, Contact","Preposition","hyd","llwybr","noun-masc","Cerddon ni hyd","cul i’r ffynnon.","lwybr","SM","hyd causes SM; ll→l (llwybr → lwybr)."
+"Soft, Contact","Preposition","heb","dŵr","noun-masc","Rydym wedi bod heb","ers tri diwrnod.","ddŵr","SM","heb causes SM: d→dd (dŵr → ddŵr)."
+"Soft, Contact","Preposition","wrth","rhiant","noun-masc","Roedd y plentyn yn sefyll wrth","y bachgen.","riant","SM","wrth causes SM; rh→r (rhiant → riant)."
+"None","Preposition","gan","Mererid","name","Cawson ni e-bost gan","ddoe.","Mererid","NONE","Personal names normally remain unmutated after prepositions."
+"None","Preposition","heb","clawr","noun-masc","Roedd y bagiau heb y","ar ôl y tân.","clawr","NONE","Article y blocks contact, so no mutation."
+"None","Preposition","hyd","yfory","day","Bydd y ffeiriau’n parhau hyd","os bydd y tywydd yn caniatáu.","yfory","NONE","Vowel-initial word: no visible SM."
+"None","Preposition","i","Berlin","placename","Es i i","ar gyfer y gynhadledd.","Berlin","NONE","Non-Welsh place names typically don’t mutate after prepositions."
+"None","Preposition","o","cadair","noun-fem","Tynnodd e’r siaced o’r","cyn eistedd.","cadair","NONE","o’r (o+yr) breaks contact → no mutation."
+"None","Preposition","tan","diwedd","noun-masc","Arhoswch tan y","nes bod pawb yn barod.","diwedd","NONE","Article y after the preposition blocks contact mutation."
+"None","Preposition","drwy","drws","noun-masc","Edrychon ni drwy’r","ar ôl y sŵn.","drws","NONE","Intervening ’r means no direct contact → no mutation."
+"None","Preposition","wrth","siop","noun-fem","Aroson nhw wrth","ar y gornel.","siop","NONE","Initial s- is immutable under SM."
+"None","Preposition","rhag","torri","verb-noun","Ceisiwch atal y plant rhag","y ffenestri.","torri","NONE","rhag does not trigger contact mutation; VN stays radical."
+"None","Preposition","rhwng","plant","noun-masc","Cafwyd trafodaeth onest rhwng","a’r athrawon.","plant","NONE","rhwng does not cause contact mutation."
+"None","Preposition","mewn","tŷ","noun-masc","Roedden nhw’n byw mewn","bach ar y bryn.","tŷ","NONE","mewn (unspecific ‘in’) does not cause mutation."
+"None","Preposition","ar ôl","cawod","noun-fem","Ar ôl","aeth pawb adref.","cawod","NONE","Compound preposition ar ôl does not mutate the following noun."
+"None","Preposition","ar draws","pont","noun-fem","Cerddon ni ar draws","i’r orsaf.","pont","NONE","Compound preposition → no mutation."
+"None","Preposition","ar gyfer","prosiect","noun-masc","Mae’r arian ar gyfer","lleol.","prosiect","NONE","Compound preposition → no mutation."
 None,Preposition,ar bwys,bwrdd,noun-masc,Gadawodd hi'r allweddi ar bwys,yn y gegin,bwrdd,NONE,Compound preposition → no mutation.
 None,Preposition,er mwyn,cefnogi,verb-noun,Fe drefnwyd y digwyddiad er mwyn,yr elusen,cefnogi,NONE,Compound preposition → no mutation.
 None,Preposition,o amgylch,parc,noun-masc,Rhedon nhw o amgylch,ddwywaith,parc,NONE,Compound preposition → no mutation.
@@ -856,6 +856,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
+
 
 
 
