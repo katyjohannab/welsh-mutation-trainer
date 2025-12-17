@@ -554,6 +554,21 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None, Possessive","Possessive","ei (his)",enw,noun-masc,"Beth yw ei","e?","enw",NONE,"ei (his) gives Soft Mutation on consonants, but with a vowel-initial noun there’s no change—and no h-: ei enw e. "
 "Prothesis, Possessive","Possessive","ar ei … hi (compound prep + poss.)",ôl,noun-masc,"Cerddodd pawb ar ei","hi.","hôl",NONE,"With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. "
 "Prothesis, Possessive","Possessive","wrth ein … ni (compound prep + poss.)",ymyl,noun-masc,"Roedden nhw wrth ein","ni trwy’r cyfarfod.","hymyl",NONE,"ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. "
+"Prothesis, Possessive","Possessive","ei (her)",ysgol,noun-fem,"Mae hi’n caru ei","hi yn fawr.","hysgol",NONE,"With ei (her) before a vowel-initial noun, add h- at the start: ei hysgol hi ‘her school’. This is standard; many speakers drop it in speech. "
+"Prothesis, Possessive","Possessive","ein (our)",enw,noun-masc,"Beth yw ein","ni ar y rhestr?","henw",NONE,"ein + vowel-initial noun takes h- in the standard language: ein henw ni ‘our name’. "
+"None, Possessive","Possessive","eich (your pl/formal)",enw,noun-masc,"Ysgrifennwch eich","chi ar frig y dudalen.","enw",NONE,"Do NOT add h- after eich in the standard language: eich enw chi (not eich henw). "
+"Prothesis, Possessive","Possessive","eu (their)",arian,noun-masc,"Maen nhw wedi colli eu","nhw eto.","harian",NONE,"eu + vowel-initial noun takes h-: eu harian nhw ‘their money’. "
+"Prothesis, Possessive","Possessive","ei (her)",oedran,noun-masc,"Rhowch ei","hi ar y ffurflen.","hoedran",NONE,"ei (her) adds h- before a vowel-initial noun: ei hoedran hi ‘her age’. "
+"Prothesis, Possessive","Possessive","ein (our)",amser,noun-masc,"Rydyn ni’n gwerthfawrogi ein","ni.","hamser",NONE,"ein + vowel-initial noun → h-: ein hamser ni. "
+"Prothesis, Possessive","Possessive","eu (their)",enwau,noun-pl,"Rhowch y rhestr gyda’u","nhw isod.","henwau",NONE,"eu + vowel-initial noun → h-: eu henwau nhw ‘their names’. "
+"None, Possessive","Possessive","eich (your pl/formal)",ysgol,noun-fem,"Ble mae eich","chi heddiw?","ysgol",NONE,"No h- after eich: eich ysgol chi (standard). "
+"Prothesis, Possessive","Possessive","ei (her)",addysg,noun-fem,"Mae hi’n parhau ei","hi yn y brifysgol.","haddysg",NONE,"ei (her) + vowel-initial noun → h-: ei haddysg hi ‘her education’. "
+"Aspirate, Contact","Possessive","ei (her)",car,noun-masc,"Bu damwain i ei","hi ddoe.","char",AM,"ei (her) causes Aspirate Mutation on c/p/t (c→ch): car→char. No h- because the word starts with a consonant. "
+"Aspirate, Contact","Possessive","ei (her)",tŷ,noun-masc,"Prynodd hi ei","hi llynedd.","thŷ",AM,"ei (her) aspirates t→th: tŷ→thŷ. "
+"Aspirate, Contact","Possessive","ei (her)",papur,noun-masc,"Gwelais i ei","hi ar y bwrdd.","phapur",AM,"ei (her) aspirates p→ph: papur→phapur. "
+"None, Possessive","Possessive","ei (his)",enw,noun-masc,"Beth yw ei","e?","enw",NONE,"ei (his) gives Soft Mutation on consonants, but with a vowel-initial noun there’s no change—and no h-: ei enw e. "
+"Prothesis, Possessive","Possessive","ar ei … hi (compound prep + poss.)",ôl,noun-masc,"Cerddodd pawb ar ei","hi.","hôl",NONE,"With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. "
+"Prothesis, Possessive","Possessive","wrth ein … ni (compound prep + poss.)",ymyl,noun-masc,"Roedden nhw wrth ein","ni trwy’r cyfarfod.","hymyl",NONE,"ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. "
 
 
 
