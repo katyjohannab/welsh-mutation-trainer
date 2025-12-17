@@ -244,7 +244,7 @@ None,Possessive,gyda’n,afal,noun-masc,"Daethon ni gyda’n ",i’r trip.,afal,
 "Aspirate, Contact",Numerals,tri,papur,noun-masc,Mae tri,ar y ddesg.,phapur,AM,tri causes a mutation on the following noun → AM (p→ph).
 "Aspirate, Contact",Numerals,tri,tŷ,noun-masc,Prynon ni tri,y lôn hon.,thŷ,AM,tri → AM (t→th).
 "Aspirate, Contact",Numerals,chwe,cath,noun-fem,Roedd chwe,yn yr ystafell.,chath,AM,chwe (form before noun) triggers AM on p/t/c.
-"Aspirate, Contact",Numerals,chwe,pen,noun-masc,Cawsom,i’w rhannu.,phen,AM,chwe → AM (p→ph).
+"Aspirate, Contact",Numerals,chwe,pen,noun-masc,Cawsom chwe,i’w rhannu.,phen,AM,chwe → AM (p→ph).
 "Aspirate, Contact",Preposition,tua,tafarn,noun-fem,Aeth e tua,ar ôl gwaith.,thafarn,AM,tua/tuag (towards) can trigger AM on p/t/c.
 "Aspirate, Contact",Preposition,tua,car,noun-masc,Rhedodd y bachgen tua,yn sydyn.,char,AM,tua → AM (c→ch).
 "Nasal, Contact",Possessive,fy,car,noun-masc,Collais i fy,ddoe.,nghar,NM,fy triggers NM: c→ngh (car → fy nghar).
@@ -728,6 +728,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None","Conjunction","ac","hawl","noun-fem","Darllenwch y canllawiau ac ","i wneud cais.","hawl","NONE","Before h-, choose ac (not a). ac causes no mutation. Hawl is feminine; it stays hawl."
 "None","Conjunction","ac","enw","noun-masc","Llenwch y llythyr ac ","ar waelod y dudalen.","enw","NONE","Use ac before a vowel; it doesn’t mutate. Enw is masculine; remains enw."
 "None","Conjunction","ac","eitem","noun-fem","Mae dau gategori ac ","ychwanegol i’w hychwanegu.","eitem","NONE","ac comes before a vowel and does not cause mutation. Eitem is feminine; it stays eitem."
+
 
 
 
