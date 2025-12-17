@@ -1,6 +1,6 @@
 RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
 "Soft,Contact",Adjective+Noun,trefn,penodol,adj,Mae trefn,ar gyfer rheoli diogelwch,benodol,SM,An adjective following a feminine singular noun soft-mutates (ll/rh excluded): penodol→benodol
-"Soft, Structure",Adjective+Noun,ardal (enw benywaidd unigol),preswyl,,Mae'r ardal,hon yn dawel.,breswyl,SM,"Ansoddair yn dilyn enw benywaidd unigol yn treiglo'n feddal; p→b, felly “ardal breswyl”."
+"Soft, Structure",Adjective+Noun,ardal,preswyl,,Mae'r ardal,hon yn dawel.,breswyl,SM,"Ansoddair yn dilyn enw benywaidd unigol yn treiglo'n feddal; p→b, felly “ardal breswyl”."
 "Soft, Contact",Adjective+Noun,fem noun → adj,mawr,adj,Sgorion nhw yn y gêm,.,fawr,SM,Adjective after fem. sg. noun soft-mutates: m→f (“gêm fawr”).
 "Soft, Contact",Article,"y (def. art., fem sg)",cynulleidfa,noun-fem,Roedd y,yn frwdfrydig.,gynulleidfa,SM,Feminine singular nouns soft-mutate after the definite article: c→g (y gynulleidfa).
 "Soft, Contact",Article,"y (def. art., fem sg)",gwasg,noun-fem,Cyhoeddwyd y llyfr gan y,.,wasg,SM,Feminine singular after y; g drops under SM (y wasg).
@@ -728,6 +728,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None","Conjunction","ac","hawl","noun-fem","Darllenwch y canllawiau ac ","i wneud cais.","hawl","NONE","Before h-, choose ac (not a). ac causes no mutation. Hawl is feminine; it stays hawl."
 "None","Conjunction","ac","enw","noun-masc","Llenwch y llythyr ac ","ar waelod y dudalen.","enw","NONE","Use ac before a vowel; it doesn’t mutate. Enw is masculine; remains enw."
 "None","Conjunction","ac","eitem","noun-fem","Mae dau gategori ac ","ychwanegol i’w hychwanegu.","eitem","NONE","ac comes before a vowel and does not cause mutation. Eitem is feminine; it stays eitem."
+
 
 
 
