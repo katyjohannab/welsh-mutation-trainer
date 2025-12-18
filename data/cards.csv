@@ -1,5 +1,4 @@
 RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
-RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
 "Soft, Contact","Adjective+Noun","trefn","penodol","adj","Mae trefn","ar gyfer rheoli diogelwch","benodol","SM","After a feminine singular noun, the following adjective softens (ll/rh don’t change): penodol → benodol."
 "Soft, Contact","Adjective+Noun","ardal","preswyl","adj","Mae’r ardal","hon yn dawel.","breswyl","SM","Adjective after a feminine singular noun softens: p → b, hence ardal breswyl."
 "Soft, Contact","Adjective+Noun","gêm","mawr","adj","Sgorion nhw yn y gêm","","fawr","SM","A feminine singular noun before an adjective makes it soften: mawr → fawr after gêm."
@@ -856,6 +855,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
+
 
 
 
