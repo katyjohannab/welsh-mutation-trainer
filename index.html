@@ -1193,22 +1193,81 @@ function buildCompleteSentence(card) {
   return s;
 }
 
-// TEMP fallback (so the button works even before you re-add Polly/Lambda):
-function playPollySentence(sentence) {
-  return new Promise((resolve, reject) => {
-    try {
-      if (!('speechSynthesis' in window)) throw new Error('Speech synthesis not supported');
-      const u = new SpeechSynthesisUtterance(sentence);
-      u.lang = 'cy-GB'; // will fall back if not available
-      u.onend = resolve;
-      u.onerror = () => reject(new Error('Speech synthesis error'));
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    } catch (e) {
-      reject(e);
-    }
-  });
+// ---------- TTS (Amazon Polly via your Lambda Function URL) ----------
+// PUT YOUR REAL FUNCTION URL HERE:
+const POLLY_FUNCTION_URL = "PASTE_YOUR_LAMBDA_FUNCTION_URL_HERE";
+
+// Cache MP3 blobs in-memory so repeated clicks don't keep calling AWS
+const ttsCache = new Map();
+
+//build Sentence
+function buildCompleteSentence(card) {
+  const before = (card.Before || '').trimEnd();
+  const answer = (card.Answer || '').trim();
+  const after  = (card.After  || '').trimStart();
+
+  let s = [before, answer, after].filter(Boolean).join(' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
+  return s;
 }
+
+async function playPollySentence(sentence) {
+  if (!sentence) throw new Error("No sentence to speak.");
+  if (!POLLY_FUNCTION_URL || POLLY_FUNCTION_URL.includes("PASTE_YOUR_LAMBDA_FUNCTION_URL_HERE")) {
+    throw new Error("POLLY_FUNCTION_URL isn't set. Paste your Lambda Function URL into the script.");
+  }
+
+  // Use cache if already generated this exact sentence
+  const cachedUrl = ttsCache.get(sentence);
+  if (cachedUrl) {
+    const audio = new Audio(cachedUrl);
+    await audio.play();
+    return;
+  }
+
+  const res = await fetch(POLLY_FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: sentence })
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(msg || `TTS failed (${res.status})`);
+  }
+
+  // Be tolerant: Lambda might return raw MP3 bytes OR JSON with base64
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+
+  let url = null;
+
+  if (ct.includes("audio") || ct.includes("octet-stream")) {
+    const buf = await res.arrayBuffer();
+    const blob = new Blob([buf], { type: "audio/mpeg" });
+    url = URL.createObjectURL(blob);
+  } else {
+    // JSON fallback: expects { audioBase64: "..."} or { audioContent: "..."} or { url: "..." }
+    const j = await res.json();
+    if (j.url) {
+      url = j.url;
+    } else if (j.audioBase64 || j.audioContent) {
+      const b64 = j.audioBase64 || j.audioContent;
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const blob = new Blob([bytes], { type: "audio/mpeg" });
+      url = URL.createObjectURL(blob);
+    } else {
+      throw new Error("TTS response wasn't audio and didn't include url/audioBase64/audioContent.");
+    }
+  }
+
+  ttsCache.set(sentence, url);
+
+  const audio = new Audio(url);
+  await audio.play();
+}
+
+
 
   // ---------- Render ----------
   function btn(label, extraClass, onClick){
