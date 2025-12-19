@@ -259,25 +259,46 @@
       box-shadow: 0 10px 22px rgba(2,6,23,0.08);
     }
 
-    /* Custom style for the audio playback button.  This echoes the site's
-       emerald colour palette while differentiating it from the primary
-       action buttons.  It's intentionally understated so as not to
-       overpower the answer feedback. */
+    /* Custom style for the audio playback button.  It is intentionally
+       compact with an inline icon to clearly convey its purpose.  The
+       emerald palette ties it back to the site’s theme without
+       overpowering the surrounding content. */
     .btn-hear{
-      background: rgba(4,120,87,0.12);
+      display:inline-flex;
+      align-items:center;
+      gap:0.35rem;
+      background: rgba(4,120,87,0.10);
       border: 1px solid rgba(4,120,87,0.26);
       color: var(--emerald-ink);
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      padding: .45rem .9rem;
+      padding: 0.28rem 0.6rem;
       border-radius: 999px;
       font-weight: 600;
+      font-size: 0.875rem; /* 14px for compactness */
       line-height: 1;
       transition: transform .06s ease, background .12s ease, box-shadow .12s ease;
+      cursor: pointer;
+    }
+    .btn-hear .icon{
+      font-size: 1rem; /* slightly larger icon */
+      line-height: 1;
     }
     .btn-hear:hover{
-      background: rgba(4,120,87,0.22);
+      background: rgba(4,120,87,0.18);
       transform: translateY(-1px);
       box-shadow: 0 4px 10px rgba(2,6,23,0.08);
+    }
+
+    /* Container styling for revealed feedback.  This box groups the
+       correctness message, completed sentence, answer details and the
+       audio button.  A soft tint and border help it stand apart from
+       the rest of the card without drawing too much attention. */
+    .feedback-box{
+      background: rgba(4,120,87,0.05);
+      border: 1px solid rgba(4,120,87,0.20);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
     }
 
     /* Toggle pill used in filter selectors */
@@ -1424,33 +1445,37 @@ async function playPollySentence(sentence) {
       
       const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
       const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
-      // Build the revealed feedback section.  The sentence and answer
-      // details are grouped for consistent spacing.  A dedicated
-      // "Hear this" button sits directly after the completed sentence to
-      // encourage listening practice.  The spacing classes have been
-      // adjusted to provide clearer separation between the action
-      // buttons and the feedback content.
+      // Build the revealed feedback section.  The sentence, answer details
+      // and audio button are grouped inside a soft-tinted box.  The
+      // audio button uses an inline icon for clarity and has been
+      // intentionally minimised in size.  Additional vertical spacing
+      // separates the action buttons from the feedback container.
       feedback.innerHTML = `
-        <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-          ${statusIcon} ${skipped ? 'Skipped' : (ok ? 'Correct!' : 'Not quite')}
-        </div>
-        ${(!ok && !skipped)
-          ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`
-          : ''
-        }
-        <!-- Completed sentence with inline audio button -->
-        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-center flex-wrap gap-3">
-          <span>${esc(card.Before || '')}</span>
-          <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
-          <span>${esc(card.After || '')}</span>
-          <button id="btnHear" class="btn btn-hear" type="button">Hear this</button>
-        </div>
-        <!-- Answer details with consistent spacing -->
-        <div class="mt-4 space-y-1 text-slate-700">
-          <div>Answer: <b>${esc(card.Answer)}</b></div>
-          <div>Trigger: <b>${esc(card.Trigger || '—')}</b></div>
-          <div><span class="font-medium">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
-          ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
+        <div class="feedback-box">
+          <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
+            ${statusIcon} ${skipped ? 'Skipped' : (ok ? 'Correct!' : 'Not quite')}
+          </div>
+          ${(!ok && !skipped)
+            ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`
+            : ''
+          }
+          <!-- Completed sentence with inline audio button -->
+          <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-center flex-wrap gap-3">
+            <span>${esc(card.Before || '')}</span>
+            <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
+            <span>${esc(card.After || '')}</span>
+            <button id="btnHear" class="btn-hear" type="button">
+              <span class="icon" aria-hidden="true">&#128266;</span>
+              <span> Hear</span>
+            </button>
+          </div>
+          <!-- Answer details with consistent spacing -->
+          <div class="mt-4 space-y-1 text-slate-700">
+            <div>Answer: <b>${esc(card.Answer)}</b></div>
+            <div>Trigger: <b>${esc(card.Trigger || '—')}</b></div>
+            <div><span class="font-medium">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
+            ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
+          </div>
         </div>
       `;
 
@@ -1651,6 +1676,5 @@ async function playPollySentence(sentence) {
   </script>
 </body>
 </html>
-
 
 
