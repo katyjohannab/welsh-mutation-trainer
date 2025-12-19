@@ -786,7 +786,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Preposition","tan","dechrau","verb-noun","Arhoswch "," y rhaglen, plis.","ddechrau","SM","tan ‘until’ softens the action word (d→dd): dechrau → ddechrau. This isn’t optional it's the pattern."
 "Soft, Contact","Preposition","am","mynd","verb-noun","Dw i "," nawr.","fynd","SM","In the common am + action frame (‘about to’), many speakers soften: m→f, so mynd → fynd. Treat it as part of the construction."
 "Soft, Contact","Preposition","am","dangos","verb-noun","Mae hi "," sut mae’n gweithio.","ddangos","SM","am can introduce an intended action; the action word softens (d→dd): dangos → ddangos."
-"Soft, Contact","Preposition","o","gweld","verb-noun"," "," y gwir, newidon nhw’r cynllun.","weld","SM","o ‘on/upon’ softens; g- drops: gweld → weld. Think ‘upon seeing …’."
+"Soft, Contact","Preposition","o","gweld","verb-noun","O "," y gwir, newidon nhw’r cynllun.","weld","SM","o ‘on/upon’ softens; g- drops: gweld → weld. Think ‘upon seeing …’."
 "Soft, Contact","Preposition","o","clywed","verb-noun"," "," y newyddion, aeth hi adref.","glywed","SM","After o, c→g: clywed → glywed. Fixed ‘upon hearing …’ feel."
 "Soft, Contact","Preposition","ar","cael","verb-noun","Mae’r adroddiad ar "," i bawb.","gael","SM","ar softens the action word; g- disappears: cael → gael. Very common phrase ar gael ‘available’."
 "Soft, Contact","Preposition","ar","dod","verb-noun","Mae rhagor o fanylion ar "," yn fuan.","ddod","SM","ar triggers d→dd: dod → ddod. Set expression ar ddod ‘upcoming’."
@@ -875,6 +875,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
+
 
 
 
