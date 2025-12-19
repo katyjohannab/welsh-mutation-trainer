@@ -381,7 +381,7 @@ None,Possessive,eu,caru,verb-noun,Dw i’n eu,nhw.,caru,NONE,eu (their) → no m
 "Soft, Contact",Possessive,dy,talu,verb-noun,Wnei di dy,di heddiw?,dalu,SM,dy: t→d (talu→dalu).
 None,Possessive,eich,talu,verb-noun,Wnewch chi eich,chi heddiw?,talu,NONE,eich → no mutation.
 "Aspirate, Contact",Possessive,ei (her),prynu,verb-noun,A wnei di ei,hi yfory?,phrynu,AM,ei (her): p→ph.
-"Soft, Contact",Possessive,ei (his),cyflog,verb-noun,Gofynnodd e am ei,yn gynnar.,gyflog,SM,ei (his): t→d.
+"Soft, Contact",Possessive,ei (his),cyflog,verb-noun,Gofynnodd e am gael ei,yn gynnar.,gyflog,SM,ei (his): t→d.
 "Nasal, Contact",Possessive,fy,talu,verb-noun,Mae hi’n fy,i arlein.,nhalu,NM,fy: t→nh.
 None,Possessive,ein,gweld,verb-noun,Maen nhw’n ein,ni ar Teams.,gweld,NONE,ein → NONE.
 None,Possessive,eu,talu,verb-noun,Rhaid iddyn nhw eu,nhw heno.,talu,NONE,eu → NONE.
@@ -974,6 +974,7 @@ None,Adjective+Noun,tir,amaethyddol,adj,Mae tir ,ger y fferm.,amaethyddol,NONE,"
 None,Adjective+Noun,darn,byr,adj,Dw i eisiau darn ,o bapur.,byr,NONE,"Because darn is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,diddordeb,personol,adj,Mae diddordeb ,yn y pwnc.,personol,NONE,"Because diddordeb is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,gwres,uchel,adj,Mae gwres ,yn y stafell.,uchel,NONE,"Because gwres is a masculine noun the following adjective does not change after it."
+
 
 
 
