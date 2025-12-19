@@ -284,7 +284,7 @@ None,Preposition,yn (in),Rhos,placename,Maen nhw yn,ers blynyddoedd.,Rhos,NONE,r
 None,Preposition,yn (in),tŷ,noun-masc,Roedd y llyfr yn y,y bore hwn.,tŷ,NONE,"Article intervenes (yn y …), so no contact NM reaches the noun."
 "Soft, Contact",Adjective+Noun,fem sg noun → adj,bach,adj,Gwelais i merch,yn y parc.,fach,SM,An adjective following a feminine singular noun soft-mutates (ll/rh exempt).
 "Soft, Contact",Adjective+Noun,fem sg noun → adj,mawr,adj,Darllenon ni stori,am y daith.,fawr,SM,Fem-sg noun + following adjective → SM.
-"Soft, Contact",Adjective+Noun,fem sg noun → adj,bychan,adj,Dewison nhw gardd,ger y tŷ.,fechan,SM,Fem-sg noun + following adjective → SM (b→f).
+"Soft, Contact",Adjective+Noun,fem sg noun → adj,bychan,adj,Dewison nhw gardd,ger y tŷ.,fychan,SM,Fem-sg noun + following adjective → SM (b→f).
 "Soft, Contact",Adjective+Noun,fem sg noun → adj,drud,adj,Cawson ni noson,yn y gwesty.,ddrud,SM,Fem-sg noun + following adjective → SM (d→dd).
 "Soft, Contact",Adjective+Noun,fem sg noun → adj,trwm,adj,Cododd hi cadair,at y ffenest.,drwm,SM,Fem-sg noun + following adjective → SM (t→d).
 "Soft, Contact",Adjective+Noun,fem sg noun → adj,clyd,adj,Dewison nhw siop,yn y dref.,glyd,SM,Fem-sg noun + following adjective → SM (c→g).
@@ -875,6 +875,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
+
 
 
 
