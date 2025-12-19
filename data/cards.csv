@@ -916,6 +916,37 @@ None,Article,y,llin,noun-masc,Wyt ti wedi gweld y,?,llun,NONE,"Llun is masculine
 None,Article,'r,mis,noun-masc,Mae'r,yma'n brysur.,mis,NONE,"Mis is masculine, so it does not change after the definite article ('r mis)."
 None,Article,yr,amser,noun-masc,Does gen i ddim yr,heddiw.,amser,NONE,"Amser is masculine, so it does not change after the definite article. It also begins with a vowel, so the article form is yr (yr amser)."
 None,Article,'r,tîm,noun-masc,Mae'r,yn ennill.,tîm,NONE,"Tîm is masculine, so it does not change after the definite article ('r tîm)."
+"Soft, Contact",Article,'r,tref,noun-fem,Mae'r,yn dawel heno.,dref,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'tref' becomes 'dref'."
+"Soft, Contact",Article,y,tref,noun-fem,Dw i'n adnabod y,yn dda.,dref,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'tref' becomes 'dref'."
+"Soft, Contact",Article,y,tafarn,noun-fem,Roedd y,ar gau neithiwr.,dafarn,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'tafarn' becomes 'dafarn'."
+"Soft, Contact",Article,'r,trafodaeth,noun-fem,Mae'r,wedi dechrau eisoes.,drafodaeth,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'trafodaeth' becomes 'drafodaeth'."
+"Soft, Contact",Article,'r,trafodaeth,noun-fem,Dyna'r,am y cynllun newydd.,drafodaeth,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'trafodaeth' becomes 'drafodaeth'."
+"Soft, Contact",Article,'r,deiseb,noun-fem,Darllenais i'r,yn ofalus.,ddeiseb,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'deiseb' becomes 'ddeiseb'."
+"Soft, Contact",Article,y,deiseb,noun-fem,Llofnodais y,ddoe.,ddeiseb,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'deiseb' becomes 'ddeiseb'."
+"Soft, Contact",Article,'r,gwraig,noun-fem,Gwelais i'r,ddoe.,wraig,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'gwraig' becomes 'wraig'."
+"Soft, Contact",Article,'r,gwraig,noun-fem,Mae'r,yn gweithio yma.,wraig,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'gwraig' becomes 'wraig'."
+"Soft, Contact",Article,y,rhaglen,noun-fem,Roedd y,ar y teledu neithiwr.,rhaglen,NONE,This is a feminine singular noun, but words starting with 'rh' do not soften after the definite article.
+"Soft, Contact",Article,'r,llinell,noun-fem,Mae'r,ar y map yn anghywir.,llinell,NONE,This is a feminine singular noun, but words starting with 'll' do not soften after the definite article.
+"Soft, Contact",Article,'r,swyddfa,noun-fem,Mae'r,ar gau heddiw.,swyddfa,NONE,"This is a feminine singular noun, so the soft-mutation rule applies, but 's' doesn't change in soft mutation."
+"Soft, Contact",Article,yr,ystafell,noun-fem,Yr,yma yw'r un fwyaf.,ystafell,NONE,"This is a feminine singular noun, but it begins with a vowel sound, so there is no visible change after the article."
+"Soft, Contact",Article,'r,gwybodaeth,noun-fem,Mae'r,yn ddefnyddiol iawn.,wybodaeth,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'gwybodaeth' becomes 'wybodaeth'."
+"Soft, Contact",Article,'r,gwybodaeth,noun-fem,Dyma'r,ar y wefan.,wybodaeth,SM,"After 'the' (y/'r/yr), feminine singular nouns take a soft mutation, so 'gwybodaeth' becomes 'wybodaeth'."
+None,Article,'r,cyfnod,noun-masc,Mae'r,yn anodd i bawb.,cyfnod,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,rheswm,noun-masc,Dyna'r,dros y penderfyniad.,rheswm,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,cwestiwn,noun-masc,Mae'r,yn dal heb ateb.,cwestiwn,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,canlyniad,noun-masc,Mae'r,yn glir erbyn hyn.,canlyniad,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,cofnod,noun-masc,Darllenais i'r,ddwywaith.,cofnod,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,busnes,noun-masc,Mae'r,yn tyfu'n gyflym.,busnes,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,y,polisi,noun-masc,Dwi ddim yn deall y,weithiau.,polisi,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,teulu,noun-masc,Mae'r,yn dod dros y penwythnos.,teulu,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,arian,noun-masc,Ble mae'r,?,arian,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,tywydd,noun-masc,Mae'r,yn newid yn sydyn.,tywydd,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,cymorth,noun-masc,Mae'r,ar gael i bawb.,cymorth,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,croeso,noun-masc,Cawson ni'r,gorau yno.,croeso,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,cylch,noun-masc,Mae'r,yn cau am chwech.,cylch,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,gweinidog,noun-masc,Mae'r,yn siarad ar y newyddion.,gweinidog,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+None,Article,'r,mudiad,noun-masc,Mae'r,yn tyfu bob blwyddyn.,mudiad,NONE,With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same.
+
 
 
 
