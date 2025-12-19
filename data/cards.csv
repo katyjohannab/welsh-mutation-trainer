@@ -907,7 +907,7 @@ None,Article,'r,cyngor,noun-masc,Gofynnais i'r,am help.,cyngor,NONE,"Cyngor is m
 None,Article,'r,cig,noun-masc,Dw i'n prynu'r,yn aml.,cig,NONE,"Cig is masculine, so it does not change after the definite article ('r cig)."
 None,Article,'r,cwmni,noun-masc,Mae'r,yn tyfu.,cwmni,NONE,"Cwmni is masculine, so it does not change after the definite article ('r cwmni)."
 None,Article,'r,llyfr,noun-masc,Mae'r,ar y bwrdd.,llyfr,NONE,"Llyfr is masculine, so it does not change after the definite article ('r llyfr)."
-None,Article,y,llin,noun-masc,Wyt ti wedi gweld y,?,llun,NONE,"Llun is masculine, so it does not change after the definite article (y llun)."
+None,Article,y,llun,noun-masc,Wyt ti wedi gweld y,?,llun,NONE,"Llun is masculine, so it does not change after the definite article (y llun)."
 None,Article,'r,mis,noun-masc,Mae'r,yma'n brysur.,mis,NONE,"Mis is masculine, so it does not change after the definite article ('r mis)."
 None,Article,yr,amser,noun-masc,Does gen i ddim yr,heddiw.,amser,NONE,"Amser is masculine, so it does not change after the definite article. It also begins with a vowel, so the article form is yr (yr amser)."
 None,Article,'r,tîm,noun-masc,Mae'r,yn ennill.,tîm,NONE,"Tîm is masculine, so it does not change after the definite article ('r tîm)."
@@ -1009,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
