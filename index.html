@@ -272,9 +272,10 @@
       color: var(--emerald-ink);
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
       padding: 0.28rem 0.6rem;
+      text-transform: uppercase;
       border-radius: 999px;
       font-weight: 600;
-      font-size: 0.875rem; /* 14px for compactness */
+      font-size: 0.875rem; 
       line-height: 1;
       transition: transform .06s ease, background .12s ease, box-shadow .12s ease;
       cursor: pointer;
@@ -785,7 +786,7 @@
             <!-- Admin / Data panel: only visible when admin=1 -->
             <div id="adminPanel" class="hidden mb-4">
               <div class="text-sm font-medium mb-2">Admin tools</div>
-              <label class="text-sm font-medium">Data URL (CSV or JSON)</label>
+              <label class="text-sm font-medium">Data URL </label>
               <div class="mt-2 flex gap-2">
                 <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
                 <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
