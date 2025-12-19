@@ -659,7 +659,6 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None","Complement","heddiw","heddiw","time-adv","Dw i’n brysur "," ond mi wnawn ni siarad fory.","heddiw","NONE","Heddiw (‘today’) doesn’t change at the start. There’s no softening here—this is its normal form."
 "None","Complement","yfory","yfory","time-adv","Awn ni at y dref "," os bydd amser.","yfory","NONE","Yfory (‘tomorrow’) shows no softening. In phrases like bore fory you’ll see fory (spelling without the y), but that isn’t a mutation."
 "Soft, Fixed","Complement","ddoe","doe","time-adv","Bues i yn y llyfrgell bore "," .","ddoe","SM","In bore ddoe (‘yesterday morning’), doe is always ddoe in this time phrase. It’s a fixed soft form, not triggered by the word bore."
-"Soft, Fixed","Complement","ddoe","doe","time-adv","Cawsom gyfarfod prynhawn "," cyn cau’r swyddfa.","ddoe","SM","In prynhawn ddoe, doe appears as ddoe by convention. Think of it as the set time adverb ‘yesterday’."
 "None","Complement","heddiw","heddiw","time-adv","Roedd yr arholiad bore "," .","heddiw","NONE","Bore heddiw uses the unchanged form heddiw; there’s no softening in this phrase."
 "None","Complement","heddiw","heddiw","time-adv","Rydyn ni’n cyfarfod prynhawn "," yn y ganolfan.","heddiw","NONE","Prynhawn heddiw has no softening; heddiw stays as it is."
 "None","Complement","fory","yfory","time-adv","Mae gen i apwyntiad bore "," .","fory","NONE","You’ll usually see bore fory (spelt fory here). That’s standard spelling in this phrase, not a mutation of yfory."
@@ -1012,6 +1011,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
