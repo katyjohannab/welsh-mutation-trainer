@@ -875,7 +875,6 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Interrogative","a","prynodd","verb","A "," e'r tocyn ddoe?","brynodd","SM","A causes soft mutation on the finite verb. p→b, so prynodd → brynodd."
 "Soft, Contact","Interrogative","a","gwelwch","verb","A "," chi'r arwydd?","welwch","SM","A softens g- away at the start of a verb. gwelwch → welwch. Use this in formal questions."
 "None","Interrogative","a","oes","verb","A "," ddigon o amser?","oes","NONE","A is present, but the verb is vowel-initial, so there is no visible softening. The form is simply A oes ...? in formal questions."
-RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Why
 "Soft, Contact",Article,'r,blwyddyn,noun-fem,Dw i'n cofio'r,hon yn dda.,flwyddyn,SM,"Because blwyddyn is a feminine singular noun, it soft-mutates after the definite article: b changes to f ('r flwyddyn)."
 "Soft, Contact",Article,'r,merch,noun-fem,Mae'r,yn aros tu allan.,ferch,SM,"Because merch is a feminine singular noun, it soft-mutates after the definite article: m changes to f ('r ferch)."
 "Soft, Contact",Article,'r,mam,noun-fem,Mae'r,ar y ffôn.,fam,SM,"Because mam is a feminine singular noun, it soft-mutates after the definite article: m changes to f ('r fam)."
@@ -946,6 +945,7 @@ None,Article,'r,croeso,noun-masc,Cawson ni'r,gorau yno.,croeso,NONE,"With the de
 None,Article,'r,cylch,noun-masc,Mae'r,yn cau am chwech.,cylch,NONE,"With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same."
 None,Article,'r,gweinidog,noun-masc,Mae'r,yn siarad ar y newyddion.,gweinidog,NONE,"With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same."
 None,Article,'r,mudiad,noun-masc,Mae'r,yn tyfu bob blwyddyn.,mudiad,NONE,"With the definite article, only feminine singular nouns soften. This noun is masculine, so it stays the same."
+
 
 
 
