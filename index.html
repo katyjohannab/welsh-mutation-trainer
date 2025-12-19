@@ -55,9 +55,7 @@
     }
 
     /* -------------------------
-       Theme: clean paper + Cymru accents
-       - No gradient header background
-       - Keep gradients as accents only
+       Theme
     ------------------------- */
     :root {
       /* primary button gradient (emerald) */
@@ -112,7 +110,7 @@
     /* red gradient bar under header */
     .cymru-red-bar{
       height: 3px;
-      /* Tie the brand together: emerald → Cymru red */
+      /* emerald → Cymru red */
       background: linear-gradient(to right,
         transparent 0%,
         rgba(4,120,87,0.20) 12%,
@@ -259,10 +257,7 @@
       box-shadow: 0 10px 22px rgba(2,6,23,0.08);
     }
 
-    /* Custom style for the audio playback button.  It is intentionally
-       compact with an inline icon to clearly convey its purpose.  The
-       emerald palette ties it back to the site’s theme without
-       overpowering the surrounding content. */
+    /* Custom style for the audio playback button*/
     .btn-hear{
       display:inline-flex;
       align-items:center;
@@ -289,10 +284,7 @@
       box-shadow: 0 4px 10px rgba(2,6,23,0.08);
     }
 
-    /* Container styling for revealed feedback.  This box groups the
-       correctness message, completed sentence, answer details and the
-       audio button.  A soft tint and border help it stand apart from
-       the rest of the card without drawing too much attention. */
+    /* Container styling for revealed feedback.  */
     .feedback-box{
       background: rgba(4,120,87,0.05);
       border: 1px solid rgba(4,120,87,0.20);
@@ -335,7 +327,7 @@
 
     .decoration-indigo-400{ text-decoration-color: rgba(4,120,87,0.55) !important; }
 
-    /* Make the base word a touch bigger (JS outputs it inside the emerald capsule) */
+    /* Make the base word bigger (JS outputs it inside the emerald capsule) */
     #practiceCard .bg-indigo-100 span{
       font-size: clamp(2.55rem, 4.6vw, 3.55rem) !important;
       letter-spacing: -0.02em;
@@ -377,10 +369,6 @@
     /* Slightly tighter subtitle colour */
     .subtle{ color: var(--muted); }
 
-    /* -------------------------
-       2025-12 tweaks: make Practice card feel centred + stronger Cymru palette
-       (CSS-only overrides; JS untouched)
-    ------------------------- */
 
     /* Reduce gold in the page wash: keep it ultra-sparing */
     body{
@@ -396,13 +384,13 @@
       margin-inline: auto;
     }
 
-    /* Card counter: make it feel designed (tiny caps + tracking) */
+    /* Card counter tiny caps + tracking*/
     #practiceCard .text-slate-500.text-xs.mb-2{
       letter-spacing: .12em;
       text-transform: uppercase;
     }
 
-    /* Base word capsule: centred focal point, slightly more intentional */
+    /* Base word capsule */
     #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
       display: flex !important;
       width: fit-content;
@@ -412,7 +400,7 @@
         inset 0 -2px 0 rgba(185,28,28,0.20);
     }
 
-    /* Keep sentence alignment feeling "text-like" */
+    /* sentence alignment" */
     #practiceCard .mt-2 > .flex.items-baseline{
       align-items: baseline !important;
     }
@@ -425,26 +413,26 @@
       line-height: 1.15;
     }
 
-    /* Give the action buttons a clearer "breath" from the sentence row */
+    /* action button spacing */
     #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
       margin-top: 1.45rem !important;
       gap: 1rem !important;
     }
 
-    /* Active filter chips: red-tinted (echo the red bar) while staying subtle */
+    /* Active filter chips */
     .chip{
       background: rgba(185,28,28,0.055) !important;
       border-color: rgba(185,28,28,0.20) !important;
       color: rgba(15,23,42,0.88) !important;
     }
 
-    /* Make the final "Clear" chip your main gold accent (sparingly used) */
+    /* chip for gold accent sparingly used */
     #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
       background: rgba(217,119,6,0.085) !important;
       border-color: rgba(217,119,6,0.30) !important;
     }
 
-    /* Gold should be rare: remove the gold-ish inner stroke from active filter pills */
+    /* remove the inner stroke from active filter pills */
     .pill-on{
       box-shadow: none !important;
     }
@@ -468,7 +456,7 @@
       transform: translateY(0px);
     }
 
-    /* Sentence → actions: give the controls a clear "breath" and a subtle red divider */
+    /* Sentence → actions: give the controls a clear "breath" and a  divider */
     #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
       margin-top: 1.55rem !important;
       padding-top: 1.05rem !important;
@@ -476,7 +464,7 @@
       border-top: 1px solid rgba(185,28,28,0.14);
     }
 
-    /* Chips: keep active filters subtly red-tinted, but make CLEAR green */
+    /* Chips: keep active filters subtly red-tinted */
     #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip{ cursor: default; }
     #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
       cursor: pointer;
@@ -490,7 +478,7 @@
       filter: saturate(1.02) brightness(1.01);
     }
 
-    /* Filter pills: add hover so they feel interactive */
+    /* Filter pills: add hover*/
     .pill{
       transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
     }
@@ -536,25 +524,25 @@
       }
     }
     /* -------------------------
-       Practice layout polish (left-aligned copy, centred base word)
-       - Keeps the header + filter chips left
+       Practice layout polish 
+       - header + filter chips left
        - Centres the base word capsule
        - Adds consistent breathing room before action buttons
     ------------------------- */
 
-    /* Keep the content column a sensible width, but don't centre the text itself */
+    /* content column width and alignment */
     #practiceCard > div{
       max-width: 46rem;
       margin-inline: auto;
     }
 
-    /* Copy should read like copy: left aligned */
+
     #practiceCard .practice-instruction{
       text-align: left;
       text-wrap: pretty;
     }
 
-    /* Base word capsule: centred focal point + calmer shadow */
+    /* Base word capsule*/
     #practiceCard .practice-base{
       display:flex;
       justify-content:center;
@@ -572,7 +560,7 @@
       display:block;
     }
 
-    /* Sentence line: keep it left aligned, but with a bit more air under the base word */
+    /* Sentence line */
     #practiceCard .practice-sentence{
       margin-top: .25rem;
     }
@@ -656,7 +644,7 @@
       ) !important;
     }
 
-    /* Instruction reads like copy, not a banner */
+    /* Instruction */
     #practiceCard .practice-instruction{
       max-width: 42rem;
       margin-bottom: 1.15rem !important;
