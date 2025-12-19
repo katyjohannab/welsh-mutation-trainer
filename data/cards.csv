@@ -522,8 +522,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "None","Subordinator","os","ewch","verb","Os ","chi’n gynnar, cawn ni ddechrau’n brydlon.","ewch","NONE","Os takes an ordinary finite verb (ewch ‘you’ll go/come’); it doesn’t mutate. "
 "None","Subordinator","os","arhoswch","verb","Os ","ychydig, fe ddaw’r athro’n fuan.","arhoswch","NONE","Natural Welsh: os + simple future/imperative-like form (arhoswch). Os itself causes no SM. "
 "None","Subordinator","os","byddwch","verb","Os ","chi’n gofyn, cawn ni ateb clir.","byddwch","NONE","With a real condition use os and a normal future (byddwch). No mutation from os. "
-"None","Subordinator","os na","bydd","verb","Os na ","fydd hi’n barod, aroswn ni.","bydd","NONE","Negative if-clause: os na + ordinary future (bydd). Os still doesn’t mutate. "
-"None","Subordinator","os","cawn","verb","Os ","ni seibiant, parhawn ni i weithio.","cawn","NONE","Another real ‘if’: os + cawn (‘we’ll get’). Os is not listed among SM triggers. "
+"None","Subordinator","os","cawn","verb","Os ","ni seibiant, parhawn ni i weithio.","cawn","NONE","os + cawn (‘we’ll get’) - os is not a SM trigger. "
 "None","Subordinator","pe","bai","verb (bod)","Pe "," hi’n barod, gallen ni fynd.","bai","NONE","Use pe for imaginary/unreal situations: pe bai… ‘if… were’. Pe chooses conditional forms; it doesn’t mutate. "
 "None","Subordinator","pe","bawn","verb (bod)","Pe "," i’n cael saib, baswn i’n dod.","bawn","NONE","Pe bawn i… ‘if I were…’. Unreal/hypothetical; pe itself is not a mutation trigger. "
 "None","Subordinator","pe","tawn","verb (bod)","Pe "," i yn dy le di, fyddwn i ddim yn gwneud hynny.","tawn","NONE","Spoken/written pe tawn i (= petawn i). Same unreal meaning; no mutation from pe. "
@@ -1011,6 +1010,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
