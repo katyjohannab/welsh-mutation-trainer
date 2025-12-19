@@ -727,7 +727,7 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Relative","y","torrodd","verb","Fe ymddwynodd o fel y "," e’r rheol, heb feddwl.","dorrodd","SM","In fel y ..., y softens the next verb: t→d, so torrodd → dorrodd. fel itself doesn’t mutate anything."
 "Soft, Contact","Relative","y","dywedodd","verb","Roedd yn union fel y "," hi ddoe.","ddywedodd","SM","y softens d→dd on a following finite verb: dywedodd → ddywedodd. The softening belongs to the ... y ... link."
 "Soft, Contact","Intensifier","rhy","drud","adj","Mae e’n rhy "," i ni ei brynu.","ddrud","SM","With rhy (‘too ...’), the adjective softens: d→dd so drud → ddrud."
-"Soft, Contact","Intensifier","rhy","boeth","adj","Mae’r ystafell yn rhy "," i gysgu’n dda.","boeth","SM","rhy softens: p→b here, so poeth → boeth."
+"Soft, Contact","Intensifier","rhy","poeth","adj","Mae’r ystafell yn rhy "," i gysgu’n dda.","boeth","SM","rhy softens: p→b here, so poeth → boeth."
 "Soft, Contact","Intensifier","rhy","mawr","adj","Mae’r siwt yn rhy "," i’r parti.","fawr","SM","rhy softens m→f: mawr → fawr. This is part of the rhy + adjective meaning ‘too ...’."
 "Soft, Contact","Intensifier","rhy","cyflym","adj","Roedd y trên yn rhy "," i’r plant ddal i fyny.","gyflym","SM","rhy softens c→g on the adjective: cyflym → gyflym."
 "Aspirate, Contact","Conjunction","a","car","noun-masc","Bu damwain rhwng bws a ","ger y groesfan.","char","AM","Use a before a consonant. It turns p/t/c → ph/th/ch. Car is masculine, so a changes it to char."
@@ -1011,6 +1011,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
