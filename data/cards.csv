@@ -120,7 +120,7 @@ RuleFamily,RuleCategory,Trigger,Base,WordCategory,Before,After,Answer,Outcome,Wh
 "None","Preposition","ar","bwrdd","noun-masc","Rhowch y llythyr ar y gadair neu’r","ger y ffenest.","bwrdd","NONE","Intervening neu’r breaks contact → no mutation."
 "Soft, Contact","Article","y","gardd","noun-fem","Gadawodd hi’r peli yn yr","ar ôl y parti.","ardd","SM","Fem. sg. noun after the definite article soft-mutates; g drops: gardd → ardd."
 "Soft, Contact","Preposition","gan","plant","noun-masc","Cawson ni anogaeth gan","cyn y perfformiad.","blant","SM","gan causes SM: p→b (plant → blant)."
-"Soft, Contact","Preposition","heb","bwyd","noun-masc","Aethon nhw am awr heb","— ond roedd dŵr ganddyn nhw.","fwyd","SM","heb causes SM: b→f (bwyd → fwyd)."
+"Soft, Contact","Preposition","heb","bwyd","noun-masc","Aethon nhw am awr heb",", ond roedd dŵr ganddyn nhw.","fwyd","SM","heb causes SM: b→f (bwyd → fwyd)."
 "Soft, Contact","Preposition","hyd","diwedd","noun-masc","Bydd y siop yn aros ar agor hyd","y mis.","ddiwedd","SM","hyd causes SM: d→dd (diwedd → ddiwedd)."
 "Soft, Contact","Preposition","i","dinas","noun-fem","Aethon ni i","brynhawn Sadwrn.","ddinas","SM","i causes SM: d→dd (dinas → ddinas)."
 "Soft, Contact","Preposition","o","gardd","noun-fem","Cymerodd y bachgen luniau o","ger y tŷ.","ardd","SM","o + g-deletion under SM: gardd → ardd."
@@ -901,7 +901,7 @@ None,Article,'r,tŷ,noun-masc,Mae'r,yn lân.,tŷ,NONE,"Tŷ is masculine, so it d
 None,Article,'r,pen,noun-masc,Mae'r,yn brifo.,pen,NONE,"Pen is masculine, so it does not change after the definite article ('r pen)."
 None,Article,'r,bwyd,noun-masc,Mae'r,yn barod.,bwyd,NONE,"Bwyd is masculine, so it does not change after the definite article ('r bwyd)."
 None,Article,'r,diwedd,noun-masc,Mae'r,yn nesáu.,diwedd,NONE,"Diwedd is masculine, so it does not change after the definite article ('r diwedd)."
-None,Article,'r,dechrau,noun-masc,Dyma'r,"— paid â stopio nawr.",dechrau,NONE,"Dechrau is masculine, so it does not change after the definite article ('r dechrau)."
+None,Article,'r,dechrau,noun-masc,Dyma'r,"felly paid â stopio nawr.",dechrau,NONE,"Dechrau is masculine, so it does not change after the definite article ('r dechrau)."
 None,Article,'r,cynllun,noun-masc,Mae'r,yn gweithio.,cynllun,NONE,"Cynllun is masculine, so it does not change after the definite article ('r cynllun)."
 None,Article,'r,cyngor,noun-masc,Gofynnais i'r,am help.,cyngor,NONE,"Cyngor is masculine, so it does not change after the definite article (i'r cyngor)."
 None,Article,'r,cig,noun-masc,Dw i'n prynu'r,yn aml.,cig,NONE,"Cig is masculine, so it does not change after the definite article ('r cig)."
@@ -1009,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
