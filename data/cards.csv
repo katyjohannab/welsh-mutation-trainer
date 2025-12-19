@@ -974,6 +974,45 @@ None,Adjective+Noun,tir,amaethyddol,adj,Mae tir ,ger y fferm.,amaethyddol,NONE,"
 None,Adjective+Noun,darn,byr,adj,Dw i eisiau darn ,o bapur.,byr,NONE,"Because darn is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,diddordeb,personol,adj,Mae diddordeb ,yn y pwnc.,personol,NONE,"Because diddordeb is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,gwres,uchel,adj,Mae gwres ,yn y stafell.,uchel,NONE,"Because gwres is a masculine noun the following adjective does not change after it."
+"Soft, Contact",Preposition,ar,bai,noun-fem,Nid fi sydd ar,.,fai,SM,Ar makes the next word soften so bai becomes fai
+"Soft, Contact",Preposition,ar,bai,noun-fem,Nid ti sydd ar,.,fai,SM,Ar makes the next word soften so bai becomes fai
+"Soft, Contact",Preposition,ar,bai,noun-fem,Pwy sydd ar,?,fai,SM,Ar makes the next word soften so bai becomes fai
+"Nasal, Contact",Possessive,fy,tro,noun-fem,Fy,i yw e.,nhro,NM,Fy makes the next word take a nasal mutation so tro becomes nhro
+"Soft, Contact",Possessive,dy,tro,noun-fem,Dy,di yw e.,dro,SM,Dy makes the next word soften so tro becomes dro
+"Soft, Contact",Possessive,ei,tro,noun-fem,Ei,e yw e.,dro,SM,Ei meaning his makes the next word soften so tro becomes dro
+"Aspirate, Contact",Possessive,ei,tro,noun-fem,Ei,hi yw e.,thro,AM,Ei meaning her makes the next word take an aspirate mutation so tro becomes thro
+None,Possessive,ein,tro,noun-fem,Ein,ni yw e.,tro,NONE,Ein does not cause mutation so tro stays tro
+None,Possessive,eich,tro,noun-fem,Eich,chi yw e.,tro,NONE,Eich does not cause mutation so tro stays tro
+None,Possessive,eu,tro,noun-fem,Eu,nhw yw e.,tro,NONE,Eu does not cause mutation so tro stays tro
+"Nasal, Contact",Possessive,fy,pen,noun-masc,Mae fy,i yn brifo.,mhen,NM,Fy makes the next word take a nasal mutation so pen becomes mhen
+"Soft, Contact",Possessive,dy,pen,noun-masc,Ble mae dy,di?,ben,SM,Dy makes the next word soften so pen becomes ben
+"Soft, Contact",Possessive,ei,pen,noun-masc,Mae ei,e yn brifo.,ben,SM,Ei meaning his makes the next word soften so pen becomes ben
+"Aspirate, Contact",Possessive,ei,pen,noun-masc,Mae ei,hi yn brifo.,phen,AM,Ei meaning her makes the next word take an aspirate mutation so pen becomes phen
+None,Possessive,ein,pen,noun-masc,Mae ein,ni yn brifo.,pen,NONE,Ein does not cause mutation so pen stays pen
+None,Possessive,eich,pen,noun-masc,Cadwch eich,chi i fyny.,pen,NONE,Eich does not cause mutation so pen stays pen
+None,Possessive,eu,pen,noun-masc,Mae eu,nhw yn brifo.,pen,NONE,Eu does not cause mutation so pen stays pen
+"Soft, Contact",Possessive,ei,pen,noun-masc,Mae e ar ei,ei hun heddiw.,ben,SM,Ei meaning his makes the next word soften so pen becomes ben
+"Aspirate, Contact",Possessive,ei,pen,noun-masc,Mae hi ar ei,ei hun heddiw.,phen,AM,Ei meaning her makes the next word take an aspirate mutation so pen becomes phen
+"Nasal, Contact",Possessive,fy,pen,noun-masc,Dw i ar fy,fy hun heddiw.,mhen,NM,Fy makes the next word take a nasal mutation so pen becomes mhen
+None,Possessive,eu,pennau,noun-masc,Maen nhw ar eu,eu hunain heddiw.,pennau,NONE,Eu does not cause mutation so pennau stays pennau
+"Soft, Contact",Preposition,ar,pen,noun-masc,Ar, hynny mae gen i gwestiwn.,ben,SM,Ar makes the next word soften so pen becomes ben
+"Nasal, Structure",Complement,fy,bod,verb-noun,Dw i'n meddwl fy,i'n dysgu'n araf.,mod,NM,Fy makes the first sound change so bod becomes mod in this clause
+"Soft, Structure",Complement,dy,bod,verb-noun,Wyt ti'n meddwl dy,ti'n dod heno?,fod,SM,Dy makes the first sound soften so bod becomes fod in this clause
+"Soft, Structure",Complement,ei,bod,verb-noun,Dw i'n gwybod ei,e yma.,fod,SM,Ei meaning his makes the first sound soften so bod becomes fod in this clause
+None,Complement,ei,bod,verb-noun,Dw i'n gwybod ei,hi yma.,bod,NONE,Ei meaning her causes aspirate mutation but b does not change so bod stays bod
+None,Complement,ein,bod,verb-noun,Dyn ni'n gobeithio ein,ni'n cyrraedd yn gynnar.,bod,NONE,Ein does not cause mutation so bod stays bod
+None,Complement,eich,bod,verb-noun,Dw i'n falch eich,chi yma.,bod,NONE,Eich does not cause mutation so bod stays bod
+None,Complement,eu,bod,verb-noun,Mae'n debyg eu,nhw'n dod heno.,bod,NONE,Eu does not cause mutation so bod stays bod
+None,TimeExpressions,bore,da,adj,Bore,!,da,NONE,This greeting is Bore da
+None,TimeExpressions,prynhawn,da,adj,Prynhawn,!,da,NONE,This greeting is Prynhawn da
+"Soft, Contact",TimeExpressions,noswaith,da,adj,Noswaith,!,dda,SM,In this greeting da is used as dda
+None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
+"Soft, Contact",Complement,yn,mawr,adj,Diolch yn,.,fawr,SM,Yn before an adjective makes it soften so mawr becomes fawr
+"Soft, Contact",Intensifier,mor,da,adj,Mae e mor,.,dda,SM,Mor makes the next adjective soften so da becomes dda
+"Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
+"Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
+"Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
