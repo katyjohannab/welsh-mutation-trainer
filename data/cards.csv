@@ -174,7 +174,6 @@ None,Preposition,yn lle,coffi,noun-masc,Prynodd hi de yn lle,.,coffi,NONE,Compou
 "Soft, Contact",Interrogative,pa,drws,noun-masc,Pa,sy'n well?,ddrws,SM,Interrogative “pa…?” triggers SM on the following noun.
 None,Conjunction,neu,ffenestr,noun-fem,Drws neu,oedd ar agor?,ffenestr,NONE,Here “ffenestr” cannot mutate; no visible change.
 "Soft, Contact",Conjunction,neu,drws,noun-masc,Wnei di agor ffenestr neu,?,ddrws,SM,Conjunction “neu” can trigger SM on the following word in this pattern.
-"Soft, Contact",Subordinator,pan,dechrau,verb-noun → finite,Pan,"y wers, roedd pawb yn dawel",ddechreuodd,SM,“pan” before a finite verb triggers SM (dechrau→ddechreuodd).
 "Soft, Contact",Numerals,ddau,ci,noun-masc,Gwelais i ddau,mawr yn y parc,gi,SM,“dau” triggers SM on a following masc. noun (ci→gi).
 "Soft, Contact",Numerals,dwy,cegin,noun-fem,Mae dwy,yn y fflat,gegin,SM,“dwy” triggers SM on a following fem. noun (cegin→gegin).
 "Soft, Contact",Numerals,un,cadair,noun-fem,Cymerwch un,at y bwrdd,gadair,SM,“un” before a fem. noun causes SM (not with ll/rh).
@@ -1010,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
