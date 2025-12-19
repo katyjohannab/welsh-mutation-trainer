@@ -656,7 +656,6 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Blocked","Complement","yn","dynes","noun-fem","Mae hi’n ","garedig iawn.","ddynes","SM","With yn plus a predicative noun, softening can appear (d→dd). Dynes is feminine, and the pattern triggers the change; nothing blocks it."
 "Soft, Blocked","Article","y","cangen","noun-fem","Cwrddon ni yn y ganolfan ac wedyn yn y ","leol.","gangen","SM","A preposition before this is blocked by y, but because cangen is feminine, the article causes softening (c→g). The visible change is from y."
 "Soft, Blocked","Preposition","am","llaw","noun-fem","Mae angen trefniant am y ","ar unwaith.","llaw","NONE","am would soften ll→l on contact, but the article y blocks it. Llaw is feminine, yet the visible change is prevented by the blocking article."
-"Soft, Fixed","Complement","ddoe","doe","time-adv","Wnes i ddod ","- roedd hi’n bwrw glaw!","ddoe","SM","Ddoe is the fixed ‘yesterday’ form. It always starts with dd- in this time meaning. It’s not caused by a nearby word; it’s just the standard form in this use."
 "None","Complement","heddiw","heddiw","time-adv","Dw i’n brysur "," ond mi wnawn ni siarad fory.","heddiw","NONE","Heddiw (‘today’) doesn’t change at the start. There’s no softening here—this is its normal form."
 "None","Complement","yfory","yfory","time-adv","Awn ni at y dref "," os bydd amser.","yfory","NONE","Yfory (‘tomorrow’) shows no softening. In phrases like bore fory you’ll see fory (spelling without the y), but that isn’t a mutation."
 "Soft, Fixed","Complement","ddoe","doe","time-adv","Bues i yn y llyfrgell bore "," .","ddoe","SM","In bore ddoe (‘yesterday morning’), doe is always ddoe in this time phrase. It’s a fixed soft form, not triggered by the word bore."
@@ -975,6 +974,7 @@ None,Adjective+Noun,tir,amaethyddol,adj,Mae tir ,ger y fferm.,amaethyddol,NONE,"
 None,Adjective+Noun,darn,byr,adj,Dw i eisiau darn ,o bapur.,byr,NONE,"Because darn is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,diddordeb,personol,adj,Mae diddordeb ,yn y pwnc.,personol,NONE,"Because diddordeb is a masculine noun the following adjective does not change after it."
 None,Adjective+Noun,gwres,uchel,adj,Mae gwres ,yn y stafell.,uchel,NONE,"Because gwres is a masculine noun the following adjective does not change after it."
+
 
 
 
