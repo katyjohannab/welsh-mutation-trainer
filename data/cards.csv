@@ -779,11 +779,11 @@ None,Article,"y (def. art., masc sg; rh exception)",rhiant,noun-masc,"Siaradodd 
 "Soft, Contact","Preposition","heb","gofyn","verb-noun","Newidiodd e’r trefniadau heb "," unrhyw un.","ofyn","SM","With heb, g- disappears: gofyn → ofyn. The trigger is the preposition, not the nearby words."
 "Soft, Contact","Preposition","trwy","gwneud","verb-noun","Fe lwyddon ni trwy "," bopeth yn ofalus.","wneud","SM","trwy ‘by/through’ softens: g- disappears → gwneud → gwneud. Set ‘by doing …’ frame."
 "Soft, Contact","Preposition","trwy","darllen","verb-noun","Gellir gwella sgiliau trwy "," yn aml.","ddarllen","SM","After trwy, d→dd: darllen → ddarllen. Natural ‘by reading …’ phrasing."
-"Soft, Contact","Preposition","tan","dechrau","verb-noun","Arhoswch "," y rhaglen, plis.","ddechrau","SM","tan ‘until’ softens the action word (d→dd): dechrau → ddechrau. This isn’t optional it's the pattern."
+"Soft, Contact","Preposition","tan","dechrau","verb-noun","Arhoswch tan "," y rhaglen, plis.","ddechrau","SM","tan ‘until’ softens the action word (d→dd): dechrau → ddechrau."
 "Soft, Contact","Preposition","am","mynd","verb-noun","Dw i "," nawr.","fynd","SM","In the common am + action frame (‘about to’), many speakers soften: m→f, so mynd → fynd. Treat it as part of the construction."
 "Soft, Contact","Preposition","am","dangos","verb-noun","Mae hi "," sut mae’n gweithio.","ddangos","SM","am can introduce an intended action; the action word softens (d→dd): dangos → ddangos."
 "Soft, Contact","Preposition","o","gweld","verb-noun","O "," y gwir, newidon nhw’r cynllun.","weld","SM","o ‘on/upon’ softens; g- drops: gweld → weld. Think ‘upon seeing …’."
-"Soft, Contact","Preposition","o","clywed","verb-noun"," "," y newyddion, aeth hi adref.","glywed","SM","After o, c→g: clywed → glywed. Fixed ‘upon hearing …’ feel."
+"Soft, Contact","Preposition","o","clywed","verb-noun"," "," y newyddion, aeth hi adref.","glywed","SM","After o, c→g: clywed → glywed."
 "Soft, Contact","Preposition","ar","cael","verb-noun","Mae’r adroddiad ar "," i bawb.","gael","SM","ar softens the action word; g- disappears: cael → gael. Very common phrase ar gael ‘available’."
 "Soft, Contact","Preposition","ar","dod","verb-noun","Mae rhagor o fanylion ar "," yn fuan.","ddod","SM","ar triggers d→dd: dod → ddod. Set expression ar ddod ‘upcoming’."
 "Soft, Contact","Preposition","gan","dweud","verb-noun","Aeth e i ffwrdd "," dim byd.","ddweud","SM","gan (often ‘…-ing’) softens d→dd: dweud → ddweud. Means ‘leaving, saying nothing’."
@@ -1009,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
