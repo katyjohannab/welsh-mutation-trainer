@@ -1181,6 +1181,35 @@ async function initData(){
     state.freezeIdx = null; state.freezePos = null;
   }
 
+//build Sentence
+function buildCompleteSentence(card) {
+  const before = (card.Before || '').trimEnd();
+  const answer = (card.Answer || '').trim();
+  const after  = (card.After  || '').trimStart();
+
+  let s = [before, answer, after].filter(Boolean).join(' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
+  return s;
+}
+
+// TEMP fallback (so the button works even before you re-add Polly/Lambda):
+function playPollySentence(sentence) {
+  return new Promise((resolve, reject) => {
+    try {
+      if (!('speechSynthesis' in window)) throw new Error('Speech synthesis not supported');
+      const u = new SpeechSynthesisUtterance(sentence);
+      u.lang = 'cy-GB'; // will fall back if not available
+      u.onend = resolve;
+      u.onerror = () => reject(new Error('Speech synthesis error'));
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
   // ---------- Render ----------
   function btn(label, extraClass, onClick){
     const b = document.createElement('button');
@@ -1301,6 +1330,7 @@ async function initData(){
     
       render();
     });
+    actions.append(btnCheck, btnHint, btnReveal, btnSkip);
     const hint = document.createElement('div'); hint.className='hidden mt-3 text-sm text-slate-600';
     hint.innerHTML = `Hint: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
@@ -1315,19 +1345,23 @@ async function initData(){
         <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
           ${statusIcon} ${skipped ? 'Skipped' : (ok ? 'Correct!' : 'Not quite')}
         </div>
-        ${(!ok && state.lastResult !== 'skipped')
+      
+        ${(!ok && !skipped)
           ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || '(blank)'}</b></div>`
           : ''
         }
+      
         <div class="mt-3 text-slate-800 text-xl md:text-2xl">
-          ${esc(card.Before||'')}
+          ${esc(card.Before || '')}
           <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
-          ${esc(card.After||'')}
+          ${esc(card.After || '')}
         </div>
       
         <div class="mt-2 text-slate-700">Answer: <b>${esc(card.Answer)}</b></div>
         <div class="mt-1 text-slate-700">Trigger: <b>${esc(card.Trigger || '—')}</b></div>
-        <div class="mt-1 text-slate-700"><span class="font-medium">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome||'').toUpperCase()}</div>
+        <div class="mt-1 text-slate-700">
+          <span class="font-medium">Rule:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}
+        </div>
       
         ${card.Why ? `<p class="mt-2 text-slate-700">${esc(card.Why)}</p>` : ''}
       
@@ -1335,6 +1369,7 @@ async function initData(){
           <button id="btnHear" class="btn btn-ghost" type="button">Hear this</button>
         </div>
       `;
+
       // Wire up the "Hear this" button (only exists when revealed)
         setTimeout(() => {
           const hearBtn = document.getElementById('btnHear');
