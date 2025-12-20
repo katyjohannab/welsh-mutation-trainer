@@ -1,0 +1,37 @@
+{
+  "lessons": [
+    {
+      "id": "mutation-whistlestop",
+      "title": { "en": "Mutation: whistlestop tour", "cy": "Treiglad: taith chwim" },
+      "desc": { "en": "A quick map of what’s going on.", "cy": "Trosolwg cyflym o’r map." },
+      "level": { "en": "Beginner", "cy": "Dechreuwr" },
+      "minutes": 10,
+      "tags": ["FOUNDATIONS", "MAP"],
+      "slideCount": 15,
+      "deck": "./data/learn/mutation-whistlestop.json"
+    },
+    {
+      "id": "treiglad-intro",
+      "title": { "en": "Introduction to Mutations", "cy": "Cyflwyniad i Dreigladau" },
+      "desc": { "en": "A friendly intro + key grammar words you’ll keep seeing.", "cy": "Cyflwyniad cyfeillgar + geiriau gramadeg byddi di’n eu gweld o hyd." },
+      "level": { "en": "Beginner", "cy": "Dechreuwr" },
+      "minutes": 10,
+      "tags": ["FOUNDATIONS", "MAP"],
+      "slideCount": 24,
+      "deck": "./data/learn/treiglad-intro.json"
+    },
+    {
+      "id": "l1-soft-mutation-core",
+      "title": { "en": "L1 Soft Mutation Core (the 80/20 set)", "cy": "G1 Treiglad meddal craidd (y set 80/20)" },
+      "desc": {
+        "en": "A proper, detailed L1 on soft mutation: prepositions, dy/ei, y + feminine nouns, and the big boundary rules.",
+        "cy": "Gwers G1 fanwl ar dreiglad meddal: arddodiaid, dy/ei, y + enwau benywaidd, a’r rheolau ffin pwysig."
+      },
+      "level": { "en": "Beginner", "cy": "Dechreuwr" },
+      "minutes": 20,
+      "tags": ["SOFT", "CORE", "PREPOSITIONS", "POSSESSIVES", "NOUN-PHRASES"],
+      "slideCount": 36,
+      "deck": "./data/learn/l1-soft-mutation-core.json"
+    }
+  ]
+}
