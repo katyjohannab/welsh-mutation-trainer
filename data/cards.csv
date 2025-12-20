@@ -228,7 +228,7 @@ None,Article,"y (def. art., pl)",pobl,noun-pl,Casglodd y,ger y llwyfan.,pobl,NON
 "Aspirate, Contact",Preposition,â (with),ci,noun-masc,Cerddodd hi â,bob bore.,chi,AM,â → AM (c→ch).
 None,Possessive,gyda’n,car,noun-masc,"Rydyn ni’n teithio gyda’n ",heddiw.,car,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; prepositional AM blocked."
 None,Possessive,gyda’n,cath,noun-fem,"Rydyn ni’n byw gyda’n ",ers mis.,cath,NONE,"BLOCKER: 'ein' after 'gyda' causes no mutation; noun stays radical."
-"Aspirate, Contact",Conjunction,a,pren,noun-masc,"Silff a ",pren.,phren,AM,"'a' triggers AM on p/t/c; pren→phren."
+"Aspirate, Contact",Conjunction,a,papur,noun-masc,"Mae 'na beiro a ", ar y silff,phapur,AM,"The conjunctive 'a' triggers Aspirate Mutation on p/t/c; so papur becomes phapur"
 "Aspirate, Contact",Conjunction,a,tŷ,noun-masc,"Gardd a ",mawr.,thŷ,AM,"'a' triggers AM on p/t/c; tŷ→thŷ."
 "Aspirate, Contact",Preposition,â (with),papur,noun-masc,"Cyflwynodd hi’r gwaith â ",trefnus.,phapur,AM,"â triggers AM on p/t/c; papur→phapur."
 "Aspirate, Contact",Preposition,â (with),tad,noun-masc,"Siaradais i â ",neithiwr.,thad,AM,"â triggers AM on p/t/c; tad→thad."
@@ -1009,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
