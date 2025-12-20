@@ -3,7 +3,7 @@
     {
       "id": "treiglad-intro",
       "title": { "en": "Introduction to Mutations", "cy": "Cyflwyniad i Dreigladau" },
-      "desc": { "en": "A friendly intro + key grammar words you’ll keep seeing.", "cy": "Cyflwyniad cyfeillgar + geiriau gramadeg byddi di’n eu gweld o hyd." },
+      "desc": { "en": "Quick introduction to mutation including important concepts and key principles", "cy": "Cyflwyniad cyflym i dreiglo gan gynnwys cysyniadau pwysig ac egwyddorion allweddol" },
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 10,
       "tags": ["FOUNDATIONS", "GRAMMAR"],
