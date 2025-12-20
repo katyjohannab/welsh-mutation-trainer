@@ -226,10 +226,10 @@
       ]
     },
     {
-      "title": { "en": "High-value nuance: blocked preposition, but the noun can still mutate 🧠", "cy": "Nuans gwerthfawr: arddodiad wedi’i flocio, ond gall yr enw dreiglo o hyd 🧠" },
+      "title": { "en": "Blocked preposition, but the noun can still mutate 🧠", "cy": "Arddodiad wedi’i flocio, ond gall yr enw dreiglo o hyd 🧠" },
       "html": {
-        "en": "<p>This is where learners level up:</p><p>&nbsp;</p><p><b>The preposition is blocked</b> by <code>'r</code>… <i>but</i> <b>the article can still soft-mutate a feminine noun</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Masculine (no change)</th><th>Feminine (SM after the article)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>So: “blocked” doesn’t mean “nothing can mutate”. It means the <i>preposition</i> can’t reach.</p></div>",
-        "cy": "<p>Dyma’r pwynt lle mae dysgwyr yn symud i fyny:</p><p>&nbsp;</p><p><b>Mae’r arddodiad wedi’i flocio</b> gan <code>'r</code>… ond gall <b>yr erthygl</b> dreiglo enw benywaidd o hyd.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Gwrywaidd (dim newid)</th><th>Benywaidd (TM ar ôl yr erthygl)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Felly: dydy “blocïo” ddim yn golygu “dim treiglo o gwbl”. Mae’n golygu na all yr <i>arddodiad</i> gyrraedd.</p></div>"
+        "en": "<p>&nbsp;</p><p><b>The preposition is blocked</b> by <code>'r</code>… <i>but</i> <b>the article can still soft-mutate a feminine noun</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Masculine (no change)</th><th>Feminine (SM after the article)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>So: “blocked” doesn’t mean “nothing can mutate”. It means the <i>preposition</i> can’t reach.</p></div>",
+        "cy": "<p>&nbsp;</p><p><b>Mae’r arddodiad wedi’i flocio</b> gan <code>'r</code>… ond gall <b>yr erthygl</b> dreiglo enw benywaidd o hyd.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Gwrywaidd (dim newid)</th><th>Benywaidd (TM ar ôl yr erthygl)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Felly: dydy “blocïo” ddim yn golygu “dim treiglo o gwbl”. Mae’n golygu na all yr <i>arddodiad</i> gyrraedd.</p></div>"
       },
       "widgets": [
         {
@@ -497,7 +497,7 @@
       ]
     },
     {
-      "title": { "en": "A quick reality note: names + variation 🧭", "cy": "Nodyn realiti: enwau + amrywiad 🧭" },
+      "title": { "en": "A quicknote: names + variation 🧭", "cy": "Nodyn: enwau + amrywiad 🧭" },
       "html": {
         "en": "<p>Personal names and place names can be variable in mutation, especially in more formal writing.</p><p>&nbsp;</p><div class='callout'><p>Rule of thumb: learn the main grammar patterns first. When you notice variation with names, treat it as style/choice — not as “Welsh is impossible”.</p></div>",
         "cy": "<p>Gall enwau personol ac enwau lleoedd amrywio o ran treiglo, yn enwedig mewn ysgrifennu mwy ffurfiol.</p><p>&nbsp;</p><div class='callout'><p>Rheol bawd: dysga’r patrymau gramadegol craidd yn gyntaf. Pan weli di amrywiad gydag enwau, trinia fe fel arddull/dewis — nid “mae’r Gymraeg yn amhosib”.</p></div>"
