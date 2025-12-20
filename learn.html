@@ -30,7 +30,7 @@
     }
 
     /* -------------------------
-       Theme 
+       Theme
     ------------------------- */
     :root {
       --primary-from: #0b7a5a;
@@ -256,6 +256,16 @@
     .slide-prose li{ margin-top: .38rem; }
     .slide-prose b{ font-weight: 650; }
 
+    /* ✅ Code styling everywhere it appears (slide body, note, widgets) */
+    .slide-prose code, #slideNote code, #slideWidgets code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      background: rgba(15,23,42,0.06);
+      border: 1px solid rgba(15,23,42,0.10);
+      padding: .08rem .35rem;
+      border-radius: .45rem;
+    }
+
     /* Callouts and tables: auto spacing  */
     .callout{
       border-radius: 1rem;
@@ -403,7 +413,7 @@
 
           <div id="slideBody" class="slide-prose mt-4 text-slate-800"></div>
 
-          <!-- NEW: interactive widgets mount point -->
+          <!-- interactive widgets mount point -->
           <div id="slideWidgets" class="mt-6 space-y-4"></div>
 
           <div id="slideNoteWrap" class="mt-6 hidden">
@@ -764,6 +774,17 @@
     }[c]));
   }
 
+  // ✅ Allow notes to be either HTML or plain text (plain text gets escaped)
+  function toRichHTML(s){
+    if (!s) return '';
+    const str = String(s);
+    const looksLikeHTML = /<\/?[a-z][\s\S]*>/i.test(str);
+    if (looksLikeHTML) return str;
+
+    // Plain text: escape + preserve line breaks
+    return escapeHtml(str).replace(/\n/g, '<br>');
+  }
+
   function normAnswer(s, {caseSensitive=false, trim=true}={}){
     let out = String(s ?? '');
     if (trim) out = out.trim();
@@ -1060,7 +1081,6 @@
       box.innerHTML = `<div class="text-sm">${revealed ? back : front}</div>`;
       btnReveal.textContent = revealed ? t('showFront') : t('reveal');
 
-      // Save position (but only mark "done" once they reveal at least once)
       setWidgetProgress(state.lessonId, widgetId, { value: { index: idx, revealed } });
     }
 
@@ -1092,10 +1112,6 @@
   }
 
   function renderWidgetActions(container, widgetId, w, badge){
-    // A simple "go practise" widget: buttons that link out (Practice categories, etc.)
-    // Schema:
-    // { type:"actions", id:"...", prompt:{en,cy}, buttons:[{label:{en,cy}, href:"...", kind:"primary|ghost"}] }
-
     const prompt = getLangText(w.prompt);
     const buttons = Array.isArray(w.buttons) ? w.buttons : [];
 
@@ -1209,13 +1225,14 @@
     const bodyHtml = slide?.html?.[lang] || slide?.html?.en || '';
     $('#slideBody').innerHTML = bodyHtml || `<p class="text-slate-600">${t('loading')}</p>`;
 
-    // NEW: render widgets for this slide
+    // render widgets for this slide
     renderWidgetsForSlide(slide);
 
+    // ✅ Notes: render as HTML (or escaped plain text) so <code> works inside notes/callouts
     const note = slide?.note?.[lang] || slide?.note?.en || '';
     if (note){
       $('#slideNoteWrap').classList.remove('hidden');
-      $('#slideNote').textContent = note;
+      $('#slideNote').innerHTML = toRichHTML(note);
       $('#slideNoteWrap .text-sm.font-semibold').textContent = t('note');
     } else {
       $('#slideNoteWrap').classList.add('hidden');
@@ -1332,10 +1349,22 @@
       else renderDeck();
     });
 
+    // ✅ Keyboard navigation: ignore keys when typing in inputs/textareas/etc.
+    function isEditableTarget(el){
+      if (!el) return false;
+      const tag = (el.tagName || '').toUpperCase();
+      return el.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
+    }
+
     document.addEventListener('keydown', (e) => {
       if (state.view !== 'deck') return;
+
+      const active = document.activeElement;
+      if (isEditableTarget(e.target) || isEditableTarget(active)) return;
+
       if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
-      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+      if (e.key === ' ') { e.preventDefault(); nextSlide(); }
       if (e.key === 'Escape') { e.preventDefault(); showHome({replace:false}); }
       if (e.key === 'Home') { e.preventDefault(); state.slideIdx = 0; renderDeck(); }
       if (e.key === 'End') {
@@ -1400,4 +1429,5 @@
 </script>
 </body>
 </html>
+
 
