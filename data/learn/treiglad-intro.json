@@ -1,0 +1,181 @@
+{
+  "id": "treiglad-intro",
+  "slides": [
+    {
+      "title": { "en": "What you’ll be able to do ✅", "cy": "Beth fyddi di’n gallu’i wneud ✅" },
+      "html": {
+        "en": "<p>By the end of this whistlestop tour, you’ll be able to:</p><ul><li>spot common mutation triggers</li><li>choose the right starting form (or <i>no</i> mutation)</li><li>recognise the big “why did nothing happen?” cases</li><li>practise the same rules in the Trainer categories</li></ul><div class='callout'><p>Keep going even if you don’t remember every table yet. You’re training your eye to recognise patterns 🧠</p></div>",
+        "cy": "<p>Erbyn diwedd y daith chwim hon, byddi di’n gallu:</p><ul><li>adnabod sbardunau treiglad cyffredin</li><li>dewis y ffurf gywir (neu <i>ddim</i> treiglad o gwbl)</li><li>adnabod y prif achosion “pam nad oes dim wedi digwydd?”</li><li>ymarfer yr un rheolau yng nghategorïau’r Hyfforddwr</li></ul><div class='callout'><p>Dal ati hyd yn oed os nad wyt ti’n cofio pob tabl eto. Rwyt ti’n hyfforddi dy lygad i weld patrymau 🧠</p></div>"
+      }
+    },
+    {
+      "title": { "en": "A quick note about grammar words (they’ll help) 🧩", "cy": "Nodyn sydyn am eiriau gramadeg (byddan nhw’n helpu) 🧩" },
+      "html": {
+        "en": "<p>I’m going to use a few grammar terms (like <b>verb</b> and <b>subject</b>) because they make mutation rules <b>way</b> easier to explain.</p><div class='callout'><p>You don’t need to love grammar. You just need a small toolkit so the next lessons don’t feel like random lists.</p></div><p>Let’s build that toolkit now.</p>",
+        "cy": "<p>Dw i’n mynd i ddefnyddio ychydig o dermau gramadeg (fel <b>berf</b> a <b>pwnc</b>) oherwydd maen nhw’n gwneud rheolau treiglo’n <b>llawer</b> haws i’w deall.</p><div class='callout'><p>Does dim rhaid i ti garu gramadeg. Dim ond pecyn bach o dermau sydd ei angen, fel nad yw’r gwersi nesaf yn teimlo fel rhestrau ar hap.</p></div><p>Gad i ni adeiladu’r pecyn yna nawr.</p>"
+      }
+    },
+    {
+      "title": { "en": "Your mini grammar toolkit 🧰", "cy": "Dy becyn gramadeg bach 🧰" },
+      "html": {
+        "en": "<div class='table-wrap'><table><thead><tr><th>Term</th><th>What it is (plain English)</th><th>Example</th></tr></thead><tbody><tr><td><b>Noun</b> (enw)</td><td>a ‘thing’ word</td><td><code>car, merch, tŷ</code></td></tr><tr><td><b>Verb</b> (berf)</td><td>a ‘doing/being’ word</td><td><code>gweld</code> (see), <code>bod</code> (be)</td></tr><tr><td><b>Adjective</b> (ansoddair)</td><td>a describing word</td><td><code>da</code> (good), <code>garedig</code> (kind)</td></tr><tr><td><b>Pronoun</b> (rhagenw)</td><td>a short ‘replacement’ word</td><td><code>fi, ti, e, hi, ni, chi, nhw</code></td></tr><tr><td><b>Preposition</b> (arddodiad)</td><td>links words (to, from, on...)</td><td><code>i, o, ar, am, heb</code></td></tr><tr><td><b>Conjunction</b> (cysylltair)</td><td>joins ideas (and, but, or...)</td><td><code>a</code> (and), <code>ond</code> (but), <code>neu</code> (or)</td></tr></tbody></table></div><div class='callout'><p>Mutation often shows up right after prepositions, conjunctions, and little grammar words like these.</p></div>",
+        "cy": "<div class='table-wrap'><table><thead><tr><th>Term</th><th>Beth ydyw (Cymraeg plaen)</th><th>Enghraifft</th></tr></thead><tbody><tr><td><b>Enw</b> (noun)</td><td>gair ‘peth’</td><td><code>car, merch, tŷ</code></td></tr><tr><td><b>Berf</b> (verb)</td><td>gair ‘gwneud/bod’</td><td><code>gweld</code>, <code>bod</code></td></tr><tr><td><b>Ansoddair</b> (adjective)</td><td>gair sy’n disgrifio</td><td><code>da</code>, <code>garedig</code></td></tr><tr><td><b>Rhagenw</b> (pronoun)</td><td>gair byr sy’n sefyll yn lle enw</td><td><code>fi, ti, e, hi, ni, chi, nhw</code></td></tr><tr><td><b>Arddodiad</b> (preposition)</td><td>gair sy’n cysylltu (i, o, ar...)</td><td><code>i, o, ar, am, heb</code></td></tr><tr><td><b>Cysylltair</b> (conjunction)</td><td>gair sy’n uno syniadau</td><td><code>a</code>, <code>ond</code>, <code>neu</code></td></tr></tbody></table></div><div class='callout'><p>Mae treiglad yn aml yn ymddangos ar ôl arddodiaid, cysyllteiriau, a geiriau gramadeg bach fel y rhain.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Subject, verb, object (the sentence skeleton) 🦴", "cy": "Pwnc, berf, gwrthrych (asgwrn cefn brawddeg) 🦴" },
+      "html": {
+        "en": "<p>Most simple sentences have these roles:</p><div class='table-wrap'><table><thead><tr><th>Role</th><th>Meaning</th><th>English example</th></tr></thead><tbody><tr><td><b>Subject</b></td><td>who/what does it</td><td><code>Siân</code> (in <code>Siân saw a dog</code>)</td></tr><tr><td><b>Verb</b></td><td>what happens</td><td><code>saw</code></td></tr><tr><td><b>Object</b></td><td>who/what gets it</td><td><code>a dog</code></td></tr></tbody></table></div><p>We use these terms because one big Welsh mutation rule is literally about what comes <b>after the subject</b>.</p>",
+        "cy": "<p>Mae gan lawer o frawddegau syml y rolau yma:</p><div class='table-wrap'><table><thead><tr><th>Rôl</th><th>Ystyr</th><th>Enghraifft</th></tr></thead><tbody><tr><td><b>Pwnc</b></td><td>pwy/beth sy’n gwneud</td><td><code>Siân</code> (yn <code>Gwelodd Siân gi</code>)</td></tr><tr><td><b>Berf</b></td><td>beth sy’n digwydd</td><td><code>gwelodd</code></td></tr><tr><td><b>Gwrthrych</b></td><td>pwy/beth sy’n cael</td><td><code>gi</code></td></tr></tbody></table></div><p>Rydyn ni’n defnyddio’r termau yma oherwydd bod un rheol fawr treiglo yn sôn am beth sy’n dod <b>ar ôl y pwnc</b>.</p>"
+      }
+    },
+    {
+      "title": { "en": "Welsh word order in one picture (VSO) 🎬", "cy": "Trefn geiriau Cymraeg ar un llun (VSO) 🎬" },
+      "html": {
+        "en": "<p>English often looks like:</p><p><code>[SUBJECT] [VERB] [OBJECT]</code></p><p>Welsh (neutral sentences) often looks like:</p><p><code>[VERB] [SUBJECT] [OBJECT]</code></p><div class='callout'><p>This matters because Welsh often marks the <b>subject boundary</b> with soft mutation.</p></div><p>Example:</p><p><code>Gwelodd Siân <b>gi</b>.</code> (from <code>ci</code>)</p>",
+        "cy": "<p>Yn Saesneg, mae’n aml fel hyn:</p><p><code>[PWNC] [BERF] [GWRTHRYCH]</code></p><p>Yn y Gymraeg (brawddeg niwtral), mae’n aml fel hyn:</p><p><code>[BERF] [PWNC] [GWRTHRYCH]</code></p><div class='callout'><p>Mae hyn yn bwysig oherwydd bod y Gymraeg yn aml yn nodi <b>ffin y pwnc</b> gyda threiglad meddal.</p></div><p>Enghraifft:</p><p><code>Gwelodd Siân <b>gi</b>.</code> (o <code>ci</code>)</p>"
+      }
+    },
+    {
+      "title": { "en": "What is mutation? 🔍", "cy": "Beth yw treiglad? 🔍" },
+      "html": {
+        "en": "<p><b>Mutation</b> is a change to the <b>first sound/letter</b> of a word in certain grammatical contexts.</p><p>Example (soft mutation): <code>car → gar</code></p><div class='callout'><p>In Welsh, mutation is normal grammar, not an optional extra.</p></div>",
+        "cy": "<p><b>Treiglad</b> yw newid i <b>sain/llythyren gyntaf</b> gair mewn cyd-destunau gramadegol penodol.</p><p>Enghraifft (treiglad meddal): <code>car → gar</code></p><div class='callout'><p>Yn y Gymraeg, mae treiglad yn ramadeg arferol, nid rhywbeth ychwanegol dewisol.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Radical: the form you look up 📚", "cy": "Ffurf wreiddiol: y ffurf eiriadur 📚" },
+      "html": {
+        "en": "<p><b>Radical</b> = the dictionary form.</p><p>When you see a mutated word, train yourself to think:</p><p><code>What radical could this come from?</code></p><ul><li><code>fara</code> → radical <code>bara</code></li><li><code>ddrws</code> → radical <code>drws</code></li><li><code>ardd</code> → radical <code>gardd</code> (g drops)</li></ul><div class='callout'><p>This one habit will save you a lot of time later.</p></div>",
+        "cy": "<p><b>Ffurf wreiddiol</b> = y ffurf eiriadur.</p><p>Pan weli di ffurf dreigledig, hyffordda dy hun i feddwl:</p><p><code>Pa ffurf wreiddiol allai hyn ddod ohoni?</code></p><ul><li><code>fara</code> → <code>bara</code></li><li><code>ddrws</code> → <code>drws</code></li><li><code>ardd</code> → <code>gardd</code> (g yn diflannu)</li></ul><div class='callout'><p>Bydd yr arfer yma’n arbed llawer o amser i ti wedyn.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Welsh letters: the digraph trap 🧠", "cy": "Llythrennau Cymraeg: trap y deulythrennau 🧠" },
+      "html": {
+        "en": "<p>Welsh has <b>single letters</b> written with two characters:</p><p><code>ch, dd, ff, ng, ll, ph, rh, th</code></p><div class='callout'><p>Don’t treat <code>ch</code> as “just c + h”. It behaves as its own letter. Same idea with <code>ll</code> and <code>rh</code>.</p></div><p>Quick contrast:</p><ul><li><code>car → gar</code> (c can change)</li><li><code>chwaer</code> stays <code>chwaer</code> (ch doesn’t behave like c)</li></ul>",
+        "cy": "<p>Mae gan y Gymraeg <b>llythrennau sengl</b> sy’n cael eu hysgrifennu gyda dau nod:</p><p><code>ch, dd, ff, ng, ll, ph, rh, th</code></p><div class='callout'><p>Paid â thrin <code>ch</code> fel “c + h” yn unig. Mae’n llythyren ar wahân. Yr un syniad gyda <code>ll</code> a <code>rh</code>.</p></div><p>Cymhariaeth sydyn:</p><ul><li><code>car → gar</code> (gall c newid)</li><li><code>chwaer</code> yn aros yn <code>chwaer</code> (nid yw ch fel c)</li></ul>"
+      }
+    },
+    {
+      "title": { "en": "The main types (plus the radical) 🧭", "cy": "Y prif fathau (a’r ffurf wreiddiol) 🧭" },
+      "html": {
+        "en": "<ul><li><b>Soft (SM)</b>: most common</li><li><b>Aspirate (AM)</b>: only <code>c/p/t</code></li><li><b>Nasal (NM)</b>: common with <code>fy</code> and some ‘in’ phrases</li><li><b>Mixed (MM)</b>: mainly for recognition (more formal negatives)</li></ul><p><b>Radical</b> = the dictionary form you look up.</p><div class='callout'><p>If you learn just one thing first: learn <b>soft mutation</b>. It carries a lot of Welsh.</p></div>",
+        "cy": "<ul><li><b>Treiglad meddal (TM)</b>: y mwyaf cyffredin</li><li><b>Treiglad llaes (TL)</b>: dim ond <code>c/p/t</code></li><li><b>Treiglad trwynol (TT)</b>: yn aml gyda <code>fy</code> ac ymadroddion ‘mewn’</li><li><b>Treiglad cymysg (TC)</b>: yn bennaf i’w adnabod (negadau mwy ffurfiol)</li></ul><p><b>Ffurf wreiddiol</b> = y ffurf eiriadur.</p><div class='callout'><p>Os wyt ti’n dysgu un peth yn gyntaf: dysga <b>treiglad meddal</b>. Mae’n cario llawer o Gymraeg.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "A mini mutation map (starter) 🗺️", "cy": "Map treiglad bach (cychwyn) 🗺️" },
+      "html": {
+        "en": "<div class='table-wrap'><table><thead><tr><th>Radical</th><th>Soft</th><th>Aspirate</th><th>Nasal</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>ch</code></td><td><code>ngh</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>ph</code></td><td><code>mh</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>th</code></td><td><code>nh</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td>—</td><td><code>m</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td>—</td><td><code>n</code></td></tr><tr><td><code>g</code></td><td><code>(drops)</code></td><td>—</td><td><code>ng</code></td></tr></tbody></table></div><div class='callout'><p>In tables, <code>—</code> means “no change”. It doesn’t mean “this letter never mutates”.</p></div>",
+        "cy": "<div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Meddal</th><th>Llaes</th><th>Trwynol</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>ch</code></td><td><code>ngh</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>ph</code></td><td><code>mh</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>th</code></td><td><code>nh</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td>—</td><td><code>m</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td>—</td><td><code>n</code></td></tr><tr><td><code>g</code></td><td><code>(yn diflannu)</code></td><td>—</td><td><code>ng</code></td></tr></tbody></table></div><div class='callout'><p>Mewn tablau, mae <code>—</code> yn golygu “dim newid”. Dydy e ddim yn golygu “byth yn treiglo”.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Two golden safety rules 🥇", "cy": "Dwy reol aur 🥇" },
+      "html": {
+        "en": "<ul><li><b>One mutation only</b>: if a word is already mutated, don’t try to mutate it again.</li><li><b>g can drop</b> in soft mutation: <code>gardd → ardd</code>.</li></ul><p>Examples:</p><ul><li><code>dy <b>gar</b> di</code> (from <code>car</code>)</li><li><code>ei <b>ardd</b> e</code> (from <code>gardd</code>)</li></ul><div class='callout'><p>If you remember these, your writing gets cleaner fast.</p></div>",
+        "cy": "<ul><li><b>Unwaith yn unig</b>: os yw gair wedi’i dreiglo eisoes, paid â cheisio’i dreiglo eto.</li><li><b>Gall g ddiflannu</b> mewn treiglad meddal: <code>gardd → ardd</code>.</li></ul><p>Enghreifftiau:</p><ul><li><code>dy <b>gar</b> di</code> (o <code>car</code>)</li><li><code>ei <b>ardd</b> e</code> (o <code>gardd</code>)</li></ul><div class='callout'><p>Os wyt ti’n cofio’r rhain, bydd dy ysgrifennu’n gwella’n gyflym.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Why mutation happens: 2 big causes ✌️", "cy": "Pam mae treiglad yn digwydd: 2 achos mawr ✌️" },
+      "html": {
+        "en": "<ul><li><b>Contact mutation</b>: a trigger word sits right before the word.</li><li><b>Grammatical mutation</b>: the sentence structure creates it (often after the subject).</li></ul><p>Examples:</p><ul><li><code>o Gymru</code> (contact: <code>o</code>)</li><li><code>Gwelodd Siân gi</code> (grammatical: after the subject)</li></ul><div class='callout'><p>Most beginner success comes from learning contact triggers first. Then you add structure rules when you’re ready.</p></div>",
+        "cy": "<ul><li><b>Treiglad cyswllt</b>: mae gair sbardun yn dod yn syth o’i flaen.</li><li><b>Treiglad gramadegol</b>: mae strwythur y frawddeg yn ei greu (yn aml ar ôl y pwnc).</li></ul><p>Enghreifftiau:</p><ul><li><code>o Gymru</code> (cyswllt: <code>o</code>)</li><li><code>Gwelodd Siân gi</code> (gramadegol: ar ôl y pwnc)</li></ul><div class='callout'><p>Mae’r llwyddiant cychwynnol mwyaf yn dod o ddysgu sbardunau cyswllt yn gyntaf. Wedyn, rwyt ti’n ychwanegu rheolau strwythur pan wyt ti’n barod.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Soft mutation: common contact triggers 🎯", "cy": "Treiglad meddal: sbardunau cyswllt cyffredin 🎯" },
+      "html": {
+        "en": "<p>These often trigger <b>soft mutation</b> (when they sit right before the word):</p><ul><li>common prepositions: <code>am, ar, at, dan, dros, gan, heb, hyd, i, o, tan, trwy/drwy, wrth</code></li><li>other common triggers: <code>neu</code> (or), <code>pan</code> (when), <code>dy</code> (your)</li></ul><p>Examples:</p><ul><li><code>i <b>Gaerdydd</b></code> (Caerdydd)</li><li><code>dy <b>gar</b> di</code> (car)</li><li><code>te neu <b>goffi</b></code> (coffi)</li></ul><div class='callout'><p>Friendly rule: if you’re unsure, assume SM first. It’s the most common.</p></div>",
+        "cy": "<p>Mae’r rhain yn aml yn sbarduno <b>treiglad meddal</b> (pan maen nhw’n syth o’i flaen):</p><ul><li>arddodiaid cyffredin: <code>am, ar, at, dan, dros, gan, heb, hyd, i, o, tan, trwy/drwy, wrth</code></li><li>sbardunau cyffredin eraill: <code>neu</code>, <code>pan</code>, <code>dy</code></li></ul><p>Enghreifftiau:</p><ul><li><code>i <b>Gaerdydd</b></code> (Caerdydd)</li><li><code>dy <b>gar</b> di</code> (car)</li><li><code>te neu <b>goffi</b></code> (coffi)</li></ul><div class='callout'><p>Rheol gyfeillgar: os wyt ti’n ansicr, tybia TM yn gyntaf. Dyma’r un mwyaf cyffredin.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Blocking: when a trigger ‘can’t reach’ 🧱", "cy": "Blocïo: pan na all sbardun ‘gyrraedd’ 🧱" },
+      "html": {
+        "en": "<p>Contact triggers usually need to be <b>right next to</b> the word they affect.</p><p><code>neu</code> normally triggers soft mutation:</p><p><code>ffenest neu <b>ddrws</b></code> (drws → ddrws)</p><p>But the definite article can block it:</p><p><code>y ffenest neu'r drws</code> (no <code>ddrws</code>)</p><div class='callout'><p>If you’re thinking “wait, why no mutation there?” — blocking is often the answer.</p></div>",
+        "cy": "<p>Fel arfer, mae angen i sbardun cyswllt fod <b>yn syth wrth ymyl</b> y gair mae’n ei effeithio.</p><p>Mae <code>neu</code> fel arfer yn sbarduno treiglad meddal:</p><p><code>ffenest neu <b>ddrws</b></code> (drws → ddrws)</p><p>Ond gall yr erthygl bendant ei flocio:</p><p><code>y ffenest neu'r drws</code> (dim <code>ddrws</code>)</p><div class='callout'><p>Os wyt ti’n meddwl “pam dim treiglad fan’na?” — blocïo yw’r ateb yn aml.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Soft mutation by structure: after the subject 👀", "cy": "Treiglad meddal yn ôl strwythur: ar ôl y pwnc 👀" },
+      "html": {
+        "en": "<div class='callout'><p>In neutral Welsh, what comes <b>after the subject</b> often takes <b>soft mutation</b> (when possible).</p></div><p>Example:</p><p><code>Gwelodd Siân <b>gi</b>.</code> (<code>ci → gi</code>)</p><p>Think: mutation helps mark the boundary after the subject.</p><div class='callout'><p>This is one of the most useful “non-list” rules in Welsh.</p></div>",
+        "cy": "<div class='callout'><p>Yn nhrefn niwtral y Gymraeg, mae’r gair ar ôl y <b>pwnc</b> yn aml yn cymryd <b>treiglad meddal</b> (os oes modd).</p></div><p>Enghraifft:</p><p><code>Gwelodd Siân <b>gi</b>.</code> (<code>ci → gi</code>)</p><p>Meddwl: mae’r treiglad yn helpu i nodi’r ffin ar ôl y pwnc.</p><div class='callout'><p>Dyma un o’r rheolau “heb restr” mwyaf defnyddiol yn y Gymraeg.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "bod + (y)n: the complement marker 🎛️", "cy": "bod + (y)n: y marciwr cyflenwad 🎛️" },
+      "html": {
+        "en": "<p>When <code>bod</code> is the front verb, Welsh often uses <code>yn</code> before what comes next (the <b>complement</b>).</p><ul><li><code>Mae Siân yn canu.</code> (verb-noun: no mutation on <code>canu</code>)</li><li><code>Mae Siân yn <b>garedig</b>.</code> (adjective: soft mutation shows)</li><li><code>Mae hi'n <b>feddyg</b>.</code> (noun: <code>meddyg → feddyg</code>)</li></ul><div class='callout'><p>So: with <code>bod</code>, you’ll often see <code>yn</code> sitting between the subject and what follows — and that can change whether mutation appears.</p></div>",
+        "cy": "<p>Pan mae <code>bod</code> ar y blaen, mae’r Gymraeg yn aml yn defnyddio <code>yn</code> cyn yr hyn sy’n dod nesaf (y <b>cyflenwad</b>).</p><ul><li><code>Mae Siân yn canu.</code> (berfenw: dim treiglad ar <code>canu</code>)</li><li><code>Mae Siân yn <b>garedig</b>.</code> (ansoddair: mae TM yn ymddangos)</li><li><code>Mae hi'n <b>feddyg</b>.</code> (enw: <code>meddyg → feddyg</code>)</li></ul><div class='callout'><p>Felly: gyda <code>bod</code>, byddi di’n aml yn gweld <code>yn</code> rhwng y pwnc a’r hyn sy’n dilyn — ac mae hynny’n gallu newid pryd mae treiglad yn ymddangos.</p></div>"
+      },
+      "note": {
+        "en": "We’ll do a full deep-dive on <code>bod + yn</code> later. For now, just recognise the pattern.",
+        "cy": "Bydd gwers fanwl ar <code>bod + yn</code> yn nes ymlaen. Am nawr, dim ond adnabod y patrwm."
+      }
+    },
+    {
+      "title": { "en": "Nil cases: when ‘nothing happens’ (and it’s still correct) 🙅", "cy": "Achosion dim: pan nad oes ‘dim yn digwydd’ (ac mae’n dal yn gywir) 🙅" },
+      "html": {
+        "en": "<p>Three common reasons you don’t see a change:</p><ul><li><b>No mutation rule applies</b> in that context.</li><li><b>The starting letter can’t show the mutation</b> (e.g. <code>s</code> doesn’t change).</li><li><b>A blocker gets in the way</b> (like <code>'r</code> in <code>neu'r</code>).</li></ul><p>Examples:</p><ul><li><code>i siop</code> (SM would be expected, but <code>s</code> doesn’t change)</li><li><code>y ffenest neu'r drws</code> (blocked)</li></ul><div class='callout'><p>Being able to say “no change is correct here” is a real skill — and it stops you over-mutating.</p></div>",
+        "cy": "<p>Tri rheswm cyffredin pam nad wyt ti’n gweld newid:</p><ul><li><b>Does dim rheol treiglo</b> yn berthnasol yn y cyd-destun.</li><li><b>Dydy’r llythyren gyntaf ddim yn dangos newid</b> (e.e. dydy <code>s</code> ddim yn newid).</li><li><b>Mae blocïwr yn dod rhyngddynt</b> (fel <code>'r</code> yn <code>neu'r</code>).</li></ul><p>Enghreifftiau:</p><ul><li><code>i siop</code> (byddet ti’n disgwyl TM, ond dydy <code>s</code> ddim yn newid)</li><li><code>y ffenest neu'r drws</code> (wedi’i flocio)</li></ul><div class='callout'><p>Mae gallu dweud “mae dim newid yn gywir yma” yn sgìl go iawn — ac mae’n dy atal di rhag gortreiglo.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Possessives: high-payoff mutation patterns 💎", "cy": "Meddiannau: patrymau treiglad gwerthfawr 💎" },
+      "html": {
+        "en": "<p>These are everywhere in real Welsh, so they’re worth learning early:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Word</th><th>Usually triggers</th></tr></thead><tbody><tr><td>my</td><td><code>fy</code></td><td>nasal (NM)</td></tr><tr><td>your (sing.)</td><td><code>dy</code></td><td>soft (SM)</td></tr><tr><td>his</td><td><code>ei</code></td><td>soft (SM)</td></tr><tr><td>her</td><td><code>ei</code></td><td>aspirate (AM) on <code>c/p/t</code></td></tr></tbody></table></div><p>Examples:</p><ul><li><code>fy <b>nghar</b> i</code> (car)</li><li><code>dy <b>gar</b> di</code> (car)</li><li><code>ei <b>gar</b> e</code> / <code>ei <b>char</b> hi</code> (car)</li></ul>",
+        "cy": "<p>Mae’r rhain ym mhobman mewn Cymraeg go iawn, felly maen nhw’n werth eu dysgu’n gynnar:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Gair</th><th>Fel arfer</th></tr></thead><tbody><tr><td>fy</td><td><code>fy</code></td><td>trwynol (TT)</td></tr><tr><td>dy (unig.)</td><td><code>dy</code></td><td>meddal (TM)</td></tr><tr><td>ei (e)</td><td><code>ei</code></td><td>meddal (TM)</td></tr><tr><td>ei (hi)</td><td><code>ei</code></td><td>llaes (TL) ar <code>c/p/t</code></td></tr></tbody></table></div><p>Enghreifftiau:</p><ul><li><code>fy <b>nghar</b> i</code> (car)</li><li><code>dy <b>gar</b> di</code> (car)</li><li><code>ei <b>gar</b> e</code> / <code>ei <b>char</b> hi</code> (car)</li></ul>"
+      }
+    },
+    {
+      "title": { "en": "Numbers: a starter set that actually matters 🔢", "cy": "Rhifau: set gychwynnol sy’n gwneud gwahaniaeth 🔢" },
+      "html": {
+        "en": "<p>Welsh has some <b>number-specific</b> mutation patterns. Start with these:</p><ul><li><code>un</code> + feminine noun → soft: <code>un <b>gath</b></code> (cath → gath)</li><li><code>dau</code> (m) / <code>dwy</code> (f) → soft: <code>dau <b>gi</b></code>, <code>dwy <b>gath</b></code></li><li><code>tri</code> + masculine noun → aspirate: <code>tri <b>char</b></code>, <code>tri <b>thŷ</b></code></li><li><code>tair</code> (feminine ‘three’) → no mutation: <code>tair cadair</code></li><li><code>chwe</code> → aspirate: <code>chwe <b>phlentyn</b></code>, <code>chwe <b>thŷ</b></code></li></ul><div class='callout'><p>Bonus: after numbers, Welsh normally uses a <b>singular</b> noun: <code>saith ci</code> (not “dogs”).</p></div>",
+        "cy": "<p>Mae gan y Gymraeg batrymau treiglo penodol gyda <b>rhifau</b>. Dechreua gyda’r rhain:</p><ul><li><code>un</code> + enw benywaidd → meddal: <code>un <b>gath</b></code> (cath → gath)</li><li><code>dau</code> (gw) / <code>dwy</code> (b) → meddal: <code>dau <b>gi</b></code>, <code>dwy <b>gath</b></code></li><li><code>tri</code> + enw gwrywaidd → llaes: <code>tri <b>char</b></code>, <code>tri <b>thŷ</b></code></li><li><code>tair</code> (y ‘tri’ benywaidd) → dim treiglad: <code>tair cadair</code></li><li><code>chwe</code> → llaes: <code>chwe <b>phlentyn</b></code>, <code>chwe <b>thŷ</b></code></li></ul><div class='callout'><p>Bônws: ar ôl rhifau, defnyddia’r Gymraeg <b>enw unigol</b> fel arfer: <code>saith ci</code>.</p></div>"
+      },
+      "note": {
+        "en": "Some guides mention extra exceptions (e.g. with <code>ll</code>/<code>rh</code>). We flag variation when it matters, but we start with the patterns you’ll actually see most.",
+        "cy": "Mae rhai canllawiau yn sôn am eithriadau ychwanegol (e.e. gyda <code>ll</code>/<code>rh</code>). Rydyn ni’n nodi amrywiad pan fo angen, ond rydyn ni’n dechrau gyda’r patrymau wyt ti’n eu gweld amlaf."
+      }
+    },
+    {
+      "title": { "en": "The ‘number + o + plural’ pattern (super useful) 🧮", "cy": "Patrwm ‘rhif + o + lluosog’ (hynod ddefnyddiol) 🧮" },
+      "html": {
+        "en": "<p>When you mean “X of (the) …”, Welsh often uses:</p><p><code>number + o + plural</code></p><p>Example:</p><p><code>dau o <b>ddynion</b></code> (dynion → ddynion after <code>o</code>)</p><div class='callout'><p>Key idea: <code>o</code> is a soft-mutation trigger, and you must use the plural form of the noun.</p></div>",
+        "cy": "<p>Pan wyt ti’n golygu “X o (’r) …”, mae’r Gymraeg yn aml yn defnyddio:</p><p><code>rhif + o + lluosog</code></p><p>Enghraifft:</p><p><code>dau o <b>ddynion</b></code> (dynion → ddynion ar ôl <code>o</code>)</p><div class='callout'><p>Syniad allweddol: mae <code>o</code> yn sbardun treiglad meddal, ac mae’n rhaid defnyddio’r lluosog.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Mixed mutation + register (what you’ll hear vs what you’ll read) 🗞️", "cy": "Treiglad cymysg + cofrestr (yr hyn a glywi di vs yr hyn a ddarlleni di) 🗞️" },
+      "html": {
+        "en": "<p><b>Mixed mutation (MM)</b> shows up mainly in more formal negatives.</p><p>Example (formal-ish): <code>Ni <b>phrynais</b> i ddim.</code></p><div class='callout'><p>In everyday speech, you’ll very often hear: <code>Wnes i ddim prynu.</code> Both are useful — just in different contexts.</p></div>",
+        "cy": "<p>Mae <b>treiglad cymysg (TC)</b> yn ymddangos yn bennaf mewn negadau mwy ffurfiol.</p><p>Enghraifft (mwy ffurfiol): <code>Ni <b>phrynais</b> i ddim.</code></p><div class='callout'><p>Mewn lleferydd bob dydd, byddi di’n aml iawn yn clywed: <code>Wnes i ddim prynu.</code> Mae’r ddau’n ddefnyddiol — dim ond mewn cyd-destunau gwahanol.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Your mutation checklist (use this every time) ✅", "cy": "Dy restr wirio treiglad (defnyddia hyn bob tro) ✅" },
+      "html": {
+        "en": "<ol><li><b>Is there a trigger?</b> (a word right before)</li><li><b>Is the next word mutable?</b> (can the first letter change?)</li><li><b>Which mutation type?</b> (soft / aspirate / nasal / mixed)</li><li><b>Any blockers?</b> (did something get in the way?)</li></ol><div class='callout'><p>Do this in this order. It stops you guessing.</p></div>",
+        "cy": "<ol><li><b>A oes sbardun?</b> (gair yn syth o’i flaen)</li><li><b>A yw’r gair nesaf yn dreigladwy?</b> (a all y dechrau newid?)</li><li><b>Pa fath o dreiglad?</b> (meddal / llaes / trwynol / cymysg)</li><li><b>A oes blocïwr?</b> (a ddaeth rhywbeth rhyngddynt?)</li></ol><div class='callout'><p>Gwna hyn yn y drefn yma. Mae’n dy atal di rhag dyfalu.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick practice (no pressure) ✍️", "cy": "Ymarfer sydyn (dim pwysau) ✍️" },
+      "html": {
+        "en": "<p>Write the final phrase (mutate only if you need to):</p><ol><li><code>i + Caerdydd</code></li><li><code>dy + car</code></li><li><code>te neu + coffi</code></li><li><code>y ffenest neu'r + drws</code></li><li><code>tri + car</code></li><li><code>dau o + dynion</code></li></ol><div class='callout'><p>Tip: if you get stuck, use the checklist from the previous slide.</p></div>",
+        "cy": "<p>Ysgrifenna’r ymadrodd terfynol (treigla dim ond os oes angen):</p><ol><li><code>i + Caerdydd</code></li><li><code>dy + car</code></li><li><code>te neu + coffi</code></li><li><code>y ffenest neu'r + drws</code></li><li><code>tri + car</code></li><li><code>dau o + dynion</code></li></ol><div class='callout'><p>Awgrym: os wyt ti’n sownd, defnyddia’r rhestr wirio ar y sleid flaenorol.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Answers + next steps ➜", "cy": "Atebion + camau nesaf ➜" },
+      "html": {
+        "en": "<p><b>Answers:</b></p><ol><li><code>i Gaerdydd</code></li><li><code>dy gar</code></li><li><code>te neu goffi</code></li><li><code>y ffenest neu'r drws</code> (blocked)</li><li><code>tri char</code></li><li><code>dau o ddynion</code></li></ol><div class='callout'><p>Now pick a Trainer category and drill it:</p><ul><li><b>Prepositions</b> (i, o, ar…)</li><li><b>Conjunctions</b> (neu + blocking)</li><li><b>Possessives</b> (fy/dy/ei)</li><li><b>Numerals</b> (un/dau-dwy/tri-tair/chwe)</li><li><b>SubjectBoundary</b> (after-subject soft mutation)</li></ul></div>",
+        "cy": "<p><b>Atebion:</b></p><ol><li><code>i Gaerdydd</code></li><li><code>dy gar</code></li><li><code>te neu goffi</code></li><li><code>y ffenest neu'r drws</code> (wedi’i flocio)</li><li><code>tri char</code></li><li><code>dau o ddynion</code></li></ol><div class='callout'><p>Nawr, dewis gategori yn yr Hyfforddwr a’i ymarfer:</p><ul><li><b>Arddodiaid</b> (i, o, ar…)</li><li><b>Cysyllteiriau</b> (neu + blocïo)</li><li><b>Meddiannau</b> (fy/dy/ei)</li><li><b>Rhifau</b> (un/dau-dwy/tri-tair/chwe)</li><li><b>FfinPwnc</b> (TM ar ôl y pwnc)</li></ul></div>"
+      }
+    }
+  ]
+}
