@@ -209,7 +209,7 @@ None,Article,"y (def. art., pl)",pobl,noun-pl,Casglodd y,ger y llwyfan.,pobl,NON
 "Aspirate, Contact",Possessive,ei (her),cath,noun-fem,Dyma ei,hoff.,chath,AM,ei (her) → AM on following noun (c→ch).
 "Aspirate, Contact",Possessive,ei (her),ci,noun-masc,Gwelais ei,hi yn y parc.,chi,AM,ei (her) → AM (c→ch).
 "Aspirate, Contact",Possessive,ei (her),cadair,noun-fem,Symudodd hi ei,at y ddesg.,chadair,AM,ei (her) → AM (c→ch).
-"Aspirate, Contact",Possessive,ei (her),pobl,noun-pl,Clywson ni am ei,yn protestio.,phobl,AM,ei (her) → AM (p→ph).
+"Aspirate, Contact",Possessive,ei (her),pobl,noun-pl,Clywson ni am ei, hi yn protestio.,phobl,AM,ei (her) → AM (p→ph).
 "Aspirate, Contact",Possessive,ei (her),pen,noun-masc,Darllenodd hi ei,cyn y cyfarfod.,phen,AM,ei (her) → AM (p→ph).
 "Aspirate, Contact",Possessive,ei (her),papur,noun-masc,Collodd hi ei,ar y trên.,phapur,AM,ei (her) → AM (p→ph).
 "Aspirate, Contact",Possessive,ei (her),plant,noun-pl,Siaradodd hi am ei,yn aml.,phlant,AM,ei (her) → AM (p→ph).
@@ -1009,6 +1009,7 @@ None,TimeExpressions,nos,da,adj,Nos,!,da,NONE,This greeting is Nos da
 "Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 "Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 "Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
