@@ -16,13 +16,13 @@
       "desc": { "en": "A friendly intro + key grammar words you’ll keep seeing.", "cy": "Cyflwyniad cyfeillgar + geiriau gramadeg byddi di’n eu gweld o hyd." },
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 10,
-      "tags": ["FOUNDATIONS", "MAP"],
+      "tags": ["FOUNDATIONS", "GRAMMAR"],
       "slideCount": 24,
       "deck": "./data/learn/treiglad-intro.json"
     },
     {
       "id": "l1-soft-mutation-core",
-      "title": { "en": "L1 Soft Mutation Core (the 80/20 set)", "cy": "G1 Treiglad meddal craidd (y set 80/20)" },
+      "title": { "en": "Soft Mutation", "cy": "Treiglad Meddal" },
       "desc": {
         "en": "A level 1 lesson on soft mutation inc prepositions, dy/ei, y + feminine nouns, and the big boundary rules.",
         "cy": "Gwers G1 ar dreiglad meddal, yn cynnwys arddodiaid, dy/ei, y + enwau benywaidd, a’r rheolau ffin pwysig."
