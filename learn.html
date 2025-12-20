@@ -526,9 +526,95 @@
   //
   // learn.html loads index.json at boot, then lazy-loads each deck JSON only when opened.
 
-  const LEARN_INDEX_URL = './data/learn/index.json';
+  const LEARN_INDEX_URLS = [
+    './data/learn/index.json',
+    'https://katyjohannab.github.io/welsh-mutation-trainer/data/learn/index.json'
+  ];
+
   let LESSON_INDEX = [];                 // [{id, title, desc, minutes, level, tags, slideCount, deck}]
   const DECK_CACHE = new Map();          // lessonId -> { id, slides: [...] }
+
+  let USING_FALLBACK = false;
+  let LOAD_ERROR = null;
+
+  function asLangObj(v){
+    if (!v) return null;
+    if (typeof v === 'string') return { en: v, cy: v };
+    if (typeof v === 'object') return v;
+    return null;
+  }
+
+  function normaliseDeckUrl(deck, lessonId){
+    // Default: /data/learn/<lessonId>.json
+    if (typeof deck !== 'string' || !deck.trim()) return `./data/learn/${lessonId}.json`;
+    const d = deck.trim();
+
+    // Absolute URL
+    if (/^https?:\/\//i.test(d)) return d;
+
+    // Root-relative
+    if (d.startsWith('/')) return d;
+
+    // Already relative
+    if (d.startsWith('./') || d.startsWith('../')) return d;
+
+    // Bare filename like "mutation-whistlestop.json"
+    if (!d.includes('/')) return `./data/learn/${d}`;
+
+    // "data/learn/x.json" -> "./data/learn/x.json"
+    if (d.startsWith('data/')) return `./${d}`;
+
+    return d;
+  }
+
+  function normaliseLessons(raw){
+    const lessons = Array.isArray(raw) ? raw : [];
+    const out = [];
+
+    for (const item of lessons){
+      if (!item || typeof item !== 'object') continue;
+      const id = String(item.id || '').trim();
+      if (!id) continue;
+
+      const title = asLangObj(item.title)
+        || (item.title_en ? { en: String(item.title_en), cy: String(item.title_cy || item.title_en) } : null)
+        || { en: id, cy: id };
+
+      const desc  = asLangObj(item.desc)
+        || (item.desc_en ? { en: String(item.desc_en), cy: String(item.desc_cy || item.desc_en) } : null)
+        || { en: '', cy: '' };
+
+      const level = asLangObj(item.level)
+        || (item.level_en ? { en: String(item.level_en), cy: String(item.level_cy || item.level_en) } : null)
+        || { en: '', cy: '' };
+
+      const minutesRaw = (item.minutes ?? item.mins ?? 0);
+      const minutes = Number(minutesRaw);
+
+      const slideCountRaw = (item.slideCount ?? item.slide_count);
+      const slideCount = (slideCountRaw === undefined || slideCountRaw === null) ? undefined : Number(slideCountRaw);
+
+      let tags = item.tags;
+      if (typeof tags === 'string') tags = tags.split(',').map(s => s.trim()).filter(Boolean);
+      if (!Array.isArray(tags)) tags = [];
+
+      const deck = normaliseDeckUrl(item.deck, id);
+
+      out.push({
+        ...item,
+        id,
+        title,
+        desc,
+        level,
+        minutes: Number.isFinite(minutes) ? minutes : 0,
+        slideCount: (slideCount !== undefined && Number.isFinite(slideCount)) ? slideCount : undefined,
+        tags,
+        deck
+      });
+    }
+
+    return out;
+  }          // lessonId -> { id, slides: [...] }
 
   // Dummy fallback (so the page works even if you haven’t created /data/learn/*.json yet)
   const DUMMY_INDEX = [
@@ -632,15 +718,34 @@
   }
 
   async function loadLearnIndex(){
-    try{
-      const idx = await loadJSON(LEARN_INDEX_URL);
-      const lessons = Array.isArray(idx?.lessons) ? idx.lessons : (Array.isArray(idx) ? idx : null);
-      if (!lessons) throw new Error('Bad index shape');
-      LESSON_INDEX = lessons;
-    }catch(e){
-      // fallback
-      LESSON_INDEX = DUMMY_INDEX;
+    USING_FALLBACK = false;
+    LOAD_ERROR = null;
+
+    for (const url of LEARN_INDEX_URLS){
+      try{
+        const idx = await loadJSON(url);
+        const lessonsRaw = Array.isArray(idx?.lessons) ? idx.lessons : (Array.isArray(idx) ? idx : null);
+        if (!lessonsRaw) throw new Error('Bad index shape (expected {"lessons": [...]} or [...])');
+
+        const normalised = normaliseLessons(lessonsRaw);
+        if (!normalised.length) throw new Error('Index loaded but no valid lessons found (each lesson must have an "id")');
+
+        LESSON_INDEX = normalised;
+        console.info('[Learn] Loaded lesson index:', url, 'count:', LESSON_INDEX.length);
+
+        // Optional: expose a debug handle for quick DevTools inspection.
+        window.__WM_LEARN_DEBUG = { USING_FALLBACK, LOAD_ERROR, LESSON_INDEX, indexUrl: url };
+        return;
+      }catch(e){
+        LOAD_ERROR = e;
+      }
     }
+
+    USING_FALLBACK = true;
+    LESSON_INDEX = normaliseLessons(DUMMY_INDEX);
+    console.warn('[Learn] Using fallback lessons (could not load /data/learn/index.json).', LOAD_ERROR);
+
+    window.__WM_LEARN_DEBUG = { USING_FALLBACK, LOAD_ERROR, LESSON_INDEX, indexUrl: null };
   }
 
   function lessonById(id){ return LESSON_INDEX.find(l => l.id === id) || null; }
@@ -656,7 +761,7 @@
     if (DECK_CACHE.has(lessonId)) return;
 
     const meta = lessonById(lessonId);
-    const deckUrl = meta?.deck;
+    const deckUrl = normaliseDeckUrl(meta?.deck, lessonId);
 
     try{
       if (!deckUrl) throw new Error('Missing deck URL');
