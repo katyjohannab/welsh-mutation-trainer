@@ -30,7 +30,7 @@
     }
 
     /* -------------------------
-       Theme
+       Theme 
     ------------------------- */
     :root {
       --primary-from: #0b7a5a;
@@ -250,20 +250,24 @@
     .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
 
     /* Slide typography */
+    .slide-prose > :first-child{ margin-top: 0 !important; }
     .slide-prose p{ margin-top: .85rem; line-height: 1.58; }
     .slide-prose ul{ margin-top: .75rem; padding-left: 1.25rem; list-style: disc; }
     .slide-prose ol{ margin-top: .75rem; padding-left: 1.25rem; list-style: decimal; }
     .slide-prose li{ margin-top: .38rem; }
     .slide-prose b{ font-weight: 650; }
 
-    /* ✅ Code styling everywhere it appears (slide body, note, widgets) */
-    .slide-prose code, #slideNote code, #slideWidgets code{
+    /* Code styling (slide + callout + widgets) */
+    .slide-prose code,
+    .callout code,
+    .widget-muted code{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: 0.95em;
-      background: rgba(15,23,42,0.06);
-      border: 1px solid rgba(15,23,42,0.10);
-      padding: .08rem .35rem;
-      border-radius: .45rem;
+      padding: 0.10em 0.35em;
+      border-radius: 0.5em;
+      background: rgba(2,6,23,0.06);
+      border: 1px solid rgba(2,6,23,0.08);
+      white-space: nowrap;
     }
 
     /* Callouts and tables: auto spacing  */
@@ -274,8 +278,8 @@
       background: rgba(4,120,87,0.06);
       box-shadow: 0 1px 0 rgba(2,6,23,0.03);
     }
-    .slide-prose .callout{ margin-top: 1rem; }
-    .slide-prose .table-wrap{ margin-top: 1rem; }
+    .slide-prose .callout{ margin-top: 1.2rem; }
+    .slide-prose .table-wrap{ margin-top: 1.2rem; }
     .slide-prose table{ margin-top: 0; }
 
     .table-wrap{
@@ -394,6 +398,7 @@
 
             <div class="flex flex-wrap items-center gap-2">
               <button id="btnRestart" class="btn btn-ghost" title="Restart">Restart</button>
+              <button id="btnResetProgress" class="btn btn-ghost" title="Reset interactive progress for this lesson">Reset progress</button>
               <button id="btnShare" class="btn btn-ghost" title="Copy shareable link">Share link</button>
             </div>
           </div>
@@ -413,7 +418,7 @@
 
           <div id="slideBody" class="slide-prose mt-4 text-slate-800"></div>
 
-          <!-- interactive widgets mount point -->
+          <!-- Interactive widgets mount point -->
           <div id="slideWidgets" class="mt-6 space-y-4"></div>
 
           <div id="slideNoteWrap" class="mt-6 hidden">
@@ -485,6 +490,8 @@
       openLast: 'Open last lesson',
       back: '← Back',
       restart: 'Restart',
+      resetProgress: 'Reset progress',
+      resetConfirm: 'Reset interactive progress for this lesson? (DONE badges will clear.)',
       share: 'Share link',
       note: 'Note',
       prev: '← Prev',
@@ -516,6 +523,8 @@
       openLast: 'Agor y wers ddiwethaf',
       back: '← Yn ôl',
       restart: 'Ailgychwyn',
+      resetProgress: 'Ailosod cynnydd',
+      resetConfirm: 'Ailosod cynnydd rhyngweithiol y wers? (Bydd bathodynnau DONE yn clirio.)',
       share: 'Rhannu dolen',
       note: 'Nodyn',
       prev: '← Blaen',
@@ -551,6 +560,7 @@
 
     $('#btnBack').textContent = t('back');
     $('#btnRestart').textContent = t('restart');
+    $('#btnResetProgress').textContent = t('resetProgress');
     $('#btnShare').textContent = t('share');
     $('#btnPrev').textContent = t('prev');
     $('#btnNext').textContent = t('next');
@@ -664,6 +674,7 @@
             {
               id: "demo-typein",
               type: "typein",
+              prompt: { en: "Make the final phrase:", cy: "Gwna’r ymadrodd terfynol:" },
               stem: { en: "i + Caerdydd", cy: "i + Caerdydd" },
               accept: ["i Gaerdydd"],
               explain: {
@@ -774,15 +785,99 @@
     }[c]));
   }
 
-  // ✅ Allow notes to be either HTML or plain text (plain text gets escaped)
-  function toRichHTML(s){
-    if (!s) return '';
-    const str = String(s);
-    const looksLikeHTML = /<\/?[a-z][\s\S]*>/i.test(str);
-    if (looksLikeHTML) return str;
+  // Allow a small safe HTML subset everywhere *except* where we explicitly want plain text.
+  // This fixes "<code>" showing literally in widgets/notes, while still blocking scripts.
+  function sanitizeHTML(input){
+    const html = String(input ?? '');
+    if (!html) return '';
 
-    // Plain text: escape + preserve line breaks
-    return escapeHtml(str).replace(/\n/g, '<br>');
+    const ALLOWED = new Set([
+      'P','B','I','UL','OL','LI','CODE','SPAN','DIV','BR',
+      'TABLE','THEAD','TBODY','TR','TH','TD',
+      'A'
+    ]);
+
+    const ALLOWED_ATTR = {
+      'DIV': new Set(['class']),
+      'SPAN': new Set(['class']),
+      'TABLE': new Set(['class']),
+      'TH': new Set(['colspan','rowspan']),
+      'TD': new Set(['colspan','rowspan']),
+      'A': new Set(['href','target','rel','class']),
+      '*': new Set(['class'])
+    };
+
+    const template = document.createElement('template');
+    template.innerHTML = html;
+
+    const isSafeHref = (href) => {
+      const h = String(href || '').trim();
+      if (!h) return false;
+      if (h.startsWith('#')) return true;
+      if (h.startsWith('/')) return true;
+      if (h.startsWith('./') || h.startsWith('../')) return true;
+      if (/^https?:\/\//i.test(h)) return true;
+      if (/^mailto:/i.test(h)) return true;
+      return false;
+    };
+
+    const unwrap = (el) => {
+      const parent = el.parentNode;
+      if (!parent) return;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+    };
+
+    const walk = (node) => {
+      const kids = Array.from(node.childNodes);
+      for (const child of kids){
+        if (child.nodeType === Node.ELEMENT_NODE){
+          const tag = child.tagName.toUpperCase();
+
+          // Remove script/style outright
+          if (tag === 'SCRIPT' || tag === 'STYLE'){
+            child.remove();
+            continue;
+          }
+
+          if (!ALLOWED.has(tag)){
+            // unwrap unknown tags (keeps text + allowed descendants)
+            unwrap(child);
+            continue;
+          }
+
+          // Strip attributes (no inline JS, no style)
+          for (const attr of Array.from(child.attributes)){
+            const name = attr.name.toLowerCase();
+
+            if (name.startsWith('on')) { child.removeAttribute(attr.name); continue; }
+            if (name === 'style') { child.removeAttribute(attr.name); continue; }
+
+            const allowedForTag = ALLOWED_ATTR[tag] || ALLOWED_ATTR['*'] || new Set();
+            if (!allowedForTag.has(name)){
+              child.removeAttribute(attr.name);
+              continue;
+            }
+
+            if (tag === 'A' && name === 'href'){
+              if (!isSafeHref(attr.value)) child.removeAttribute('href');
+            }
+            if (tag === 'A' && name === 'target'){
+              const v = String(attr.value || '').trim();
+              if (v !== '_blank' && v !== '_self') child.removeAttribute('target');
+              if (v === '_blank' && !child.getAttribute('rel')) child.setAttribute('rel', 'noopener');
+            }
+          }
+
+          walk(child);
+        } else if (child.nodeType === Node.COMMENT_NODE){
+          child.remove();
+        }
+      }
+    };
+
+    walk(template.content);
+    return template.innerHTML;
   }
 
   function normAnswer(s, {caseSensitive=false, trim=true}={}){
@@ -804,6 +899,14 @@
     saveLS(WIDGET_PROGRESS_KEY, WIDGET_PROGRESS);
   }
 
+  function resetLessonProgress(lessonId){
+    if (!lessonId) return;
+    if (WIDGET_PROGRESS && WIDGET_PROGRESS[lessonId]){
+      delete WIDGET_PROGRESS[lessonId];
+      saveLS(WIDGET_PROGRESS_KEY, WIDGET_PROGRESS);
+    }
+  }
+
   function setBadge(badgeEl, done){
     if (!badgeEl) return;
     badgeEl.textContent = done ? t('done') : t('practise');
@@ -815,7 +918,7 @@
     if (!htmlStr) return;
     const box = document.createElement('div');
     box.className = "callout mt-4";
-    box.innerHTML = `<div class="text-sm">${htmlStr}</div>`;
+    box.innerHTML = `<div class="text-sm">${sanitizeHTML(htmlStr)}</div>`;
     container.appendChild(box);
   }
 
@@ -848,7 +951,7 @@
       const stem = getLangText(w.stem);
 
       left.innerHTML = `
-        ${prompt ? `<div class="text-sm font-semibold" style="color: var(--emerald-ink);">${escapeHtml(prompt)}</div>` : ''}
+        ${prompt ? `<div class="text-sm font-semibold" style="color: var(--emerald-ink);">${sanitizeHTML(prompt)}</div>` : ''}
         ${stem ? `<div class="mt-2 text-slate-800"><code>${escapeHtml(stem)}</code></div>` : ''}
       `;
 
@@ -942,7 +1045,7 @@
     if (prompt2){
       const p = document.createElement('div');
       p.className = "widget-muted";
-      p.textContent = prompt2;
+      p.innerHTML = sanitizeHTML(prompt2);
       container.appendChild(p);
     }
 
@@ -954,6 +1057,13 @@
     input.placeholder = (lang === 'cy') ? "Teipia dy ateb…" : "Type your answer…";
     input.disabled = locked;
     input.value = (locked && prog?.value) ? String(prog.value) : '';
+
+    // IMPORTANT: stop space/arrow keys inside inputs from advancing slides
+    input.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+        e.stopPropagation();
+      }
+    });
 
     const check = document.createElement('button');
     check.type = 'button';
@@ -1008,16 +1118,19 @@
 
     const frontEl = document.createElement('div');
     frontEl.className = "text-slate-800";
-    frontEl.innerHTML = `<div class="text-sm">${front}</div>`;
+    frontEl.innerHTML = `<div class="text-sm">${sanitizeHTML(front)}</div>`;
 
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = "btn btn-ghost px-4 py-3 rounded-xl mt-3";
-    btn.textContent = done ? t('hide') : t('reveal');
+    btn.textContent = t('reveal');
 
     const box = document.createElement('div');
-    box.className = "callout mt-4" + (done ? "" : " hidden");
-    box.innerHTML = `<div class="text-sm">${back}</div>`;
+    box.className = "callout mt-4 hidden";
+    box.innerHTML = `<div class="text-sm">${sanitizeHTML(back)}</div>`;
+
+    // Even if previously DONE, start hidden (DONE = “you did it before”, not “always show”)
+    if (done) setBadge(badge, true);
 
     btn.addEventListener('click', () => {
       const hidden = box.classList.contains('hidden');
@@ -1078,9 +1191,10 @@
       const back = getLangText(it.back);
 
       counter.textContent = `${idx + 1} / ${items.length}`;
-      box.innerHTML = `<div class="text-sm">${revealed ? back : front}</div>`;
+      box.innerHTML = `<div class="text-sm">${sanitizeHTML(revealed ? back : front)}</div>`;
       btnReveal.textContent = revealed ? t('showFront') : t('reveal');
 
+      // Save position only; don't auto-mark DONE unless they've actually revealed at least once
       setWidgetProgress(state.lessonId, widgetId, { value: { index: idx, revealed } });
     }
 
@@ -1101,6 +1215,9 @@
       renderCard();
     });
 
+    // Badge reflects actual stored DONE
+    setBadge(badge, !!prog?.done);
+
     controls.appendChild(btnReveal);
     controls.appendChild(btnNext);
     controls.appendChild(counter);
@@ -1118,7 +1235,7 @@
     if (prompt){
       const p = document.createElement('div');
       p.className = "widget-muted";
-      p.textContent = prompt;
+      p.innerHTML = sanitizeHTML(prompt);
       container.appendChild(p);
     }
 
@@ -1220,19 +1337,20 @@
 
     const slide = slides[state.slideIdx];
     $('#slideTitle').textContent = slide?.title?.[lang] || slide?.title?.en || '';
-    $('#slideNumber').textContent = `Slide ${state.slideIdx + 1}`;
+    $('#slideNumber').textContent = (lang === 'cy') ? `SLEID ${state.slideIdx + 1}` : `SLIDE ${state.slideIdx + 1}`;
 
-    const bodyHtml = slide?.html?.[lang] || slide?.html?.en || '';
-    $('#slideBody').innerHTML = bodyHtml || `<p class="text-slate-600">${t('loading')}</p>`;
+    // Slide body HTML (sanitized)
+    const bodyHtmlRaw = slide?.html?.[lang] || slide?.html?.en || '';
+    $('#slideBody').innerHTML = bodyHtmlRaw ? sanitizeHTML(bodyHtmlRaw) : `<p class="text-slate-600">${t('loading')}</p>`;
 
-    // render widgets for this slide
+    // Widgets for this slide
     renderWidgetsForSlide(slide);
 
-    // ✅ Notes: render as HTML (or escaped plain text) so <code> works inside notes/callouts
-    const note = slide?.note?.[lang] || slide?.note?.en || '';
-    if (note){
+    // Note: allow safe inline HTML too (fixes literal <code> in notes)
+    const noteRaw = slide?.note?.[lang] || slide?.note?.en || '';
+    if (noteRaw){
       $('#slideNoteWrap').classList.remove('hidden');
-      $('#slideNote').innerHTML = toRichHTML(note);
+      $('#slideNote').innerHTML = sanitizeHTML(noteRaw);
       $('#slideNoteWrap .text-sm.font-semibold').textContent = t('note');
     } else {
       $('#slideNoteWrap').classList.add('hidden');
@@ -1317,6 +1435,17 @@
     }
   }
 
+  // ---------- Keyboard navigation guard ----------
+  function isEditableElement(el){
+    if (!el) return false;
+    if (el.isContentEditable) return true;
+    const tag = (el.tagName || '').toUpperCase();
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+    // also treat anything inside widgets with a textbox role as editable
+    if (el.getAttribute && el.getAttribute('role') === 'textbox') return true;
+    return false;
+  }
+
   // ---------- Wiring ----------
   function wireEvents(){
     $('#btnBack').addEventListener('click', () => showHome({replace:false}));
@@ -1328,6 +1457,15 @@
     $('#mbBack').addEventListener('click', () => showHome({replace:false}));
 
     $('#btnRestart').addEventListener('click', () => { state.slideIdx = 0; renderDeck(); });
+
+    // NEW: reset widget progress for current lesson
+    $('#btnResetProgress').addEventListener('click', () => {
+      if (!state.lessonId) return;
+      const ok = confirm(t('resetConfirm'));
+      if (!ok) return;
+      resetLessonProgress(state.lessonId);
+      renderDeck();
+    });
 
     $('#btnShare').addEventListener('click', async () => {
       try{
@@ -1349,22 +1487,22 @@
       else renderDeck();
     });
 
-    // ✅ Keyboard navigation: ignore keys when typing in inputs/textareas/etc.
-    function isEditableTarget(el){
-      if (!el) return false;
-      const tag = (el.tagName || '').toUpperCase();
-      return el.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT';
-    }
-
     document.addEventListener('keydown', (e) => {
       if (state.view !== 'deck') return;
 
+      // CRITICAL FIX: if the user is typing in an input/textarea, do not hijack keys
       const active = document.activeElement;
-      if (isEditableTarget(e.target) || isEditableTarget(active)) return;
+      if (isEditableElement(active)) return;
+
+      // also ignore if modifier keys are used
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
       if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+
+      // Space to advance (only when not in an input)
       if (e.key === ' ') { e.preventDefault(); nextSlide(); }
+
       if (e.key === 'Escape') { e.preventDefault(); showHome({replace:false}); }
       if (e.key === 'Home') { e.preventDefault(); state.slideIdx = 0; renderDeck(); }
       if (e.key === 'End') {
