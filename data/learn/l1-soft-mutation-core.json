@@ -63,8 +63,8 @@
     {
       "title": { "en": "Sometimes you won’t see a change 👀", "cy": "Weithiau does dim newid 👀" },
       "html": {
-        "en": "<p>Sometimes the rule applies, but you can’t <i>see</i> it because the word starts with a letter that doesn’t change in SM.</p><p>&nbsp;</p><p>Two very common examples:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mindset: “no change” can be correct Welsh — not a mistake.</p></div>",
-        "cy": "<p>Weithiau mae’r rheol yn berthnasol, ond does dim modd <i>gweld</i> newid oherwydd bod y gair yn dechrau gyda llythyren nad yw’n newid yn TM.</p><p>&nbsp;</p><p>Dau enghraifft cyffredin iawn:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>Meddylfryd: gall “dim newid” fod yn Gymraeg hollol gywir.</p></div>"
+        "en": "<p>Sometimes the rule applies, but you can’t <i>see</i> it because the word starts with a letter that doesn’t change in SM.</p><p>&nbsp;</p><p>Two very common examples:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>“No change” is often correct Welsh</p></div>",
+        "cy": "<p>Weithiau mae’r rheol yn berthnasol, ond does dim modd <i>gweld</i> newid oherwydd bod y gair yn dechrau gyda llythyren nad yw’n newid yn TM.</p><p>&nbsp;</p><p>Dau enghraifft cyffredin iawn:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>Yn aml, mae “dim newid” yn Gymraeg hollol gywir.</p></div>"
       },
       "widgets": [
         {
