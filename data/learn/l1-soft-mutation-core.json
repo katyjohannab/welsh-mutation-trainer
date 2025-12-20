@@ -4,267 +4,518 @@
     {
       "title": { "en": "L1: Soft mutation core ✅", "cy": "G1: Treiglad meddal craidd ✅" },
       "html": {
-        "en": "<p>By the end of this lesson, you’ll be able to:</p><ul><li>apply <b>soft mutation (SM)</b> confidently in the most common places</li><li>use the <b>big 3</b> high-yield areas: <b>prepositions</b>, <b>dy/ei (his)</b>, and <b>y + feminine nouns</b></li><li>avoid the classic mistakes: <b>blocking</b>, <b>no visible change</b>, <b>names</b>, and <b>one mutation only</b></li><li>self-test without pen and paper: <b>think it → swipe → check it</b></li></ul><p>&nbsp;</p><div class='callout'><p>Today is about usable accuracy. Not a giant list you’ll forget tomorrow 🙂</p></div>",
-        "cy": "<p>Erbyn diwedd y wers hon, byddi di’n gallu:</p><ul><li>defnyddio <b>treiglad meddal (TM)</b> yn hyderus yn y llefydd mwyaf cyffredin</li><li>defnyddio’r <b>tri mawr</b>: <b>arddodiaid</b>, <b>dy/ei (e)</b>, a <b>y + enwau benywaidd</b></li><li>osgoi’r camgymeriadau clasurol: <b>blocïo</b>, <b>dim newid gweladwy</b>, <b>enwau</b>, a <b>unwaith yn unig</b></li><li>hunan-brofi heb bin na phapur: <b>meddwl → llithro → gwirio</b></li></ul><p>&nbsp;</p><div class='callout'><p>Nod heddiw yw cywirdeb defnyddiol. Nid rhestr enfawr fydd yn diflannu o’r cof yfory 🙂</p></div>"
+        "en": "<p>By the end of this lesson, you’ll be able to:</p><ul><li>apply <b>soft mutation (SM)</b> confidently in the most common places</li><li>use the <b>big 3</b>: <b>prepositions</b>, <b>dy / ei (his)</b>, and <b>the article + feminine singular nouns</b></li><li>avoid classic traps: <b>blocking</b>, <b>no visible change</b>, <b>names/variation</b>, and <b>one mutation only</b></li><li>self-test <b>inside the lesson</b> (tap / type / check — no pen & paper)</li></ul><p>&nbsp;</p><div class='callout'><p>Today is about usable accuracy. Not a giant list you’ll forget tomorrow 🙂</p></div>",
+        "cy": "<p>Erbyn diwedd y wers hon, byddi di’n gallu:</p><ul><li>defnyddio <b>treiglad meddal (TM)</b> yn hyderus yn y llefydd mwyaf cyffredin</li><li>defnyddio’r <b>tri mawr</b>: <b>arddodiaid</b>, <b>dy / ei (e)</b>, a <b>yr erthygl + benywaidd unigol</b></li><li>osgoi’r trapiau clasurol: <b>blocïo</b>, <b>dim newid gweladwy</b>, <b>enwau/amrywiad</b>, a <b>unwaith yn unig</b></li><li>hunan-brofi <b>o fewn y wers</b> (tapio / teipio / gwirio — dim pin na phapur)</li></ul><p>&nbsp;</p><div class='callout'><p>Nod heddiw yw cywirdeb defnyddiol. Nid rhestr enfawr fydd yn diflannu o’r cof yfory 🙂</p></div>"
       }
     },
     {
-      "title": { "en": "The one core rule (and why it’s ‘80/20’) 🎯", "cy": "Y rheol graidd (a pham ei bod yn ‘80/20’) 🎯" },
+      "title": { "en": "Two tiny terms that make everything clearer 🧩", "cy": "Dau derm bach sy’n gwneud popeth yn gliriach 🧩" },
       "html": {
-        "en": "<p><b>Core rule:</b> in many everyday patterns, Welsh changes the <b>first sound</b> of the next word → that’s mutation.</p><p>For beginners, the single best place to invest effort is <b>soft mutation</b>, because it’s the one you meet most.</p><p>&nbsp;</p><div class='callout'><p>We’re focusing on the “80/20” set: a small number of triggers that show up all the time.</p></div>",
-        "cy": "<p><b>Rheol graidd:</b> mewn llawer o batrymau bob dydd, mae’r Gymraeg yn newid <b>sain gyntaf</b> y gair nesaf → dyna dreiglad.</p><p>I ddechreuwyr, y buddsoddiad gorau yw <b>treiglad meddal</b>, oherwydd dyma’r un mwyaf cyffredin.</p><p>&nbsp;</p><div class='callout'><p>Rydyn ni’n canolbwyntio ar y set “80/20”: ychydig o sbardunau sy’n ymddangos drwy’r amser.</p></div>"
-      }
+        "en": "<p>You’ll see these words a lot:</p><ul><li><b>Radical</b> = the dictionary form (the one you look up)</li><li><b>Mutation</b> = a change to the first sound/letter in certain patterns</li></ul><p>&nbsp;</p><p>So we think like this:</p><p><code>radical → mutated form (when a rule triggers it)</code></p><p>&nbsp;</p><div class='callout'><p>Best habit: when you see a mutated word, train yourself to ask: “what radical could this be?”</p></div>",
+        "cy": "<p>Byddi di’n gweld y geiriau yma’n aml:</p><ul><li><b>Ffurf wreiddiol</b> = y ffurf eiriadur (y ffurf rwyt ti’n ei chwilio)</li><li><b>Treiglad</b> = newid i’r sain/llythyren gyntaf mewn patrymau penodol</li></ul><p>&nbsp;</p><p>Felly rydyn ni’n meddwl fel hyn:</p><p><code>ffurf wreiddiol → ffurf dreigledig (pan mae rheol yn sbarduno)</code></p><p>&nbsp;</p><div class='callout'><p>Yr arfer gorau: pan weli di ffurf dreigledig, gofynna: “pa ffurf wreiddiol allai hyn fod?”</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-rev-radical-1",
+          "type": "reveal",
+          "front": { "en": "Radical of <code>ddrws</code> is…", "cy": "Ffurf wreiddiol <code>ddrws</code> yw…" },
+          "back": { "en": "<code>drws</code>", "cy": "<code>drws</code>" }
+        },
+        {
+          "id": "l1-sm-rev-radical-2",
+          "type": "reveal",
+          "front": { "en": "Radical of <code>fwrdd</code> is…", "cy": "Ffurf wreiddiol <code>fwrdd</code> yw…" },
+          "back": { "en": "<code>bwrdd</code>", "cy": "<code>bwrdd</code>" }
+        }
+      ]
     },
     {
-      "title": { "en": "Soft mutation: the map you’ll actually use 🗺️", "cy": "Treiglad meddal: y map defnyddiol 🗺️" },
+      "title": { "en": "Soft mutation: the 80/20 map 🗺️", "cy": "Treiglad meddal: map 80/20 🗺️" },
       "html": {
-        "en": "<p>These are the high-yield changes to learn first:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>Soft mutation</th><th>Example</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>car → gar</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>pont → bont</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>tŷ → dŷ</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td><code>bwrdd → fwrdd</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td><code>drws → ddrws</code></td></tr><tr><td><code>g</code></td><td><code>(drops)</code></td><td><code>gardd → ardd</code></td></tr><tr><td><code>ll</code></td><td><code>l</code></td><td><code>llais → lais</code></td></tr><tr><td><code>rh</code></td><td><code>r</code></td><td><code>rhieni → rieni</code></td></tr><tr><td><code>m</code></td><td><code>f</code></td><td><code>merch → ferch</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Digraph reminder: <code>ll</code> and <code>rh</code> are real letters in Welsh (not “two letters stuck together”).</p></div>",
-        "cy": "<p>Dyma’r newidiadau pwysicaf i’w dysgu’n gyntaf:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Treiglad meddal</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>car → gar</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>pont → bont</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>tŷ → dŷ</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td><code>bwrdd → fwrdd</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td><code>drws → ddrws</code></td></tr><tr><td><code>g</code></td><td><code>(yn diflannu)</code></td><td><code>gardd → ardd</code></td></tr><tr><td><code>ll</code></td><td><code>l</code></td><td><code>llais → lais</code></td></tr><tr><td><code>rh</code></td><td><code>r</code></td><td><code>rhieni → rieni</code></td></tr><tr><td><code>m</code></td><td><code>f</code></td><td><code>merch → ferch</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Nodyn deulythrennau: mae <code>ll</code> a <code>rh</code> yn lythrennau go iawn yn y Gymraeg (nid “dau lythyren wedi’u gludo”).</p></div>"
-      }
+        "en": "<p>These are the high-yield SM changes to learn first:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>Soft mutation</th><th>Example</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>car → gar</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>pont → bont</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>tŷ → dŷ</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td><code>bwrdd → fwrdd</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td><code>drws → ddrws</code></td></tr><tr><td><code>g</code></td><td><code>(drops)</code></td><td><code>gardd → ardd</code></td></tr><tr><td><code>m</code></td><td><code>f</code></td><td><code>merch → ferch</code></td></tr><tr><td><code>ll</code></td><td><code>l</code></td><td><code>llais → lais</code></td></tr><tr><td><code>rh</code></td><td><code>r</code></td><td><code>rhieni → rieni</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Digraph reminder: <code>ll</code> and <code>rh</code> are real letters in Welsh (not “two letters stuck together”).</p></div>",
+        "cy": "<p>Dyma’r newidiadau TM pwysicaf i’w dysgu’n gyntaf:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Treiglad meddal</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>g</code></td><td><code>car → gar</code></td></tr><tr><td><code>p</code></td><td><code>b</code></td><td><code>pont → bont</code></td></tr><tr><td><code>t</code></td><td><code>d</code></td><td><code>tŷ → dŷ</code></td></tr><tr><td><code>b</code></td><td><code>f</code></td><td><code>bwrdd → fwrdd</code></td></tr><tr><td><code>d</code></td><td><code>dd</code></td><td><code>drws → ddrws</code></td></tr><tr><td><code>g</code></td><td><code>(yn diflannu)</code></td><td><code>gardd → ardd</code></td></tr><tr><td><code>m</code></td><td><code>f</code></td><td><code>merch → ferch</code></td></tr><tr><td><code>ll</code></td><td><code>l</code></td><td><code>llais → lais</code></td></tr><tr><td><code>rh</code></td><td><code>r</code></td><td><code>rhieni → rieni</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Nodyn deulythrennau: mae <code>ll</code> a <code>rh</code> yn lythrennau go iawn yn y Gymraeg (nid “dau lythyren wedi’u gludo”).</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-fc-map",
+          "type": "flashcards",
+          "items": [
+            { "front": { "en": "<code>c</code> → ?", "cy": "<code>c</code> → ?" }, "back": { "en": "<code>g</code>", "cy": "<code>g</code>" } },
+            { "front": { "en": "<code>p</code> → ?", "cy": "<code>p</code> → ?" }, "back": { "en": "<code>b</code>", "cy": "<code>b</code>" } },
+            { "front": { "en": "<code>t</code> → ?", "cy": "<code>t</code> → ?" }, "back": { "en": "<code>d</code>", "cy": "<code>d</code>" } },
+            { "front": { "en": "<code>b</code> → ?", "cy": "<code>b</code> → ?" }, "back": { "en": "<code>f</code>", "cy": "<code>f</code>" } },
+            { "front": { "en": "<code>d</code> → ?", "cy": "<code>d</code> → ?" }, "back": { "en": "<code>dd</code>", "cy": "<code>dd</code>" } },
+            { "front": { "en": "<code>g</code> → ?", "cy": "<code>g</code> → ?" }, "back": { "en": "<code>(drops)</code>", "cy": "<code>(yn diflannu)</code>" } },
+            { "front": { "en": "<code>m</code> → ?", "cy": "<code>m</code> → ?" }, "back": { "en": "<code>f</code>", "cy": "<code>f</code>" } },
+            { "front": { "en": "<code>ll</code> → ?", "cy": "<code>ll</code> → ?" }, "back": { "en": "<code>l</code>", "cy": "<code>l</code>" } },
+            { "front": { "en": "<code>rh</code> → ?", "cy": "<code>rh</code> → ?" }, "back": { "en": "<code>r</code>", "cy": "<code>r</code>" } }
+          ]
+        }
+      ]
     },
     {
-      "title": { "en": "Boundary rule #1: sometimes there’s no visible change 👀", "cy": "Rheol ffin #1: weithiau does dim newid gweladwy 👀" },
+      "title": { "en": "Boundary rule #1: sometimes you won’t see a change 👀", "cy": "Rheol ffin #1: weithiau does dim newid gweladwy 👀" },
       "html": {
-        "en": "<p>Sometimes a rule applies, but you can’t <i>see</i> it because the word starts with a letter that doesn’t change in SM.</p><p>Common examples:</p><ul><li><code>i siop</code> (rule applies after <code>i</code>, but <code>s</code> doesn’t change)</li><li><code>o ysgol</code> (same idea)</li></ul><p>&nbsp;</p><div class='callout'><p>Important mindset: “no change” can be correct Welsh, not a mistake.</p></div>",
-        "cy": "<p>Weithiau mae’r rheol yn berthnasol, ond does dim modd <i>gweld</i> newid oherwydd bod y gair yn dechrau gyda llythyren nad yw’n newid yn TM.</p><p>Enghreifftiau cyffredin:</p><ul><li><code>i siop</code> (mae’r rheol ar ôl <code>i</code>, ond dydy <code>s</code> ddim yn newid)</li><li><code>o ysgol</code> (yr un syniad)</li></ul><p>&nbsp;</p><div class='callout'><p>Meddylfryd allweddol: gall “dim newid” fod yn Gymraeg hollol gywir.</p></div>"
-      }
+        "en": "<p>Sometimes the rule applies, but you can’t <i>see</i> it because the word starts with a letter that doesn’t change in SM.</p><p>&nbsp;</p><p>Two very common examples:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mindset: “no change” can be correct Welsh — not a mistake.</p></div>",
+        "cy": "<p>Weithiau mae’r rheol yn berthnasol, ond does dim modd <i>gweld</i> newid oherwydd bod y gair yn dechrau gyda llythyren nad yw’n newid yn TM.</p><p>&nbsp;</p><p>Dau enghraifft cyffredin iawn:</p><ul><li><code>i siop</code></li><li><code>o siop</code></li></ul><p>&nbsp;</p><div class='callout'><p>Meddylfryd: gall “dim newid” fod yn Gymraeg hollol gywir.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-novis-1",
+          "type": "typein",
+          "stem": { "en": "Make the final phrase: <code>i + siop</code>", "cy": "Gwna’r ymadrodd terfynol: <code>i + siop</code>" },
+          "accept": ["i siop"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": {
+            "en": "The trigger is there (<code>i</code>), but <code>s</code> doesn’t show SM. So the correct written form stays <code>siop</code>.",
+            "cy": "Mae’r sbardun yno (<code>i</code>), ond dydy <code>s</code> ddim yn dangos TM. Felly mae’r ffurf ysgrifenedig yn aros yn <code>siop</code>."
+          }
+        }
+      ]
     },
     {
-      "title": { "en": "How to decide (the SM workflow) ✅", "cy": "Sut i benderfynu (llif gwaith TM) ✅" },
+      "title": { "en": "Your SM decision workflow ✅", "cy": "Dy lif gwaith TM ✅" },
       "html": {
-        "en": "<p>Use this order every time:</p><ol><li><b>Is there a trigger?</b> (like a preposition, or <code>dy</code>, or <code>y</code>)</li><li><b>Is the next word mutable?</b> (does it start with a letter that can change?)</li><li><b>Is there a blocker?</b> (did <code>y/'r/yr</code> or another word break the contact?)</li><li><b>Apply one change only</b> (don’t stack mutations)</li></ol><p>&nbsp;</p><div class='callout'><p>This stops guessing — and it’s how fluent writers actually work.</p></div>",
-        "cy": "<p>Defnyddia’r drefn yma bob tro:</p><ol><li><b>Oes sbardun?</b> (fel arddodiad, neu <code>dy</code>, neu <code>y</code>)</li><li><b>A yw’r gair nesaf yn dreigladwy?</b> (a yw’n dechrau gyda llythyren sy’n gallu newid?)</li><li><b>Oes blocïwr?</b> (a ddaeth <code>y/'r/yr</code> neu air arall rhyngddynt?)</li><li><b>Un newid yn unig</b> (paid â stacio treigladau)</li></ol><p>&nbsp;</p><div class='callout'><p>Mae hyn yn dy atal rhag dyfalu — a dyma sut mae ysgrifenwyr rhugl yn gweithio mewn gwirionedd.</p></div>"
-      }
+        "en": "<p>Use this order every time (seriously — it stops guessing):</p><ol><li><b>Trigger?</b> (preposition / <code>dy</code> / <code>ei</code> / the article)</li><li><b>Mutable?</b> (can the first letter change visibly?)</li><li><b>Blocker?</b> (<code>y/'r/yr</code> or another word breaks contact)</li><li><b>One change only</b> (don’t stack mutations)</li></ol><p>&nbsp;</p><div class='callout'><p>Fluent writers aren’t “guessing”. They’re running this checklist fast.</p></div>",
+        "cy": "<p>Defnyddia’r drefn yma bob tro (o ddifrif — mae’n dy atal rhag dyfalu):</p><ol><li><b>Sbardun?</b> (arddodiad / <code>dy</code> / <code>ei</code> / yr erthygl)</li><li><b>Treigladwy?</b> (a yw’r llythyren gyntaf yn gallu newid yn weladwy?)</li><li><b>Blocïwr?</b> (<code>y/'r/yr</code> neu air arall yn torri’r cyswllt)</li><li><b>Unwaith yn unig</b> (paid â stacio treigladau)</li></ol><p>&nbsp;</p><div class='callout'><p>Dydy ysgrifenwyr rhugl ddim yn “dyfalu”. Maen nhw’n rhedeg y rhestr wirio yma’n gyflym.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-mcq-workflow-1",
+          "type": "mcq",
+          "prompt": { "en": "Quick workflow check:", "cy": "Profiad llif gwaith:" },
+          "stem": { "en": "<code>i'r + tŷ</code>", "cy": "<code>i'r + tŷ</code>" },
+          "options": [
+            { "text": { "en": "i'r dŷ", "cy": "i'r dŷ" } },
+            { "text": { "en": "i'r tŷ", "cy": "i'r tŷ" } },
+            { "text": { "en": "i dŷ", "cy": "i dŷ" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>i</code> can’t reach the noun because the article is in the way, and <code>tŷ</code> (masc. singular) doesn’t usually mutate after the article.",
+            "cy": "Does dim “cyrraedd” gan <code>i</code> oherwydd bod yr erthygl rhyngddynt, a dydy <code>tŷ</code> (gwrywaidd unigol) ddim fel arfer yn treiglo ar ôl yr erthygl."
+          }
+        }
+      ]
     },
     {
       "title": { "en": "Core trigger set A: prepositions ➜", "cy": "Set sbardun A: arddodiaid ➜" },
       "html": {
-        "en": "<p>These are the prepositions you’ll see constantly, and they very often trigger SM on the next word:</p><div class='table-wrap'><table><thead><tr><th>Preposition</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><code>i</code></td><td>to</td><td><code>i Gaerdydd</code></td></tr><tr><td><code>o</code></td><td>from / of</td><td><code>o Gymru</code></td></tr><tr><td><code>ar</code></td><td>on</td><td><code>ar bont</code></td></tr><tr><td><code>dan</code></td><td>under</td><td><code>dan fwrdd</code></td></tr><tr><td><code>wrth</code></td><td>by / at</td><td><code>wrth ddrws</code></td></tr><tr><td><code>am</code></td><td>about</td><td><code>am gar</code></td></tr><tr><td><code>heb</code></td><td>without</td><td><code>heb drwydded</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Start with these. You’ll pick up the rest naturally once these feel normal.</p></div>",
-        "cy": "<p>Dyma’r arddodiaid fyddi di’n eu gweld drwy’r amser, ac maen nhw’n aml iawn yn sbarduno TM ar y gair nesaf:</p><div class='table-wrap'><table><thead><tr><th>Arddodiad</th><th>Ystyr</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>i</code></td><td>i</td><td><code>i Gaerdydd</code></td></tr><tr><td><code>o</code></td><td>o / o ran</td><td><code>o Gymru</code></td></tr><tr><td><code>ar</code></td><td>ar</td><td><code>ar bont</code></td></tr><tr><td><code>dan</code></td><td>dan</td><td><code>dan fwrdd</code></td></tr><tr><td><code>wrth</code></td><td>wrth</td><td><code>wrth ddrws</code></td></tr><tr><td><code>am</code></td><td>am</td><td><code>am gar</code></td></tr><tr><td><code>heb</code></td><td>heb</td><td><code>heb drwydded</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Dechreua gyda’r rhain. Bydd y gweddill yn dod yn naturiol pan fydd y rhain yn teimlo’n normal.</p></div>"
+        "en": "<p>These show up constantly, and they often trigger SM on the next word <b>in direct contact</b>:</p><div class='table-wrap'><table><thead><tr><th>Preposition</th><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td><code>i</code></td><td>to</td><td><code>i Gaerdydd</code></td></tr><tr><td><code>o</code></td><td>from / of</td><td><code>o Gymru</code></td></tr><tr><td><code>ar</code></td><td>on</td><td><code>ar bont</code></td></tr><tr><td><code>dan</code></td><td>under</td><td><code>dan fwrdd</code></td></tr><tr><td><code>wrth</code></td><td>by / at</td><td><code>wrth ddrws</code></td></tr><tr><td><code>am</code></td><td>about</td><td><code>am gar</code></td></tr><tr><td><code>heb</code></td><td>without</td><td><code>heb drwydded</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Start with these. If these feel normal, your Welsh starts looking “real”.</p></div>",
+        "cy": "<p>Mae’r rhain ym mhobman, ac maen nhw’n aml yn sbarduno TM ar y gair nesaf <b>mewn cyswllt union</b>:</p><div class='table-wrap'><table><thead><tr><th>Arddodiad</th><th>Ystyr</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>i</code></td><td>i</td><td><code>i Gaerdydd</code></td></tr><tr><td><code>o</code></td><td>o / o ran</td><td><code>o Gymru</code></td></tr><tr><td><code>ar</code></td><td>ar</td><td><code>ar bont</code></td></tr><tr><td><code>dan</code></td><td>dan</td><td><code>dan fwrdd</code></td></tr><tr><td><code>wrth</code></td><td>wrth</td><td><code>wrth ddrws</code></td></tr><tr><td><code>am</code></td><td>am</td><td><code>am gar</code></td></tr><tr><td><code>heb</code></td><td>heb</td><td><code>heb drwydded</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Dechreua gyda’r rhain. Pan fyddan nhw’n teimlo’n normal, mae dy Gymraeg yn dechrau edrych yn “go iawn”.</p></div>"
       }
     },
     {
-      "title": { "en": "Worked examples (prepositions): radical ↔ mutated 🔁", "cy": "Enghreifftiau gweithio (arddodiaid): wreiddiol ↔ treigledig 🔁" },
+      "title": { "en": "Interactive drill: prepositions (type + check) ✍️", "cy": "Dril rhyngweithiol: arddodiaid (teipio + gwirio) ✍️" },
       "html": {
-        "en": "<p>Say the radical in your head first, then the phrase:</p><ul><li><code>car → i gar</code></li><li><code>pont → ar bont</code></li><li><code>tŷ → i dŷ</code></li><li><code>bwrdd → dan fwrdd</code></li><li><code>drws → wrth ddrws</code></li><li><code>gardd → i ardd</code> (g drops)</li><li><code>llais → gyda lais</code> (ll → l)</li><li><code>rhieni → o rieni</code> (rh → r)</li></ul><p>&nbsp;</p><div class='callout'><p>That “say the radical first” habit is what stops you drifting into random spelling.</p></div>",
-        "cy": "<p>Dywed y ffurf wreiddiol yn dy ben yn gyntaf, wedyn yr ymadrodd:</p><ul><li><code>car → i gar</code></li><li><code>pont → ar bont</code></li><li><code>tŷ → i dŷ</code></li><li><code>bwrdd → dan fwrdd</code></li><li><code>drws → wrth ddrws</code></li><li><code>gardd → i ardd</code> (g yn diflannu)</li><li><code>llais → gyda lais</code> (ll → l)</li><li><code>rhieni → o rieni</code> (rh → r)</li></ul><p>&nbsp;</p><div class='callout'><p>Mae’r arfer “dywed y ffurf wreiddiol yn gyntaf” yn dy atal rhag sillafu ar hap.</p></div>"
+        "en": "<p>Type the final phrase. Don’t overthink it — just run the workflow.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia’r ymadrodd terfynol. Paid â gorfeddwl — rhed y llif gwaith.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-prep-1",
+          "type": "typein",
+          "stem": { "en": "<code>i + Caerdydd</code>", "cy": "<code>i + Caerdydd</code>" },
+          "accept": ["i Gaerdydd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>i</code> triggers SM: <code>C → G</code>.", "cy": "Mae <code>i</code> yn sbarduno TM: <code>C → G</code>." }
+        },
+        {
+          "id": "l1-sm-typein-prep-2",
+          "type": "typein",
+          "stem": { "en": "<code>o + Cymru</code>", "cy": "<code>o + Cymru</code>" },
+          "accept": ["o Gymru"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>o</code> triggers SM in direct contact: <code>C → G</code>.", "cy": "Mae <code>o</code> yn sbarduno TM mewn cyswllt union: <code>C → G</code>." }
+        },
+        {
+          "id": "l1-sm-typein-prep-3",
+          "type": "typein",
+          "stem": { "en": "<code>dan + bwrdd</code>", "cy": "<code>dan + bwrdd</code>" },
+          "accept": ["dan fwrdd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>b → f</code> in SM.", "cy": "<code>b → f</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-typein-prep-4",
+          "type": "typein",
+          "stem": { "en": "<code>wrth + drws</code>", "cy": "<code>wrth + drws</code>" },
+          "accept": ["wrth ddrws"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>d → dd</code> in SM.", "cy": "<code>d → dd</code> mewn TM." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Boundary rule #2: the article blocks the preposition… 🧱", "cy": "Rheol ffin #2: yr erthygl yn blocio’r arddodiad… 🧱" },
+      "html": {
+        "en": "<p>Prepositions usually need to be <b>right next to</b> the word they affect.</p><p>&nbsp;</p><p>If <code>y/'r/yr</code> comes in between, the preposition can’t “reach” the noun.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Direct contact</th><th>Blocked by the article</th></tr></thead><tbody><tr><td><code>i dŷ</code> (tŷ → dŷ)</td><td><code>i'r tŷ</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>This is one of the highest-value “why didn’t it mutate?” answers you’ll ever learn.</p></div>",
+        "cy": "<p>Fel arfer, mae arddodiaid angen bod <b>yn syth wrth ymyl</b> y gair maen nhw’n ei effeithio.</p><p>&nbsp;</p><p>Os daw <code>y/'r/yr</code> rhyngddynt, mae’r arddodiad yn methu “cyrraedd” yr enw.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Cyswllt union</th><th>Wedi’i flocio gan yr erthygl</th></tr></thead><tbody><tr><td><code>i dŷ</code> (tŷ → dŷ)</td><td><code>i'r tŷ</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Dyma un o’r atebion “pam dim treiglad?” mwyaf gwerthfawr.</p></div>"
       }
     },
     {
-      "title": { "en": "Boundary rule #2: the article can block a preposition 🧱", "cy": "Rheol ffin #2: gall yr erthygl flocio arddodiad 🧱" },
+      "title": { "en": "…but the article has its own SM job 🧩", "cy": "…ond mae gan yr erthygl ei swydd TM ei hun 🧩" },
       "html": {
-        "en": "<p>Prepositions usually need to sit <b>right next to</b> the word they mutate.</p><p>If the definite article (<code>y/'r/yr</code>) comes in between, the preposition can’t “reach” the noun.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Direct contact</th><th>Blocked by the article</th></tr></thead><tbody><tr><td><code>i dŷ</code> (tŷ → dŷ)</td><td><code>i'r tŷ</code> (no preposition mutation)</td></tr><tr><td><code>ar fwrdd</code> (bwrdd → fwrdd)</td><td><code>ar y bwrdd</code> (no preposition mutation)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>This is one of the highest-value “why didn’t it mutate?” answers you’ll ever learn.</p></div>",
-        "cy": "<p>Fel arfer, mae arddodiaid angen bod <b>yn syth wrth ymyl</b> y gair maen nhw’n ei dreiglo.</p><p>Os daw’r erthygl bendant (<code>y/'r/yr</code>) rhyngddynt, does dim “cyrraedd”.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Cyswllt union</th><th>Wedi’i flocio gan yr erthygl</th></tr></thead><tbody><tr><td><code>i dŷ</code> (tŷ → dŷ)</td><td><code>i'r tŷ</code> (dim TM gan yr arddodiad)</td></tr><tr><td><code>ar fwrdd</code> (bwrdd → fwrdd)</td><td><code>ar y bwrdd</code> (dim TM gan yr arddodiad)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Dyma un o’r atebion “pam dim treiglad?” mwyaf gwerthfawr fyddi di’n ei ddysgu.</p></div>"
-      }
+        "en": "<p>Here’s the big noun-phrase rule you’ll use constantly:</p><p>&nbsp;</p><p><b>After the definite article, feminine singular nouns often take SM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>With <code>y</code></th></tr></thead><tbody><tr><td><code>cath</code></td><td><code>y gath</code></td></tr><tr><td><code>merch</code></td><td><code>y ferch</code></td></tr><tr><td><code>cadair</code></td><td><code>y gadair</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Don’t panic about gender. You learn it word-by-word. Dictionaries mark nouns as masculine or feminine.</p></div>",
+        "cy": "<p>Dyma’r rheol ymadrodd-enw fyddi di’n ei defnyddio drwy’r amser:</p><p>&nbsp;</p><p><b>Ar ôl yr erthygl bendant, mae enwau benywaidd unigol yn aml yn cymryd TM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Gyda <code>y</code></th></tr></thead><tbody><tr><td><code>cath</code></td><td><code>y gath</code></td></tr><tr><td><code>merch</code></td><td><code>y ferch</code></td></tr><tr><td><code>cadair</code></td><td><code>y gadair</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Paid â phoeni gormod am ryw. Bydd yn dod gair-wrth-air. Mae geiriaduron yn nodi gwrywaidd/benywaidd.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-article-fem-1",
+          "type": "typein",
+          "stem": { "en": "<code>y + cath</code>", "cy": "<code>y + cath</code>" },
+          "accept": ["y gath"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Feminine singular after <code>y</code> often takes SM: <code>c → g</code>.", "cy": "Mae benywaidd unigol ar ôl <code>y</code> yn aml yn cymryd TM: <code>c → g</code>." }
+        },
+        {
+          "id": "l1-sm-typein-article-fem-2",
+          "type": "typein",
+          "stem": { "en": "<code>y + merch</code>", "cy": "<code>y + merch</code>" },
+          "accept": ["y ferch"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>m → f</code> in SM.", "cy": "<code>m → f</code> mewn TM." }
+        }
+      ]
     },
     {
-      "title": { "en": "…but the article has its own soft-mutation job 🧩", "cy": "…ond mae gan yr erthygl ei swydd TM ei hun 🧩" },
+      "title": { "en": "Boundary rule #3: masc. + plural usually stay radical 🚦", "cy": "Rheol ffin #3: gwrywaidd + lluosog fel arfer yn aros yn wreiddiol 🚦" },
       "html": {
-        "en": "<p>Here’s the big noun-phrase rule you’ll use constantly:</p><p><b>After the definite article, feminine singular nouns often take soft mutation.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>With <code>y</code></th><th>Gloss</th></tr></thead><tbody><tr><td><code>cath</code></td><td><code>y gath</code></td><td>the cat</td></tr><tr><td><code>merch</code></td><td><code>y ferch</code></td><td>the girl</td></tr><tr><td><code>pont</code></td><td><code>y bont</code></td><td>the bridge</td></tr><tr><td><code>car</code></td><td><code>y gar</code></td><td>the car</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Don’t panic about gender. You’ll learn it word-by-word. Dictionaries mark nouns as masculine or feminine.</p></div>",
-        "cy": "<p>Dyma’r rheol ymadrodd-enw fyddi di’n ei defnyddio drwy’r amser:</p><p><b>Ar ôl yr erthygl bendant, mae enwau benywaidd unigol yn aml yn cymryd TM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Gyda <code>y</code></th><th>Ystyr</th></tr></thead><tbody><tr><td><code>cath</code></td><td><code>y gath</code></td><td>y gath</td></tr><tr><td><code>merch</code></td><td><code>y ferch</code></td><td>y ferch</td></tr><tr><td><code>pont</code></td><td><code>y bont</code></td><td>y bont</td></tr><tr><td><code>car</code></td><td><code>y gar</code></td><td>y gar</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Paid â phoeni gormod am ryw. Bydd yn dod gair-wrth-air. Mae geiriaduron yn nodi a yw enw’n wrywaidd neu’n fenywaidd.</p></div>"
-      }
+        "en": "<p>Two common “no mutation” cases after <code>y</code>:</p><ul><li><b>Masculine singular</b> usually stays radical</li><li><b>Plural</b> usually stays radical</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Type</th><th>Example</th></tr></thead><tbody><tr><td>masc. singular</td><td><code>y dyn</code>, <code>y tŷ</code></td></tr><tr><td>plural</td><td><code>y cathod</code>, <code>y merched</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Skill check: being able to say “no mutation is correct here” stops you over-mutating.</p></div>",
+        "cy": "<p>Dau achos “dim TM” cyffredin iawn ar ôl <code>y</code>:</p><ul><li><b>Gwrywaidd unigol</b> fel arfer yn aros yn wreiddiol</li><li><b>Lluosog</b> fel arfer yn aros yn wreiddiol</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Math</th><th>Enghraifft</th></tr></thead><tbody><tr><td>gw. unigol</td><td><code>y dyn</code>, <code>y tŷ</code></td></tr><tr><td>lluosog</td><td><code>y cathod</code>, <code>y merched</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Gwir sgìl: gallu dweud “mae dim TM yn gywir yma” — mae’n dy atal rhag gortreiglo.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-mcq-article-boundary-1",
+          "type": "mcq",
+          "prompt": { "en": "Choose the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
+          "stem": { "en": "<code>y + dyn</code>", "cy": "<code>y + dyn</code>" },
+          "options": [
+            { "text": { "en": "y ddyn", "cy": "y ddyn" } },
+            { "text": { "en": "y dyn", "cy": "y dyn" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Masculine singular after <code>y</code> usually stays radical.", "cy": "Mae gwrywaidd unigol ar ôl <code>y</code> fel arfer yn aros yn wreiddiol." }
+        },
+        {
+          "id": "l1-sm-mcq-article-boundary-2",
+          "type": "mcq",
+          "prompt": { "en": "And this one:", "cy": "A hwn:" },
+          "stem": { "en": "<code>y + cathod</code>", "cy": "<code>y + cathod</code>" },
+          "options": [
+            { "text": { "en": "y gathod", "cy": "y gathod" } },
+            { "text": { "en": "y cathod", "cy": "y cathod" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Plural after <code>y</code> usually stays radical.", "cy": "Mae lluosog ar ôl <code>y</code> fel arfer yn aros yn wreiddiol." }
+        }
+      ]
     },
     {
-      "title": { "en": "Boundary rule #3: masculine + plural usually don’t mutate after the article 🚦", "cy": "Rheol ffin #3: fel arfer does dim TM ar ôl yr erthygl gyda gwrywaidd + lluosog 🚦" },
+      "title": { "en": "High-value nuance: blocked preposition, but the noun can still mutate 🧠", "cy": "Nuans gwerthfawr: arddodiad wedi’i flocio, ond gall yr enw dreiglo o hyd 🧠" },
       "html": {
-        "en": "<p>Two very common “no mutation” cases after <code>y</code>:</p><ul><li><b>Masculine singular</b> usually stays radical</li><li><b>Plural</b> usually stays radical</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Type</th><th>Radical</th><th>With <code>y</code></th></tr></thead><tbody><tr><td>masc. singular</td><td><code>dyn</code></td><td><code>y dyn</code></td></tr><tr><td>masc. singular</td><td><code>tŷ</code></td><td><code>y tŷ</code></td></tr><tr><td>plural</td><td><code>cathod</code></td><td><code>y cathod</code></td></tr><tr><td>plural</td><td><code>merched</code></td><td><code>y merched</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>So if you’re not sure, it’s fine to check: is it feminine singular? If not, “no mutation after <code>y</code>” is often the safe bet.</p></div>",
-        "cy": "<p>Dau achos “dim TM” cyffredin iawn ar ôl <code>y</code>:</p><ul><li><b>Gwrywaidd unigol</b> fel arfer yn aros yn wreiddiol</li><li><b>Lluosog</b> fel arfer yn aros yn wreiddiol</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Math</th><th>Ffurf wreiddiol</th><th>Gyda <code>y</code></th></tr></thead><tbody><tr><td>gw. unigol</td><td><code>dyn</code></td><td><code>y dyn</code></td></tr><tr><td>gw. unigol</td><td><code>tŷ</code></td><td><code>y tŷ</code></td></tr><tr><td>lluosog</td><td><code>cathod</code></td><td><code>y cathod</code></td></tr><tr><td>lluosog</td><td><code>merched</code></td><td><code>y merched</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Felly os wyt ti’n ansicr: gofynna “ai benywaidd unigol yw e?” Os nad ydy, mae “dim TM ar ôl <code>y</code>” yn aml yn bet diogel.</p></div>"
-      }
+        "en": "<p>This is where learners level up:</p><p>&nbsp;</p><p><b>The preposition is blocked</b> by <code>'r</code>… <i>but</i> <b>the article can still soft-mutate a feminine noun</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Masculine (no change)</th><th>Feminine (SM after the article)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>So: “blocked” doesn’t mean “nothing can mutate”. It means the <i>preposition</i> can’t reach.</p></div>",
+        "cy": "<p>Dyma’r pwynt lle mae dysgwyr yn symud i fyny:</p><p>&nbsp;</p><p><b>Mae’r arddodiad wedi’i flocio</b> gan <code>'r</code>… ond gall <b>yr erthygl</b> dreiglo enw benywaidd o hyd.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Gwrywaidd (dim newid)</th><th>Benywaidd (TM ar ôl yr erthygl)</th></tr></thead><tbody><tr><td><code>i'r tŷ</code></td><td><code>i'r gath</code> (cath → gath)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Felly: dydy “blocïo” ddim yn golygu “dim treiglo o gwbl”. Mae’n golygu na all yr <i>arddodiad</i> gyrraedd.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-blocked-but-mutates",
+          "type": "typein",
+          "stem": { "en": "Make the final phrase: <code>i'r + cath</code>", "cy": "Gwna’r ymadrodd terfynol: <code>i'r + cath</code>" },
+          "accept": ["i'r gath"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": {
+            "en": "The preposition is blocked, but the article still triggers SM on a feminine singular noun.",
+            "cy": "Mae’r arddodiad wedi’i flocio, ond mae’r erthygl yn dal i sbarduno TM ar enw benywaidd unigol."
+          }
+        }
+      ]
     },
     {
-      "title": { "en": "Bonus noun phrase: feminine noun → adjective often soft-mutates 🌟", "cy": "Bonws ymadrodd-enw: enw benywaidd → ansoddair yn aml yn treiglo’n feddal 🌟" },
+      "title": { "en": "Bonus pattern: feminine noun → adjective often soft-mutates 🌟", "cy": "Bonws: enw benywaidd → ansoddair yn aml yn treiglo’n feddal 🌟" },
       "html": {
-        "en": "<p>This is extremely common in real Welsh:</p><p><b>After a feminine singular noun, the following adjective often takes SM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Phrase</th><th>What changed</th></tr></thead><tbody><tr><td><code>y gath ddu</code></td><td><code>du → ddu</code></td></tr><tr><td><code>y ferch dal</code></td><td><code>tal → dal</code></td></tr><tr><td><code>y bont fawr</code></td><td><code>mawr → fawr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Compare: <code>y dyn tal</code> (masculine noun → usually no mutation on the adjective).</p></div>",
-        "cy": "<p>Mae hyn yn gyffredin iawn mewn Cymraeg go iawn:</p><p><b>Ar ôl enw benywaidd unigol, mae’r ansoddair sy’n dilyn yn aml yn cymryd TM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ymadrodd</th><th>Beth newidiodd</th></tr></thead><tbody><tr><td><code>y gath ddu</code></td><td><code>du → ddu</code></td></tr><tr><td><code>y ferch dal</code></td><td><code>tal → dal</code></td></tr><tr><td><code>y bont fawr</code></td><td><code>mawr → fawr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Cymharu: <code>y dyn tal</code> (enw gwrywaidd → fel arfer dim treiglad ar yr ansoddair).</p></div>"
+        "en": "<p>Very common in real Welsh:</p><p>&nbsp;</p><p><b>After a feminine singular noun, the following adjective often takes SM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Phrase</th><th>What changed</th></tr></thead><tbody><tr><td><code>y gath ddu</code></td><td><code>du → ddu</code></td></tr><tr><td><code>y ferch dal</code></td><td><code>tal → dal</code></td></tr><tr><td><code>y gadair fawr</code></td><td><code>mawr → fawr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Contrast: <code>y dyn tal</code> (masculine noun → usually no mutation on the adjective).</p></div>",
+        "cy": "<p>Mae hyn yn gyffredin iawn mewn Cymraeg go iawn:</p><p>&nbsp;</p><p><b>Ar ôl enw benywaidd unigol, mae’r ansoddair sy’n dilyn yn aml yn cymryd TM.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ymadrodd</th><th>Beth newidiodd</th></tr></thead><tbody><tr><td><code>y gath ddu</code></td><td><code>du → ddu</code></td></tr><tr><td><code>y ferch dal</code></td><td><code>tal → dal</code></td></tr><tr><td><code>y gadair fawr</code></td><td><code>mawr → fawr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Cymharu: <code>y dyn tal</code> (enw gwrywaidd → fel arfer dim treiglad ar yr ansoddair).</p></div>"
       },
       "note": {
         "en": "Some styles/writers vary on how consistently they apply adjective mutation. Learn the core pattern first, then notice variation as you read.",
         "cy": "Mae amrywiad mewn arddull/awduron o ran pa mor gyson mae treiglad ansoddair yn cael ei ddefnyddio. Dysga’r patrwm craidd yn gyntaf, wedyn sylwa ar yr amrywiad wrth ddarllen."
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-adj-1",
+          "type": "typein",
+          "stem": { "en": "<code>y gath + du</code>", "cy": "<code>y gath + du</code>" },
+          "accept": ["y gath ddu"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "After a feminine singular noun, the adjective often takes SM: <code>d → dd</code>.", "cy": "Ar ôl benywaidd unigol, mae’r ansoddair yn aml yn cymryd TM: <code>d → dd</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Core trigger set B: <code>dy</code> + <code>ei</code> (his) 💎", "cy": "Set sbardun B: <code>dy</code> + <code>ei</code> (e) 💎" },
+      "html": {
+        "en": "<p>Two small words, huge payoff:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Word</th><th>Usually triggers</th></tr></thead><tbody><tr><td>your (sing.)</td><td><code>dy</code></td><td><b>soft mutation</b></td></tr><tr><td>his</td><td><code>ei</code></td><td><b>soft mutation</b></td></tr></tbody></table></div><p>&nbsp;</p><p>In everyday Welsh (especially spoken), you’ll often add a little clarifier:</p><ul><li><code>dy gar di</code></li><li><code>ei gar e</code></li></ul><p>&nbsp;</p><div class='callout'><p>This helps because <code>ei</code> can mean <i>his</i> or <i>her</i>. Adding <code>e</code> or <code>hi</code> makes it clear.</p></div>",
+        "cy": "<p>Dau air bach, lot o werth:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Gair</th><th>Fel arfer</th></tr></thead><tbody><tr><td>dy (unig.)</td><td><code>dy</code></td><td><b>treiglad meddal</b></td></tr><tr><td>ei (e)</td><td><code>ei</code></td><td><b>treiglad meddal</b></td></tr></tbody></table></div><p>&nbsp;</p><p>Mewn Cymraeg bob dydd (yn enwedig ar lafar), byddi di’n aml yn ychwanegu ategyn:</p><ul><li><code>dy gar di</code></li><li><code>ei gar e</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mae hyn yn helpu oherwydd gall <code>ei</code> olygu <i>ei (e)</i> neu <i>ei (hi)</i>. Mae ychwanegu <code>e</code> neu <code>hi</code> yn ei wneud yn glir.</p></div>"
       }
     },
     {
-      "title": { "en": "Core trigger set B: dy + ei (his) 💎", "cy": "Set sbardun B: dy + ei (e) 💎" },
+      "title": { "en": "Interactive drill: <code>dy</code> / <code>ei</code> (his) ✍️", "cy": "Dril rhyngweithiol: <code>dy</code> / <code>ei</code> (e) ✍️" },
       "html": {
-        "en": "<p>Two small words, huge payoff:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Word</th><th>Usually triggers</th></tr></thead><tbody><tr><td>your (sing.)</td><td><code>dy</code></td><td><b>soft mutation</b></td></tr><tr><td>his</td><td><code>ei</code></td><td><b>soft mutation</b></td></tr></tbody></table></div><p>&nbsp;</p><p>In everyday Welsh (especially spoken), you’ll often see a little “reinforcer” after the noun:</p><ul><li><code>dy gar di</code></li><li><code>ei gar e</code></li></ul><p>&nbsp;</p><div class='callout'><p>This helps because <code>ei</code> can mean <i>his</i> or <i>her</i>. Adding <code>e</code> or <code>hi</code> makes it clear.</p></div>",
-        "cy": "<p>Dau air bach, lot o werth:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Gair</th><th>Fel arfer</th></tr></thead><tbody><tr><td>dy (unig.)</td><td><code>dy</code></td><td><b>treiglad meddal</b></td></tr><tr><td>ei (e)</td><td><code>ei</code></td><td><b>treiglad meddal</b></td></tr></tbody></table></div><p>&nbsp;</p><p>Mewn Cymraeg bob dydd (yn enwedig ar lafar), byddi di’n aml yn gweld “ategyn” bach ar ôl yr enw:</p><ul><li><code>dy gar di</code></li><li><code>ei gar e</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mae hyn yn helpu oherwydd gall <code>ei</code> olygu <i>ei (e)</i> neu <i>ei (hi)</i>. Mae ychwanegu <code>e</code> neu <code>hi</code> yn ei wneud yn glir.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Worked examples (dy/ei): pairs you’ll reuse everywhere 🔁", "cy": "Enghreifftiau gweithio (dy/ei): parau i’w hailddefnyddio 🔁" },
-      "html": {
-        "en": "<p>These are the same SM changes from the map — now in real phrases:</p><ul><li><code>car → dy gar di</code></li><li><code>tŷ → dy dŷ di</code></li><li><code>bwrdd → dy fwrdd di</code></li><li><code>drws → ei ddrws e</code></li><li><code>gardd → ei ardd e</code> (g drops)</li><li><code>llais → dy lais di</code> (ll → l)</li><li><code>rhieni → ei rieni e</code> (rh → r)</li></ul><p>&nbsp;</p><div class='callout'><p>If you can do these quickly, your written Welsh suddenly looks much more “native”.</p></div>",
-        "cy": "<p>Dyma’r un newidiadau TM — nawr mewn ymadroddion go iawn:</p><ul><li><code>car → dy gar di</code></li><li><code>tŷ → dy dŷ di</code></li><li><code>bwrdd → dy fwrdd di</code></li><li><code>drws → ei ddrws e</code></li><li><code>gardd → ei ardd e</code> (g yn diflannu)</li><li><code>llais → dy lais di</code> (ll → l)</li><li><code>rhieni → ei rieni e</code> (rh → r)</li></ul><p>&nbsp;</p><div class='callout'><p>Os wyt ti’n gallu gwneud y rhain yn gyflym, bydd dy Gymraeg ysgrifenedig yn edrych yn llawer mwy “naturiol”.</p></div>"
-      }
+        "en": "<p>Type the phrase you’d actually write/say.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia’r ymadrodd fel byddet ti’n ei ysgrifennu/dweud.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-typein-dy-1",
+          "type": "typein",
+          "stem": { "en": "<code>dy + car</code>", "cy": "<code>dy + car</code>" },
+          "accept": ["dy gar", "dy gar di"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>dy</code> triggers SM: <code>c → g</code>.", "cy": "Mae <code>dy</code> yn sbarduno TM: <code>c → g</code>." }
+        },
+        {
+          "id": "l1-sm-typein-ei-his-1",
+          "type": "typein",
+          "stem": { "en": "<code>ei (his) + gardd</code>", "cy": "<code>ei (e) + gardd</code>" },
+          "accept": ["ei ardd", "ei ardd e"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "SM can drop <code>g</code>: <code>gardd → ardd</code>.", "cy": "Gall TM ddiflannu <code>g</code>: <code>gardd → ardd</code>." }
+        },
+        {
+          "id": "l1-sm-typein-ei-his-2",
+          "type": "typein",
+          "stem": { "en": "<code>ei (his) + rhieni</code>", "cy": "<code>ei (e) + rhieni</code>" },
+          "accept": ["ei rieni", "ei rieni e"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>rh → r</code> in SM.", "cy": "<code>rh → r</code> mewn TM." }
+        }
+      ]
     },
     {
       "title": { "en": "Boundary rule #4: not all possessives are soft ⚠️", "cy": "Rheol ffin #4: nid TM yw pob meddiant ⚠️" },
       "html": {
-        "en": "<p>Don’t over-generalise:</p><ul><li><code>dy</code> and <code>ei</code> (his) → <b>soft mutation</b></li><li><code>fy</code> (my) → usually <b>nasal mutation</b></li><li><code>ei</code> (her) + <code>hi</code> → often <b>aspirate mutation</b> on <code>c/p/t</code></li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Example</th><th>What to notice</th></tr></thead><tbody><tr><td>my</td><td><code>fy nghar i</code></td><td>not soft</td></tr><tr><td>his</td><td><code>ei gar e</code></td><td>soft</td></tr><tr><td>her</td><td><code>ei char hi</code></td><td>not soft (on <code>c</code>)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>We’ll do full lessons on nasal/aspirate later — but you need this boundary now so you don’t build bad habits.</p></div>",
-        "cy": "<p>Paid â gorgyffredinoli:</p><ul><li><code>dy</code> ac <code>ei</code> (e) → <b>treiglad meddal</b></li><li><code>fy</code> → fel arfer <b>treiglad trwynol</b></li><li><code>ei</code> (hi) + <code>hi</code> → yn aml <b>treiglad llaes</b> ar <code>c/p/t</code></li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Enghraifft</th><th>Beth i’w weld</th></tr></thead><tbody><tr><td>fy</td><td><code>fy nghar i</code></td><td>nid TM</td></tr><tr><td>ei (e)</td><td><code>ei gar e</code></td><td>TM</td></tr><tr><td>ei (hi)</td><td><code>ei char hi</code></td><td>nid TM (ar <code>c</code>)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Bydd gwersi llawn ar drwynol/llaes yn nes ymlaen — ond mae’r ffin yma’n angenrheidiol nawr fel nad wyt ti’n adeiladu arferion drwg.</p></div>"
-      }
+        "en": "<p>Don’t over-generalise. Here’s the boundary you need <b>now</b>:</p><p>&nbsp;</p><ul><li><code>dy</code> + <code>ei</code> (his) → <b>soft mutation</b></li><li><code>fy</code> (my) → usually <b>nasal mutation</b></li><li><code>ei</code> (her) + <code>hi</code> → often <b>aspirate mutation</b> on <code>c/p/t</code></li></ul><p>&nbsp;</p><div class='callout'><p>We’ll do full lessons on nasal/aspirate later — this slide is here so you don’t build bad habits.</p></div>",
+        "cy": "<p>Paid â gorgyffredinoli. Dyma’r ffin sydd ei hangen <b>nawr</b>:</p><p>&nbsp;</p><ul><li><code>dy</code> + <code>ei</code> (e) → <b>treiglad meddal</b></li><li><code>fy</code> → fel arfer <b>treiglad trwynol</b></li><li><code>ei</code> (hi) + <code>hi</code> → yn aml <b>treiglad llaes</b> ar <code>c/p/t</code></li></ul><p>&nbsp;</p><div class='callout'><p>Bydd gwersi llawn ar drwynol/llaes yn nes ymlaen — mae’r sleid yma i dy atal rhag adeiladu arferion drwg.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-mcq-poss-boundary-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
+          "stem": { "en": "<code>fy + car</code>", "cy": "<code>fy + car</code>" },
+          "options": [
+            { "text": { "en": "fy gar", "cy": "fy gar" } },
+            { "text": { "en": "fy nghar", "cy": "fy nghar" } },
+            { "text": { "en": "fy char", "cy": "fy char" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>fy</code> is usually nasal mutation (not soft).",
+            "cy": "Mae <code>fy</code> fel arfer yn dreiglad trwynol (nid meddal)."
+          }
+        },
+        {
+          "id": "l1-sm-mcq-poss-boundary-2",
+          "type": "mcq",
+          "prompt": { "en": "And for <code>ei</code> (her):", "cy": "Ac ar gyfer <code>ei</code> (hi):" },
+          "stem": { "en": "<code>ei + car + hi</code>", "cy": "<code>ei + car + hi</code>" },
+          "options": [
+            { "text": { "en": "ei gar hi", "cy": "ei gar hi" } },
+            { "text": { "en": "ei char hi", "cy": "ei char hi" } },
+            { "text": { "en": "ei nghar hi", "cy": "ei nghar hi" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>ei</code> (her) often triggers aspirate mutation on <code>c/p/t</code>: <code>car → char</code>.",
+            "cy": "Mae <code>ei</code> (hi) yn aml yn sbarduno treiglad llaes ar <code>c/p/t</code>: <code>car → char</code>."
+          }
+        }
+      ]
     },
     {
       "title": { "en": "Common trap: blocking (triggers can’t jump) 🧱", "cy": "Trap cyffredin: blocïo (does dim ‘neidio’) 🧱" },
       "html": {
-        "en": "<p>Many triggers only work when they touch the word directly.</p><p>Classic example with <code>neu</code> (or):</p><p><code>te neu coffi → te neu goffi</code></p><p>But:</p><p><code>te neu'r coffi</code> (no <code>goffi</code>)</p><p>&nbsp;</p><div class='callout'><p>So when you expect SM but it doesn’t happen, ask: “Did something get in the way?”</p></div>",
-        "cy": "<p>Mae llawer o sbardunau yn gweithio dim ond pan maen nhw’n cyffwrdd â’r gair yn syth.</p><p>Enghraifft glasurol gyda <code>neu</code>:</p><p><code>te neu coffi → te neu goffi</code></p><p>Ond:</p><p><code>te neu'r coffi</code> (dim <code>goffi</code>)</p><p>&nbsp;</p><div class='callout'><p>Felly pan wyt ti’n disgwyl TM ond nad yw’n digwydd, gofynna: “A ddaeth rhywbeth rhyngddynt?”</p></div>"
-      }
+        "en": "<p>Many triggers only work when they touch the word directly.</p><p>&nbsp;</p><p>Classic example with <code>neu</code> (or):</p><p><code>te neu coffi → te neu goffi</code></p><p>&nbsp;</p><p>But:</p><p><code>te neu'r coffi</code> (no <code>goffi</code>)</p><p>&nbsp;</p><div class='callout'><p>If you expected SM and didn’t get it, blocking is often the answer.</p></div>",
+        "cy": "<p>Mae llawer o sbardunau yn gweithio dim ond pan maen nhw’n cyffwrdd â’r gair yn syth.</p><p>&nbsp;</p><p>Enghraifft glasurol gyda <code>neu</code>:</p><p><code>te neu coffi → te neu goffi</code></p><p>&nbsp;</p><p>Ond:</p><p><code>te neu'r coffi</code> (dim <code>goffi</code>)</p><p>&nbsp;</p><div class='callout'><p>Os oedde ti’n disgwyl TM ond nad yw’n digwydd, blocïo yw’r ateb yn aml.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-mcq-blocking-neu",
+          "type": "mcq",
+          "prompt": { "en": "Choose the correct mutated form:", "cy": "Dewisa’r ffurf gywir:" },
+          "stem": { "en": "<code>te neu coffi</code>", "cy": "<code>te neu coffi</code>" },
+          "options": [
+            { "text": { "en": "te neu coffi", "cy": "te neu coffi" } },
+            { "text": { "en": "te neu goffi", "cy": "te neu goffi" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>neu</code> triggers SM in direct contact: <code>c → g</code>.", "cy": "Mae <code>neu</code> yn sbarduno TM mewn cyswllt union: <code>c → g</code>." }
+        }
+      ]
     },
     {
       "title": { "en": "Common trap: one mutation only 🧯", "cy": "Trap cyffredin: un treiglad yn unig 🧯" },
       "html": {
-        "en": "<p>Welsh doesn’t “stack” mutations.</p><p>If a word is already in a mutated form, don’t try to mutate it again.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Correct</th><th>Why</th></tr></thead><tbody><tr><td><code>dy gar di</code></td><td>car mutated once</td></tr><tr><td><code>i dŷ</code></td><td>tŷ mutated once</td></tr><tr><td><code>ei ardd e</code></td><td>g dropped once</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Quick self-check: if you’re about to add extra letters like <code>ngh-</code> or <code>mh-</code> on top of an SM form, stop.</p></div>",
-        "cy": "<p>Dydy’r Gymraeg ddim yn “stacio” treigladau.</p><p>Os yw gair eisoes mewn ffurf dreigledig, paid â cheisio’i dreiglo eto.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Cywir</th><th>Pam</th></tr></thead><tbody><tr><td><code>dy gar di</code></td><td>car wedi treiglo unwaith</td></tr><tr><td><code>i dŷ</code></td><td>tŷ wedi treiglo unwaith</td></tr><tr><td><code>ei ardd e</code></td><td>g wedi diflannu unwaith</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Gwirio cyflym: os wyt ti ar fin ychwanegu pethau fel <code>ngh-</code> neu <code>mh-</code> ar ben ffurf TM, stopia.</p></div>"
+        "en": "<p>Welsh doesn’t “stack” mutations.</p><p>&nbsp;</p><p>If a word is already mutated, don’t try to mutate it again.</p><p>&nbsp;</p><div class='callout'><p>Quick self-check: if you’re about to add extra letters like <code>ngh-</code> or <code>mh-</code> on top of an SM form, stop.</p></div>",
+        "cy": "<p>Dydy’r Gymraeg ddim yn “stacio” treigladau.</p><p>&nbsp;</p><p>Os yw gair eisoes wedi’i dreiglo, paid â cheisio’i dreiglo eto.</p><p>&nbsp;</p><div class='callout'><p>Gwirio cyflym: os wyt ti ar fin ychwanegu pethau fel <code>ngh-</code> neu <code>mh-</code> ar ben ffurf TM, stopia.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-mcq-one-only",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct form:", "cy": "Dewisa’r ffurf gywir:" },
+          "stem": { "en": "<code>dy + car</code>", "cy": "<code>dy + car</code>" },
+          "options": [
+            { "text": { "en": "dy car", "cy": "dy car" } },
+            { "text": { "en": "dy gar", "cy": "dy gar" } },
+            { "text": { "en": "dy nghar", "cy": "dy nghar" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>dy</code> triggers soft mutation: <code>car → gar</code>. Nasal forms like <code>ngh-</code> belong with other triggers (e.g. <code>fy</code>).",
+            "cy": "Mae <code>dy</code> yn sbarduno treiglad meddal: <code>car → gar</code>. Mae ffurfiau trwynol fel <code>ngh-</code> yn perthyn i sbardunau eraill (e.e. <code>fy</code>)."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Contrast set: minimal pairs that teach the boundaries 🔍", "cy": "Set cyferbyniad: parau sy’n dysgu’r ffiniau 🔍" },
+      "html": {
+        "en": "<p>Read these as pairs. They’re designed to stop over-mutating:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Pair</th><th>What you learn</th></tr></thead><tbody><tr><td><code>i dŷ</code> vs <code>i'r tŷ</code></td><td>article blocks the preposition</td></tr><tr><td><code>i'r tŷ</code> vs <code>i'r gath</code></td><td>article can still mutate feminine nouns</td></tr><tr><td><code>y gath</code> vs <code>y dyn</code></td><td>feminine vs masculine after <code>y</code></td></tr><tr><td><code>y gath</code> vs <code>y cathod</code></td><td>singular vs plural after <code>y</code></td></tr><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> can be his/her → different mutation</td></tr><tr><td><code>te neu goffi</code> vs <code>te neu'r coffi</code></td><td>blocking</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you can explain why both sides are correct, you’ve got real control.</p></div>",
+        "cy": "<p>Darllena’r rhain fel parau. Maen nhw’n dy atal rhag gortreiglo:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Pâr</th><th>Beth wyt ti’n ei ddysgu</th></tr></thead><tbody><tr><td><code>i dŷ</code> vs <code>i'r tŷ</code></td><td>yr erthygl yn blocio’r arddodiad</td></tr><tr><td><code>i'r tŷ</code> vs <code>i'r gath</code></td><td>gall yr erthygl dreiglo benywaidd o hyd</td></tr><tr><td><code>y gath</code> vs <code>y dyn</code></td><td>benywaidd vs gwrywaidd ar ôl <code>y</code></td></tr><tr><td><code>y gath</code> vs <code>y cathod</code></td><td>unigol vs lluosog ar ôl <code>y</code></td></tr><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> = e/hi → treiglad gwahanol</td></tr><tr><td><code>te neu goffi</code> vs <code>te neu'r coffi</code></td><td>blocïo</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os gelli di egluro pam mae’r ddwy ochr yn gywir, mae gen ti reolaeth go iawn.</p></div>"
       }
     },
     {
-      "title": { "en": "Contrast set (minimal pairs that teach the boundaries) 🔍", "cy": "Set cyferbyniad (parau sy’n dysgu’r ffiniau) 🔍" },
+      "title": { "en": "Mini-quiz: 8 quick hits (all interactive) ⚡", "cy": "Mini-gwis: 8 taro cyflym (i gyd yn rhyngweithiol) ⚡" },
       "html": {
-        "en": "<p>Read these as pairs. They’re designed to stop over-mutating:</p><div class='table-wrap'><table><thead><tr><th>Pair</th><th>What you learn</th></tr></thead><tbody><tr><td><code>i dŷ</code> vs <code>i'r tŷ</code></td><td>article blocks preposition</td></tr><tr><td><code>ar fwrdd</code> vs <code>ar y bwrdd</code></td><td>same boundary again</td></tr><tr><td><code>y gath</code> vs <code>y dyn</code></td><td>fem vs masc after <code>y</code></td></tr><tr><td><code>y gath</code> vs <code>y cathod</code></td><td>singular vs plural after <code>y</code></td></tr><tr><td><code>dy gar di</code> vs <code>ei gar e</code></td><td>both soft (different triggers)</td></tr><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> can be his/her → different mutation</td></tr><tr><td><code>te neu goffi</code> vs <code>te neu'r coffi</code></td><td>blocking</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you can explain why both sides are correct, you’ve got real control.</p></div>",
-        "cy": "<p>Darllena’r rhain fel parau. Maen nhw’n dy atal rhag gortreiglo:</p><div class='table-wrap'><table><thead><tr><th>Pâr</th><th>Beth wyt ti’n ei ddysgu</th></tr></thead><tbody><tr><td><code>i dŷ</code> vs <code>i'r tŷ</code></td><td>yr erthygl yn blocio’r arddodiad</td></tr><tr><td><code>ar fwrdd</code> vs <code>ar y bwrdd</code></td><td>yr un ffin eto</td></tr><tr><td><code>y gath</code> vs <code>y dyn</code></td><td>benywaidd vs gwrywaidd ar ôl <code>y</code></td></tr><tr><td><code>y gath</code> vs <code>y cathod</code></td><td>unigol vs lluosog ar ôl <code>y</code></td></tr><tr><td><code>dy gar di</code> vs <code>ei gar e</code></td><td>y ddau’n feddal (sbardunau gwahanol)</td></tr><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> = e/hi → treiglad gwahanol</td></tr><tr><td><code>te neu goffi</code> vs <code>te neu'r coffi</code></td><td>blocïo</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os gelli di egluro pam mae’r ddwy ochr yn gywir, mae gen ti reolaeth go iawn.</p></div>"
-      }
+        "en": "<p>Do these fast. If you get one wrong, read the feedback and move on.</p><p>&nbsp;</p>",
+        "cy": "<p>Gwna’r rhain yn gyflym. Os wyt ti’n camu, darllena’r adborth a symud ymlaen.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-quiz-1",
+          "type": "mcq",
+          "stem": { "en": "<code>o + pont</code>", "cy": "<code>o + pont</code>" },
+          "options": [
+            { "text": { "en": "o pont", "cy": "o pont" } },
+            { "text": { "en": "o bont", "cy": "o bont" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>p → b</code> in SM.", "cy": "<code>p → b</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-quiz-2",
+          "type": "mcq",
+          "stem": { "en": "<code>y + cadair</code>", "cy": "<code>y + cadair</code>" },
+          "options": [
+            { "text": { "en": "y cadair", "cy": "y cadair" } },
+            { "text": { "en": "y gadair", "cy": "y gadair" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Feminine singular after <code>y</code> often takes SM: <code>c → g</code>.", "cy": "Mae benywaidd unigol ar ôl <code>y</code> yn aml yn cymryd TM: <code>c → g</code>." }
+        },
+        {
+          "id": "l1-sm-quiz-3",
+          "type": "mcq",
+          "stem": { "en": "<code>dy + merch</code>", "cy": "<code>dy + merch</code>" },
+          "options": [
+            { "text": { "en": "dy merch", "cy": "dy merch" } },
+            { "text": { "en": "dy ferch", "cy": "dy ferch" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>m → f</code> in SM.", "cy": "<code>m → f</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-quiz-4",
+          "type": "mcq",
+          "stem": { "en": "<code>ei (his) + drws</code>", "cy": "<code>ei (e) + drws</code>" },
+          "options": [
+            { "text": { "en": "ei drws e", "cy": "ei drws e" } },
+            { "text": { "en": "ei ddrws e", "cy": "ei ddrws e" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>d → dd</code> in SM.", "cy": "<code>d → dd</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-quiz-5",
+          "type": "typein",
+          "stem": { "en": "<code>am + car</code>", "cy": "<code>am + car</code>" },
+          "accept": ["am gar"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>c → g</code> in SM.", "cy": "<code>c → g</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-quiz-6",
+          "type": "typein",
+          "stem": { "en": "<code>i + gardd</code>", "cy": "<code>i + gardd</code>" },
+          "accept": ["i ardd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "SM can drop <code>g</code>: <code>gardd → ardd</code>.", "cy": "Gall TM ddiflannu <code>g</code>: <code>gardd → ardd</code>." }
+        },
+        {
+          "id": "l1-sm-quiz-7",
+          "type": "typein",
+          "stem": { "en": "<code>dy + llais</code>", "cy": "<code>dy + llais</code>" },
+          "accept": ["dy lais", "dy lais di"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>ll → l</code> in SM.", "cy": "<code>ll → l</code> mewn TM." }
+        },
+        {
+          "id": "l1-sm-quiz-8",
+          "type": "mcq",
+          "stem": { "en": "<code>te neu'r + coffi</code>", "cy": "<code>te neu'r + coffi</code>" },
+          "options": [
+            { "text": { "en": "te neu'r goffi", "cy": "te neu'r goffi" } },
+            { "text": { "en": "te neu'r coffi", "cy": "te neu'r coffi" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Blocked: <code>neu</code> can’t reach past <code>'r</code>.", "cy": "Wedi’i flocio: dydy <code>neu</code> ddim yn gallu cyrraedd heibio <code>'r</code>." }
+        }
+      ]
     },
     {
       "title": { "en": "A quick reality note: names + variation 🧭", "cy": "Nodyn realiti: enwau + amrywiad 🧭" },
       "html": {
-        "en": "<p>Personal names and place names can be variable in mutation, especially in formal writing.</p><p>&nbsp;</p><div class='callout'><p>Rule of thumb for learners: learn the main grammar pattern first. When you notice variation with names, treat it as style/choice — not as “Welsh is impossible”.</p></div>",
-        "cy": "<p>Gall enwau personol ac enwau lleoedd amrywio o ran treiglo, yn enwedig mewn ysgrifennu ffurfiol.</p><p>&nbsp;</p><div class='callout'><p>Rheol bawd i ddysgwyr: dysga’r patrwm gramadegol prif-ffrwd yn gyntaf. Pan weli di amrywiad gydag enwau, trinia fe fel arddull/dewis — nid “mae’r Gymraeg yn amhosib”.</p></div>"
+        "en": "<p>Personal names and place names can be variable in mutation, especially in more formal writing.</p><p>&nbsp;</p><div class='callout'><p>Rule of thumb: learn the main grammar patterns first. When you notice variation with names, treat it as style/choice — not as “Welsh is impossible”.</p></div>",
+        "cy": "<p>Gall enwau personol ac enwau lleoedd amrywio o ran treiglo, yn enwedig mewn ysgrifennu mwy ffurfiol.</p><p>&nbsp;</p><div class='callout'><p>Rheol bawd: dysga’r patrymau gramadegol craidd yn gyntaf. Pan weli di amrywiad gydag enwau, trinia fe fel arddull/dewis — nid “mae’r Gymraeg yn amhosib”.</p></div>"
       }
     },
     {
-      "title": { "en": "Self-test mode: no pen, just swipe 👇", "cy": "Modd hunan-brofi: dim pin, dim ond llithro 👇" },
+      "title": { "en": "Now practise ➜ (same rules, drill mode) 🎯", "cy": "Nawr ymarfer ➜ (yr un rheolau, modd drilio) 🎯" },
       "html": {
-        "en": "<p>From here, you’ll get <b>question slides</b> and then an <b>answer slide</b>.</p><p>Do it like this:</p><ol><li>Look at the prompt</li><li>Say the phrase in your head (or out loud)</li><li>Swipe to check</li></ol><p>&nbsp;</p><div class='callout'><p>That “try first” moment is where learning happens.</p></div>",
-        "cy": "<p>O hyn ymlaen, cei <b>sleid cwestiwn</b> ac wedyn <b>sleid ateb</b>.</p><p>Gwna fel hyn:</p><ol><li>Edrycha ar y dasg</li><li>Dywed yr ymadrodd yn dy ben (neu ar lafar)</li><li>Llithra i wirio</li></ol><p>&nbsp;</p><div class='callout'><p>Dyna’r eiliad “rho gynnig” lle mae’r dysgu’n digwydd.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 1/8: preposition (contact) 🎯", "cy": "Cwis 1/8: arddodiad (cyswllt) 🎯" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>i + Caerdydd</code></p><p>&nbsp;</p><div class='callout'><p>Remember: <code>i</code> is a core SM trigger when it touches the next word.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>i + Caerdydd</code></p><p>&nbsp;</p><div class='callout'><p>Cofia: mae <code>i</code> yn sbardun TM craidd pan mae’n cyffwrdd â’r gair nesaf.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 1/8 ✅", "cy": "Ateb 1/8 ✅" },
-      "html": {
-        "en": "<p><code>i Gaerdydd</code></p><p>&nbsp;</p><div class='callout'><p><code>C → G</code> is one of the most common SM changes. You’ll see it constantly with <code>i</code> and <code>o</code>.</p></div>",
-        "cy": "<p><code>i Gaerdydd</code></p><p>&nbsp;</p><div class='callout'><p><code>C → G</code> yw un o’r newidiadau TM mwyaf cyffredin. Byddi di’n ei weld drwy’r amser gyda <code>i</code> ac <code>o</code>.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 2/8: preposition 🎯", "cy": "Cwis 2/8: arddodiad 🎯" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>ar + pont</code></p><p>&nbsp;</p><div class='callout'><p>Use the map: <code>p → b</code>.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>ar + pont</code></p><p>&nbsp;</p><div class='callout'><p>Defnyddia’r map: <code>p → b</code>.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 2/8 ✅", "cy": "Ateb 2/8 ✅" },
-      "html": {
-        "en": "<p><code>ar bont</code></p><p>&nbsp;</p><div class='callout'><p>This is a nice “clean” one: direct trigger + visible change.</p></div>",
-        "cy": "<p><code>ar bont</code></p><p>&nbsp;</p><div class='callout'><p>Dyma un “glân”: sbardun union + newid gweladwy.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 3/8: article blocks the preposition 🧱", "cy": "Cwis 3/8: yr erthygl yn blocio’r arddodiad 🧱" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>i'r + tŷ</code></p><p>&nbsp;</p><div class='callout'><p>Don’t rush — check the workflow: trigger → blocker → apply (or not).</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>i'r + tŷ</code></p><p>&nbsp;</p><div class='callout'><p>Paid â rhuthro — gwiria’r llif gwaith: sbardun → blocïwr → cymhwyso (neu beidio).</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 3/8 ✅", "cy": "Ateb 3/8 ✅" },
-      "html": {
-        "en": "<p><code>i'r tŷ</code></p><p>&nbsp;</p><div class='callout'><p>The preposition <code>i</code> can’t reach because the article is in the way. And <code>tŷ</code> (masc.) doesn’t usually mutate after <code>y</code>.</p></div>",
-        "cy": "<p><code>i'r tŷ</code></p><p>&nbsp;</p><div class='callout'><p>Does dim “cyrraedd” gan <code>i</code> oherwydd bod yr erthygl rhyngddynt. A dydy <code>tŷ</code> (gwrywaidd) ddim fel arfer yn treiglo ar ôl <code>y</code>.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 4/8: y + feminine noun 🧩", "cy": "Cwis 4/8: y + enw benywaidd 🧩" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>y + cath</code></p><p>&nbsp;</p><div class='callout'><p>Think: feminine singular after the article often takes SM.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>y + cath</code></p><p>&nbsp;</p><div class='callout'><p>Meddwl: ar ôl yr erthygl, mae benywaidd unigol yn aml yn cymryd TM.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 4/8 ✅", "cy": "Ateb 4/8 ✅" },
-      "html": {
-        "en": "<p><code>y gath</code></p><p>&nbsp;</p><div class='callout'><p><code>c → g</code> again. Same letter-change, different trigger (the article).</p></div>",
-        "cy": "<p><code>y gath</code></p><p>&nbsp;</p><div class='callout'><p><code>c → g</code> eto. Yr un newid llythyren, sbardun gwahanol (yr erthygl).</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 5/8: y + masculine noun 🚦", "cy": "Cwis 5/8: y + enw gwrywaidd 🚦" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>y + dyn</code></p><p>&nbsp;</p><div class='callout'><p>Here the key skill is recognising that “no mutation” can be correct.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>y + dyn</code></p><p>&nbsp;</p><div class='callout'><p>Y sgìl allweddol yma yw adnabod bod “dim treiglad” yn gallu bod yn gywir.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 5/8 ✅", "cy": "Ateb 5/8 ✅" },
-      "html": {
-        "en": "<p><code>y dyn</code></p><p>&nbsp;</p><div class='callout'><p>Masculine singular after <code>y</code> usually stays radical.</p></div>",
-        "cy": "<p><code>y dyn</code></p><p>&nbsp;</p><div class='callout'><p>Mae gwrywaidd unigol ar ôl <code>y</code> fel arfer yn aros yn wreiddiol.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 6/8: y + plural 🚦", "cy": "Cwis 6/8: y + lluosog 🚦" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>y + cathod</code></p><p>&nbsp;</p><div class='callout'><p>Plural after the article usually doesn’t mutate.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>y + cathod</code></p><p>&nbsp;</p><div class='callout'><p>Fel arfer, dydy lluosog ar ôl yr erthygl ddim yn treiglo.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 6/8 ✅", "cy": "Ateb 6/8 ✅" },
-      "html": {
-        "en": "<p><code>y cathod</code></p><p>&nbsp;</p><div class='callout'><p>Compare: <code>y gath</code> (fem. singular) vs <code>y cathod</code> (plural).</p></div>",
-        "cy": "<p><code>y cathod</code></p><p>&nbsp;</p><div class='callout'><p>Cymharu: <code>y gath</code> (benywaidd unigol) vs <code>y cathod</code> (lluosog).</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 7/8: dy (your) 💎", "cy": "Cwis 7/8: dy (dy) 💎" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>dy + car</code></p><p>&nbsp;</p><div class='callout'><p>Optional spoken-style: add <code>di</code> after the noun.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>dy + car</code></p><p>&nbsp;</p><div class='callout'><p>Ar lafar (dewisol): gelli di ychwanegu <code>di</code> ar ôl yr enw.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 7/8 ✅", "cy": "Ateb 7/8 ✅" },
-      "html": {
-        "en": "<p><code>dy gar (di)</code></p><p>&nbsp;</p><div class='callout'><p><code>dy</code> is a core SM trigger. Same old friend: <code>c → g</code>.</p></div>",
-        "cy": "<p><code>dy gar (di)</code></p><p>&nbsp;</p><div class='callout'><p>Mae <code>dy</code> yn sbardun TM craidd. Yr un ffrind: <code>c → g</code>.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Quiz 8/8: ei (his) + rh- 💎", "cy": "Cwis 8/8: ei (e) + rh- 💎" },
-      "html": {
-        "en": "<p>Make the final phrase:</p><p><code>ei (his) + rhieni</code></p><p>&nbsp;</p><div class='callout'><p>Remember: <code>rh → r</code> in soft mutation.</p></div>",
-        "cy": "<p>Gwna’r ymadrodd terfynol:</p><p><code>ei (e) + rhieni</code></p><p>&nbsp;</p><div class='callout'><p>Cofia: <code>rh → r</code> mewn TM.</p></div>"
-      }
-    },
-    {
-      "title": { "en": "Answer 8/8 ✅", "cy": "Ateb 8/8 ✅" },
-      "html": {
-        "en": "<p><code>ei rieni (e)</code></p><p>&nbsp;</p><div class='callout'><p>That <code>rh</code> change is high-value because it’s very common in real vocabulary.</p></div>",
-        "cy": "<p><code>ei rieni (e)</code></p><p>&nbsp;</p><div class='callout'><p>Mae’r newid <code>rh</code> yma’n werthfawr oherwydd mae’n ymddangos yn aml mewn geirfa go iawn.</p></div>"
-      }
-    },
-
-    {
-      "title": { "en": "Now practise (same rules, interactive drills) ➜", "cy": "Nawr ymarfer (yr un rheolau, drill rhyngweithiol) ➜" },
-      "html": {
-        "en": "<p>Go straight into the Trainer and drill what you’ve just learned:</p><ul><li><b>PREPOSITIONS</b>: <code>i</code>, <code>o</code>, <code>ar</code>, <code>dan</code>, <code>wrth</code>, <code>am</code>, <code>heb</code></li><li><b>POSSESSIVES</b>: <code>dy</code>, <code>ei</code> (his)</li><li><b>NOUN-PHRASES</b>: <code>y</code> + feminine singular nouns</li><li><b>BLOCKING</b>: patterns like <code>neu'r</code></li></ul><p>&nbsp;</p><div class='callout'><p>Best routine: 3–5 minutes a day for a week. You’ll remember more than doing one big session.</p></div>",
-        "cy": "<p>Dos yn syth i’r Hyfforddwr a drilia’r hyn wyt ti newydd ei ddysgu:</p><ul><li><b>ARDDODIAID</b>: <code>i</code>, <code>o</code>, <code>ar</code>, <code>dan</code>, <code>wrth</code>, <code>am</code>, <code>heb</code></li><li><b>MEDDIANNAU</b>: <code>dy</code>, <code>ei</code> (e)</li><li><b>YMADRODDION ENWOL</b>: <code>y</code> + enwau benywaidd unigol</li><li><b>BLOCÏO</b>: patrymau fel <code>neu'r</code></li></ul><p>&nbsp;</p><div class='callout'><p>Y drefn orau: 3–5 munud y dydd am wythnos. Byddi di’n cofio mwy na gwneud un sesiwn hir.</p></div>"
-      }
+        "en": "<p>Go straight into the Trainer and drill what you’ve just learned.</p><p>&nbsp;</p><div class='callout'><p>Best routine: 3–5 minutes a day for a week. You’ll remember more than doing one long session.</p></div>",
+        "cy": "<p>Dos yn syth i’r Hyfforddwr a drilia’r hyn wyt ti newydd ei ddysgu.</p><p>&nbsp;</p><div class='callout'><p>Y drefn orau: 3–5 munud y dydd am wythnos. Byddi di’n cofio mwy na gwneud un sesiwn hir.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-sm-actions",
+          "type": "actions",
+          "prompt": { "en": "Pick a drill category:", "cy": "Dewisa gategori drilio:" },
+          "buttons": [
+            { "label": { "en": "Prepositions", "cy": "Arddodiaid" }, "href": "./index.html", "kind": "primary" },
+            { "label": { "en": "Possessives", "cy": "Meddiannau" }, "href": "./index.html", "kind": "ghost" },
+            { "label": { "en": "Noun phrases (y + fem.)", "cy": "Ymadroddion enwol (y + b.)" }, "href": "./index.html", "kind": "ghost" },
+            { "label": { "en": "Blocking", "cy": "Blocïo" }, "href": "./index.html", "kind": "ghost" }
+          ]
+        }
+      ]
     }
   ]
 }
+
