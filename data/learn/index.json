@@ -8,7 +8,9 @@
       "minutes": 10,
       "tags": ["FOUNDATIONS", "MAP"]
     }
-        {
+  ]
+            [
+  {
       "id": "treiglad-intro",
       "title": { "en": "Introduction to Mutations", "cy": "Cyflwyniad i Dreigladau" },
       "desc": { "en": "A quick map of what’s going on.", "cy": "Trosolwg cyflym o’r map." },
