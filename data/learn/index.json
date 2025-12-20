@@ -29,7 +29,7 @@
       },
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 20,
-      "tags": ["SOFT", "CORE", "PREPOSITIONS", "POSSESSIVES", "NOUN-PHRASES"],
+      "tags": ["SOFT MUTATION", "PREPOSITIONS", "POSSESSIVES", "NOUN-PHRASES"],
       "slideCount": 36,
       "deck": "./data/learn/l1-soft-mutation-core.json"
     }
