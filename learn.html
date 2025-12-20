@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hyffordwr Treiglad | Learn</title>
+
+  <!-- Tailwind via CDN (matches your current approach) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts (mirrors index.html) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    body { -webkit-font-smoothing: antialiased; }
+
+    /* Header font (matches your index.html) */
+    .bbh-bogle-regular{
+      font-family: "BBH Bogle", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+    .bbh-bogle-bold{
+      font-family: "BBH Bogle", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    /* -------------------------
+       Theme (lifted from index.html so Learn matches Practice)
+    ------------------------- */
+    :root {
+      --primary-from: #0b7a5a;
+      --primary-mid:  #065f46;
+      --primary-to:   #064e3b;
+
+      --page: #fbfbf7;
+      --page-tint: rgba(6,95,70,0.04);
+
+      --surface: rgba(255,255,255,0.94);
+      --border: rgba(15,23,42,0.10);
+      --shadow: 0 12px 30px rgba(15,23,42,0.06);
+
+      --text: #0f172a;
+      --muted: #475569;
+
+      --emerald-ink: #064e3b;
+      --gold: #d97706;
+      --cymru-red: #b91c1c;
+      --cymru-red-ink: #991b1b;
+
+      --focus: rgba(4,120,87,0.35);
+    }
+
+    body{
+      background: var(--page);
+      background-image:
+        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%),
+        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.015), transparent 55%);
+      color: var(--text);
+    }
+
+    /* Glass panel used for cards */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Header: clean, lightly glassy */
+    #siteHeader{
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* red/green ribbon under header */
+    .cymru-red-bar{
+      height: 3px;
+      background: linear-gradient(to right,
+        transparent 0%,
+        rgba(4,120,87,0.20) 12%,
+        rgba(4,120,87,0.92) 28%,
+        rgba(4,120,87,1.00) 40%,
+        rgba(185,28,28,1.00) 60%,
+        rgba(185,28,28,0.92) 72%,
+        rgba(185,28,28,0.20) 88%,
+        transparent 100%
+      );
+    }
+
+    /* Brand lockup (icon + title) */
+    .brand-lockup{
+      display:flex;
+      align-items:center;
+      gap:.65rem;
+      min-width:0;
+    }
+
+    .brand-title{
+      display:flex;
+      align-items:center;
+      gap:0;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .title-hy{ color: var(--emerald-ink); }
+    .title-trei{ color: var(--cymru-red-ink); margin-left: .06em; }
+
+    .brand-dragon{
+      width: 34px;
+      height: 34px;
+      display:block;
+      flex: 0 0 auto;
+      filter: drop-shadow(0 10px 18px rgba(2,6,23,0.10));
+      transform: translateY(-1px);
+    }
+    @media (min-width: 768px){
+      .brand-dragon{ width: 44px; height: 44px; }
+    }
+
+    /* Button styles (mirrors index) */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      padding:.55rem .95rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:600;
+      line-height:1;
+      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+
+    .btn-primary{
+      color:#fff;
+      background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+      background-size: 220% 220%;
+      background-position: 0% 50%;
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      overflow:hidden;
+      box-shadow: 0 10px 20px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .btn-primary:hover{
+      transform: translateY(-1px);
+      filter: saturate(1.06) brightness(1.02);
+      box-shadow:0 14px 28px rgba(2,6,23,0.16);
+      background-position: 100% 50%;
+    }
+    .btn-primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+      pointer-events:none;
+    }
+    .btn-primary:hover::after{ transform: translateX(120%); }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.76);
+      border:1px solid var(--border);
+      color:#0f172a;
+      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
+    }
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.94);
+      border-color: rgba(185,28,28,0.22);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(2,6,23,0.08);
+    }
+
+    /* header secondary styles for Stats/Filters (keeps your current feel) */
+    #btnStats, #btnFilters{
+      padding: .5rem .9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      background: rgba(185,28,28,0.08);
+      border-color: rgba(185,28,28,0.24);
+      color: rgba(127,29,29,0.96);
+    }
+    #btnStats:hover, #btnFilters:hover{
+      background: linear-gradient(to right, rgba(185,28,28,0.96), rgba(153,27,27,0.96));
+      border-color: rgba(185,28,28,0.55);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.14);
+    }
+
+    /* Language toggle button (same look as your "hear" pill) */
+    /* Language toggle button (small, separated from main nav) */
+    .btn-lang{
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      background: rgba(217,119,6,0.10);
+      border: 1px solid rgba(217,119,6,0.32);
+      color: rgba(15,23,42,0.92);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.78rem;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-lang:hover{
+      background: rgba(217,119,6,0.20);
+      border-color: rgba(217,119,6,0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(2,6,23,0.08);
+    }
+    .btn-lang:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+
+    /* Learn UI components */
+    .lesson-card{
+      transition: transform .10s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .lesson-card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(2,6,23,0.08);
+      border-color: rgba(4,120,87,0.22);
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:6px 12px;
+      font-size:11.5px;
+      font-weight:750;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(217,119,6,0.22);
+      background:rgba(217,119,6,0.07);
+      color:rgba(15,23,42,0.86);
+      box-shadow:0 1px 2px rgba(0,0,0,.04);
+    }
+
+    .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
+
+    .slide-prose p{ margin-top: .8rem; line-height: 1.55; }
+    .slide-prose ul{ margin-top: .7rem; padding-left: 1.25rem; list-style: disc; }
+    .slide-prose li{ margin-top: .35rem; }
+    .slide-prose b{ font-weight: 650; }
+
+    .callout{
+      border-radius: 1rem;
+      padding: .9rem 1rem;
+      border: 1px solid rgba(4,120,87,0.18);
+      background: rgba(4,120,87,0.06);
+      box-shadow: 0 1px 0 rgba(2,6,23,0.03);
+    }
+
+    .table-wrap{
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(15,23,42,0.10);
+      box-shadow: 0 10px 20px rgba(2,6,23,0.05);
+      background: rgba(255,255,255,0.88);
+    }
+    table{ width: 100%; border-collapse: collapse; }
+    th, td{ padding: .55rem .7rem; border-bottom: 1px solid rgba(15,23,42,0.08); }
+    th{ text-align: left; font-size: 12px; letter-spacing: .10em; text-transform: uppercase; color: rgba(71,85,105,0.95); background: rgba(6,95,70,0.05); }
+    td{ font-size: 14px; }
+
+    /* Deck animation */
+    @keyframes pop{0%{transform:scale(.985);opacity:0}100%{transform:scale(1);opacity:1}}
+    .animate-pop{animation:pop .18s ease-out both}
+
+    /* Mobile action bar for deck */
+    #deckMobileBar{
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(15,23,42,0.10);
+      box-shadow: 0 -16px 30px rgba(2,6,23,0.08);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-slate-900">
+  <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
+
+    <!-- Header (styled to match index.html) -->
+    <header id="siteHeader" class="sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+
+        <div class="brand-lockup grow min-w-0">
+          <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
+            <span class="title-hy">Hyffordwr</span><span class="title-trei">Treiglad</span>
+          </h1>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
+          <!-- Nav group -->
+          <div class="flex flex-wrap items-center gap-2">
+            <a id="btnLearn" class="btn btn-primary" href="./learn.html" title="Learn" aria-current="page">Learn</a>
+            <a id="btnPractice" class="btn btn-ghost" href="./index.html" title="Practice">Practice</a>
+          </div>
+
+          <!-- Subtle separation so the language toggle feels like a distinct control -->
+          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
+
+          <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
+        </div>
+
+      </div>
+      <div class="cymru-red-bar" aria-hidden="true"></div>
+    </header>
+
+    <!-- Main -->
+    <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6">
+
+      <!-- Learn home: lesson chooser -->
+      <section id="learnHome" class="space-y-4">
+        <div class="panel rounded-2xl p-5 md:p-6">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <div class="min-w-0">
+              <div id="learnKicker" class="text-xs uppercase tracking-widest text-slate-500">Learn</div>
+              <h2 id="learnTitle" class="mt-1 text-2xl md:text-3xl font-bold tracking-tight" style="color: var(--emerald-ink);">Mutation lessons as mini slide decks</h2>
+              <p id="learnSubtitle" class="mt-2 text-slate-700 max-w-3xl leading-relaxed">
+                Pick a lesson, then flick through the cards. Keyboard: <span class="kbd">←</span>/<span class="kbd">→</span> to move, <span class="kbd">Esc</span> to go back.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btnResume" class="btn btn-ghost hidden">Resume</button>
+              <button id="btnOpenLast" class="btn btn-ghost hidden">Open last lesson</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="lessonGrid" aria-label="Lesson list"></div>
+      </section>
+
+      <!-- Deck view -->
+      <section id="deckView" class="hidden space-y-4">
+        <div class="panel rounded-2xl p-4 md:p-5">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <button id="btnBack" class="btn btn-ghost" title="Back (Esc)">← Back</button>
+                <span id="deckMeta" class="tag">LESSON</span>
+                <span id="deckProgressChip" class="tag" style="border-color: rgba(4,120,87,0.22); background: rgba(4,120,87,0.07);">1 / 1</span>
+              </div>
+              <h2 id="deckTitle" class="mt-2 text-xl md:text-2xl font-bold tracking-tight"></h2>
+              <p id="deckSubtitle" class="mt-1 text-slate-600 text-sm"></p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btnRestart" class="btn btn-ghost" title="Restart">Restart</button>
+              <button id="btnShare" class="btn btn-ghost" title="Copy shareable link">Share link</button>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div class="h-1 rounded-full bg-slate-200 overflow-hidden">
+              <div id="deckProgressBar" class="h-full" style="width:0%; background: linear-gradient(90deg, rgba(6,78,59,0.85), rgba(153,27,27,0.85));"></div>
+            </div>
+          </div>
+        </div>
+
+        <article class="panel rounded-2xl p-6 md:p-8 animate-pop" id="slideCard" aria-live="polite">
+          <div class="flex items-start justify-between gap-3">
+            <h3 id="slideTitle" class="text-xl md:text-2xl font-bold tracking-tight"></h3>
+            <span id="slideNumber" class="tag" title="Slide number"></span>
+          </div>
+
+          <div id="slideBody" class="slide-prose mt-4 text-slate-800"></div>
+
+          <div id="slideNoteWrap" class="mt-5 hidden">
+            <div class="callout">
+              <div class="text-sm font-semibold" style="color: var(--emerald-ink);">Note</div>
+              <div id="slideNote" class="mt-1 text-sm text-slate-700"></div>
+            </div>
+          </div>
+
+          <div class="mt-7 flex flex-wrap items-center gap-2">
+            <button id="btnPrev" class="btn btn-ghost" title="Previous (←)">← Prev</button>
+            <button id="btnNext" class="btn btn-primary" title="Next (→)">Next →</button>
+            <div class="ml-auto text-sm text-slate-600">
+              <span id="slideHint">Tip: swipe left/right on mobile.</span>
+            </div>
+          </div>
+        </article>
+
+      </section>
+    </main>
+
+    <!-- Mobile deck bar -->
+    <div id="deckMobileBar" class="fixed md:hidden bottom-0 inset-x-0 p-2 hidden">
+      <div class="max-w-6xl mx-auto flex gap-2">
+        <button id="mbPrev" class="flex-1 btn btn-ghost px-3 py-2" title="Previous">Prev</button>
+        <button id="mbBack" class="flex-1 btn btn-ghost px-3 py-2" title="Back">Back</button>
+        <button id="mbNext" class="flex-1 btn btn-primary px-3 py-2" title="Next">Next</button>
+      </div>
+    </div>
+
+    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+      <div class="flex flex-wrap gap-4 items-center">
+        <span>© Hyffordwr Treiglad</span>
+        <a class="ml-auto btn btn-ghost px-2 py-1" href="#" id="btnTop">Back to top</a>
+      </div>
+    </footer>
+
+  </div>
+
+<script>
+  // ---------- Small utilities (mirrors index conventions) ----------
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
+  function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  function setParams(params, {replace=true}={}){
+    const url = new URL(location.href);
+    Object.entries(params).forEach(([k,v]) => {
+      if (v === null || v === undefined || v === '') url.searchParams.delete(k);
+      else url.searchParams.set(k, String(v));
+    });
+    if (replace) history.replaceState({}, '', url.toString());
+    else history.pushState({}, '', url.toString());
+  }
+
+  function clamp(n, lo, hi){ return Math.max(lo, Math.min(hi, n)); }
+
+  // ---------- Language (shared key with your practice page) ----------
+  let lang = loadLS('wm_lang', 'en');
+  const STR = {
+    en: {
+      learnKicker: 'Learn',
+      learnTitle: 'Mutation lessons as mini slide decks',
+      learnSubtitle: 'Pick a lesson, then flick through the cards. Keyboard: ←/→ to move, Esc to go back.',
+      resume: 'Resume',
+      openLast: 'Open last lesson',
+      back: '← Back',
+      restart: 'Restart',
+      share: 'Share link',
+      note: 'Note',
+      prev: '← Prev',
+      next: 'Next →',
+      tipSwipe: 'Tip: swipe left/right on mobile.',
+      copied: 'Copied link ✅',
+      copyFail: 'Could not copy, but the URL is updated in the address bar.',
+      minutes: 'min',
+      slides: 'slides',
+      loading: 'Loading…'
+    },
+    cy: {
+      learnKicker: 'Dysgu',
+      learnTitle: 'Gwersi treiglad fel "sleidiau" bach',
+      learnSubtitle: 'Dewisa wers, wedyn symud trwy’r cardiau. Bysellfwrdd: ←/→ i symud, Esc i fynd yn ôl.',
+      resume: 'Parhau',
+      openLast: 'Agor y wers ddiwethaf',
+      back: '← Yn ôl',
+      restart: 'Ailgychwyn',
+      share: 'Rhannu dolen',
+      note: 'Nodyn',
+      prev: '← Blaen',
+      next: 'Nesaf →',
+      tipSwipe: 'Awgrym: llusgo chwith/de ar ffôn.',
+      copied: 'Wedi copïo ✅',
+      copyFail: 'Methu copïo, ond mae’r URL yn y bar cyfeiriad.',
+      minutes: 'mun',
+      slides: 'sleidiau',
+      loading: 'Wrthi’n llwytho…'
+    }
+  };
+  const t = (k) => (STR[lang] && STR[lang][k]) ? STR[lang][k] : (STR.en[k] || k);
+
+  function updateLangUI(){
+    $('#learnKicker').textContent = t('learnKicker');
+    $('#learnTitle').textContent = t('learnTitle');
+    $('#learnSubtitle').innerHTML = `${t('learnSubtitle')
+      .replace('←/→', '<span class="kbd">←</span>/<span class="kbd">→</span>')
+      .replace('Esc', '<span class="kbd">Esc</span>')}`;
+
+    $('#btnBack').textContent = t('back');
+    $('#btnRestart').textContent = t('restart');
+    $('#btnShare').textContent = t('share');
+    $('#btnPrev').textContent = t('prev');
+    $('#btnNext').textContent = t('next');
+    $('#slideHint').textContent = t('tipSwipe');
+
+    $('#mbPrev').textContent = (lang==='cy' ? 'Blaen' : 'Prev');
+    $('#mbBack').textContent = (lang==='cy' ? 'Yn ôl' : 'Back');
+    $('#mbNext').textContent = (lang==='cy' ? 'Nesaf' : 'Next');
+
+    // Toggle label shows the *other* language, compact, with an icon suggesting flipping.
+    const nextLang = (lang === 'en') ? 'CY' : 'EN';
+    $('#btnLangToggle').innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
+    $('#btnLangToggle').setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
+    $('#btnLangToggle').title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
+  }
+
+  // ---------- Learn data (external JSON) ----------
+  // Goal: keep lesson *content* out of this HTML, so you can edit lessons without touching JS.
+  //
+  // Recommended file structure:
+  //   /data/learn/index.json              (lesson list + metadata)
+  //   /data/learn/<lessonId>.json         (the slide deck for that lesson)
+  //
+  // learn.html loads index.json at boot, then lazy-loads each deck JSON only when opened.
+
+  const LEARN_INDEX_URL = './data/learn/index.json';
+  let LESSON_INDEX = [];                 // [{id, title, desc, minutes, level, tags, slideCount, deck}]
+  const DECK_CACHE = new Map();          // lessonId -> { id, slides: [...] }
+
+  // Dummy fallback (so the page works even if you haven’t created /data/learn/*.json yet)
+  const DUMMY_INDEX = [
+    {
+      id: 'whistlestop',
+      level: {en:'Beginner', cy:'Dechreuwr'},
+      minutes: 10,
+      title: { en: 'Whistlestop tour: what mutations are and why they matter', cy: 'Taith chwim: beth yw treigladau a pham maen nhw’n bwysig' },
+      desc:  { en: 'A quick, practical overview. Enough to stop mutations feeling random, and to give you a mental map.', cy: 'Trosolwg cyflym a defnyddiol. Digon i wneud i dreigladau deimlo’n llai ar hap, gyda “map” yn y pen.' },
+      tags: ['FOUNDATIONS','MAP'],
+      slideCount: 3,
+      deck: './data/learn/whistlestop.json'
+    },
+    {
+      id: 'soft-contact',
+      level: {en:'Beginner', cy:'Dechreuwr'},
+      minutes: 12,
+      title: { en: 'Soft mutation: everyday contact triggers', cy: 'Treiglad meddal: sbardunau cysylltiad bob dydd' },
+      desc:  { en: 'High-frequency triggers you’ll meet constantly: prepositions and a few common structures.', cy: 'Y sbardunau wyt ti’n eu gweld drwy’r amser: arddodiaid a rhai strwythurau cyffredin.' },
+      tags: ['SOFT','TRIGGERS'],
+      slideCount: 2,
+      deck: './data/learn/soft-contact.json'
+    }
+  ];
+
+  const DUMMY_DECKS = {
+    'whistlestop': {
+      id: 'whistlestop',
+      slides: [
+        {
+          title: {en:'1) Mutations are normal word-shape (not decoration)', cy:'1) Mae treiglad yn rhan arferol o siâp geiriau'},
+          html: {
+            en: `<p><b>Mutation</b> = a change to the <b>first sound/letter</b> of a word (usually the first consonant).</p>
+                 <p>It is not “optional decoration”. It’s built into everyday Welsh.</p>
+                 <div class="callout mt-4"><div class="text-sm font-semibold" style="color: var(--emerald-ink);">Key idea</div>
+                   <div class="mt-1 text-sm">Treat mutation as part of the word’s <b>shape</b>, not a separate bolt-on rule.</div>
+                 </div>`,
+            cy: `<p><b>Treiglad</b> = newid i’r <b>cytsain/llythyren gyntaf</b> mewn gair.</p>
+                 <p>Dydy e ddim yn “addurn”. Mae’n rhan o Gymraeg bob dydd.</p>
+                 <div class="callout mt-4"><div class="text-sm font-semibold" style="color: var(--emerald-ink);">Syniad allweddol</div>
+                   <div class="mt-1 text-sm">Gweld treiglad fel rhan o <b>siâp</b> y gair, nid fel rheol ychwanegol.</div>
+                 </div>`
+          },
+          note: { en: 'Dictionaries show the radical. Real sentences often show the mutated forms first.', cy: 'Mae geiriaduron yn dangos y ffurf wreiddiol. Mewn brawddegau, ti’n gweld y ffurf treigledig yn aml.' }
+        },
+        {
+          title: {en:'2) The radical is the dictionary form', cy:'2) Y ffurf wreiddiol yw’r ffurf geiriadur'},
+          html: {
+            en: `<ul>
+                  <li><b>cath</b> is the radical</li>
+                  <li>you might meet <b>gath</b> or <b>chath</b> depending on the trigger</li>
+                 </ul>`,
+            cy: `<ul>
+                  <li><b>cath</b> yw’r ffurf wreiddiol</li>
+                  <li>gallet ti weld <b>gath</b> neu <b>chath</b> yn dibynnu ar y sbardun</li>
+                 </ul>`
+          }
+        },
+        {
+          title: {en:'3) The core map (SM/AM/NM)', cy:'3) Y map craidd (SM/AM/NM)'},
+          html: {
+            en: `<p>Most learning boils down to two layers:</p>
+                 <ul>
+                   <li>Know the <b>tables</b> (SM/AM/NM) fast.</li>
+                   <li>Then learn the <b>triggers</b> and structures.</li>
+                 </ul>`,
+            cy: `<p>Mae’r rhan fwyaf o ddysgu yn dod i ddau haen:</p>
+                 <ul>
+                   <li>Cofio’r <b>tablau</b> (SM/AM/NM) yn gyflym.</li>
+                   <li>Wedyn dysgu’r <b>sbardunau</b> a’r strwythurau.</li>
+                 </ul>`
+          }
+        }
+      ]
+    },
+    'soft-contact': {
+      id: 'soft-contact',
+      slides: [
+        {
+          title: {en:'Start with the shortlist', cy:'Dechrau gyda’r rhestr fer'},
+          html: {
+            en: '<p>Start with a small set you meet constantly: <b>i, o, ar, am, tan, heb, gyda</b>.</p>',
+            cy: '<p>Dechrau gyda set fach wyt ti’n gweld drwy’r amser: <b>i, o, ar, am, tan, heb, gyda</b>.</p>'
+          }
+        },
+        {
+          title: {en:'Contact means “right next door”', cy:'Cysylltiad = “yn syth o flaen”'},
+          html: {
+            en: '<p>If the trigger is immediately before the word, you can often predict a contact mutation. Your trainer works because you see the trigger before typing.</p>',
+            cy: '<p>Os yw’r sbardun yn syth o flaen y gair, gelli di ragweld treiglad cysylltiad yn aml. Mae’r ap yn gweithio am dy fod ti’n gweld y sbardun cyn teipio.</p>'
+          }
+        }
+      ]
+    }
+  };
+
+  async function loadJSON(url){
+    const res = await fetch(url, {cache: 'no-cache'});
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  }
+
+  async function loadLearnIndex(){
+    try{
+      const idx = await loadJSON(LEARN_INDEX_URL);
+      const lessons = Array.isArray(idx?.lessons) ? idx.lessons : (Array.isArray(idx) ? idx : null);
+      if (!lessons) throw new Error('Bad index shape');
+      LESSON_INDEX = lessons;
+    }catch(e){
+      // fallback
+      LESSON_INDEX = DUMMY_INDEX;
+    }
+  }
+
+  function lessonById(id){ return LESSON_INDEX.find(l => l.id === id) || null; }
+  function lessonTitle(lesson){ return (lesson?.title?.[lang] || lesson?.title?.en || ''); }
+  function lessonDesc(lesson){ return (lesson?.desc?.[lang] || lesson?.desc?.en || ''); }
+
+  function deckForLesson(lessonId){
+    const deck = DECK_CACHE.get(lessonId);
+    return deck && Array.isArray(deck.slides) ? deck.slides : [];
+  }
+
+  async function ensureDeckLoaded(lessonId){
+    if (DECK_CACHE.has(lessonId)) return;
+
+    const meta = lessonById(lessonId);
+    const deckUrl = meta?.deck;
+
+    try{
+      if (!deckUrl) throw new Error('Missing deck URL');
+      const deck = await loadJSON(deckUrl);
+      const slides = Array.isArray(deck?.slides) ? deck.slides : null;
+      if (!slides) throw new Error('Bad deck shape');
+      DECK_CACHE.set(lessonId, {id: deck?.id || lessonId, slides});
+    }catch(e){
+      // fallback to dummy if present
+      const dummy = DUMMY_DECKS[lessonId];
+      if (dummy && Array.isArray(dummy.slides)) DECK_CACHE.set(lessonId, dummy);
+      else DECK_CACHE.set(lessonId, {id: lessonId, slides: []});
+    }
+  }
+
+  function slideCountMeta(lesson){
+    if (!lesson) return 0;
+    if (typeof lesson.slideCount === 'number') return lesson.slideCount;
+    const cached = deckForLesson(lesson.id);
+    return cached.length;
+  }
+
+  // ---------- State ----------
+  const state = {
+    view: 'home',
+    lessonId: null,
+    slideIdx: 0,
+    touchStartX: null,
+    touchStartY: null,
+  };
+
+  // ---------- Rendering: lesson list ----------
+  function renderLessonGrid(){
+    const grid = $('#lessonGrid');
+    grid.innerHTML = '';
+
+    for (const lesson of LESSON_INDEX){
+      const card = document.createElement('button');
+      card.className = 'lesson-card panel rounded-2xl p-5 text-left w-full';
+      card.type = 'button';
+      card.setAttribute('aria-label', lessonTitle(lesson));
+
+      const level = (lesson.level?.[lang] || lesson.level?.en || '');
+      const mins  = lesson.minutes;
+      const nSlides = slideCountMeta(lesson);
+
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="text-xs uppercase tracking-widest text-slate-500">${level} · ${mins} ${t('minutes')}</div>
+            <div class="mt-1 text-lg font-bold tracking-tight" style="color: var(--emerald-ink);">${lessonTitle(lesson)}</div>
+            <div class="mt-2 text-sm text-slate-700 leading-relaxed">${lessonDesc(lesson)}</div>
+          </div>
+          <div class="tag">${nSlides} ${t('slides')}</div>
+        </div>
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          ${(lesson.tags || []).map(x => `<span class="tag">${x}</span>`).join('')}
+        </div>
+      `;
+
+      card.addEventListener('click', () => { openLesson(lesson.id, 0, {push:true}); });
+      grid.appendChild(card);
+    }
+
+    // Resume / last lesson affordances
+    const last = loadLS('wm_learn_last', null);
+    if (last && last.lessonId && lessonById(last.lessonId)){
+      $('#btnOpenLast').classList.remove('hidden');
+      $('#btnOpenLast').textContent = t('openLast');
+      $('#btnOpenLast').onclick = () => openLesson(last.lessonId, last.slideIdx || 0, {push:true});
+
+      $('#btnResume').classList.remove('hidden');
+      $('#btnResume').textContent = t('resume');
+      $('#btnResume').onclick = () => openLesson(last.lessonId, last.slideIdx || 0, {push:true});
+    } else {
+      $('#btnOpenLast').classList.add('hidden');
+      $('#btnResume').classList.add('hidden');
+    }
+  }
+
+  // ---------- Rendering: deck ----------
+  function renderDeck(){
+    const lesson = lessonById(state.lessonId);
+    if (!lesson){
+      showHome({replace:true});
+      return;
+    }
+
+    const slides = deckForLesson(state.lessonId);
+    const n = slides.length;
+    state.slideIdx = clamp(state.slideIdx, 0, Math.max(0, n-1));
+
+    // Header
+    $('#deckTitle').textContent = lessonTitle(lesson);
+    $('#deckSubtitle').textContent = lessonDesc(lesson);
+
+    const level = (lesson.level?.[lang] || lesson.level?.en || '');
+    $('#deckMeta').textContent = `${level} · ${lesson.minutes} ${t('minutes')}`;
+
+    $('#deckProgressChip').textContent = `${Math.min(state.slideIdx + 1, Math.max(n,1))} / ${Math.max(n,1)}`;
+    const pct = n ? ((state.slideIdx + 1) / n) * 100 : 0;
+    $('#deckProgressBar').style.width = pct.toFixed(1) + '%';
+
+    // Slide
+    const slide = slides[state.slideIdx];
+    $('#slideTitle').textContent = slide?.title?.[lang] || slide?.title?.en || '';
+    $('#slideNumber').textContent = `Slide ${state.slideIdx + 1}`;
+
+    const bodyHtml = slide?.html?.[lang] || slide?.html?.en || '';
+    $('#slideBody').innerHTML = bodyHtml || `<p class="text-slate-600">${t('loading')}</p>`;
+
+    const note = slide?.note?.[lang] || slide?.note?.en || '';
+    if (note){
+      $('#slideNoteWrap').classList.remove('hidden');
+      $('#slideNote').textContent = note;
+      $('#slideNoteWrap .text-sm.font-semibold').textContent = t('note');
+    } else {
+      $('#slideNoteWrap').classList.add('hidden');
+    }
+
+    // Buttons
+    $('#btnPrev').disabled = (state.slideIdx === 0);
+    $('#btnPrev').style.opacity = (state.slideIdx === 0) ? '0.55' : '1';
+
+    const isLast = (state.slideIdx === n-1);
+    $('#btnNext').textContent = isLast ? (lang === 'cy' ? 'Gorffen ✓' : 'Finish ✓') : t('next');
+
+    // Mobile bar
+    $('#deckMobileBar').classList.remove('hidden');
+
+    // Persist
+    saveLS('wm_learn_last', {lessonId: state.lessonId, slideIdx: state.slideIdx, ts: Date.now()});
+
+    // URL
+    setParams({lesson: state.lessonId, slide: state.slideIdx + 1}, {replace:true});
+  }
+
+  function setLoadingDeckUI(){
+    const lesson = lessonById(state.lessonId);
+    $('#deckTitle').textContent = lesson ? lessonTitle(lesson) : '';
+    $('#deckSubtitle').textContent = lesson ? lessonDesc(lesson) : '';
+    $('#deckMeta').textContent = lesson ? `${lesson.level?.[lang] || lesson.level?.en || ''} · ${lesson.minutes} ${t('minutes')}` : '';
+    $('#deckProgressChip').textContent = '…';
+    $('#deckProgressBar').style.width = '0%';
+    $('#slideTitle').textContent = t('loading');
+    $('#slideNumber').textContent = '';
+    $('#slideBody').innerHTML = `<p class="text-slate-600">${t('loading')}</p>`;
+    $('#slideNoteWrap').classList.add('hidden');
+  }
+
+  // ---------- View switching ----------
+  function showHome({replace=true}={}){
+    state.view = 'home';
+    state.lessonId = null;
+    state.slideIdx = 0;
+
+    $('#learnHome').classList.remove('hidden');
+    $('#deckView').classList.add('hidden');
+    $('#deckMobileBar').classList.add('hidden');
+
+    setParams({lesson:null, slide:null}, {replace});
+    renderLessonGrid();
+  }
+
+  async function openLesson(lessonId, slideIdx=0, {push=false}={}){
+    state.view = 'deck';
+    state.lessonId = lessonId;
+    state.slideIdx = slideIdx;
+
+    $('#learnHome').classList.add('hidden');
+    $('#deckView').classList.remove('hidden');
+    $('#deckMobileBar').classList.remove('hidden');
+
+    if (push){
+      setParams({lesson: lessonId, slide: slideIdx + 1}, {replace:false});
+    }
+
+    setLoadingDeckUI();
+
+    await ensureDeckLoaded(lessonId);
+    renderDeck();
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  // ---------- Navigation helpers ----------
+  function prevSlide(){
+    if (!state.lessonId) return;
+    if (state.slideIdx > 0){
+      state.slideIdx -= 1;
+      renderDeck();
+    }
+  }
+
+  function nextSlide(){
+    if (!state.lessonId) return;
+    const slides = deckForLesson(state.lessonId);
+    if (state.slideIdx < slides.length - 1){
+      state.slideIdx += 1;
+      renderDeck();
+    } else {
+      // Finish returns to home
+      showHome({replace:false});
+    }
+  }
+
+  // ---------- Wiring ----------
+  function wireEvents(){
+    $('#btnBack').addEventListener('click', () => showHome({replace:false}));
+    $('#btnPrev').addEventListener('click', prevSlide);
+    $('#btnNext').addEventListener('click', nextSlide);
+
+    $('#mbPrev').addEventListener('click', prevSlide);
+    $('#mbNext').addEventListener('click', nextSlide);
+    $('#mbBack').addEventListener('click', () => showHome({replace:false}));
+
+    $('#btnRestart').addEventListener('click', () => { state.slideIdx = 0; renderDeck(); });
+
+    $('#btnShare').addEventListener('click', async () => {
+      try{
+        const url = new URL(location.href);
+        await navigator.clipboard.writeText(url.toString());
+        const old = $('#btnShare').textContent;
+        $('#btnShare').textContent = t('copied');
+        setTimeout(() => { $('#btnShare').textContent = old; }, 1200);
+      }catch(e){
+        alert(t('copyFail'));
+      }
+    });
+
+    $('#btnLangToggle').addEventListener('click', () => {
+      lang = (lang === 'en') ? 'cy' : 'en';
+      saveLS('wm_lang', lang);
+      updateLangUI();
+      // Re-render current view in the new language
+      if (state.view === 'home') renderLessonGrid();
+      else renderDeck();
+    });
+
+    // Keyboard navigation (deck only)
+    document.addEventListener('keydown', (e) => {
+      if (state.view !== 'deck') return;
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'Escape') { e.preventDefault(); showHome({replace:false}); }
+      if (e.key === 'Home') { e.preventDefault(); state.slideIdx = 0; renderDeck(); }
+      if (e.key === 'End') {
+        const slides = deckForLesson(state.lessonId);
+        if (slides.length){ e.preventDefault(); state.slideIdx = slides.length-1; renderDeck(); }
+      }
+    }, {passive:false});
+
+    // Swipe (deck only)
+    const slideCard = $('#slideCard');
+    slideCard.addEventListener('touchstart', (e) => {
+      if (state.view !== 'deck') return;
+      const t0 = e.touches && e.touches[0];
+      if (!t0) return;
+      state.touchStartX = t0.clientX;
+      state.touchStartY = t0.clientY;
+    }, {passive:true});
+
+    slideCard.addEventListener('touchend', (e) => {
+      if (state.view !== 'deck') return;
+      const t1 = e.changedTouches && e.changedTouches[0];
+      if (!t1 || state.touchStartX == null) return;
+      const dx = t1.clientX - state.touchStartX;
+      const dy = t1.clientY - state.touchStartY;
+      state.touchStartX = null;
+      state.touchStartY = null;
+
+      // Ignore mostly-vertical gestures.
+      if (Math.abs(dy) > Math.abs(dx)) return;
+
+      // Threshold
+      if (dx < -40) nextSlide();
+      if (dx > 40) prevSlide();
+    }, {passive:true});
+
+    // Back to top
+    $('#btnTop').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    });
+
+    // Browser navigation (back/forward)
+    window.addEventListener('popstate', () => {
+      const qLesson = getParam('lesson');
+      const qSlide = parseInt(getParam('slide') || '1', 10);
+      if (qLesson && lessonById(qLesson)) openLesson(qLesson, clamp((qSlide||1)-1, 0, 999), {push:false});
+      else showHome({replace:true});
+    });
+  }
+
+  // ---------- Boot ----------
+  async function boot(){
+    await loadLearnIndex();
+    updateLangUI();
+    wireEvents();
+
+    const qLesson = getParam('lesson');
+    const qSlide = parseInt(getParam('slide') || '1', 10);
+
+    if (qLesson && lessonById(qLesson)){
+      await openLesson(qLesson, clamp((qSlide||1)-1, 0, 999), {push:false});
+    } else {
+      showHome({replace:true});
+    }
+  }
+
+  boot();
+</script>
+</body>
+</html>
