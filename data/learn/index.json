@@ -1,13 +1,12 @@
 {
-"id": "mutation-whistlestop",
-"level": { "en": "Beginner", "cy": "Dechreuwr" },
-"minutes": 12,
-"title": { "en": "Welsh mutations: whistlestop tour", "cy": "Treigladau Cymraeg: taith chwim" },
-"desc": {
-"en": "A fast, practical overview: what mutations are, why they happen, soft mutation in real sentences, possessives, AM/NM, numbers, and the biggest traps.",
-"cy": "Trosolwg cyflym a defnyddiol: beth yw treigladau, pam maen nhw’n digwydd, treiglad meddal mewn brawddegau, meddiannau, TL/TT, rhifau, a’r trapiau mwyaf."
-},
-"tags": ["INTRO", "WHISTLESTOP", "BASICS", "SOFT", "POSSESSIVE", "AM", "NM", "NUMERALS"],
-"slideCount": 14,
-"deck": "./data/learn/mutation-whistlestop.json"
+  "lessons": [
+    {
+      "id": "mutation-whistlestop",
+      "title": { "en": "Mutation: whistlestop tour", "cy": "Treiglad: taith chwim" },
+      "desc": { "en": "A quick map of what’s going on.", "cy": "Trosolwg cyflym o’r map." },
+      "level": { "en": "Beginner", "cy": "Dechreuwr" },
+      "minutes": 10,
+      "tags": ["FOUNDATIONS", "MAP"]
+    }
+  ]
 }
