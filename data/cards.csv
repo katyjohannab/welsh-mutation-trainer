@@ -251,7 +251,6 @@ c000249,"Nasal, Contact",Possessive,fy,ci,noun-masc,Fe gollais i fy,yn y parc.,n
 c000250,"Nasal, Contact",Possessive,fy,cadair,noun-fem,Symudais fy,at y ffenest.,nghadair,NM,fy → NM: c→ngh (cadair → fy nghadair).
 c000251,"Nasal, Contact",Possessive,fy,pen,noun-masc,Dwi’n teimlo poen yn fy,heddiw.,mhen,NM,fy → NM: p→mh (pen → fy mhen).
 c000252,"Nasal, Contact",Possessive,fy,papur,noun-masc,Collais i fy,ar y trên.,mhapur,NM,fy → NM: p→mh (papur → fy mhapur).
-c000253,"Nasal, Contact",Possessive,fy,pris,noun-masc,Cododd y,llynedd—nid fy,i.,mhris,NM
 c000254,"Nasal, Contact",Possessive,fy,plant,noun-pl,Dwi’n caru fy,yn fawr.,mhlant,NM,fy → NM: p→mh (plant → fy mhlant).
 c000255,"Nasal, Contact",Possessive,fy,tad,noun-masc,Es i at fy,neithiwr.,nhad,NM,fy → NM: t→nh (tad → fy nhad).
 c000256,"Nasal, Contact",Possessive,fy,tŷ,noun-masc,Maen nhw’n paentio fy,ar hyn o bryd.,nhŷ,NM,fy → NM: t→nh (tŷ → fy nhŷ).
@@ -535,36 +534,36 @@ c000533,None,Subordinator,pe na,bai,verb (bod),Pe na ," dim ots gen ti, arhoswn 
 c000534,None,Subordinator,pe na,byddai,verb (bod),Pe na ," e’n cytuno, byddai’n anodd.",byddai,NONE,Another closed negative: pe na fyddai…. Focus is the conditional form; no mutation from pe/na. 
 c000535,None,Subordinator,pe,gallai,verb,Pe ," hi esbonio, byddai’n hawdd.",gallai,NONE,"With other verbs, pe still just marks unreality: pe gallai… ‘if … could’. No mutation from pe. "
 c000536,None,Subordinator,pe,gallen,verb,Pe ," ni dalu, byddai popeth yn iawn.",gallen,NONE,Pe + conditional plural (gallen ni ‘we could’) is common; pe doesn’t soften the verb. 
-c000537,"Prothesis, Possessive",Possessive,ei (her),ysgol,noun-fem,Mae hi’n caru ei,hi yn fawr.,hysgol,NONE,"With ei (her) before a vowel-initial noun, add h- at the start: ei hysgol hi ‘her school’. This is standard; many speakers drop it in speech. "
-c000538,"Prothesis, Possessive",Possessive,ein (our),enw,noun-masc,Beth yw ein,ni ar y rhestr?,henw,NONE,ein + vowel-initial noun takes h- in the standard language: ein henw ni ‘our name’. 
+c000537,"Prothesis, Possessive",Possessive,ei (her),ysgol,noun-fem,Mae hi’n caru ei,hi yn fawr.,hysgol,AM,"With ei (her) before a vowel-initial noun, add h- at the start: ei hysgol hi ‘her school’. This is standard; many speakers drop it in speech. "
+c000538,"Prothesis, Possessive",Possessive,ein (our),enw,noun-masc,Beth yw ein,ni ar y rhestr?,henw,AM,ein + vowel-initial noun takes h- in the standard language: ein henw ni ‘our name’. 
 c000539,"None, Possessive",Possessive,eich (your pl/formal),enw,noun-masc,Ysgrifennwch eich,chi ar frig y dudalen.,enw,NONE,Do NOT add h- after eich in the standard language: eich enw chi (not eich henw). 
-c000540,"Prothesis, Possessive",Possessive,eu (their),arian,noun-masc,Maen nhw wedi colli eu,nhw eto.,harian,NONE,eu + vowel-initial noun takes h-: eu harian nhw ‘their money’. 
-c000541,"Prothesis, Possessive",Possessive,ei (her),oedran,noun-masc,Rhowch ei,hi ar y ffurflen.,hoedran,NONE,ei (her) adds h- before a vowel-initial noun: ei hoedran hi ‘her age’. 
-c000542,"Prothesis, Possessive",Possessive,ein (our),amser,noun-masc,Rydyn ni’n gwerthfawrogi ein,ni.,hamser,NONE,ein + vowel-initial noun → h-: ein hamser ni. 
-c000543,"Prothesis, Possessive",Possessive,eu (their),enwau,noun-pl,Rhowch y rhestr gyda’u,nhw isod.,henwau,NONE,eu + vowel-initial noun → h-: eu henwau nhw ‘their names’. 
-c000544,"None, Possessive",Possessive,eich (your pl/formal),ysgol,noun-fem,Ble mae eich,chi heddiw?,ysgol,NONE,No h- after eich: eich ysgol chi (standard). 
-c000545,"Prothesis, Possessive",Possessive,ei (her),addysg,noun-fem,Mae hi’n parhau ei,hi yn y brifysgol.,haddysg,NONE,ei (her) + vowel-initial noun → h-: ei haddysg hi ‘her education’. 
+c000540,"Prothesis, Possessive",Possessive,eu (their),arian,noun-masc,Maen nhw wedi colli eu,nhw eto.,harian,AM,eu + vowel-initial noun takes h-: eu harian nhw ‘their money’. 
+c000541,"Prothesis, Possessive",Possessive,ei (her),oedran,noun-masc,Rhowch ei,hi ar y ffurflen.,hoedran,AM,ei (her) adds h- before a vowel-initial noun: ei hoedran hi ‘her age’. 
+c000542,"Prothesis, Possessive",Possessive,ein (our),amser,noun-masc,Rydyn ni’n gwerthfawrogi ein,ni.,hamser,AM,ein + vowel-initial noun → h-: ein hamser ni. 
+c000543,"Prothesis, Possessive",Possessive,eu (their),enwau,noun-pl,Rhowch y rhestr gyda’u,nhw isod.,henwau,AM,eu + vowel-initial noun → h-: eu henwau nhw ‘their names’. 
+c000544,"None, Possessive",Possessive,eich (your pl/formal),ysgol,noun-fem,Ble mae eich,chi heddiw?,ysgol,None,No h- after eich: eich ysgol chi (standard). 
+c000545,"Prothesis, Possessive",Possessive,ei (her),addysg,noun-fem,Mae hi’n parhau ei,hi yn y brifysgol.,haddysg,AM,ei (her) + vowel-initial noun → h-: ei haddysg hi ‘her education’. 
 c000546,"Aspirate, Contact",Possessive,ei (her),car,noun-masc,Bu damwain i ei,hi ddoe.,char,AM,ei (her) causes Aspirate Mutation on c/p/t (c→ch): car→char. No h- because the word starts with a consonant. 
 c000547,"Aspirate, Contact",Possessive,ei (her),tŷ,noun-masc,Prynodd hi ei,hi llynedd.,thŷ,AM,ei (her) aspirates t→th: tŷ→thŷ. 
 c000548,"Aspirate, Contact",Possessive,ei (her),papur,noun-masc,Gwelais i ei,hi ar y bwrdd.,phapur,AM,ei (her) aspirates p→ph: papur→phapur. 
 c000549,"None, Possessive",Possessive,ei (his),enw,noun-masc,Beth yw ei,e?,enw,NONE,"ei (his) gives Soft Mutation on consonants, but with a vowel-initial noun there’s no change—and no h-: ei enw e. "
-c000550,"Prothesis, Possessive",Possessive,ar ei … hi (compound prep + poss.),ôl,noun-masc,Cerddodd pawb ar ei,hi.,hôl,NONE,With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. 
-c000551,"Prothesis, Possessive",Possessive,wrth ein … ni (compound prep + poss.),ymyl,noun-masc,Roedden nhw wrth ein,ni trwy’r cyfarfod.,hymyl,NONE,ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. 
-c000552,"Prothesis, Possessive",Possessive,ei (her),ysgol,noun-fem,Mae hi’n caru ei,hi yn fawr.,hysgol,NONE,"With ei (her) before a vowel-initial noun, add h- at the start: ei hysgol hi ‘her school’. This is standard; many speakers drop it in speech. "
-c000553,"Prothesis, Possessive",Possessive,ein (our),enw,noun-masc,Beth yw ein,ni ar y rhestr?,henw,NONE,ein + vowel-initial noun takes h- in the standard language: ein henw ni ‘our name’. 
+c000550,"Prothesis, Possessive",Possessive,ar ei … hi (compound prep + poss.),ôl,noun-masc,Cerddodd pawb ar ei,hi.,hôl,AM,With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. 
+c000551,"Prothesis, Possessive",Possessive,wrth ein … ni (compound prep + poss.),ymyl,noun-masc,Roedden nhw wrth ein,ni trwy’r cyfarfod.,hymyl,AM,ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. 
+c000552,"Prothesis, Possessive",Possessive,ei (her),ysgol,noun-fem,Mae hi’n caru ei,hi yn fawr.,hysgol,AM,"With ei (her) before a vowel-initial noun, add h- at the start: ei hysgol hi ‘her school’. This is standard; many speakers drop it in speech. "
+c000553,"Prothesis, Possessive",Possessive,ein (our),enw,noun-masc,Beth yw ein,ni ar y rhestr?,henw,AM,ein + vowel-initial noun takes h- in the standard language: ein henw ni ‘our name’. 
 c000554,"None, Possessive",Possessive,eich (your pl/formal),enw,noun-masc,Ysgrifennwch eich,chi ar frig y dudalen.,enw,NONE,Do NOT add h- after eich in the standard language: eich enw chi (not eich henw). 
-c000555,"Prothesis, Possessive",Possessive,eu (their),arian,noun-masc,Maen nhw wedi colli eu,nhw eto.,harian,NONE,eu + vowel-initial noun takes h-: eu harian nhw ‘their money’. 
-c000556,"Prothesis, Possessive",Possessive,ei (her),oedran,noun-masc,Rhowch ei,hi ar y ffurflen.,hoedran,NONE,ei (her) adds h- before a vowel-initial noun: ei hoedran hi ‘her age’. 
-c000557,"Prothesis, Possessive",Possessive,ein (our),amser,noun-masc,Rydyn ni’n gwerthfawrogi ein,ni.,hamser,NONE,ein + vowel-initial noun → h-: ein hamser ni. 
-c000558,"Prothesis, Possessive",Possessive,eu (their),enwau,noun-pl,Rhowch y rhestr gyda’u,nhw isod.,henwau,NONE,eu + vowel-initial noun → h-: eu henwau nhw ‘their names’. 
+c000555,"Prothesis, Possessive",Possessive,eu (their),arian,noun-masc,Maen nhw wedi colli eu,nhw eto.,harian,AM,eu + vowel-initial noun takes h-: eu harian nhw ‘their money’. 
+c000556,"Prothesis, Possessive",Possessive,ei (her),oedran,noun-masc,Rhowch ei,hi ar y ffurflen.,hoedran,AM,ei (her) adds h- before a vowel-initial noun: ei hoedran hi ‘her age’. 
+c000557,"Prothesis, Possessive",Possessive,ein (our),amser,noun-masc,Rydyn ni’n gwerthfawrogi ein,ni.,hamser,AM,ein + vowel-initial noun → h-: ein hamser ni. 
+c000558,"Prothesis, Possessive",Possessive,eu (their),enwau,noun-pl,Rhowch y rhestr gyda’u,nhw isod.,henwau,AM,eu + vowel-initial noun → h-: eu henwau nhw ‘their names’. 
 c000559,"None, Possessive",Possessive,eich (your pl/formal),ysgol,noun-fem,Ble mae eich,chi heddiw?,ysgol,NONE,No h- after eich: eich ysgol chi (standard). 
-c000560,"Prothesis, Possessive",Possessive,ei (her),addysg,noun-fem,Mae hi’n parhau ei,hi yn y brifysgol.,haddysg,NONE,ei (her) + vowel-initial noun → h-: ei haddysg hi ‘her education’. 
+c000560,"Prothesis, Possessive",Possessive,ei (her),addysg,noun-fem,Mae hi’n parhau ei,hi yn y brifysgol.,haddysg,AM,ei (her) + vowel-initial noun → h-: ei haddysg hi ‘her education’. 
 c000561,"Aspirate, Contact",Possessive,ei (her),car,noun-masc,Bu damwain i ei,hi ddoe.,char,AM,ei (her) causes Aspirate Mutation on c/p/t (c→ch): car→char. No h- because the word starts with a consonant. 
 c000562,"Aspirate, Contact",Possessive,ei (her),tŷ,noun-masc,Prynodd hi ei,hi llynedd.,thŷ,AM,ei (her) aspirates t→th: tŷ→thŷ. 
 c000563,"Aspirate, Contact",Possessive,ei (her),papur,noun-masc,Gwelais i ei,hi ar y bwrdd.,phapur,AM,ei (her) aspirates p→ph: papur→phapur. 
 c000564,"None, Possessive",Possessive,ei (his),enw,noun-masc,Beth yw ei,e?,enw,NONE,"ei (his) gives Soft Mutation on consonants, but with a vowel-initial noun there’s no change—and no h-: ei enw e. "
-c000565,"Prothesis, Possessive",Possessive,ar ei … hi (compound prep + poss.),ôl,noun-masc,Cerddodd pawb ar ei,hi.,hôl,NONE,With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. 
-c000566,"Prothesis, Possessive",Possessive,wrth ein … ni (compound prep + poss.),ymyl,noun-masc,Roedden nhw wrth ein,ni trwy’r cyfarfod.,hymyl,NONE,ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. 
+c000565,"Prothesis, Possessive",Possessive,ar ei … hi (compound prep + poss.),ôl,noun-masc,Cerddodd pawb ar ei,hi.,hôl,AM,With compound prepositions the second element takes a possessive; 3sgf can add h- before a vowel: ar ei hôl hi ‘after her’. 
+c000566,"Prothesis, Possessive",Possessive,wrth ein … ni (compound prep + poss.),ymyl,noun-masc,Roedden nhw wrth ein,ni trwy’r cyfarfod.,hymyl,AM,ein before a vowel-initial second element can add h-: wrth ein hymyl ni ‘beside us’. 
 c000567,"Soft, Contact",TimeExpressions,nos,Mawrth,day,Wela i chdi Nos ,", ta?",Fawrth,SM,"Nos + day-name means 'on [day] night'. After nos the day soft-mutates where possible: m→f, so Mawrth→Fawrth. This is a listed contact trigger and is shown in examples. "
 c000568,"Soft, Contact",TimeExpressions,nos,Mawrth,day,Mae'r dosbarth ar Nos , am chwech.,Fawrth,SM,After nos the day takes SM where possible (m→f): Mawrth→Fawrth. High-frequency pattern for naming nights. 
 c000569,"Soft, Contact",TimeExpressions,nos,Mercher,day,Mae cyfarfod pwyllgor Nos , bob wythnos.,Fercher,SM,Nos triggers Soft Mutation on the day name; m→f gives Mercher→Fercher. 
@@ -1009,6 +1008,7 @@ c001007,"Soft, Contact",Intensifier,mor,da,adj,Mae e mor,.,dda,SM,Mor makes the 
 c001008,"Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 c001009,"Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 c001010,"Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
