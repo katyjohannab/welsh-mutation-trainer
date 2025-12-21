@@ -1,0 +1,773 @@
+
+    html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /*Fonts Styling*/
+    .bbh-bogle-regular {
+      font-family: "BBH Bogle", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .bbh-hegarty-regular {
+      font-family: "BBH Hegarty", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .merriweather-title {
+      font-family: "Merriweather", serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: italic;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    .inter-body {
+      font-family: "Inter", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .roboto-body {
+      font-family: "Roboto", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings:
+        "wdth" 100;
+    }
+
+    /* -------------------------
+       Theme
+    ------------------------- */
+    :root {
+      /* primary button gradient (emerald) */
+      --primary-from: #0b7a5a; /* lighter title-green */
+      --primary-mid:  #065f46; /* title-green mid */
+      --primary-to:   #064e3b; /* title ink */
+
+      /* page */
+      --page: #fbfbf7;                 /* warm paper */
+      --page-tint: rgba(6,95,70,0.04); /* faint green wash */
+
+      /* surfaces */
+      --surface: rgba(255,255,255,0.94);
+      --border: rgba(15,23,42,0.10);
+      --shadow: 0 12px 30px rgba(15,23,42,0.06);
+
+      /* text */
+      --text: #0f172a;
+      --muted: #475569;
+
+      /* accents */
+      --emerald-ink: #064e3b;
+      --gold: #d97706;
+      --cymru-red: #b91c1c;      /* red-700 */
+      --cymru-red-ink: #991b1b;  /* red-800 */
+
+      /* chips */
+      --chip-bg: rgba(4,120,87,0.10);
+      --chip-bd: rgba(4,120,87,0.22);
+      --chip-fg: #065f46;
+
+      --focus: rgba(4,120,87,0.35);
+    }
+
+    body{
+      background: var(--page);
+      background-image:
+        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.03), transparent 55%),
+        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.02), transparent 60%);
+      color: var(--text);
+    }
+
+    /* Glass panel used for cards, filters and stats */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    /* red gradient bar under header */
+    .cymru-red-bar{
+      height: 3px;
+      /* Tie the brand together: emerald → Cymru red */
+      background: linear-gradient(to right,
+        transparent 0%,
+        rgba(4,120,87,0.20) 12%,
+        rgba(4,120,87,0.92) 28%,
+        rgba(4,120,87,1.00) 40%,
+        rgba(185,28,28,1.00) 60%,
+        rgba(185,28,28,0.92) 72%,
+        rgba(185,28,28,0.20) 88%,
+        transparent 100%
+      );
+    }
+
+    /* Brand lockup (icon + title) */
+    .brand-lockup{
+      display:flex;
+      align-items:center;
+      gap:.65rem;
+      min-width:0;
+    }
+
+    /* Title colours + dot separator (green → red) */
+    .brand-title{
+      display:flex;
+      align-items:center;
+      gap:0;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .title-hy{ color: var(--emerald-ink); }
+    .title-trei{ color: var(--cymru-red-ink); margin-left: .06em; }
+    .cymru-dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--cymru-red-ink);
+      margin: 0 .55rem;
+      flex: 0 0 auto;
+      display: inline-block;
+      align-self: center;
+    }
+    @media (min-width: 768px){
+      .cymru-dot{ width: 9px; height: 9px; margin: 0 .65rem; }
+    }
+
+    .brand-dragon{
+      width: 34px;
+      height: 34px;
+      display:block;
+      flex: 0 0 auto;
+      background: transparent;
+      border: 0;
+      filter: drop-shadow(0 10px 18px rgba(2,6,23,0.10));
+      transform: translateY(-1px);
+    }
+    @media (min-width: 768px){
+      .brand-dragon{ width: 44px; height: 44px; }
+      .cymru-dot{
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--cymru-red-ink);
+      box-shadow: 0 0 0 4px rgba(153,27,27,0.10);
+      flex: 0 0 auto;
+      align-self: center;
+    }
+    }
+
+@keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
+    .animate-pop{animation:pop .18s ease-out both}
+
+    .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      border-radius:999px;
+      padding:6px 12px;
+      font-size:11.5px;
+      font-weight:750;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      border:1px solid rgba(217,119,6,0.28);
+      background:rgba(217,119,6,0.08);
+      color:rgba(15,23,42,0.86);
+      box-shadow:0 1px 2px rgba(0,0,0,.04);
+      cursor:default;
+    }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* Button styles */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.5rem;
+      padding:.55rem .95rem;
+      border-radius:999px;
+      border:1px solid transparent;
+      font-weight:600;
+      line-height:1;
+      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+
+    .btn-primary{
+      color:#fff;
+      font-weight:600;
+      /* Gradient colours for the primary actions */
+      background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+      /* Provide extra space for a subtle motion effect on hover */
+      background-size: 220% 220%;
+      background-position: 0% 50%;
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      overflow:hidden;
+      box-shadow: 0 10px 20px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
+    }
+    .btn-primary:hover{
+      transform: translateY(-1px);
+      filter: saturate(1.06) brightness(1.02);
+      box-shadow:0 14px 28px rgba(2,6,23,.16);
+      /* Shift the background to reveal a new portion of the gradient */
+      background-position: 100% 50%;
+    }
+    .btn-primary::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+      pointer-events:none;
+    }
+    .btn-primary:hover::after{ transform: translateX(120%); }
+
+    .btn-ghost{
+      background:rgba(255,255,255,.76);
+      border:1px solid var(--border);
+      color:#0f172a;
+      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
+    }
+    .btn-ghost:hover{
+      background:rgba(255,255,255,.94);
+      border-color: rgba(185,28,28,0.22); /* sparing Cymru red echo */
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(2,6,23,0.08);
+    }
+
+    /* Custom style for the audio playback button.   */
+    .btn-hear{
+      display:inline-flex;
+      align-items:center;
+      gap:0.35rem;
+      background: rgba(217,119,6,0.10);
+      border: 1px solid rgba(217,119,6,0.32);
+      color: var(--emerald-ink);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 0.28rem 0.6rem;
+      text-transform: uppercase;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.875rem; 
+      line-height: 1;
+      transition: transform .06s ease, background .12s ease, box-shadow .12s ease;
+      cursor: pointer;
+    }
+    .btn-hear .icon{
+      font-size: 1rem; /* slightly larger icon */
+      line-height: 1;
+    }
+    .btn-hear:hover{
+      background: rgba(217,119,6,0.20);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(2,6,23,0.08);
+    }
+
+    /* Container styling for revealed feedback. 
+       correctness message, completed sentence, answer details and the
+       audio button.   */
+    .feedback-box{
+      background: rgba(4,120,87,0.05);
+      border: 1px solid rgba(4,120,87,0.20);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Toggle pill used in filter selectors */
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      border-radius:999px;
+      padding:.32rem .62rem;
+      font-weight:650;
+      font-size:10.5px;
+      border:1px solid rgba(148,163,184,.28);
+      background:rgba(255,255,255,.82);
+      cursor:pointer;
+    }
+    .pill-on{
+      background:rgba(4,120,87,.12);
+      border-color:rgba(4,120,87,.26);
+      box-shadow: inset 0 0 0 1px rgba(217,119,6,0.14);
+    }
+
+    /* --------- Theme overrides for Tailwind utilities used in JS output ---------
+    */
+    .bg-indigo-100{ background-color: rgba(4,120,87,0.12) !important; }
+    .ring-indigo-300{ --tw-ring-color: rgba(4,120,87,0.30) !important; }
+    .text-indigo-900{ color: var(--emerald-ink) !important; }
+
+    .bg-indigo-50{ background-color: rgba(16,185,129,0.10) !important; }
+    .ring-indigo-200{ --tw-ring-color: rgba(16,185,129,0.25) !important; }
+
+    .bg-rose-50{ background-color: rgba(185,28,28,0.06) !important; }
+    .ring-rose-200{ --tw-ring-color: rgba(185,28,28,0.22) !important; }
+    .text-rose-900{ color: rgba(127,29,29,0.95) !important; }
+
+    .decoration-indigo-400{ text-decoration-color: rgba(4,120,87,0.55) !important; }
+
+    /* Make the base word a touch bigger (JS outputs it inside the emerald capsule) */
+    #practiceCard .bg-indigo-100 span{
+      font-size: clamp(2.55rem, 4.6vw, 3.55rem) !important;
+      letter-spacing: -0.02em;
+    }
+
+
+
+/* Answer box: light gold background with darker gold border; flex to allow wrapping */
+    #answerBox{
+      background: rgba(217,119,6,0.08) !important;
+      /* darker gold border for definition */
+      border-color: rgba(217,119,6,0.45) !important;
+      width: clamp(10rem, 22vw, 16rem) !important;
+      flex: 0 1 clamp(10rem, 22vw, 16rem) !important;
+      flex-shrink: 1 !important;
+      line-height: 1.15;
+    }
+    #answerBox::placeholder{ color: rgba(100,116,139,0.85); }
+    #answerBox:focus{
+      border-color: rgba(4,120,87,0.72) !important;
+      box-shadow: 0 0 0 4px rgba(4,120,87,0.12) !important;
+    }
+
+
+    /* Header: clean, lightly glassy */
+    #siteHeader{
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Slightly tighter subtitle colour */
+    .subtle{ color: var(--muted); }
+
+    /* -------------------------
+       2025-12 tweaks: make Practice card feel centred + stronger Cymru palette
+ 
+    ------------------------- */
+
+    /* Reduce gold in the page wash*/
+    body{
+      background-image:
+        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%),
+        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.015), transparent 55%);
+    }
+
+    /* Centre the practice content within the big left panel so it doesn't feel "lost" */
+    #practiceCard > div{
+      max-width: 46rem;
+      margin-inline: auto;
+    }
+
+    /* Card counter(tiny caps + tracking) */
+    #practiceCard .text-slate-500.text-xs.mb-2{
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    /* Base word capsule: centred focal point */
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      display: flex !important;
+      width: fit-content;
+      margin: 0 auto;
+      box-shadow:
+        0 12px 26px rgba(2,6,23,0.08),
+        inset 0 -2px 0 rgba(185,28,28,0.20);
+    }
+
+    /* Keep sentence alignment feeling "text-like" */
+    #practiceCard .mt-2 > .flex.items-baseline{
+      align-items: baseline !important;
+    }
+
+
+
+
+
+    /* Active filter chips: red-tinted (echo the red bar) while staying subtle */
+    .chip{
+      background: rgba(185,28,28,0.055) !important;
+      border-color: rgba(185,28,28,0.20) !important;
+      color: rgba(15,23,42,0.88) !important;
+    }
+
+    /* Make the final "Clear" chip your main gold accent */
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
+      background: rgba(217,119,6,0.085) !important;
+      border-color: rgba(217,119,6,0.30) !important;
+    }
+
+    /* remove the gold-ish inner stroke from active filter pills */
+    .pill-on{
+      box-shadow: none !important;
+    }
+
+    /* -------------------------
+       Polish pass: alignment + hover
+  
+    ------------------------- */
+
+    /* Base word capsule: true visual centring + calmer shadow */
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      align-items:center !important;
+      justify-content:center !important;
+      padding-top: .9rem !important;
+      padding-bottom: .9rem !important;
+      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
+    }
+    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
+      line-height: 1 !important;
+      display: block !important;
+      transform: translateY(0px);
+    }
+
+    /* Sentence → actions: give the controls a clear "breath", a subtle red divider,
+       and ensure controls align to the left */
+    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
+      margin-top: 1.55rem !important;
+      padding-top: 1.05rem !important;
+      gap: 1rem !important;
+      border-top: 1px solid rgba(185,28,28,0.14);
+      justify-content: flex-start !important;
+    }
+
+    /* Chips: keep active filters subtly red-tinted, but make CLEAR green */
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip{ cursor: default; }
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
+      cursor: pointer;
+      background: rgba(4,120,87,0.10) !important;
+      border-color: rgba(4,120,87,0.28) !important;
+      color: rgba(6,78,59,0.95) !important;
+    }
+    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+      filter: saturate(1.02) brightness(1.01);
+    }
+
+    /* Filter pills: add hover so they feel interactive */
+    .pill{
+      transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .pill:hover{
+      background: rgba(255,255,255,0.96);
+      border-color: rgba(4,120,87,0.24);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+    }
+    .pill:active{
+      transform: translateY(0px);
+      box-shadow: 0 6px 12px rgba(2,6,23,0.05);
+    }
+    .pill-on:hover{
+      background: rgba(4,120,87,0.15);
+      border-color: rgba(4,120,87,0.34);
+    }
+
+  
+
+    /* -------------------------
+       Layout tightening
+       - Stop grid rows stretching panels to 1fr heights
+       - Keep Filters (row 1) and Session (row 2) stable
+    ------------------------- */
+    @media (min-width: 768px){
+      #practiceView{
+        grid-template-rows: auto auto !important;
+        align-items: start !important;
+      }
+      #filtersPanel{
+        grid-row: 1 / 2 !important;
+        align-self: start !important;
+      }
+      #practiceView > aside{
+        grid-row: 2 / 3 !important;
+        align-self: start !important;
+        height: fit-content;
+      }
+      /* Left practice panel */
+      #practiceView > div:nth-child(1){
+        align-self: start !important;
+      }
+    }
+
+
+    /* Keep the content column a sensible width, but don't centre the text itself */
+    #practiceCard > div{
+      max-width: 46rem;
+      margin-inline: auto;
+    }
+
+    /* Copy should read like copy: left aligned */
+    #practiceCard .practice-instruction{
+      text-align: left;
+      text-wrap: pretty;
+    }
+
+    /* Base word capsule: centred focal point + calmer shadow */
+    #practiceCard .practice-base{
+      display:flex;
+      justify-content:center;
+      margin: .35rem 0 1.65rem;
+    }
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: .95rem 1.25rem !important;
+      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
+    }
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
+      line-height: 1 !important;
+      display:block;
+    }
+
+    /* Sentence line: keep it left aligned, but with a bit more air under the base word */
+    #practiceCard .practice-sentence{
+      margin-top: .25rem;
+    }
+
+    /* Buttons: clear separation + consistent spacing */
+    #practiceCard .practice-actions{
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(185,28,28,0.14);
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+
+    /* Remove any lingering centring from older CSS experiments */
+    #practiceCard > div > div.text-lg.md\:text-xl.text-slate-700{ text-align:left !important; }
+    #practiceCard > div > div.mt-2 > div.flex{ justify-content:flex-start !important; text-align:left !important; }
+
+
+
+    /* Header nav buttons: slightly lighter weight + clearer gradient hero */
+    #siteHeader .btn{ font-weight: 600; }
+
+    /* --- Header nav buttons: make Practice the hero, Stats/Filters secondary (red) --- */
+    #btnStats, #btnFilters{
+      padding: .5rem .9rem;
+      border-radius: 999px;
+      font-weight: 600;
+      background: rgba(185,28,28,0.08);
+      border-color: rgba(185,28,28,0.24);
+      color: rgba(127,29,29,0.96);
+    }
+    #btnStats:hover, #btnFilters:hover{
+      background: linear-gradient(to right, rgba(185,28,28,0.96), rgba(153,27,27,0.96));
+      border-color: rgba(185,28,28,0.55);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(2,6,23,0.14);
+    }
+
+    /* --- Filters: hide redundant Outcome column --- */
+    #outcomeCol{ display:none; }
+    #familyCol{ grid-column: 1 / -1; }
+
+    /* --- Filters panel: stop it forcing huge page height on desktop --- */
+    @media (min-width: 768px){
+      #filtersPanel{
+        max-height: calc(100vh - 190px);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      #filtersPanel::-webkit-scrollbar{ width: 10px; }
+      #filtersPanel::-webkit-scrollbar-thumb{
+        background: rgba(15,23,42,0.12);
+        border-radius: 999px;
+        border: 3px solid rgba(255,255,255,0.70);
+      }
+    }
+
+    /* --- Practice sentence line: centre it --- */
+    #practiceCard .practice-sentenceLine{ align-items: center !important; }
+
+    /* Slightly tighter right panels (reduce dead space) */
+    #sessionPanel{ padding-bottom: 1.05rem !important; }
+
+    /* Ribbon: match the exact inks used in the title */
+    .cymru-red-bar{
+      background: linear-gradient(90deg,
+        rgba(6,78,59,0) 0%,
+        rgba(6,78,59,1) 30%,
+        rgba(153,27,27,1) 70%,
+        rgba(153,27,27,0) 100%
+      ) !important;
+    }
+
+    /* Instruction reads like copy, not a banner */
+    #practiceCard .practice-instruction{
+      max-width: 42rem;
+      margin-bottom: 1.15rem !important;
+    }
+
+    /* Base word: centred on mobile, aligned on desktop */
+    #practiceCard .practice-base{
+      justify-content: center;
+      margin: .8rem 0 2.35rem !important;
+    }
+    @media (min-width: 768px){
+      #practiceCard .practice-base{ justify-content: flex-start; }
+    }
+
+    /* Base capsule: calm shadow, no weird baseline wobble */
+    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+      box-shadow: 0 5px 12px rgba(2,6,23,0.06) !important;
+    }
+
+    /* Actions row: gradient divider instead of a plain rule */
+    #practiceCard .practice-actions{
+      position: relative;
+      border-top: 0 !important;
+      padding-top: 1.05rem !important;
+      margin-top: 1.35rem !important;
+    }
+    #practiceCard .practice-actions::before{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+        rgba(6,78,59,0.24),
+        rgba(153,27,27,0.24)
+      );
+    }
+
+    /* Buttons: centred on mobile feels intentional, left on desktop */
+    #practiceCard .practice-actions{ justify-content: center; }
+    @media (min-width: 768px){
+      #practiceCard .practice-actions{ justify-content: flex-start; }
+    }
+
+
+
+    /* --- Brand dot: tighter spacing + vertical centring (dot replaces the word-space) --- */
+    .cymru-dot{
+      width: 8px !important;
+      height: 8px !important;
+      margin: 0 .18rem !important; /* much tighter than before */
+      background: var(--cymru-red-ink) !important; /* must match Treiglad */
+      box-shadow: none !important;
+      transform: translateY(-0.06em);
+    }
+    @media (min-width: 768px){
+      .cymru-dot{
+        width: 9px !important;
+        height: 9px !important;
+        margin: 0 .22rem !important;
+      }
+    }
+
+
+
+    /* =========================
+       2025-12-17 polish tweaks
+       - Cleaner Cymru ribbon (no muddy mid-colour)
+       - More obvious (but on-brand) green gradient on primary buttons
+       - Tighter practice action buttons spacing
+       ========================= */
+
+    /* Removed duplicate :root primary colour overrides */
+
+    /* Removed duplicate ribbon, title and primary button overrides to simplify CSS */
+
+    /* Header nav: slightly lighter weight on secondary buttons */
+    #btnStats, #btnFilters{ font-weight: 500 !important; }
+
+    /* Filter pills: a touch smaller/tighter */
+    .pill{
+      padding: .28rem .56rem !important;
+      font-size: 10px !important;
+    }
+
+    /* Practice actions row: reduce spacing + pull it slightly closer to the sentence */
+    #practiceCard .practice-actions{
+      margin-top: 1.05rem !important;
+      padding-top: .75rem !important;
+      gap: .65rem !important;
+    }
+    #practiceCard .practice-actions .btn{
+      padding: .5rem .85rem !important;
+    }
+
+    /* Base word capsule: left-align (always) */
+    #practiceCard .practice-base{
+      justify-content: flex-start !important;
+    }
+
+
+    /* Language toggle button (small, separated from main nav) */
+    .btn-lang{
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      background: rgba(217,119,6,0.10);
+      border: 1px solid rgba(217,119,6,0.32);
+      color: rgba(15,23,42,0.92);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.78rem;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-lang:hover{
+      background: rgba(217,119,6,0.20);
+      border-color: rgba(217,119,6,0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(2,6,23,0.08);
+    }
+    .btn-lang:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+
+    .langtag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 2.2rem;
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.55);
+      background: rgba(255,255,255,0.75);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: rgba(15,23,42,0.78);
+      flex: 0 0 auto;
+    }
+    details.practice-help summary::-webkit-details-marker{ display:none; }
+    details.practice-help summary{ list-style:none; }
+    details.practice-help summary::after{
+      content: '▾';
+      float: right;
+      opacity: 0.55;
+    }
+    details.practice-help[open] summary::after{ content: '▴'; }
+
