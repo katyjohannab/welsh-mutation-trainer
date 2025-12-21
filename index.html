@@ -73,7 +73,7 @@
           <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
           <ol class="list-decimal ml-5 leading-relaxed">
             <!-- Added explicit explanation of practice modes. Users can choose Random (random order) or Smart (adaptive Leitner) before practising. -->
-            <li>Select a practice mode: <b>Random review</b> shows cards in a random order; <b>Smart review</b> adapts to your mistakes using a spaced‑repetition system. Use the toggle at the top of the card to switch modes.</li>
+            <li>Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle the deck at any time. <b>Smart review</b> adapts to your progress using a spaced‑repetition (Leitner) system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at the top of the card to switch modes.</li>
             <li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
             <li>Read the sentence and type the correct form in the box.</li>
             <li>Press <b>Check</b> to mark your answer.</li>
@@ -379,6 +379,10 @@
     freezeIdx: null,
     freezePos: null
   };
+  // Persist whether the user has dismissed the practice modes help box.  This prevents it
+  // from appearing again until localStorage is cleared.
+  const HELP_DISMISSED_KEY = 'wm_help_dismissed_v1';
+  state.helpDismissed = loadLS(HELP_DISMISSED_KEY, false);
   // Track the UI language (default to English); persisted via localStorage
   state.lang = loadLS('wm_lang', 'en');
 
@@ -387,6 +391,7 @@
   const LABEL = {
     en: {
       nav: {
+        Learn: 'Learn',
         Practice: 'Practice',
         Browse: 'Browse',
         Stats: 'Stats',
@@ -439,6 +444,11 @@
       skip: 'Skip',
       check: 'Check',
       next: 'Next',
+      // Descriptive tooltips for practice modes
+      shuffleModeDesc: 'Random review: cards appear in a truly random order.',
+      smartModeDesc: 'Smart review: adapts to your progress and focuses on mistakes, repeating those cards more often.',
+      // Tooltip description for the shuffle action
+      shuffleNowDesc: 'Reshuffle the current deck (useful if you are seeing the same cards repeatedly).',
       // Updated labels to clearly distinguish practice mode and shuffle action
       shuffleNow: 'Shuffle cards',
       shuffleModeLabel: 'Random review',
@@ -450,8 +460,8 @@
       poolLabel: 'Pool',
       howItWorksTitle: 'Practice modes',
       // Updated descriptions: single language versions used per locale
-      howItWorksEN: 'There are two practice modes. Random review shows cards in a random order. Smart review adapts to your progress using a Leitner system: correct answers promote cards to be shown less often; wrong or skipped answers reset them to box 1 so they reappear sooner.',
-      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae atebion cywir yn symud cardiau i fyny fel eu bod yn ymddangos yn llai aml; mae atebion anghywir neu wedi’u hepgor yn eu hailosod i flwch 1 fel eu bod yn ymddangos yn fuanach.',
+      howItWorksEN: 'Practice has two modes. In Random review cards appear in a truly random order – you can reshuffle the deck at any time. In Smart review the trainer adapts to you using a spaced‑repetition (Leitner) system: correct answers move cards up and they appear less often; wrong or skipped answers reset them to box 1 so they reappear sooner.',
+      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap – gallwch ailgymysgu’r dec unrhyw bryd. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae cardiau rydych yn eu hateb yn gywir yn symud i fyny ac yn ymddangos yn llai aml; mae cardiau anghywir neu wedi’u hepgor yn cael eu hailosod i flwch 1 fel eich bod yn eu gweld eto cyn bo hir.',
 
       answerLabel: 'Answer',
       triggerLabel: 'Trigger',
@@ -520,6 +530,11 @@
       skip: 'Hepgor',
       check: 'Gwirio',
       next: 'Nesaf',
+      // Disgrifiadau cryno ar gyfer moddau ymarfer (ar gyfer hoff fanylion)
+      shuffleModeDesc: 'Adolygu ar hap: mae cardiau’n ymddangos mewn trefn wirioneddol ar hap.',
+      smartModeDesc: 'Adolygu clyfar: addasu i’ch cynnydd a phwysleisio camgymeriadau; mae’n ailadrodd cardiau anghywir yn amlach.',
+      // Disgrifiad ar gyfer ailgymysgu’r dec
+      shuffleNowDesc: 'Ailgymysgu’r dec presennol (yn ddefnyddiol os ydych chi’n gweld yr un cardiau dro ar ôl tro).',
       shuffleNow: 'Cymysgu cardiau',
       shuffleModeLabel: 'Adolygu ar hap',
       smartModeLabel: 'Adolygu clyfar',
@@ -560,6 +575,10 @@
     if ($('#btnPractice')) {
       $('#btnPractice').setAttribute('title', navLabels.Practice);
       $('#btnPractice').textContent = navLabels.Practice;
+    }
+    if ($('#btnLearn')) {
+      $('#btnLearn').setAttribute('title', navLabels.Learn);
+      $('#btnLearn').textContent = navLabels.Learn;
     }
     if ($('#btnBrowse')) {
       $('#btnBrowse').setAttribute('title', navLabels.Browse);
@@ -612,6 +631,9 @@
   }
 
   // ---------- Data loading ----------
+// Loads ONLY the sources listed in data/index.json (e.g. ["data/cards.csv"]).
+// In GitHub Pages this works via relative paths. In canvas preview, relative fetches may not resolve,
+// so we also try your live URLs as a fallback (NOT a demo dataset).
 
 const FALLBACK_INDEX_URL = 'https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json';
 const FALLBACK_SITE_ROOT = 'https://katyjohannab.github.io/welsh-mutation-trainer/';
@@ -649,11 +671,11 @@ async function loadAllDefault(){
   let list = null;
   let usingFallbackRoot = false;
 
-  // Try local relative first
+  // Try local relative first (works on your deployed site)
   try{
     list = await fetchIndexList('data/index.json');
   }catch(e){
-  
+    // Canvas preview often needs absolute
     try{
       list = await fetchIndexList(FALLBACK_INDEX_URL);
       usingFallbackRoot = true;
@@ -841,8 +863,10 @@ function buildCompleteSentence(card) {
   return s;
 }
 
-// ---------- TTS (Amazon Polly via Lambda-
-
+// ---------- TTS (Amazon Polly via your Lambda Function URL) ----------
+// PUT YOUR REAL FUNCTION URL HERE:
+// The user has provided their deployed Amazon Polly Lambda function URL.
+// Use this value to call the TTS service.
 const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
 
 // Cache MP3 blobs in-memory so repeated clicks don't keep calling AWS
@@ -996,8 +1020,16 @@ async function playPollySentence(sentence) {
       const b = document.createElement('button');
       b.type = 'button';
       const on = state.practiceMode === value;
-      b.className = `px-3 py-1.5 text-[12px] font-semibold ${on ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`;
+      // Use the global button style for consistent rounded appearance
+      b.className = `btn px-3 py-1.5 text-[12px] font-semibold ${on ? 'btn-primary' : 'btn-ghost'}`;
       b.textContent = label;
+      // Attach a tooltip describing what this mode does (per locale)
+      const langT = LABEL[state.lang] || LABEL.en;
+      if (value === 'shuffle') {
+        b.title = langT.shuffleModeDesc || '';
+      } else {
+        b.title = langT.smartModeDesc || '';
+      }
       b.onclick = () => {
         if (state.practiceMode === value) return;
         state.practiceMode = value;
@@ -1012,8 +1044,11 @@ async function playPollySentence(sentence) {
 
     const btnShuffleNow = document.createElement('button');
     btnShuffleNow.type = 'button';
-    btnShuffleNow.className = 'btn btn-ghost px-3 py-2';
+    // Use standard button styling with ghost variant for consistent appearance
+    btnShuffleNow.className = 'btn btn-ghost px-3 py-1.5';
     btnShuffleNow.innerHTML = `<span aria-hidden="true">🔀</span><span class="ml-2">${esc(t.shuffleNow)}</span>`;
+    // Tooltip explaining what this action does
+    btnShuffleNow.title = t.shuffleNowDesc || '';
     btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
 
     headerRight.append(seg, btnShuffleNow);
@@ -1075,14 +1110,24 @@ async function playPollySentence(sentence) {
     // Use translated instruction text
     instruction.innerHTML = esc(t.instruction);
 
-    // Help box: show explanation in current language only
-    const helpBox = document.createElement('details');
-    helpBox.className = 'practice-help panel p-3 rounded-2xl mb-4 text-sm text-slate-700';
-    const desc = (state.lang === 'cy') ? t.howItWorksCY : t.howItWorksEN;
-    helpBox.innerHTML = `
-      <summary class="cursor-pointer font-semibold text-slate-800">${esc(t.howItWorksTitle)}</summary>
-      <div class="mt-3">${esc(desc)}</div>
-    `;
+    // Help box: show explanation in current language only, unless dismissed.  Use a collapsible
+    // details element so users can expand/collapse.  Include a small dismiss button to
+    // permanently hide this panel.  Once dismissed it will not render again (until localStorage is cleared).
+    let helpBox = null;
+    if (!state.helpDismissed) {
+      helpBox = document.createElement('details');
+      helpBox.className = 'practice-help panel p-3 rounded-2xl mb-4 text-sm text-slate-700';
+      const desc = (state.lang === 'cy') ? t.howItWorksCY : t.howItWorksEN;
+      helpBox.innerHTML = `
+        <summary class="cursor-pointer font-semibold text-slate-800">${esc(t.howItWorksTitle)}</summary>
+        <div class="mt-3 space-y-3">
+          <p>${esc(desc)}</p>
+          <div class="flex justify-end">
+            <button type="button" id="dismissHelp" class="btn btn-ghost px-2 py-1 text-xs">${state.lang === 'cy' ? 'Cau' : 'Close'}</button>
+          </div>
+        </div>
+      `;
+    }
 
     const row = document.createElement('div');
     row.className = 'practice-sentence mt-2';
@@ -1210,7 +1255,22 @@ async function playPollySentence(sentence) {
       nb.onclick = ()=> nextCard(1);
       feedback.appendChild(nb);
     }
-    wrap.append(header, summary, instruction, helpBox, chips, row, actions, hint, feedback);
+    // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
+    const parts = [header, summary, instruction];
+    if (helpBox) parts.push(helpBox);
+    parts.push(chips, row, actions, hint, feedback);
+    wrap.append(...parts);
+    // If the helpBox is rendered, attach a click handler to dismiss it permanently
+    if (helpBox) {
+      const dismissBtn = helpBox.querySelector('#dismissHelp');
+      if (dismissBtn) {
+        dismissBtn.onclick = () => {
+          state.helpDismissed = true;
+          saveLS(HELP_DISMISSED_KEY, true);
+          render();
+        };
+      }
+    }
     host.appendChild(wrap);
     const ab = $('#answerBox');
     ab.value = state.guess; ab.focus();
@@ -1406,7 +1466,6 @@ async function playPollySentence(sentence) {
   </script>
 </body>
 </html>
-
 
 
 
