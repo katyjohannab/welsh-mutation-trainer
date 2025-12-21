@@ -612,9 +612,6 @@
   }
 
   // ---------- Data loading ----------
-// Loads ONLY the sources listed in data/index.json (e.g. ["data/cards.csv"]).
-// In GitHub Pages this works via relative paths. In canvas preview, relative fetches may not resolve,
-// so we also try your live URLs as a fallback (NOT a demo dataset).
 
 const FALLBACK_INDEX_URL = 'https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json';
 const FALLBACK_SITE_ROOT = 'https://katyjohannab.github.io/welsh-mutation-trainer/';
@@ -652,11 +649,11 @@ async function loadAllDefault(){
   let list = null;
   let usingFallbackRoot = false;
 
-  // Try local relative first (works on your deployed site)
+  // Try local relative first
   try{
     list = await fetchIndexList('data/index.json');
   }catch(e){
-    // Canvas preview often needs absolute
+  
     try{
       list = await fetchIndexList(FALLBACK_INDEX_URL);
       usingFallbackRoot = true;
@@ -844,10 +841,8 @@ function buildCompleteSentence(card) {
   return s;
 }
 
-// ---------- TTS (Amazon Polly via your Lambda Function URL) ----------
-// PUT YOUR REAL FUNCTION URL HERE:
-// The user has provided their deployed Amazon Polly Lambda function URL.
-// Use this value to call the TTS service.
+// ---------- TTS (Amazon Polly via Lambda-
+
 const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
 
 // Cache MP3 blobs in-memory so repeated clicks don't keep calling AWS
