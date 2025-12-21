@@ -1,0 +1,465 @@
+{
+  "id": "l1-aspirate-mutation-core",
+  "slides": [
+    {
+      "title": { "en": "Aspirate mutation", "cy": "Treiglad llaes" },
+      "html": {
+        "en": "<p>In this lesson, you'll learn how to:</p><ul><li>recognise <b>aspirate mutation (AM)</b> fast</li><li>use the high-frequency triggers: <b>ei (her)</b>, <b>a</b> (and), <b>&acirc;</b> (with)</li><li>handle the classic traps: <b>blocking</b>, <b>no visible change</b>, <b>one mutation only</b></li><li>spot the bonus pattern: <b>h-</b> added before vowels in a few places</li><li>self-test inside the lesson</li></ul><p>&nbsp;</p><div class='callout'><p>Aspirate mutation is smaller than soft mutation. It only affects three letters, so it gets easier quickly.</p></div>",
+        "cy": "<p>Yn y wers hon, byddi di'n dysgu sut i:</p><ul><li>adnabod <b>treiglad llaes (TL)</b> yn gyflym</li><li>defnyddio'r sbardunau cyffredin: <b>ei (hi)</b>, <b>a</b>, <b>&acirc;</b></li><li>osgoi'r trapiau: <b>bloc&iuml;o</b>, <b>dim newid gweladwy</b>, <b>un treiglad yn unig</b></li><li>sylwi ar y bonws: <b>h-</b> o flaen llafariaid mewn ychydig o achosion</li><li>hunan-brofi o fewn y wers</li></ul><p>&nbsp;</p><div class='callout'><p>Mae treiglad llaes yn llai na threiglad meddal. Dim ond tri llythyren mae'n eu newid, felly mae'n setlo'n gyflym.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick anchor: what AM looks like 🧩", "cy": "Angor cyflym: sut mae TL yn edrych 🧩" },
+      "html": {
+        "en": "<p><b>Aspirate mutation</b> changes the start of a word into a breathy form.</p><p>&nbsp;</p><ul><li><code>c</code> becomes <code>ch</code></li><li><code>p</code> becomes <code>ph</code></li><li><code>t</code> becomes <code>th</code></li></ul><p>&nbsp;</p><div class='callout'><p>Reminder: <code>ch</code>, <code>ph</code>, and <code>th</code> are Welsh digraph letters. Treat them like one unit when you read.</p></div>",
+        "cy": "<p>Mae <b>treiglad llaes</b> yn newid dechrau gair i ffurf “anadlog”.</p><p>&nbsp;</p><ul><li><code>c</code> yn dod yn <code>ch</code></li><li><code>p</code> yn dod yn <code>ph</code></li><li><code>t</code> yn dod yn <code>th</code></li></ul><p>&nbsp;</p><div class='callout'><p>Nodyn: mae <code>ch</code>, <code>ph</code>, a <code>th</code> yn lythrennau deulythyren yn y Gymraeg. Meddylia amdanyn nhw fel un uned.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-rev-1",
+          "type": "reveal",
+          "front": { "en": "Aspirate of <code>car</code> is…", "cy": "Treiglad llaes <code>car</code> yw…" },
+          "back": { "en": "<code>char</code>", "cy": "<code>char</code>" }
+        },
+        {
+          "id": "l1-am-rev-2",
+          "type": "reveal",
+          "front": { "en": "Aspirate of <code>pont</code> is…", "cy": "Treiglad llaes <code>pont</code> yw…" },
+          "back": { "en": "<code>phont</code>", "cy": "<code>phont</code>" }
+        },
+        {
+          "id": "l1-am-rev-3",
+          "type": "reveal",
+          "front": { "en": "Aspirate of <code>tad</code> is…", "cy": "Treiglad llaes <code>tad</code> yw…" },
+          "back": { "en": "<code>thad</code>", "cy": "<code>thad</code>" }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Aspirate mutation: the map 🗺️", "cy": "Treiglad llaes: y map 🗺️" },
+      "html": {
+        "en": "<p>This is the whole AM table:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>Aspirate mutation</th><th>Example</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>ch</code></td><td><code>car → char</code></td></tr><tr><td><code>p</code></td><td><code>ph</code></td><td><code>pont → phont</code></td></tr><tr><td><code>t</code></td><td><code>th</code></td><td><code>tad → thad</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If a word does not start with <code>c/p/t</code>, AM cannot show as a letter change.</p></div>",
+        "cy": "<p>Dyma'r tabl TL cyfan:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Treiglad llaes</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>ch</code></td><td><code>car → char</code></td></tr><tr><td><code>p</code></td><td><code>ph</code></td><td><code>pont → phont</code></td></tr><tr><td><code>t</code></td><td><code>th</code></td><td><code>tad → thad</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os nad yw gair yn dechrau gyda <code>c/p/t</code>, ni all TL ymddangos fel newid llythyren.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-fc-map",
+          "type": "flashcards",
+          "items": [
+            { "front": { "en": "c → ?", "cy": "c → ?" }, "back": { "en": "ch", "cy": "ch" } },
+            { "front": { "en": "p → ?", "cy": "p → ?" }, "back": { "en": "ph", "cy": "ph" } },
+            { "front": { "en": "t → ?", "cy": "t → ?" }, "back": { "en": "th", "cy": "th" } }
+          ]
+        }
+      ]
+    },
+    {
+      "title": { "en": "Your AM workflow ✅", "cy": "Dy lif gwaith TL ✅" },
+      "html": {
+        "en": "<p>Run this in order. It saves a lot of guessing:</p><ol><li><b>Trigger?</b> (ei (her), a, &acirc;, sometimes numbers)</li><li><b>Contact?</b> (is the trigger right next to the word?)</li><li><b>Mutable?</b> (does it start with <code>c/p/t</code>?)</li><li><b>Or vowel?</b> (some contexts add <code>h-</code> before vowels)</li><li><b>One change only</b> (do not stack mutations)</li></ol><p>&nbsp;</p><div class='callout'><p>Most AM mistakes are really just: not in contact, or wrong table (soft vs aspirate).</p></div>",
+        "cy": "<p>Defnyddia'r drefn yma. Mae'n atal dyfalu:</p><ol><li><b>Sbardun?</b> (ei (hi), a, &acirc;, weithiau rhifau)</li><li><b>Cyswllt?</b> (a yw'r sbardun yn syth wrth ymyl y gair?)</li><li><b>Treigladwy?</b> (a yw'n dechrau gyda <code>c/p/t</code>?)</li><li><b>Neu llafariad?</b> (mewn rhai achosion mae <code>h-</code> yn dod o flaen llafariad)</li><li><b>Unwaith yn unig</b> (paid &acirc; stacio treigladau)</li></ol><p>&nbsp;</p><div class='callout'><p>Mae'r rhan fwyaf o gamgymeriadau TL yn dod i lawr i: dim cyswllt union, neu'r tabl anghywir (meddal vs llaes).</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Sometimes you won’t see a change 👀", "cy": "Weithiau does dim newid gweladwy 👀" },
+      "html": {
+        "en": "<p>AM only changes <code>c/p/t</code>. So you can have a real trigger, but still see no letter change.</p><p>&nbsp;</p><ul><li><code>bara a menyn</code></li><li><code>&acirc; d&ocirc;r</code></li><li><code>ei brawd hi</code> (her brother)</li></ul><p>&nbsp;</p><div class='callout'><p>Mindset: “no change” can be correct Welsh, even when a trigger is present.</p></div>",
+        "cy": "<p>Dim ond <code>c/p/t</code> mae TL yn ei newid. Felly gall sbardun fod yno, ond does dim newid i'w weld.</p><p>&nbsp;</p><ul><li><code>bara a menyn</code></li><li><code>&acirc; d&ocirc;r</code></li><li><code>ei brawd hi</code></li></ul><p>&nbsp;</p><div class='callout'><p>Meddylfryd: gall “dim newid” fod yn Gymraeg hollol gywir, hyd yn oed pan mae sbardun yno.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-novis-1",
+          "type": "typein",
+          "stem": { "en": "Make the final phrase: bara a + menyn", "cy": "Gwna’r ymadrodd terfynol: bara a + menyn" },
+          "accept": ["bara a menyn"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": {
+            "en": "<code>a</code> is a trigger, but <code>m</code> does not change in AM. So the written form stays <code>menyn</code>.",
+            "cy": "Mae <code>a</code> yn sbardun, ond dydy <code>m</code> ddim yn newid mewn TL. Felly mae'r ffurf yn aros yn <code>menyn</code>."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Core trigger set A: <code>ei</code> (her) 💎", "cy": "Set sbardun A: <code>ei</code> (hi) 💎" },
+      "html": {
+        "en": "<p>This is one of the highest-value places to learn AM:</p><p>&nbsp;</p><p><b><code>ei</code> (her)</b> often triggers AM on <code>c/p/t</code>:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>Her…</th></tr></thead><tbody><tr><td><code>car</code></td><td><code>ei char hi</code></td></tr><tr><td><code>tad</code></td><td><code>ei thad hi</code></td></tr><tr><td><code>plentyn</code></td><td><code>ei phlentyn hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Tip: adding <code>hi</code> makes it clear it's “her” (because <code>ei</code> can also mean “his”).</p></div>",
+        "cy": "<p>Dyma un o'r llefydd mwyaf gwerthfawr i ddysgu TL:</p><p>&nbsp;</p><p>Mae <b><code>ei</code> (hi)</b> yn aml yn sbarduno TL ar <code>c/p/t</code>:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Ei … hi</th></tr></thead><tbody><tr><td><code>car</code></td><td><code>ei char hi</code></td></tr><tr><td><code>tad</code></td><td><code>ei thad hi</code></td></tr><tr><td><code>plentyn</code></td><td><code>ei phlentyn hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Awgrym: mae ychwanegu <code>hi</code> yn ei wneud yn glir mai “ei (hi)” yw e (gan fod <code>ei</code> hefyd yn gallu golygu “ei (e)”).</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Interactive drill: <code>ei</code> (her) ✍️", "cy": "Dril rhyngweithiol: <code>ei</code> (hi) ✍️" },
+      "html": {
+        "en": "<p>Type the phrase you'd actually write/say.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia'r ymadrodd fel byddet ti'n ei ysgrifennu/dweud.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-ei-her-1",
+          "type": "typein",
+          "stem": { "en": "ei (her) + car + hi", "cy": "ei (hi) + car + hi" },
+          "accept": ["ei char hi", "ei char"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>ei</code> (her) triggers AM: <code>c → ch</code>.", "cy": "Mae <code>ei</code> (hi) yn sbarduno TL: <code>c → ch</code>." }
+        },
+        {
+          "id": "l1-am-typein-ei-her-2",
+          "type": "typein",
+          "stem": { "en": "ei (her) + tad + hi", "cy": "ei (hi) + tad + hi" },
+          "accept": ["ei thad hi", "ei thad"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>t → th</code> in AM.", "cy": "<code>t → th</code> mewn TL." }
+        },
+        {
+          "id": "l1-am-typein-ei-her-3",
+          "type": "typein",
+          "stem": { "en": "ei (her) + plentyn + hi", "cy": "ei (hi) + plentyn + hi" },
+          "accept": ["ei phlentyn hi", "ei phlentyn"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>p → ph</code> in AM.", "cy": "<code>p → ph</code> mewn TL." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Bonus: <code>h-</code> before vowels (h-prothesis) 🌬️", "cy": "Bonws: <code>h-</code> o flaen llafariaid 🌬️" },
+      "html": {
+        "en": "<p>When AM can't apply (because the word starts with a vowel), Welsh sometimes shows the pattern by adding <code>h-</code>.</p><p>&nbsp;</p><p>High-frequency example:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Phrase</th></tr></thead><tbody><tr><td>his school</td><td><code>ei ysgol e</code></td></tr><tr><td>her school</td><td><code>ei hysgol hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>This is a useful gender signal in writing. It is not the main thing to memorise right now, but it is worth noticing.</p></div>",
+        "cy": "<p>Pan na all TL weithio (oherwydd bod y gair yn dechrau gyda llafariad), mae'r Gymraeg weithiau'n dangos y patrwm drwy ychwanegu <code>h-</code>.</p><p>&nbsp;</p><p>Enghraifft gyffredin iawn:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Ymadrodd</th></tr></thead><tbody><tr><td>ei ysgol e</td><td><code>ei ysgol e</code></td></tr><tr><td>ei hysgol hi</td><td><code>ei hysgol hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Mae hyn yn arwydd defnyddiol o ryw mewn ysgrifennu. Nid dyma'r prif ffocws, ond mae'n werth sylwi arno.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-hprot-1",
+          "type": "typein",
+          "stem": { "en": "ei (her) + ysgol + hi", "cy": "ei (hi) + ysgol + hi" },
+          "accept": ["ei hysgol hi", "ei hysgol"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Before vowels, you often see <code>h-</code> with <code>ei</code> (her): <code>ysgol → hysgol</code>.", "cy": "O flaen llafariaid, fe weli di <code>h-</code> yn aml gyda <code>ei</code> (hi): <code>ysgol → hysgol</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "High-value contrast: <code>ei</code> (his) vs <code>ei</code> (her) 🔍", "cy": "Cyferbyniad gwerthfawr: <code>ei</code> (e) vs <code>ei</code> (hi) 🔍" },
+      "html": {
+        "en": "<p>Same spelling. Different mutation. This is why the little clarifiers matter.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Typical pattern</th><th>Example</th></tr></thead><tbody><tr><td>his</td><td>soft mutation</td><td><code>ei gar e</code></td></tr><tr><td>her</td><td>aspirate (or <code>h-</code> before vowels)</td><td><code>ei char hi</code>, <code>ei hysgol hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If the noun starts with <code>b/d/g/m</code> etc., the mutation might not show. So <code>e</code> / <code>hi</code> still helps.</p></div>",
+        "cy": "<p>Yr un sillafiad. Treiglad gwahanol. Dyna pam mae'r ategion bach yn help.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Patrwm</th><th>Enghraifft</th></tr></thead><tbody><tr><td>ei (e)</td><td>treiglad meddal</td><td><code>ei gar e</code></td></tr><tr><td>ei (hi)</td><td>treiglad llaes (neu <code>h-</code> o flaen llafariaid)</td><td><code>ei char hi</code>, <code>ei hysgol hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os yw'r enw yn dechrau gyda <code>b/d/g/m</code> ac ati, efallai na fydd treiglad i'w weld. Felly mae <code>e</code> / <code>hi</code> yn dal yn ddefnyddiol.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-mcq-ei-contrast-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct phrase for “her car”:", "cy": "Dewisa’r ymadrodd cywir am “ei char hi”:" },
+          "stem": { "en": "ei (her) + car + hi", "cy": "ei (hi) + car + hi" },
+          "options": [
+            { "text": { "en": "ei gar hi", "cy": "ei gar hi" } },
+            { "text": { "en": "ei char hi", "cy": "ei char hi" } },
+            { "text": { "en": "ei nghar hi", "cy": "ei nghar hi" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>ei</code> (her) uses aspirate on <code>c/p/t</code>: <code>c → ch</code>.", "cy": "Mae <code>ei</code> (hi) yn defnyddio TL ar <code>c/p/t</code>: <code>c → ch</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Core trigger set B: <code>a</code> (and) ➜", "cy": "Set sbardun B: <code>a</code> ➜" },
+      "html": {
+        "en": "<p><code>a</code> (and) often triggers AM on the next word in direct contact:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Phrase</th><th>What changed</th></tr></thead><tbody><tr><td><code>bara a chaws</code></td><td><code>caws → chaws</code></td></tr><tr><td><code>mam a thad</code></td><td><code>tad → thad</code></td></tr><tr><td><code>te a phaned</code></td><td><code>paned → phaned</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Before a vowel, <code>a</code> often appears as <code>ac</code> (e.g. <code>Lloegr ac Iwerddon</code>). That is normal spelling, not a mutation.</p></div>",
+        "cy": "<p>Mae <code>a</code> yn aml yn sbarduno TL ar y gair nesaf mewn cyswllt union:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ymadrodd</th><th>Beth newidiodd</th></tr></thead><tbody><tr><td><code>bara a chaws</code></td><td><code>caws → chaws</code></td></tr><tr><td><code>mam a thad</code></td><td><code>tad → thad</code></td></tr><tr><td><code>te a phaned</code></td><td><code>paned → phaned</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Cyn llafariad, bydd <code>a</code> yn aml yn troi'n <code>ac</code> (e.e. <code>Lloegr ac Iwerddon</code>). Sillafiad arferol yw hyn, nid treiglad.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Interactive drill: <code>a</code> (and) ✍️", "cy": "Dril rhyngweithiol: <code>a</code> ✍️" },
+      "html": {
+        "en": "<p>Type the final phrase. Keep it simple: trigger + contact + c/p/t?</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia'r ymadrodd terfynol. Cadw'n syml: sbardun + cyswllt + c/p/t?</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-a-1",
+          "type": "typein",
+          "stem": { "en": "bara a + caws", "cy": "bara a + caws" },
+          "accept": ["bara a chaws"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>a</code> triggers AM in direct contact: <code>c → ch</code>.", "cy": "Mae <code>a</code> yn sbarduno TL mewn cyswllt union: <code>c → ch</code>." }
+        },
+        {
+          "id": "l1-am-typein-a-2",
+          "type": "typein",
+          "stem": { "en": "mam a + tad", "cy": "mam a + tad" },
+          "accept": ["mam a thad"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>t → th</code> in AM.", "cy": "<code>t → th</code> mewn TL." }
+        },
+        {
+          "id": "l1-am-typein-a-3",
+          "type": "typein",
+          "stem": { "en": "te a + paned", "cy": "te a + paned" },
+          "accept": ["te a phaned"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>p → ph</code> in AM.", "cy": "<code>p → ph</code> mewn TL." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Core trigger set C: <code>&acirc;</code> (with) ➜", "cy": "Set sbardun C: <code>&acirc;</code> (gyda) ➜" },
+      "html": {
+        "en": "<p><code>&acirc;</code> (with) is common after a lot of verbs, and it often triggers AM on <code>c/p/t</code>:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Verb phrase</th><th>Example</th></tr></thead><tbody><tr><td>go with</td><td><code>mynd &acirc; char</code></td></tr><tr><td>speak with</td><td><code>siarad &acirc; phlentyn</code></td></tr><tr><td>come with</td><td><code>dod &acirc; thad</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>In informal writing you might see <code>a</code> instead of <code>&acirc;</code>. In this lesson we keep <code>&acirc;</code> because it avoids confusion with <code>a</code> (and).</p></div>",
+        "cy": "<p>Mae <code>&acirc;</code> (= gyda) yn gyffredin ar &ocirc;l llawer o ferfau, ac mae'n aml yn sbarduno TL ar <code>c/p/t</code>:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ymadrodd</th><th>Enghraifft</th></tr></thead><tbody><tr><td>mynd gyda</td><td><code>mynd &acirc; char</code></td></tr><tr><td>siarad gyda</td><td><code>siarad &acirc; phlentyn</code></td></tr><tr><td>dod gyda</td><td><code>dod &acirc; thad</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Mewn ysgrifennu anffurfiol fe weli di <code>a</code> yn lle <code>&acirc;</code> weithiau. Yma rydyn ni'n cadw <code>&acirc;</code> i osgoi dryswch gyda <code>a</code>.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Interactive drill: <code>&acirc;</code> (with) ✍️", "cy": "Dril rhyngweithiol: <code>&acirc;</code> ✍️" },
+      "html": {
+        "en": "<p>Type the final phrase.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia'r ymadrodd terfynol.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-a-circ-1",
+          "type": "typein",
+          "stem": { "en": "mynd â + car", "cy": "mynd â + car" },
+          "accept": ["mynd â char", "mynd a char"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>â</code> triggers AM: <code>c → ch</code>.", "cy": "Mae <code>â</code> yn sbarduno TL: <code>c → ch</code>." }
+        },
+        {
+          "id": "l1-am-mcq-a-circ-2",
+          "type": "mcq",
+          "prompt": { "en": "Choose the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
+          "stem": { "en": "siarad â + plentyn", "cy": "siarad â + plentyn" },
+          "options": [
+            { "text": { "en": "siarad â plentyn", "cy": "siarad â plentyn" } },
+            { "text": { "en": "siarad â phlentyn", "cy": "siarad â phlentyn" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>p → ph</code> in AM.", "cy": "<code>p → ph</code> mewn TL." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Blocking: triggers can’t jump 🧱", "cy": "Blocïo: does dim ‘neidio’ 🧱" },
+      "html": {
+        "en": "<p>Most AM triggers need direct contact.</p><p>&nbsp;</p><p>Compare:</p><div class='table-wrap'><table><thead><tr><th>Direct contact</th><th>Blocked</th></tr></thead><tbody><tr><td><code>mam a thad</code></td><td><code>mam a'r tad</code></td></tr><tr><td><code>siarad &acirc; phlentyn</code></td><td><code>siarad &acirc;'r plentyn</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you expected <code>ch/ph/th</code> and didn’t get it, check for a blocker like <code>y/'r/yr</code>.</p></div>",
+        "cy": "<p>Mae'r rhan fwyaf o sbardunau TL angen cyswllt union.</p><p>&nbsp;</p><p>Cymharu:</p><div class='table-wrap'><table><thead><tr><th>Cyswllt union</th><th>Wedi'i flocio</th></tr></thead><tbody><tr><td><code>mam a thad</code></td><td><code>mam a'r tad</code></td></tr><tr><td><code>siarad &acirc; phlentyn</code></td><td><code>siarad &acirc;'r plentyn</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os oeddit ti'n disgwyl <code>ch/ph/th</code> ond nad yw'n digwydd, chwilia am flociwr fel <code>y/'r/yr</code>.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-mcq-blocking-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct form:", "cy": "Dewisa’r ffurf gywir:" },
+          "stem": { "en": "siarad â'r + plentyn", "cy": "siarad â'r + plentyn" },
+          "options": [
+            { "text": { "en": "siarad â'r plentyn", "cy": "siarad â'r plentyn" } },
+            { "text": { "en": "siarad â'r phlentyn", "cy": "siarad â'r phlentyn" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "Blocked by <code>'r</code>. The trigger can’t reach the noun.", "cy": "Wedi'i flocio gan <code>'r</code>. Dydy'r sbardun ddim yn gallu cyrraedd yr enw." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "One mutation only 🧯", "cy": "Un treiglad yn unig 🧯" },
+      "html": {
+        "en": "<p>Welsh does not stack mutations.</p><p>&nbsp;</p><p>If a word is already in a mutated form, do not try to mutate it again.</p><p>&nbsp;</p><div class='callout'><p>Quick self-check: if you’re about to add extra letters like <code>ngh-</code> on top of a mutation, stop.</p></div>",
+        "cy": "<p>Dydy'r Gymraeg ddim yn stacio treigladau.</p><p>&nbsp;</p><p>Os yw gair eisoes wedi'i dreiglo, paid â cheisio'i dreiglo eto.</p><p>&nbsp;</p><div class='callout'><p>Gwirio cyflym: os wyt ti ar fin ychwanegu pethau fel <code>ngh-</code> ar ben treiglad, stopia.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-mcq-oneonly-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct phrase for “her child”:", "cy": "Dewisa’r ymadrodd cywir am “ei phlentyn hi”:" },
+          "stem": { "en": "ei (her) + plentyn + hi", "cy": "ei (hi) + plentyn + hi" },
+          "options": [
+            { "text": { "en": "ei plentyn hi", "cy": "ei plentyn hi" } },
+            { "text": { "en": "ei phlentyn hi", "cy": "ei phlentyn hi" } },
+            { "text": { "en": "ei nghphlentyn hi", "cy": "ei nghphlentyn hi" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Aspirate gives <code>p → ph</code>. There is no extra layer to add on top.", "cy": "Mae TL yn rhoi <code>p → ph</code>. Dim haen ychwanegol i'w rhoi ar ben hynny." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Bonus trigger: numbers <code>tri</code> / <code>tair</code> / <code>chwe</code> 🔢", "cy": "Bonws: rhifau <code>tri</code> / <code>tair</code> / <code>chwe</code> 🔢" },
+      "html": {
+        "en": "<p>You will bump into this in the wild:</p><p>&nbsp;</p><ul><li><b><code>tri</code></b> + a masculine noun often uses AM</li><li><b><code>tair</code></b> (feminine form of three) has <b>no mutation</b></li><li><b><code>chwe</code></b> uses AM very widely</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Example</th></tr></thead><tbody><tr><td><code>tri</code></td><td><code>tri char</code></td></tr><tr><td><code>tair</code></td><td><code>tair cadair</code></td></tr><tr><td><code>chwe</code></td><td><code>chwe phlentyn</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Do not stress about number gender yet. Just recognise the pattern when you see it.</p></div>",
+        "cy": "<p>Byddi di'n gweld hyn mewn Cymraeg go iawn:</p><p>&nbsp;</p><ul><li><b><code>tri</code></b> + enw gwrywaidd yn aml gyda TL</li><li><b><code>tair</code></b> (ffurf benywaidd tri) gyda <b>dim treiglad</b></li><li><b><code>chwe</code></b> fel arfer gyda TL yn eang</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>tri</code></td><td><code>tri char</code></td></tr><tr><td><code>tair</code></td><td><code>tair cadair</code></td></tr><tr><td><code>chwe</code></td><td><code>chwe phlentyn</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Paid â phoeni gormod am ryw rhifau eto. Sylwa ar y patrwm pan weli di ef.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-typein-num-1",
+          "type": "typein",
+          "stem": { "en": "tri + car", "cy": "tri + car" },
+          "accept": ["tri char"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "With <code>tri</code> you often see AM: <code>c → ch</code>.", "cy": "Gyda <code>tri</code> fe weli di TL yn aml: <code>c → ch</code>." }
+        },
+        {
+          "id": "l1-am-typein-num-2",
+          "type": "typein",
+          "stem": { "en": "tair + cadair", "cy": "tair + cadair" },
+          "accept": ["tair cadair"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "No mutation after <code>tair</code>.", "cy": "Dim treiglad ar &ocirc;l <code>tair</code>." }
+        },
+        {
+          "id": "l1-am-typein-num-3",
+          "type": "typein",
+          "stem": { "en": "chwe + plentyn", "cy": "chwe + plentyn" },
+          "accept": ["chwe phlentyn"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>chwe</code> commonly triggers AM: <code>p → ph</code>.", "cy": "Mae <code>chwe</code> yn aml yn sbarduno TL: <code>p → ph</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Contrast set: minimal pairs that teach the boundaries 🔍", "cy": "Set cyferbyniad: parau sy'n dysgu'r ffiniau 🔍" },
+      "html": {
+        "en": "<p>Read these as pairs. They stop the classic mistakes:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Pair</th><th>What you learn</th></tr></thead><tbody><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> his vs her (soft vs aspirate)</td></tr><tr><td><code>ei ysgol e</code> vs <code>ei hysgol hi</code></td><td><code>h-</code> can signal “her” before a vowel</td></tr><tr><td><code>mam a thad</code> vs <code>mam a'r tad</code></td><td>blocking by the article</td></tr><tr><td><code>siarad &acirc; phlentyn</code> vs <code>siarad &acirc;'r plentyn</code></td><td>contact matters</td></tr><tr><td><code>bara a chaws</code> vs <code>bara a menyn</code></td><td>only <code>c/p/t</code> show AM</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you can explain why both sides are correct, you have real control.</p></div>",
+        "cy": "<p>Darllena'r rhain fel parau. Maen nhw'n stopio'r camgymeriadau clasurol:</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>P&acirc;r</th><th>Beth wyt ti'n ei ddysgu</th></tr></thead><tbody><tr><td><code>ei gar e</code> vs <code>ei char hi</code></td><td><code>ei</code> e vs hi (meddal vs llaes)</td></tr><tr><td><code>ei ysgol e</code> vs <code>ei hysgol hi</code></td><td><code>h-</code> fel arwydd o “hi” cyn llafariad</td></tr><tr><td><code>mam a thad</code> vs <code>mam a'r tad</code></td><td>bloc&iuml;o gan yr erthygl</td></tr><tr><td><code>siarad &acirc; phlentyn</code> vs <code>siarad &acirc;'r plentyn</code></td><td>mae cyswllt yn bwysig</td></tr><tr><td><code>bara a chaws</code> vs <code>bara a menyn</code></td><td>dim ond <code>c/p/t</code> sy'n dangos TL</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os gelli di egluro pam mae'r ddwy ochr yn gywir, mae gen ti reolaeth go iawn.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Mini-quiz: 10 quick hits ⚡", "cy": "Mini-gwis: 10 taro cyflym ⚡" },
+      "html": {
+        "en": "<p>Do these quickly. If you miss one, read the feedback and move on.</p><p>&nbsp;</p>",
+        "cy": "<p>Gwna'r rhain yn gyflym. Os wyt ti'n camu, darllena'r adborth a symud ymlaen.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-quiz-1",
+          "type": "mcq",
+          "stem": { "en": "ei (her) + tad + hi", "cy": "ei (hi) + tad + hi" },
+          "options": [
+            { "text": { "en": "ei tad hi", "cy": "ei tad hi" } },
+            { "text": { "en": "ei thad hi", "cy": "ei thad hi" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>t → th</code> in AM.", "cy": "<code>t → th</code> mewn TL." }
+        },
+        {
+          "id": "l1-am-quiz-2",
+          "type": "mcq",
+          "stem": { "en": "bara a + caws", "cy": "bara a + caws" },
+          "options": [
+            { "text": { "en": "bara a caws", "cy": "bara a caws" } },
+            { "text": { "en": "bara a chaws", "cy": "bara a chaws" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>a</code> triggers AM in direct contact: <code>c → ch</code>.", "cy": "Mae <code>a</code> yn sbarduno TL mewn cyswllt union: <code>c → ch</code>." }
+        },
+        {
+          "id": "l1-am-quiz-3",
+          "type": "typein",
+          "stem": { "en": "mynd â + pont", "cy": "mynd â + pont" },
+          "accept": ["mynd â phont", "mynd a phont"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>â</code> triggers AM: <code>p → ph</code>.", "cy": "Mae <code>â</code> yn sbarduno TL: <code>p → ph</code>." }
+        },
+        {
+          "id": "l1-am-quiz-4",
+          "type": "mcq",
+          "stem": { "en": "siarad â'r + tad", "cy": "siarad â'r + tad" },
+          "options": [
+            { "text": { "en": "siarad â'r tad", "cy": "siarad â'r tad" } },
+            { "text": { "en": "siarad â'r thad", "cy": "siarad â'r thad" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "Blocked by <code>'r</code>. No direct contact.", "cy": "Wedi'i flocio gan <code>'r</code>. Dim cyswllt union." }
+        },
+        {
+          "id": "l1-am-quiz-5",
+          "type": "typein",
+          "stem": { "en": "ei (her) + ysgol + hi", "cy": "ei (hi) + ysgol + hi" },
+          "accept": ["ei hysgol hi", "ei hysgol"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Bonus pattern: <code>h-</code> before a vowel with <code>ei</code> (her).", "cy": "Bonws: <code>h-</code> cyn llafariad gyda <code>ei</code> (hi)." }
+        },
+        {
+          "id": "l1-am-quiz-6",
+          "type": "mcq",
+          "stem": { "en": "te a + paned", "cy": "te a + paned" },
+          "options": [
+            { "text": { "en": "te a phaned", "cy": "te a phaned" } },
+            { "text": { "en": "te a baned", "cy": "te a baned" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "Aspirate is <code>p → ph</code>, not soft <code>p → b</code>.", "cy": "TL yw <code>p → ph</code>, nid meddal <code>p → b</code>." }
+        },
+        {
+          "id": "l1-am-quiz-7",
+          "type": "typein",
+          "stem": { "en": "tri + car", "cy": "tri + car" },
+          "accept": ["tri char"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Common number pattern: <code>tri</code> can show AM.", "cy": "Patrwm rhif cyffredin: gall <code>tri</code> ddangos TL." }
+        },
+        {
+          "id": "l1-am-quiz-8",
+          "type": "mcq",
+          "stem": { "en": "tair + cadair", "cy": "tair + cadair" },
+          "options": [
+            { "text": { "en": "tair cadair", "cy": "tair cadair" } },
+            { "text": { "en": "tair chadair", "cy": "tair chadair" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "No mutation after <code>tair</code>.", "cy": "Dim treiglad ar &ocirc;l <code>tair</code>." }
+        },
+        {
+          "id": "l1-am-quiz-9",
+          "type": "mcq",
+          "stem": { "en": "ei (her) + car + hi", "cy": "ei (hi) + car + hi" },
+          "options": [
+            { "text": { "en": "ei char hi", "cy": "ei char hi" } },
+            { "text": { "en": "ei gar hi", "cy": "ei gar hi" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "Her uses aspirate on <code>c</code>: <code>car → char</code>.", "cy": "Mae “hi” yn defnyddio TL ar <code>c</code>: <code>car → char</code>." }
+        },
+        {
+          "id": "l1-am-quiz-10",
+          "type": "typein",
+          "stem": { "en": "bara a + menyn", "cy": "bara a + menyn" },
+          "accept": ["bara a menyn"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Trigger present, but <code>m</code> cannot show AM.", "cy": "Mae sbardun yno, ond ni all <code>m</code> ddangos TL." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Now practise ➜ (same rules, drill mode) 🎯", "cy": "Nawr ymarfer ➜ (yr un rheolau, modd drilio) 🎯" },
+      "html": {
+        "en": "<p>Go straight into the Trainer and drill what you’ve just learned.</p><p>&nbsp;</p><div class='callout'><p>Best routine: 3–5 minutes a day for a week. You’ll remember more than doing one long session.</p></div>",
+        "cy": "<p>Dos yn syth i’r Hyfforddwr a drilia’r hyn wyt ti newydd ei ddysgu.</p><p>&nbsp;</p><div class='callout'><p>Y drefn orau: 3–5 munud y dydd am wythnos. Byddi di’n cofio mwy na gwneud un sesiwn hir.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l1-am-actions",
+          "type": "actions",
+          "prompt": { "en": "Pick a drill category:", "cy": "Dewisa gategori drilio:" },
+          "buttons": [
+            { "label": { "en": "Possessives (ei)", "cy": "Meddiannau (ei)" }, "href": "./index.html", "kind": "primary" },
+            { "label": { "en": "A (and)", "cy": "A" }, "href": "./index.html", "kind": "ghost" },
+            { "label": { "en": "Â (with)", "cy": "Â" }, "href": "./index.html", "kind": "ghost" },
+            { "label": { "en": "Mixed review", "cy": "Adolygu cymysg" }, "href": "./index.html", "kind": "ghost" }
+          ]
+        }
+      ]
+    }
+  ]
+}
