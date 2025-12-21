@@ -1,0 +1,358 @@
+{
+  "id": "l2-nasal-mutation-core",
+  "slides": [
+    {
+      "title": { "en": "Nasal mutation", "cy": "Treiglad trwynol" },
+      "html": {
+        "en": "<p>In this lesson, you'll learn how to:</p><ul><li>recognise <b>nasal mutation (NM)</b> fast</li><li>use the core triggers: <b>fy</b> (my) and <b>yn</b> meaning <i>in</i> (with <code>ym</code>/<code>yng</code>)</li><li>avoid classic traps: <b>no visible change</b>, <b>yn confusion</b>, and <b>one mutation only</b></li></ul><p>&nbsp;</p><div class='callout'><p>Nasal mutation is not as constant as soft mutation, but it shows up in high-value places. If you can spot it quickly, reading and writing get a lot easier.</p></div>",
+        "cy": "<p>Yn y wers hon, byddi di'n dysgu sut i:</p><ul><li>adnabod <b>treiglad trwynol (TT)</b> yn gyflym</li><li>defnyddio’r sbardunau craidd: <b>fy</b> a <b>yn</b> = <i>mewn</i> (gyda <code>ym</code>/<code>yng</code>)</li><li>osgoi trapiau clasurol: <b>dim newid gweladwy</b>, <b>dryswch yn</b>, ac <b>un treiglad yn unig</b></li></ul><p>&nbsp;</p><div class='callout'><p>Dydy treiglad trwynol ddim mor gyson â threisglad meddal, ond mae’n ymddangos mewn llefydd gwerth uchel. Os wyt ti’n gallu ei weld yn sydyn, mae darllen ac ysgrifennu’n mynd yn haws.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Where NM shows up most", "cy": "Ble mae TT yn ymddangos amlaf" },
+      "html": {
+        "en": "<p>For most learners, NM is mainly these:</p><ul><li><b>fy</b> (my) + noun</li><li><b>yn</b> meaning <i>in</i> (spelled <code>yn</code>/<code>ym</code>/<code>yng</code>) + noun/place</li></ul><p>&nbsp;</p><div class='callout'><p>You may hear less NM in casual speech. In writing, it matters more, and it is always worth recognising.</p></div>",
+        "cy": "<p>I’r rhan fwyaf o ddysgwyr, TT yw’r rhain yn bennaf:</p><ul><li><b>fy</b> + enw</li><li><b>yn</b> = <i>mewn</i> (wedi'i sillafu <code>yn</code>/<code>ym</code>/<code>yng</code>) + enw/enw lle</li></ul><p>&nbsp;</p><div class='callout'><p>Gallet ti glywed llai o TT ar lafar achlysurol. Mewn ysgrifennu, mae’n bwysicach, ac mae adnabod TT bob amser yn sgil dda.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Nasal mutation: the map 🗺️", "cy": "Treiglad trwynol: y map 🗺️" },
+      "html": {
+        "en": "<p>These are the core letter changes in NM:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>Nasal mutation</th><th>Example</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>ngh</code></td><td><code>Cymru → Nghymru</code></td></tr><tr><td><code>p</code></td><td><code>mh</code></td><td><code>pont → mhont</code></td></tr><tr><td><code>t</code></td><td><code>nh</code></td><td><code>tŷ → nhŷ</code></td></tr><tr><td><code>g</code></td><td><code>ng</code></td><td><code>gardd → ngardd</code></td></tr><tr><td><code>b</code></td><td><code>m</code></td><td><code>brawd → mrawd</code></td></tr><tr><td><code>d</code></td><td><code>n</code></td><td><code>drws → nrws</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Mindset: you are not learning new words. You are learning the same words in a different “shape”.</p></div>",
+        "cy": "<p>Dyma’r newidiadau llythyren craidd yn TT:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Treiglad trwynol</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>c</code></td><td><code>ngh</code></td><td><code>Cymru → Nghymru</code></td></tr><tr><td><code>p</code></td><td><code>mh</code></td><td><code>pont → mhont</code></td></tr><tr><td><code>t</code></td><td><code>nh</code></td><td><code>tŷ → nhŷ</code></td></tr><tr><td><code>g</code></td><td><code>ng</code></td><td><code>gardd → ngardd</code></td></tr><tr><td><code>b</code></td><td><code>m</code></td><td><code>brawd → mrawd</code></td></tr><tr><td><code>d</code></td><td><code>n</code></td><td><code>drws → nrws</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Meddylfryd: dydy hyn ddim yn eiriau newydd. Yr un geiriau ydy e, ond gyda “siâp” gwahanol.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick map drill (flashcards) ⚡", "cy": "Dril map cyflym (cardiau) ⚡" },
+      "html": {
+        "en": "<p>Tap to reveal. Aim for speed, not perfection.</p>",
+        "cy": "<p>Tapia i weld yr ateb. Anela am gyflymder, nid perffeithrwydd.</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-fc-map",
+          "type": "flashcards",
+          "items": [
+            { "front": { "en": "<code>c</code> → ?", "cy": "<code>c</code> → ?" }, "back": { "en": "<code>ngh</code>", "cy": "<code>ngh</code>" } },
+            { "front": { "en": "<code>p</code> → ?", "cy": "<code>p</code> → ?" }, "back": { "en": "<code>mh</code>", "cy": "<code>mh</code>" } },
+            { "front": { "en": "<code>t</code> → ?", "cy": "<code>t</code> → ?" }, "back": { "en": "<code>nh</code>", "cy": "<code>nh</code>" } },
+            { "front": { "en": "<code>g</code> → ?", "cy": "<code>g</code> → ?" }, "back": { "en": "<code>ng</code>", "cy": "<code>ng</code>" } },
+            { "front": { "en": "<code>b</code> → ?", "cy": "<code>b</code> → ?" }, "back": { "en": "<code>m</code>", "cy": "<code>m</code>" } },
+            { "front": { "en": "<code>d</code> → ?", "cy": "<code>d</code> → ?" }, "back": { "en": "<code>n</code>", "cy": "<code>n</code>" } }
+          ]
+        }
+      ]
+    },
+    {
+      "title": { "en": "Core trigger A: <code>fy</code> (my) 💎", "cy": "Sbardun craidd A: <code>fy</code> 💎" },
+      "html": {
+        "en": "<p><b>fy</b> often triggers <b>nasal mutation</b> on the next word.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>With <code>fy</code></th></tr></thead><tbody><tr><td><code>car</code></td><td><code>fy nghar (i)</code></td></tr><tr><td><code>plant</code></td><td><code>fy mhlant (i)</code></td></tr><tr><td><code>tŷ</code></td><td><code>fy nhŷ (i)</code></td></tr><tr><td><code>gardd</code></td><td><code>fy ngardd (i)</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>The little <code>i</code> after the noun is optional and very common in natural Welsh. Learn both as “normal”.</p></div>",
+        "cy": "<p>Mae <b>fy</b> yn aml yn sbarduno <b>treiglad trwynol</b> ar y gair nesaf.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Gyda <code>fy</code></th></tr></thead><tbody><tr><td><code>car</code></td><td><code>fy nghar (i)</code></td></tr><tr><td><code>plant</code></td><td><code>fy mhlant (i)</code></td></tr><tr><td><code>tŷ</code></td><td><code>fy nhŷ (i)</code></td></tr><tr><td><code>gardd</code></td><td><code>fy ngardd (i)</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Mae’r <code>i</code> bach ar ôl yr enw yn ddewisol ac yn gyffredin iawn. Dysga’r ddwy ffurf fel “normal”.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Interactive drill: <code>fy</code> (type + check) ✍️", "cy": "Dril rhyngweithiol: <code>fy</code> (teipio + gwirio) ✍️" },
+      "html": {
+        "en": "<p>Type the phrase you would actually write/say.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia’r ymadrodd fel byddet ti’n ei ysgrifennu/dweud.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-typein-fy-1",
+          "type": "typein",
+          "stem": { "en": "fy + car", "cy": "fy + car" },
+          "accept": ["fy nghar", "fy nghar i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>fy</code> triggers NM: <code>c → ngh</code>.", "cy": "Mae <code>fy</code> yn sbarduno TT: <code>c → ngh</code>." }
+        },
+        {
+          "id": "l2-nm-typein-fy-2",
+          "type": "typein",
+          "stem": { "en": "fy + plant", "cy": "fy + plant" },
+          "accept": ["fy mhlant", "fy mhlant i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>p → mh</code> in NM, written <code>mhl-</code>.", "cy": "<code>p → mh</code> mewn TT, wedi'i ysgrifennu <code>mhl-</code>." }
+        },
+        {
+          "id": "l2-nm-typein-fy-3",
+          "type": "typein",
+          "stem": { "en": "fy + tŷ", "cy": "fy + tŷ" },
+          "accept": ["fy nhŷ", "fy nhy", "fy nhŷ i", "fy nhy i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>t → nh</code> in NM: <code>tŷ → nhŷ</code>.", "cy": "<code>t → nh</code> mewn TT: <code>tŷ → nhŷ</code>." }
+        },
+        {
+          "id": "l2-nm-typein-fy-4",
+          "type": "typein",
+          "stem": { "en": "fy + brawd", "cy": "fy + brawd" },
+          "accept": ["fy mrawd", "fy mrawd i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>b → m</code> in NM.", "cy": "<code>b → m</code> mewn TT." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Boundary rule: sometimes nothing changes 👀", "cy": "Rheol ffin: weithiau does dim newid 👀" },
+      "html": {
+        "en": "<p>NM only affects a small set of letters: <code>c p t g b d</code>.</p><p>&nbsp;</p><p>If a word starts with something else, you may get <b>no visible change</b> even when the trigger is real.</p><p>&nbsp;</p><ul><li><code>fy siop i</code></li><li><code>yn Lloegr</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mindset: “no change” can be correct Welsh. Your job is to spot the trigger and check whether the first letter is on the NM map.</p></div>",
+        "cy": "<p>Dim ond set fach o lythrennau mae TT yn eu newid: <code>c p t g b d</code>.</p><p>&nbsp;</p><p>Os yw’r gair yn dechrau gyda rhywbeth arall, gall fod <b>dim newid gweladwy</b> hyd yn oed pan fo’r sbardun yn iawn.</p><p>&nbsp;</p><ul><li><code>fy siop i</code></li><li><code>yn Lloegr</code></li></ul><p>&nbsp;</p><div class='callout'><p>Meddylfryd: gall “dim newid” fod yn gwbl gywir. Dy waith di yw gweld y sbardun a gwirio a yw’r llythyren gyntaf ar fap TT.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Core trigger B: <code>yn</code> meaning <i>in</i> (yn / ym / yng) 📍", "cy": "Sbardun craidd B: <code>yn</code> = <i>mewn</i> (yn / ym / yng) 📍" },
+      "html": {
+        "en": "<p>The preposition <b>yn</b> meaning <i>in</i> often triggers NM.</p><p>&nbsp;</p><p>In writing, it commonly appears as:</p><div class='table-wrap'><table><thead><tr><th>Before...</th><th>Write</th><th>Example</th></tr></thead><tbody><tr><td><code>b</code>/<code>m</code>/<code>p</code></td><td><code>ym</code></td><td><code>ym mhobman</code></td></tr><tr><td><code>c</code>/<code>g</code></td><td><code>yng</code></td><td><code>yng Nghymru</code></td></tr><tr><td>other letters / vowels</td><td><code>yn</code></td><td><code>yn Lloegr</code>, <code>yn ysgol</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Think: choose <code>yn</code>/<code>ym</code>/<code>yng</code>, then apply NM if the next word starts with <code>c p t g b d</code>.</p></div>",
+        "cy": "<p>Mae’r arddodiad <b>yn</b> = <i>mewn</i> yn aml yn sbarduno TT.</p><p>&nbsp;</p><p>Mewn ysgrifennu, mae’n aml yn ymddangos fel hyn:</p><div class='table-wrap'><table><thead><tr><th>Cyn...</th><th>Ysgrifenna</th><th>Enghraifft</th></tr></thead><tbody><tr><td><code>b</code>/<code>m</code>/<code>p</code></td><td><code>ym</code></td><td><code>ym mhobman</code></td></tr><tr><td><code>c</code>/<code>g</code></td><td><code>yng</code></td><td><code>yng Nghymru</code></td></tr><tr><td>llythrennau eraill / llafariaid</td><td><code>yn</code></td><td><code>yn Lloegr</code>, <code>yn ysgol</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Meddylia: dewis <code>yn</code>/<code>ym</code>/<code>yng</code>, wedyn cymhwyso TT os yw’r gair nesaf yn dechrau gyda <code>c p t g b d</code>.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Interactive drill: <code>yn</code> = in (type + check) ✍️", "cy": "Dril rhyngweithiol: <code>yn</code> = mewn (teipio + gwirio) ✍️" },
+      "html": {
+        "en": "<p>Build the final phrase. Don’t overthink it.</p><p>&nbsp;</p>",
+        "cy": "<p>Gwna’r ymadrodd terfynol. Paid â gorfeddwl.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-typein-in-1",
+          "type": "typein",
+          "stem": { "en": "yng + Cymru", "cy": "yng + Cymru" },
+          "accept": ["yng Nghymru"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Choose <code>yng</code> before <code>c</code>, then NM: <code>C → Ngh</code>.", "cy": "Dewis <code>yng</code> cyn <code>c</code>, wedyn TT: <code>C → Ngh</code>." }
+        },
+        {
+          "id": "l2-nm-typein-in-2",
+          "type": "typein",
+          "stem": { "en": "yng + Caerdydd", "cy": "yng + Caerdydd" },
+          "accept": ["yng Nghaerdydd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "NM of <code>C</code> is <code>Ngh</code>.", "cy": "TT <code>C</code> yw <code>Ngh</code>." }
+        },
+        {
+          "id": "l2-nm-typein-in-3",
+          "type": "typein",
+          "stem": { "en": "ym + pobman", "cy": "ym + pobman" },
+          "accept": ["ym mhobman"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>ym</code> before <code>p</code>, and NM: <code>p → mh</code>.", "cy": "<code>ym</code> cyn <code>p</code>, a TT: <code>p → mh</code>." }
+        },
+        {
+          "id": "l2-nm-typein-in-4",
+          "type": "typein",
+          "stem": { "en": "yn + Lloegr", "cy": "yn + Lloegr" },
+          "accept": ["yn Lloegr"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>ll</code> does not change in NM, so the written form stays the same.", "cy": "Dydy <code>ll</code> ddim yn newid mewn TT, felly mae’r ffurf yn aros yr un fath." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Trap: two different <code>yn</code> words 🧩", "cy": "Trap: dau fath o <code>yn</code> 🧩" },
+      "html": {
+        "en": "<p>This causes loads of confusion:</p><ul><li><b><code>yn</code> = in</b> (preposition) can be <code>yn</code>/<code>ym</code>/<code>yng</code> and can trigger <b>nasal</b>.</li><li><b><code>yn</code> as a linker after <code>bod</code></b> (often written <code>'n</code>) is a grammar marker and very often involves <b>soft</b> mutation, not nasal.</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Example</th></tr></thead><tbody><tr><td>in</td><td><code>Dw i yng Nghymru</code></td></tr><tr><td>linker after <code>bod</code></td><td><code>Dw i'n dda</code> (da → dda)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Quick check: if you can swap it for English <i>in</i>, it is the preposition and NM may be in play.</p></div>",
+        "cy": "<p>Mae hyn yn creu tipyn o ddryswch:</p><ul><li><b><code>yn</code> = mewn</b> (arddodiad) gall fod yn <code>yn</code>/<code>ym</code>/<code>yng</code> ac mae’n gallu sbarduno <b>TT</b>.</li><li><b><code>yn</code> ar ôl <code>bod</code></b> (yn aml <code>'n</code>) yw marc gramadegol ac mae’n aml yn golygu <b>TM</b>, nid TT.</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Enghraifft</th></tr></thead><tbody><tr><td>mewn</td><td><code>Dw i yng Nghymru</code></td></tr><tr><td>cysylltair ar ôl <code>bod</code></td><td><code>Dw i'n dda</code> (da → dda)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Gwirio cyflym: os gelli di ei gyfieithu fel <i>in</i>, dyma’r arddodiad, ac mae TT yn bosib.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: pick the right one ✅", "cy": "Profiad sydyn: dewis y ffurf gywir ✅" },
+      "html": {
+        "en": "<p>Choose the correct phrase:</p><p>&nbsp;</p>",
+        "cy": "<p>Dewisa’r ymadrodd cywir:</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-mcq-yn-1",
+          "type": "mcq",
+          "stem": { "en": "Dw i'n + da", "cy": "Dw i'n + da" },
+          "options": [
+            { "text": { "en": "Dw i'n da", "cy": "Dw i'n da" } },
+            { "text": { "en": "Dw i'n dda", "cy": "Dw i'n dda" } },
+            { "text": { "en": "Dw i'n nda", "cy": "Dw i'n nda" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "This is the linker <code>'n</code> after <code>bod</code>. It commonly involves <b>soft</b> mutation: <code>da → dda</code>.",
+            "cy": "Dyma’r cysylltair <code>'n</code> ar ôl <code>bod</code>. Mae’n aml yn golygu <b>TM</b>: <code>da → dda</code>."
+          }
+        },
+        {
+          "id": "l2-nm-mcq-yn-2",
+          "type": "mcq",
+          "stem": { "en": "Dw i + in Wales", "cy": "Dw i + mewn Cymru" },
+          "options": [
+            { "text": { "en": "Dw i yn Cymru", "cy": "Dw i yn Cymru" } },
+            { "text": { "en": "Dw i yng Nghymru", "cy": "Dw i yng Nghymru" } },
+            { "text": { "en": "Dw i yng Gymru", "cy": "Dw i yng Gymru" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "For <i>in</i>, use <code>yng</code> before <code>c</code>, then NM: <code>Cymru → Nghymru</code>.",
+            "cy": "Ar gyfer <i>mewn</i>, defnyddia <code>yng</code> cyn <code>c</code>, wedyn TT: <code>Cymru → Nghymru</code>."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Boundary rule: contact needs contact 🧱", "cy": "Rheol ffin: rhaid cael cyswllt 🧱" },
+      "html": {
+        "en": "<p>Contact triggers work best when they are <b>right next to</b> the word.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Direct contact</th><th>Not direct</th></tr></thead><tbody><tr><td><code>yng Nghymru</code></td><td><code>yn y wlad</code> (the article sits in between)</td></tr><tr><td><code>fy nghar</code></td><td><code>car fi</code> (different structure, different feel)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you expected NM but did not get it, ask: is the trigger actually touching the word?</p></div>",
+        "cy": "<p>Mae sbardunau cysylltiad yn gweithio orau pan maen nhw <b>yn syth wrth ymyl</b> y gair.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Cyswllt union</th><th>Ddim yn union</th></tr></thead><tbody><tr><td><code>yng Nghymru</code></td><td><code>yn y wlad</code> (mae’r erthygl rhyngddynt)</td></tr><tr><td><code>fy nghar</code></td><td><code>car fi</code> (strwythur gwahanol, teimlad gwahanol)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os oedde ti’n disgwyl TT ond nad yw’n digwydd, gofynna: a yw’r sbardun yn cyffwrdd â’r gair go iawn?</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Possessives recap (so you don’t build bad habits) ⚠️", "cy": "Crynodeb meddiannau (i osgoi arferion drwg) ⚠️" },
+      "html": {
+        "en": "<p>This is the high-value boundary set:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Word</th><th>Often triggers</th><th>Example</th></tr></thead><tbody><tr><td>my</td><td><code>fy</code></td><td><b>nasal</b></td><td><code>fy nghar i</code></td></tr><tr><td>your (sing.)</td><td><code>dy</code></td><td><b>soft</b></td><td><code>dy gar di</code></td></tr><tr><td>his</td><td><code>ei</code></td><td><b>soft</b></td><td><code>ei gar e</code></td></tr><tr><td>her</td><td><code>ei</code> + <code>hi</code></td><td><b>aspirate</b> on <code>c/p/t</code></td><td><code>ei char hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Bonus: in careful written Welsh, <b><code>ei</code> (her)</b>, <b><code>ein</code></b> and <b><code>eu</code></b> can add <code>h</code> before a vowel: <code>ei hanrheg hi</code>. It is a handy signal for gender in writing.</p></div>",
+        "cy": "<p>Dyma’r set ffin gwerth uchel:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Gair</th><th>Fel arfer</th><th>Enghraifft</th></tr></thead><tbody><tr><td>fy</td><td><code>fy</code></td><td><b>trwynol</b></td><td><code>fy nghar i</code></td></tr><tr><td>dy (unig.)</td><td><code>dy</code></td><td><b>meddal</b></td><td><code>dy gar di</code></td></tr><tr><td>ei (e)</td><td><code>ei</code></td><td><b>meddal</b></td><td><code>ei gar e</code></td></tr><tr><td>ei (hi)</td><td><code>ei</code> + <code>hi</code></td><td><b>llaes</b> ar <code>c/p/t</code></td><td><code>ei char hi</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Bonws: mewn Cymraeg ysgrifenedig gofalus, gall <b><code>ei</code> (hi)</b>, <b><code>ein</code></b> a <b><code>eu</code></b> ychwanegu <code>h</code> cyn llafariad: <code>ei hanrheg hi</code>. Mae’n arwydd defnyddiol o ryw mewn ysgrifennu.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick drill: <code>fy</code> vs <code>dy</code> ✅", "cy": "Dril sydyn: <code>fy</code> vs <code>dy</code> ✅" },
+      "html": {
+        "en": "<p>Pick the correct phrase:</p><p>&nbsp;</p>",
+        "cy": "<p>Dewisa’r ymadrodd cywir:</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-mcq-fy-vs-dy-1",
+          "type": "mcq",
+          "stem": { "en": "fy + plant", "cy": "fy + plant" },
+          "options": [
+            { "text": { "en": "fy plant", "cy": "fy plant" } },
+            { "text": { "en": "fy mhlant", "cy": "fy mhlant" } },
+            { "text": { "en": "fy blant", "cy": "fy blant" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>fy</code> often triggers NM: <code>p → mh</code> (written <code>mhl-</code>).", "cy": "Mae <code>fy</code> yn aml yn sbarduno TT: <code>p → mh</code> (wedi'i ysgrifennu <code>mhl-</code>)." }
+        },
+        {
+          "id": "l2-nm-mcq-fy-vs-dy-2",
+          "type": "mcq",
+          "stem": { "en": "dy + car", "cy": "dy + car" },
+          "options": [
+            { "text": { "en": "dy nghar", "cy": "dy nghar" } },
+            { "text": { "en": "dy gar", "cy": "dy gar" } },
+            { "text": { "en": "dy car", "cy": "dy car" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>dy</code> is soft mutation, not nasal: <code>car → gar</code>.", "cy": "TM sydd gyda <code>dy</code>, nid TT: <code>car → gar</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Common trap: one mutation only 🧯", "cy": "Trap cyffredin: un treiglad yn unig 🧯" },
+      "html": {
+        "en": "<p>Welsh does not “stack” mutations.</p><p>&nbsp;</p><p>If a word is already mutated, don’t try to mutate it again.</p><p>&nbsp;</p><div class='callout'><p>Quick self-check: if you are about to add extra letters on top of <code>ngh-</code>, <code>mh-</code> or <code>nh-</code>, stop.</p></div>",
+        "cy": "<p>Dydy’r Gymraeg ddim yn “stacio” treigladau.</p><p>&nbsp;</p><p>Os yw gair eisoes wedi’i dreiglo, paid â cheisio’i dreiglo eto.</p><p>&nbsp;</p><div class='callout'><p>Gwirio cyflym: os wyt ti ar fin ychwanegu llythrennau ar ben <code>ngh-</code>, <code>mh-</code> neu <code>nh-</code>, stopia.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Mini-quiz: 8 quick hits ⚡", "cy": "Mini-gwis: 8 taro cyflym ⚡" },
+      "html": {
+        "en": "<p>Do these fast. If you get one wrong, read the feedback and move on.</p><p>&nbsp;</p>",
+        "cy": "<p>Gwna’r rhain yn gyflym. Os wyt ti’n camu, darllena’r adborth a symud ymlaen.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-quiz-1",
+          "type": "mcq",
+          "stem": { "en": "fy + brawd", "cy": "fy + brawd" },
+          "options": [
+            { "text": { "en": "fy brawd", "cy": "fy brawd" } },
+            { "text": { "en": "fy mrawd", "cy": "fy mrawd" } },
+            { "text": { "en": "fy frawd", "cy": "fy frawd" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>b → m</code> in NM.", "cy": "<code>b → m</code> mewn TT." }
+        },
+        {
+          "id": "l2-nm-quiz-2",
+          "type": "typein",
+          "stem": { "en": "fy + tŷ", "cy": "fy + tŷ" },
+          "accept": ["fy nhŷ", "fy nhy", "fy nhŷ i", "fy nhy i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>t → nh</code> in NM.", "cy": "<code>t → nh</code> mewn TT." }
+        },
+        {
+          "id": "l2-nm-quiz-3",
+          "type": "typein",
+          "stem": { "en": "ym + pobman", "cy": "ym + pobman" },
+          "accept": ["ym mhobman"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>ym</code> before <code>p</code>, and NM: <code>p → mh</code>.", "cy": "<code>ym</code> cyn <code>p</code>, a TT: <code>p → mh</code>." }
+        },
+        {
+          "id": "l2-nm-quiz-4",
+          "type": "mcq",
+          "stem": { "en": "yng + Cymru", "cy": "yng + Cymru" },
+          "options": [
+            { "text": { "en": "yng Nghymru", "cy": "yng Nghymru" } },
+            { "text": { "en": "yng Gymru", "cy": "yng Gymru" } },
+            { "text": { "en": "yn Nghymru", "cy": "yn Nghymru" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "NM of <code>C</code> is <code>Ngh</code>: <code>Cymru → Nghymru</code>.", "cy": "TT <code>C</code> yw <code>Ngh</code>: <code>Cymru → Nghymru</code>." }
+        },
+        {
+          "id": "l2-nm-quiz-5",
+          "type": "mcq",
+          "stem": { "en": "Dw i'n + da", "cy": "Dw i'n + da" },
+          "options": [
+            { "text": { "en": "Dw i'n dda", "cy": "Dw i'n dda" } },
+            { "text": { "en": "Dw i'n nda", "cy": "Dw i'n nda" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "This is <b>soft</b> mutation after <code>'n</code>: <code>da → dda</code>.", "cy": "TM yw hwn ar ôl <code>'n</code>: <code>da → dda</code>." }
+        },
+        {
+          "id": "l2-nm-quiz-6",
+          "type": "typein",
+          "stem": { "en": "fy + drws", "cy": "fy + drws" },
+          "accept": ["fy nrws", "fy nrws i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>d → n</code> in NM.", "cy": "<code>d → n</code> mewn TT." }
+        },
+        {
+          "id": "l2-nm-quiz-7",
+          "type": "typein",
+          "stem": { "en": "fy + gardd", "cy": "fy + gardd" },
+          "accept": ["fy ngardd", "fy ngardd i"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>g → ng</code> in NM.", "cy": "<code>g → ng</code> mewn TT." }
+        },
+        {
+          "id": "l2-nm-quiz-8",
+          "type": "mcq",
+          "stem": { "en": "yn + Lloegr", "cy": "yn + Lloegr" },
+          "options": [
+            { "text": { "en": "yn Lloegr", "cy": "yn Lloegr" } },
+            { "text": { "en": "yn Nloegr", "cy": "yn Nloegr" } }
+          ],
+          "correct": [0],
+          "explain": { "en": "<code>ll</code> does not change in NM, so there is no visible mutation.", "cy": "Dydy <code>ll</code> ddim yn newid mewn TT, felly does dim treiglad gweladwy." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "A quick reality note 🧭", "cy": "Nodyn realiti 🧭" },
+      "html": {
+        "en": "<p>You will hear variation with NM, especially in fast, casual speech.</p><p>&nbsp;</p><div class='callout'><p>Don’t let that stress you out. Learn the standard patterns first, then notice variation as you listen and read.</p></div>",
+        "cy": "<p>Byddi di’n clywed amrywiad gyda TT, yn enwedig ar lafar cyflym ac achlysurol.</p><p>&nbsp;</p><div class='callout'><p>Paid â gadael i hynny dy straenio. Dysga’r patrymau safonol yn gyntaf, wedyn sylwa ar amrywiad wrth wrando a darllen.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Now practise ➜ (same rules, drill mode) 🎯", "cy": "Nawr ymarfer ➜ (yr un rheolau, modd drilio) 🎯" },
+      "html": {
+        "
