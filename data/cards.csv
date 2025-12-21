@@ -788,7 +788,6 @@ c000787,"Soft, Contact",Preposition,ar,dod,verb-noun,Mae rhagor o fanylion ar , 
 c000788,"Soft, Contact",Preposition,gan,dweud,verb-noun,Aeth e i ffwrdd , dim byd.,ddweud,SM,"gan (often ‘…-ing’) softens d→dd: dweud → ddweud. Means ‘leaving, saying nothing’."
 c000789,"Soft, Contact",Preposition,gan,canu,verb-noun,Aethon nhw adref , yn dawel.,ganu,SM,"After gan, c→g: canu → ganu. Natural ‘went home, singing …’ description."
 c000790,None,Preposition,cyn,gorffen,verb-noun, ," y wers, gad i ni adolygu.",gorffen,NONE,cyn ‘before’ does not soften a following action word: gorffen stays the same. The lack of change is normal here.
-c000791,None,Subordinator,cyn,bod,verb,Cyrhaeddwn ni , hir.,bo,NONE,"Set expression cyn bo hir ‘before long’. The bo form is just how this phrase is said, there’s no mutation happening."
 c000792,None,Negation,Paid,torri,verb-noun,Paid, y rhaff!,torri,NONE,Paid on its own makes a negative command but doesn’t change the next word: torri stays radical here.
 c000793,"Aspirate, Contact",Preposition,â,torri,verb-noun,Paid â, y rhaff!,thorri,AM,"With the linker â (‘with’ in this pattern), p/t/c → ph/th/ch. So torri → thorri in Paid â thorri!"
 c000794,None,Negation,Peidiwch,talu,verb-noun, , ar y safle.,talu,NONE,Peidiwch (plural/polite) makes the command negative but causes no change to the action word: talu unchanged.
@@ -1008,6 +1007,7 @@ c001007,"Soft, Contact",Intensifier,mor,da,adj,Mae e mor,.,dda,SM,Mor makes the 
 c001008,"Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 c001009,"Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 c001010,"Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
