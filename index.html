@@ -14,6 +14,26 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
   </style>
+
+  <!-- Custom tooltip CSS injected for mode controls and shuffle button -->
+  <style>
+    .tooltip {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.75rem;
+      color: var(--text);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+      z-index: 50;
+      pointer-events: none;
+      max-width: 14rem;
+    }
+    .tooltip.hidden {
+      display: none;
+    }
+  </style>
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- PapaParse for CSV loading -->
@@ -214,6 +234,30 @@
     const blob = new Blob([text], {type});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+  }
+
+  // Attach a simple tooltip to a target element.  The tooltip will appear near the
+  // element on mouseover and hide on mouseout.  It uses the provided text and
+  // leverages a global CSS class defined in the head.  Tooltips are appended
+  // to the document body and reposition on show.
+  function attachTooltip(el, text){
+    if (!el || !text) return;
+    const tip = document.createElement('div');
+    tip.className = 'tooltip hidden';
+    tip.textContent = text;
+    document.body.appendChild(tip);
+    function positionTip(){
+      const rect = el.getBoundingClientRect();
+      tip.style.top = `${rect.bottom + window.scrollY + 6}px`;
+      tip.style.left = `${rect.left + window.scrollX}px`;
+    }
+    el.addEventListener('mouseenter', () => {
+      tip.classList.remove('hidden');
+      positionTip();
+    });
+    el.addEventListener('mouseleave', () => {
+      tip.classList.add('hidden');
+    });
   }
   function getParam(k){ return new URLSearchParams(location.search).get(k); }
 
@@ -1030,6 +1074,9 @@ async function playPollySentence(sentence) {
       } else {
         b.title = langT.smartModeDesc || '';
       }
+      // Remove default focus outline/box-shadow to prevent ugly blue borders
+      b.style.outline = 'none';
+      b.style.boxShadow = 'none';
       b.onclick = () => {
         if (state.practiceMode === value) return;
         state.practiceMode = value;
@@ -1049,9 +1096,24 @@ async function playPollySentence(sentence) {
     btnShuffleNow.innerHTML = `<span aria-hidden="true">🔀</span><span class="ml-2">${esc(t.shuffleNow)}</span>`;
     // Tooltip explaining what this action does
     btnShuffleNow.title = t.shuffleNowDesc || '';
+    // Remove default focus outline to keep styling consistent
+    btnShuffleNow.style.outline = 'none';
+    btnShuffleNow.style.boxShadow = 'none';
     btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
 
     headerRight.append(seg, btnShuffleNow);
+
+    // Attach custom tooltips to the mode buttons and shuffle button
+    // (uses text from the current locale via t)
+    try {
+      if (seg.children && seg.children.length >= 2) {
+        attachTooltip(seg.children[0], t.shuffleModeDesc);
+        attachTooltip(seg.children[1], t.smartModeDesc);
+      }
+      attachTooltip(btnShuffleNow, t.shuffleNowDesc);
+    } catch(err) {
+      console.warn('Tooltip setup failed', err);
+    }
     header.append(headerLeft, headerRight);
     // Active filters summary as chips
     const summary = document.createElement('div');
