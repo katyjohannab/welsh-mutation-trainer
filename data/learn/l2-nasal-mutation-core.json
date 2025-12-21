@@ -355,4 +355,22 @@
     {
       "title": { "en": "Now practise ➜ (same rules, drill mode) 🎯", "cy": "Nawr ymarfer ➜ (yr un rheolau, modd drilio) 🎯" },
       "html": {
-        "
+        "en": "<p>Go straight into the Trainer and drill what you’ve just learned.</p><p>&nbsp;</p><div class='callout'><p>Best routine: 3–5 minutes a day for a week. You will remember more than doing one long session.</p></div>",
+        "cy": "<p>Dos yn syth i’r Hyfforddwr a drilia’r hyn wyt ti newydd ei ddysgu.</p><p>&nbsp;</p><div class='callout'><p>Y drefn orau: 3–5 munud y dydd am wythnos. Byddi di’n cofio mwy na gwneud un sesiwn hir.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l2-nm-actions",
+          "type": "actions",
+          "prompt": { "en": "Pick a drill category:", "cy": "Dewisa gategori drilio:" },
+          "buttons": [
+            { "label": { "en": "Possessives (fy)", "cy": "Meddiannau (fy)" }, "href": "./index.html", "kind": "primary" },
+            { "label": { "en": "In (yn / ym / yng)", "cy": "Mewn (yn / ym / yng)" }, "href": "./index.html", "kind": "ghost" },
+            { "label": { "en": "Mixed mini-drill", "cy": "Dril cymysg" }, "href": "./index.html", "kind": "ghost" }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
