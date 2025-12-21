@@ -695,7 +695,7 @@ c000694,"Soft, Contact",Preposition,tan,diwedd,noun-masc,Bydd y prosiect yn parh
 c000695,"Soft, Contact",Preposition,at,diwedd,noun-masc,Anfonwch yr adroddiad at,yr wythnos.,ddiwedd,SM,Preposition at causes SM: at + diwedd → ddiwedd (d→dd).
 c000696,"Soft, Contact",Preposition,hyd,diwedd,noun-masc,Bydd y cynnig yn ddilys hyd,y chwarter.,ddiwedd,SM,Preposition hyd causes SM on the next word: hyd + diwedd → diwedd (d→dd).
 c000697,"Soft, Contact",Preposition,ar,canol,noun-masc,Daethon ni at ei gilydd ar,dydd.,ganol,SM,ar triggers SM on contact: ar + canol → ganol (c→g).
-c000698,"Soft, Fixed",Complement,ddoe,doe,time-adv,Rhedais i 10km,- dw i’n flin heddiw!,ddoe,SM,"Ddoe is the set ‘yesterday’ adverb. It keeps the soft dd- even at the start of a sentence or after other words, there’s no ‘unmutated’ version here."
+c000698,"None",Complement,ddoe,ddoe,time-adv,Rhedais i 10km,- dw i’n flin heddiw!,ddoe,None,"Ddoe is the set ‘yesterday’ adverb and it is not mutable."
 c000699,None,Complement,heddiw,heddiw,time-adv,Bu’r tîm yn ymarfer prynhawn," , a gêm fory.",heddiw,NONE,Heddiw and fory in time phrases don’t soften; they appear as themselves. Save your softening for the fixed ones like ddoe and the ar + noun patterns above.
 c000700,"Soft, Contact",Intensifier,mor,drud,adj,Mae’r tocynnau mor,y dyddiau hyn.,ddrud,SM,"In the frame mor + adjective (‘so ...’), the adjective softens: d→dd here, so drud → ddrud. It’s the pattern that causes it, not the word next to it."
 c000701,"Soft, Contact",Intensifier,mor,clir,adj,Mae’r neges mor,nes nad oes amheuaeth.,glir,SM,mor makes the following adjective start softer; c→g so clir → glir. Gender doesn’t matter here—this frame always softens.
@@ -1007,6 +1007,7 @@ c001007,"Soft, Contact",Intensifier,mor,da,adj,Mae e mor,.,dda,SM,Mor makes the 
 c001008,"Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 c001009,"Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 c001010,"Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
 
