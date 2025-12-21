@@ -2,7 +2,7 @@
   "lessons": [
     {
       "id": "treiglad-intro",
-      "title": { "en": "Introduction to Mutations", "cy": "Cyflwyniad i Dreigladau" },
+      "title": { "en": "🧱 Introduction to Mutations", "cy": "🧱 Cyflwyniad i Dreigladau" },
       "desc": { "en": "Quick introduction to mutation including important concepts and key principles", "cy": "Cyflwyniad cyflym i dreiglo gan gynnwys cysyniadau pwysig ac egwyddorion allweddol" },
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 10,
@@ -12,7 +12,7 @@
     },
     {
       "id": "l1-soft-mutation-core",
-      "title": { "en": "Soft Mutation", "cy": "Treiglad Meddal" },
+      "title": { "en": "🌊 Soft Mutation", "cy": "🌊 Treiglad Meddal" },
       "desc": {
         "en": "A level 1 lesson on soft mutation inc prepositions, dy/ei, y + feminine nouns, and the big boundary rules.",
         "cy": "Gwers G1 ar dreiglad meddal, yn cynnwys arddodiaid, dy/ei, y + enwau benywaidd, a’r rheolau ffin pwysig."
@@ -27,7 +27,7 @@
       "id": "l2-nasal-mutation-core",
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 16,
-      "title": { "en": "Nasal mutation (core)", "cy": "Treiglad trwynol (craidd)" },
+      "title": { "en": "👃 Nasal mutation", "cy": "👃 Treiglad trwynol" },
       "desc": {
         "en": "The high-frequency nasal contexts: fy (my), and yn meaning in (with ym / yng).",
         "cy": "Y cyd-destunau trwynol amlaf: fy (fy), a yn = mewn (gyda ym / yng)."
@@ -40,7 +40,7 @@
       "id": "l1-aspirate-mutation-core",
       "level": { "en": "Beginner", "cy": "Dechreuwr" },
       "minutes": 15,
-      "title": { "en": "Aspirate mutation (core)", "cy": "Treiglad llaes (craidd)" },
+      "title": { "en": "💨 Aspirate mutation", "cy": "💨 Treiglad llaes" },
       "desc": {
         "en": "The high-frequency triggers: ei (her), a, â, plus the handy h- before vowels.",
         "cy": "Y sbardunau cyffredin: ei (hi), a, â, a’r h- defnyddiol o flaen llafariaid."
