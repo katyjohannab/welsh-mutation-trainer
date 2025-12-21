@@ -658,7 +658,7 @@ c000657,None,Complement,yfory,yfory,time-adv,Awn ni at y dref,os bydd amser.,yfo
 c000658,"Soft, Fixed",Complement,ddoe,doe,time-adv,Bues i yn y llyfrgell bore,.,ddoe,SM,"In bore ddoe (‘yesterday morning’), doe is always ddoe in this time phrase. It’s a fixed soft form, not triggered by the word bore."
 c000659,None,Complement,heddiw,heddiw,time-adv,Roedd yr arholiad bore,.,heddiw,NONE,Bore heddiw uses the unchanged form heddiw; there’s no softening in this phrase.
 c000660,None,Complement,heddiw,heddiw,time-adv,Rydyn ni’n cyfarfod prynhawn,yn y ganolfan.,heddiw,NONE,Prynhawn heddiw has no softening; heddiw stays as it is.
-c000661,None,Complement,fory,yfory,time-adv,Mae gen i apwyntiad bore,.,fory,NONE,"You’ll usually see bore fory (spelt fory here). That’s standard spelling in this phrase, not a mutation of yfory."
+c000661,None,Complement,fory,yfory,time-adv,Mae gen i apwyntiad bore,.,yfory,NONE,"You’ll usually see bore yfory spelt fory. That’s standard spelling in this phrase, not a mutation of yfory."
 c000662,None,Complement,fory,yfory,time-adv,Cawn ni alwad Teams prynhawn,i drafod y camau nesaf.,fory,NONE,"Prynhawn fory (spelt fory) is the usual form; again, that spelling is conventional here, not soft mutation."
 c000663,"Soft, Fixed",Complement,dydd,dydd,noun-masc,,Llun byddwn ni’n cyfarfod am ddeg.,Ddydd,SM,"In time phrases like Ddydd Llun (‘on Monday’), dydd appears as Ddydd. Historically ar (‘on’) is left out, but the soft start on dydd remains."
 c000664,"Soft, Fixed",Complement,dydd,dydd,noun-masc,,Mawrth mae’r cwrs yn dechrau.,Ddydd,SM,Ddydd Mawrth = ‘on Tuesday’. The soft start belongs to the time expression (not to the following word).
@@ -1007,5 +1007,6 @@ c001007,"Soft, Contact",Intensifier,mor,da,adj,Mae e mor,.,dda,SM,Mor makes the 
 c001008,"Soft, Contact",Intensifier,rhy,mawr,adj,Mae hwn yn rhy,.,fawr,SM,Rhy makes the next adjective soften so mawr becomes fawr
 c001009,"Soft, Contact",Negation,ni,bydd,verb,Ni,ots gen i.,fydd,SM,Ni makes the following verb soften so bydd becomes fydd
 c001010,"Soft, Contact",Interrogative,a,bydd,verb,A,e'n dod heno?,fydd,SM,The question particle a makes the following verb soften so bydd becomes fydd
+
 
 
