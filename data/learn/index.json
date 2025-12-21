@@ -22,6 +22,19 @@
       "tags": ["SOFT MUTATION", "PREPOSITIONS", "POSSESSIVES", "NOUN-PHRASES"],
       "slideCount": 36,
       "deck": "./data/learn/l1-soft-mutation-core.json"
+    },
+    {
+      "id": "l1-aspirate-mutation-core",
+      "level": { "en": "Beginner", "cy": "Dechreuwr" },
+      "minutes": 15,
+      "title": { "en": "Aspirate mutation (core)", "cy": "Treiglad llaes (craidd)" },
+      "desc": {
+        "en": "The high-frequency triggers: ei (her), a, â, plus the handy h- before vowels.",
+        "cy": "Y sbardunau cyffredin: ei (hi), a, â, a’r h- defnyddiol o flaen llafariaid."
+      },
+      "tags": ["ASPIRATE", "TREIGLAD-LLAES", "POSSESSIVES", "FOUNDATIONS"],
+      "slideCount": 19,
+      "deck": "./data/learn/l1-aspirate-mutation-core.json"
     }
   ]
 }
