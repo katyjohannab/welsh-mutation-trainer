@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welsh Mutation Trainer</title>
-  <link rel="stylesheet" href="styles.css" />
+   <link rel="stylesheet" href="styles.css" />
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- PapaParse for CSV loading -->
@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  
 </head>
 
 <body class="min-h-screen text-slate-900">
@@ -200,95 +202,6 @@
   function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
   function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
 
-  // ---------- Smart review (Leitner) ----------
-  // Stored as: { [CardId]: boxNumber }
-  const LEITNER_LS_KEY = 'wm_leitner_boxes_v1';
-  const PRACTICE_MODE_LS_KEY = 'wm_practice_mode_v1';
-  const LEITNER_MAX_BOX = 5;
-  const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
-
-  function getCardId(card, idxFallback){
-    const raw = (card && (card.CardId ?? card.CardID ?? card.ID ?? card.Id));
-    const s = (raw == null ? '' : String(raw)).trim();
-    return s ? s : `row_${idxFallback}`;
-  }
-  function clampBox(n){
-    const x = Number(n);
-    if (!Number.isFinite(x)) return 1;
-    return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
-  }
-  function getBoxFor(cardId){
-    return clampBox(state.leitner?.[cardId] ?? 1);
-  }
-  function setBoxFor(cardId, box){
-    if (!state.leitner) state.leitner = {};
-    state.leitner[cardId] = clampBox(box);
-    saveLS(LEITNER_LS_KEY, state.leitner);
-  }
-  function updateLeitner(cardId, result){
-    // result: 'correct' | 'wrong' | 'skipped'
-    const cur = getBoxFor(cardId);
-    const next = (result === 'correct')
-      ? Math.min(LEITNER_MAX_BOX, cur + 1)
-      : 1;
-    setBoxFor(cardId, next);
-  }
-
-  function weightedPickBox(candidatesByBox){
-    let total = 0;
-    for (let b=1; b<=LEITNER_MAX_BOX; b++){
-      if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
-    }
-    if (!total) return 1;
-    let r = Math.random() * total;
-    for (let b=1; b<=LEITNER_MAX_BOX; b++){
-      if (!candidatesByBox[b]?.length) continue;
-      r -= LEITNER_WEIGHTS[b];
-      if (r <= 0) return b;
-    }
-    return 1;
-  }
-
-  function pickNextSmartIdx(){
-    const n = state.filtered?.length || 0;
-    if (!n) return 0;
-
-    // Decrement any queued retries, and serve the first due one (avoids immediate repeats).
-    if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-    if (state.smartQueue.length){
-      state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter||0) - 1));
-      const duePos = state.smartQueue.findIndex(item => (item.dueAfter||0) === 0 && item.idx !== state.smartIdx);
-      if (duePos >= 0){
-        const item = state.smartQueue.splice(duePos, 1)[0];
-        return item.idx;
-      }
-    }
-
-    const byBox = {1:[],2:[],3:[],4:[],5:[]};
-    for (let i=0; i<n; i++){
-      const id = getCardId(state.filtered[i], i);
-      const box = getBoxFor(id);
-      byBox[box].push(i);
-    }
-
-    let chosenBox = weightedPickBox(byBox);
-    if (!byBox[chosenBox].length){
-      for (let b=1; b<=LEITNER_MAX_BOX; b++){
-        if (byBox[b].length){ chosenBox = b; break; }
-      }
-    }
-
-    const pool = byBox[chosenBox] || [];
-    if (!pool.length) return Math.floor(Math.random() * n);
-
-    let idx = pool[Math.floor(Math.random() * pool.length)];
-    for (let tries=0; tries<6 && idx === state.smartIdx && pool.length > 1; tries++){
-      idx = pool[Math.floor(Math.random() * pool.length)];
-    }
-    return idx;
-  }
-
-
   // ---------- Data coercion ----------
   const PREP = new Set(["am","ar","at","dan","dros","tros","drwy","trwy","gan","heb","hyd","i","o","tan","wrth","yng","yn","gyda","hefo","â"]);
   function getVal(row, names){
@@ -320,7 +233,6 @@
       fam = famRaw.split(',')[0].trim();
     }
     return {
-      CardId: getVal(r, ["CardId","Card ID","ID","Id","id","cardId","card_id"]) || "",
       RuleFamily: fam,
       RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig||'').toLowerCase()) ? 'Preposition' : ''),
       Trigger: trig,
@@ -344,11 +256,6 @@
     triggerQuery: loadLS('wm_trig',''),
     nilOnly: loadLS('wm_nil', false),
     mode: loadLS('wm_mode','practice'),
-    practiceMode: loadLS(PRACTICE_MODE_LS_KEY, 'shuffle'),
-    leitner: loadLS(LEITNER_LS_KEY, {}),
-    smartIdx: null,
-    smartCount: 0,
-    smartQueue: [],
     deck: [],
     p: 0,
     guess: '',
@@ -418,18 +325,6 @@
       skip: 'Skip',
       check: 'Check',
       next: 'Next',
-      shuffleNow: 'Shuffle',
-      shuffleModeLabel: 'Shuffle / Ar hap',
-      smartModeLabel: 'Smart review / Adolygu clyfar',
-      shuffleModeShort: 'Shuffle',
-      smartModeShort: 'Smart',
-      cardLabel: 'Card',
-      reviewedLabel: 'Reviewed',
-      poolLabel: 'Pool',
-      howItWorksTitle: 'How this works / Sut mae hyn yn gweithio',
-      howItWorksEN: 'Shuffle gives random cards. Smart review uses a Leitner system: correct answers move cards up (shown less often); wrong or skipped resets to box 1 (shown more often).',
-      howItWorksCY: 'Mae Ar hap yn rhoi cardiau ar hap. Mae Adolygu clyfar yn defnyddio system Leitner: ateb cywir yn symud y cerdyn i fyny (llai aml); camgymeriad neu neidio yn ei ailosod i flwch 1 (yn amlach).',
-
       answerLabel: 'Answer',
       triggerLabel: 'Trigger',
       ruleLabel: 'Rule',
@@ -495,18 +390,6 @@
       skip: 'Hepgor',
       check: 'Gwirio',
       next: 'Nesaf',
-      shuffleNow: 'Cymysgu',
-      shuffleModeLabel: 'Ar hap / Shuffle',
-      smartModeLabel: 'Adolygu clyfar / Smart review',
-      shuffleModeShort: 'Ar hap',
-      smartModeShort: 'Clyfar',
-      cardLabel: 'Cerdyn',
-      reviewedLabel: 'Wedi adolygu',
-      poolLabel: 'Set',
-      howItWorksTitle: 'Sut mae hyn yn gweithio / How this works',
-      howItWorksEN: 'Shuffle gives random cards. Smart review uses a Leitner system: correct answers move cards up (shown less often); wrong or skipped resets to box 1 (shown more often).',
-      howItWorksCY: 'Mae Ar hap yn rhoi cardiau ar hap. Mae Adolygu clyfar yn defnyddio system Leitner: ateb cywir yn symud y cerdyn i fyny (llai aml); camgymeriad neu neidio yn ei ailosod i flwch 1 (yn amlach).',
-
       answerLabel: 'Ateb',
       triggerLabel: 'Sbardun',
       ruleLabel: 'Rheol',
@@ -664,7 +547,7 @@ async function initData(){
       if (sheet){ rows = await loadCsvUrl(sheet); }
       else { rows = await loadAllDefault(); }
     }catch(e){ console.warn('Data load failed; no demo fallback configured.', e); rows = await loadAllDefault(); }
-    const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+    const expected = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
     const cleaned = rows.map(r => {
       const m = coerceRow(r); const o = {};
       for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
@@ -788,23 +671,10 @@ async function initData(){
   }
 
   function rebuildDeck(){
-    const n = state.filtered.length;
-    const d = Array.from({length:n}, (_,i)=>i);
+    const n = state.filtered.length; const d = Array.from({length:n}, (_,i)=>i);
     for (let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
-    state.deck = d;
-    state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
+    state.deck = d; state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
     state.freezeIdx = null; state.freezePos = null;
-
-    // Reset any "show again soon" queue used by Smart review.
-    state.smartQueue = [];
-
-    if (state.practiceMode === 'smart'){
-      state.smartCount = 0;
-      state.smartIdx = pickNextSmartIdx();
-    } else {
-      state.smartIdx = null;
-      state.smartCount = 0;
-    }
   }
 
 //build Sentence
@@ -925,79 +795,16 @@ async function playPollySentence(sentence) {
         buildFilters(); applyFilters(); rebuildDeck(); render();
       }); }
       return; }
-    // Pick a current card depending on practice mode.
-    let idxNow;
-    let posText = '';
-    if (state.practiceMode === 'smart'){
-      if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
-      idxNow = state.smartIdx;
-      state.currentDeckPos = -1;
-      const reviewed = (state.smartCount || 0) + 1;
-      posText = `${t.reviewedLabel} ${reviewed} · ${t.poolLabel} ${n}`;
-      $('#cardPos').textContent = `${t.smartModeShort} · ${posText}`;
-    } else {
-      const deckIdx = state.p % state.deck.length;
-      idxNow = state.deck[deckIdx];
-      state.currentDeckPos = deckIdx;
-      const pos = state.deck.length ? (state.p % state.deck.length) + 1 : 0;
-      posText = `${t.cardLabel} ${pos} / ${state.deck.length || 0}`;
-      $('#cardPos').textContent = posText;
-    }
-
+    const deckIdx = state.p % state.deck.length;
+    const idxNow = state.deck[deckIdx];
     const idx = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
     const card = state.filtered[idx];
     state.currentIdx = idxNow;
-
+    state.currentDeckPos = deckIdx;
+    $('#cardPos').textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
     const wrap = document.createElement('div');
-
-    // Header row (mode toggle + shuffle button)
-    const header = document.createElement('div');
-    header.className = 'flex flex-wrap items-center justify-between gap-2 mb-2';
-
-    const headerLeft = document.createElement('div');
-    headerLeft.className = 'flex flex-wrap items-center gap-2 text-xs text-slate-500';
-
-    const modePill = document.createElement('span');
-    modePill.className = 'inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-2 py-1 text-[11px] font-semibold text-slate-700';
-    modePill.textContent = (state.practiceMode === 'smart') ? t.smartModeLabel : t.shuffleModeLabel;
-
-    const posSpan = document.createElement('span');
-    posSpan.textContent = posText;
-
-    headerLeft.append(modePill, posSpan);
-
-    const headerRight = document.createElement('div');
-    headerRight.className = 'flex items-center gap-2';
-
-    const seg = document.createElement('div');
-    seg.className = 'inline-flex overflow-hidden rounded-full border border-slate-200 bg-white/70';
-
-    const mkSegBtn = (label, value) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      const on = state.practiceMode === value;
-      b.className = `px-3 py-1.5 text-[12px] font-semibold ${on ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-50'}`;
-      b.textContent = label;
-      b.onclick = () => {
-        if (state.practiceMode === value) return;
-        state.practiceMode = value;
-        saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
-        rebuildDeck();
-        render();
-      };
-      return b;
-    };
-
-    seg.append(mkSegBtn(t.shuffleModeShort, 'shuffle'), mkSegBtn(t.smartModeShort, 'smart'));
-
-    const btnShuffleNow = document.createElement('button');
-    btnShuffleNow.type = 'button';
-    btnShuffleNow.className = 'btn btn-ghost px-3 py-2';
-    btnShuffleNow.innerHTML = `<span aria-hidden="true">🔀</span><span class="ml-2">${esc(t.shuffleNow)}</span>`;
-    btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
-
-    headerRight.append(seg, btnShuffleNow);
-    header.append(headerLeft, headerRight);
+    const header = document.createElement('div'); header.className='text-slate-500 text-xs mb-2';
+    header.textContent = `Card ${state.deck.length? (state.p % state.deck.length)+1 : 0} / ${state.deck.length || 0}`;
     // Active filters summary as chips
     const summary = document.createElement('div');
     summary.className = 'flex flex-wrap items-center gap-2 mb-4';
@@ -1054,24 +861,6 @@ async function playPollySentence(sentence) {
     const instruction = document.createElement('div'); instruction.className='practice-instruction text-lg md:text-xl text-slate-700 mb-6';
     // Use translated instruction text
     instruction.innerHTML = esc(t.instruction);
-
-    // Quick, bilingual help (EN/CY tags) + short explanation of modes.
-    const helpBox = document.createElement('details');
-    helpBox.className = 'practice-help panel p-3 rounded-2xl mb-4 text-sm text-slate-700';
-    helpBox.innerHTML = `
-      <summary class="cursor-pointer font-semibold text-slate-800">${esc(t.howItWorksTitle)}</summary>
-      <div class="mt-3 grid gap-2">
-        <div class="flex gap-2 items-start">
-          <span class="langtag">EN</span>
-          <div>${esc(t.howItWorksEN)}</div>
-        </div>
-        <div class="flex gap-2 items-start">
-          <span class="langtag">CY</span>
-          <div>${esc(t.howItWorksCY)}</div>
-        </div>
-      </div>
-    `;
-
     const row = document.createElement('div');
     row.className = 'practice-sentence mt-2';
     row.innerHTML = `
@@ -1092,28 +881,6 @@ async function playPollySentence(sentence) {
       state.lastResult = 'skipped';
       state.freezeIdx = state.currentIdx;
       state.freezePos = state.currentDeckPos;
-
-
-      // Record skip as a miss (for stats + Smart review).
-      const shownIdx = state.freezeIdx;
-      const shownCard = state.filtered[shownIdx];
-      const cardId = getCardId(shownCard, shownIdx);
-      state.history.push({
-        t: Date.now(),
-        ok: false,
-        key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
-        cardId,
-        expected: shownCard.Answer,
-        got: '',
-        mode: state.practiceMode,
-        skipped: true,
-      });
-      saveLS('wm_hist', state.history);
-      updateLeitner(cardId, 'skipped');
-      if (state.practiceMode === 'smart'){
-        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-        state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
-      }
     
       // Disable input like Check does (so it feels consistent)
       const ab2 = document.getElementById('answerBox');
@@ -1130,7 +897,6 @@ async function playPollySentence(sentence) {
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     let btnHear = null;
     if (state.revealed){
-      feedback.className = 'mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm';
       const ok = state.lastResult === 'correct';
       const skipped = state.lastResult === 'skipped';
       
@@ -1198,7 +964,7 @@ async function playPollySentence(sentence) {
       nb.onclick = ()=> nextCard(1);
       feedback.appendChild(nb);
     }
-    wrap.append(header, summary, instruction, helpBox, chips, row, actions, hint, feedback);
+    wrap.append(header, summary, instruction, chips, row, actions, hint, feedback);
     host.appendChild(wrap);
     const ab = $('#answerBox');
     ab.value = state.guess; ab.focus();
@@ -1209,36 +975,8 @@ async function playPollySentence(sentence) {
       state.revealed = true; state.lastResult = ok? 'correct':'wrong';
       state.freezeIdx = state.currentIdx;
       state.freezePos = state.currentDeckPos;
-
-
-      // Record skip as a miss (for stats + Smart review).
-      const shownIdx = state.freezeIdx;
-      const shownCard = state.filtered[shownIdx];
-      const cardId = getCardId(shownCard, shownIdx);
-      state.history.push({
-        t: Date.now(),
-        ok: false,
-        key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
-        cardId,
-        expected: shownCard.Answer,
-        got: '',
-        mode: state.practiceMode,
-        skipped: true,
-      });
-      saveLS('wm_hist', state.history);
-      updateLeitner(cardId, 'skipped');
-      if (state.practiceMode === 'smart'){
-        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-        state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
-      }
-      const cardId = getCardId(card, idx);
-      const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, cardId, expected: card.Answer, got: state.guess, mode: state.practiceMode };
+      const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, expected: card.Answer, got: state.guess };
       state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
-      updateLeitner(cardId, ok ? 'correct' : 'wrong');
-      if (!ok && state.practiceMode === 'smart'){
-        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-        state.smartQueue.push({ idx, dueAfter: 2 });
-      }
       const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
       setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
       render();
@@ -1292,16 +1030,6 @@ async function playPollySentence(sentence) {
   }
 
   function nextCard(offset=1){
-    if (state.practiceMode === 'smart'){
-      if (!state.filtered.length) return;
-      state.freezeIdx = null; state.freezePos = null;
-      state.smartIdx = pickNextSmartIdx();
-      state.smartCount = (state.smartCount || 0) + 1;
-      state.guess=''; state.revealed=false; state.lastResult=null;
-      render();
-      return;
-    }
-
     if (!state.deck.length) return;
     if (state.lastResult === 'wrong' && state.freezeIdx != null && state.freezePos != null){
       const idxVal = state.freezeIdx;
