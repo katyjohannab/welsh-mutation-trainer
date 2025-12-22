@@ -1149,7 +1149,6 @@ const headerRight = document.createElement('div');
             <button type="button" id="dismissHelp" class="btn btn-ghost px-2 py-1 text-xs">${state.lang === 'cy' ? 'Cau' : 'Close'}</button>
           </div>
         </div>
-      `;
     }
 
     const row = document.createElement('div');
@@ -1210,59 +1209,64 @@ const headerRight = document.createElement('div');
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     let btnHear = null;
     if (state.revealed){
-      feedback.className = 'mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm';
+      feedback.className = 'mt-4';
+
       const ok = state.lastResult === 'correct';
       const skipped = state.lastResult === 'skipped';
-      
+
       const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
-      const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
       const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
-      // Build the revealed feedback section.  The sentence, answer details
-      // and audio button are grouped inside a soft-tinted box.  The
-      // audio button uses an inline icon for clarity and has been
-      // intentionally minimised in size.  Additional vertical spacing
-      // separates the action buttons from the feedback container.
+      const statusClass = skipped ? 'feedback--skip' : (ok ? 'feedback--ok' : 'feedback--wrong');
+
+      // Keep feedback compact by default. Sentence is primary; metadata is unobtrusive.
       const whyFull = (card.Why || '').trim();
       const whyShort = (whyFull.length > 160) ? (whyFull.slice(0, 160).trim() + '…') : whyFull;
       const needsMore = whyFull.length > 160;
+      const showDetails = Boolean(card.Trigger) || needsMore;
       const moreLabel = (state.lang === 'cy') ? 'Mwy o fanylion' : 'More details';
 
       feedback.innerHTML = `
-        <div class="feedback-box">
-          <div class="feedback-status flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-            ${statusIcon} ${esc(statusText)}
+        <div class="feedback-panel ${statusClass}">
+          <div class="feedback-head">
+            <div class="feedback-badge">
+              <span class="feedback-badge__icon" aria-hidden="true">${statusIcon}</span>
+              <span class="feedback-badge__text">${esc(statusText)}</span>
+            </div>
+            ${(!ok && !skipped)
+              ? `<div class="feedback-typed">${esc(t.youTyped)}: <span class="feedback-typed__value">${esc(state.guess) || esc(t.blank)}</span></div>`
+              : ''
+            }
           </div>
-          ${(!ok && !skipped)
-            ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
-            : ''
-          }
-          <!-- Completed sentence with inline audio button -->
-          <div class="feedback-sentence mt-4 text-slate-800 text-xl md:text-2xl flex items-center flex-wrap gap-3">
-            <span>${esc(card.Before || '')}</span>
-            <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
-            <span>${esc(card.After || '')}</span>
+
+          <div class="feedback-sentence">
+            <div class="feedback-sentence__text">
+              <span class="feedback-sentence__before">${esc(card.Before || '')}</span>
+              <span class="feedback-answer">${esc(card.Answer)}</span>
+              <span class="feedback-sentence__after">${esc(card.After || '')}</span>
+            </div>
             <button id="btnHear" class="btn-hear" type="button">
               <span class="icon" aria-hidden="true">&#128266;</span>
               <span>${esc(t.hear)}</span>
             </button>
           </div>
-                      <!-- Feedback details: essentials first, extra info tucked away -->
-          <div class="feedback-meta mt-4 space-y-2 text-slate-700">
-            <div class="feedback-ruleline">
-              <span class="feedback-k">${esc(t.ruleLabel)}:</span>
-              <span class="feedback-v">${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}${card.Trigger ? ` • ${esc(card.Trigger)}` : ''}</span>
+
+          <div class="feedback-meta">
+            <div class="feedback-tags">
+              <span class="feedback-tag">${esc(card.RuleCategory || '—')}</span>
+              <span class="feedback-tag">${(card.Outcome || '—').toUpperCase()}</span>
             </div>
+
             ${whyShort ? `<p class="feedback-why">${esc(whyShort)}</p>` : ''}
-            ${needsMore ? `
+
+            ${showDetails ? `
               <details class="feedback-details">
                 <summary>${esc(moreLabel)}</summary>
-                <div class="mt-2 text-sm leading-relaxed text-slate-700">${esc(whyFull)}</div>
+                <div class="feedback-details__body">
+                  ${card.Trigger ? `<div class="feedback-detail-row"><span class="feedback-detail-k">${esc(t.triggerLabel)}:</span> <span class="feedback-detail-v">${esc(card.Trigger)}</span></div>` : ''}
+                  ${needsMore ? `<div class="feedback-detail-row"><div class="feedback-detail-v">${esc(whyFull)}</div></div>` : ''}
+                </div>
               </details>
             ` : ''}
-          </div>
-<div>${esc(t.triggerLabel)}: <b>${esc(card.Trigger || '—')}</b></div>
-            <div><span class="font-medium">${esc(t.ruleLabel)}:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
-            ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
           </div>
         </div>
       `;
