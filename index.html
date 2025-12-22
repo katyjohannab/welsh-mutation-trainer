@@ -10,25 +10,8 @@
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
   </style>
 
-  <!-- Custom tooltip CSS injected for mode controls and shuffle button -->
-  <style>
-    .tooltip {
-      position: absolute;
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid var(--border);
-      border-radius: 0.5rem;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.75rem;
-      color: var(--text);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-      z-index: 50;
-      pointer-events: none;
-      max-width: 14rem;
-    }
-    .tooltip.hidden {
-      display: none;
-    }
-  </style>
+
+  
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- PapaParse for CSV loading -->
@@ -1098,18 +1081,6 @@ async function playPollySentence(sentence) {
 
     headerRight.append(seg, btnShuffleNow);
 
-    // Attach custom tooltips to the mode buttons and shuffle button
-    // (uses text from the current locale via t)
-    try {
-      if (seg.children && seg.children.length >= 2) {
-        attachTooltip(seg.children[0], t.shuffleModeDesc);
-        attachTooltip(seg.children[1], t.smartModeDesc);
-      }
-      attachTooltip(btnShuffleNow, t.shuffleNowDesc);
-    } catch(err) {
-      console.warn('Tooltip setup failed', err);
-    }
-    header.append(headerLeft, headerRight);
     // Active filters summary as chips
     const summary = document.createElement('div');
     summary.className = 'flex flex-wrap items-center gap-2 mb-4';
