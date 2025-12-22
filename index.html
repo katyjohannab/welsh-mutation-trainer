@@ -9,11 +9,8 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
   </style>
-
-
+<!-- Tailwind via CDN -->
   
-  <!-- Tailwind via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1036,25 +1033,18 @@ async function playPollySentence(sentence) {
     headerRight.className = 'flex items-center gap-2';
 
     const seg = document.createElement('div');
-    seg.className = 'inline-flex overflow-hidden rounded-full border border-slate-200 bg-white/70';
+    seg.className = 'seg';
 
     const mkSegBtn = (label, value) => {
       const b = document.createElement('button');
       b.type = 'button';
       const on = state.practiceMode === value;
-      // Use the global button style for consistent rounded appearance
-      b.className = `btn px-3 py-1.5 text-[12px] font-semibold ${on ? 'btn-primary' : 'btn-ghost'}`;
+
+      // Styled segmented control button (see .seg / .seg-btn in styles.css)
+      b.className = `seg-btn ${on ? 'is-on' : ''}`;
       b.textContent = label;
-      // Attach a tooltip describing what this mode does (per locale)
-      const langT = LABEL[state.lang] || LABEL.en;
-      if (value === 'shuffle') {
-        b.title = langT.shuffleModeDesc || '';
-      } else {
-        b.title = langT.smartModeDesc || '';
-      }
-      // Remove default focus outline/box-shadow to prevent ugly blue borders
-      b.style.outline = 'none';
-      b.style.boxShadow = 'none';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+
       b.onclick = () => {
         if (state.practiceMode === value) return;
         state.practiceMode = value;
@@ -1070,17 +1060,12 @@ async function playPollySentence(sentence) {
     const btnShuffleNow = document.createElement('button');
     btnShuffleNow.type = 'button';
     // Use standard button styling with ghost variant for consistent appearance
-    btnShuffleNow.className = 'btn btn-ghost px-3 py-1.5';
-    btnShuffleNow.innerHTML = `<span aria-hidden="true">🔀</span><span class="ml-2">${esc(t.shuffleNow)}</span>`;
-    // Tooltip explaining what this action does
-    btnShuffleNow.title = t.shuffleNowDesc || '';
-    // Remove default focus outline to keep styling consistent
-    btnShuffleNow.style.outline = 'none';
-    btnShuffleNow.style.boxShadow = 'none';
+    btnShuffleNow.className = 'btn btn-ghost btn-shuffleNow';
+    btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
     btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
 
     headerRight.append(seg, btnShuffleNow);
-
+    header.append(headerLeft, headerRight);
     // Active filters summary as chips
     const summary = document.createElement('div');
     summary.className = 'flex flex-wrap items-center gap-2 mb-4';
