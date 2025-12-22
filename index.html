@@ -139,11 +139,8 @@
           </div>
 
           <!-- Session / stats panel -->
-          <aside id="sessionPanel" class="panel rounded-2xl p-4 session-sheet hidden md:block">
-            <div class="flex items-center justify-between mb-2">
-            <div class="text-sm font-medium">Session</div>
-            <button id="btnCloseSession" class="btn btn-ghost px-3 py-1.5 md:hidden" type="button">Close</button>
-          </div>
+          <aside id="sessionPanel" class="panel rounded-2xl p-4">
+            <div class="text-sm font-medium mb-2">Session</div>
             <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
             <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
             <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
@@ -183,9 +180,7 @@
     </main>
 
     <!-- Mobile action bar -->
-    <div id="sessionOverlay" class="sheet-overlay hidden md:hidden" aria-hidden="true"></div>
-
-  <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
+    <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
       <div class="max-w-6xl mx-auto flex gap-2">
         <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
         <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
@@ -648,7 +643,6 @@
     if ($('#btnResetStats')) $('#btnResetStats').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
     if ($('#btnResetStats2')) $('#btnResetStats2').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
     if ($('#btnTop')) $('#btnTop').textContent = (lang === 'cy' ? 'Yn ôl i’r brig' : 'Back to top');
-    if ($('#btnCloseSession')) $('#btnCloseSession').textContent = (lang === 'cy' ? 'Cau' : 'Close');
     // Rebuild filters to apply translations to chips and headings
     buildFilters();
     // Re-render practice card with translated labels
@@ -1024,13 +1018,18 @@ async function playPollySentence(sentence) {
     header.className = 'flex flex-wrap items-center justify-between gap-2 mb-2';
 
     const headerLeft = document.createElement('div');
-    headerLeft.className = 'flex items-center gap-2 text-xs text-slate-500';
+    headerLeft.className = 'flex flex-wrap items-center gap-2 text-xs text-slate-500';
+
+    const modePill = document.createElement('span');
+    modePill.className = 'inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-2 py-1 text-[11px] font-semibold text-slate-700';
+    modePill.textContent = (state.practiceMode === 'smart') ? t.smartModeLabel : t.shuffleModeLabel;
 
     const posSpan = document.createElement('span');
     posSpan.textContent = posText;
 
-    headerLeft.append(posSpan);
-const headerRight = document.createElement('div');
+    headerLeft.append(modePill, posSpan);
+
+    const headerRight = document.createElement('div');
     headerRight.className = 'flex items-center gap-2';
 
     const seg = document.createElement('div');
@@ -1065,20 +1064,11 @@ const headerRight = document.createElement('div');
     btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
     btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
 
-    const sessionChip = document.createElement('button');
-    sessionChip.type = 'button';
-    sessionChip.id = 'sessionChip';
-    sessionChip.className = 'session-chip md:hidden';
-    const s = computeStats();
-    sessionChip.innerHTML = `<span class="session-chip__pct">${s.acc}%</span><span class="session-chip__meta">${s.correct}/${s.total}</span>`;
-    sessionChip.title = (state.lang === 'cy') ? 'Agor ystadegau sesiwn' : 'Open session stats';
-    sessionChip.onclick = openSessionSheet;
-
-    headerRight.append(sessionChip, seg, btnShuffleNow);
+    headerRight.append(seg, btnShuffleNow);
     header.append(headerLeft, headerRight);
     // Active filters summary as chips
     const summary = document.createElement('div');
-    summary.className = 'flex flex-nowrap md:flex-wrap items-center gap-2 mb-4 overflow-x-auto md:overflow-visible -mx-1 px-1 md:mx-0 md:px-0';
+    summary.className = 'flex flex-wrap items-center gap-2 mb-4';
     const addChip = (label, onClear) => {
       const c = document.createElement('button');
       c.type = 'button';
@@ -1149,6 +1139,7 @@ const headerRight = document.createElement('div');
             <button type="button" id="dismissHelp" class="btn btn-ghost px-2 py-1 text-xs">${state.lang === 'cy' ? 'Cau' : 'Close'}</button>
           </div>
         </div>
+      `;
     }
 
     const row = document.createElement('div');
@@ -1209,64 +1200,43 @@ const headerRight = document.createElement('div');
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     let btnHear = null;
     if (state.revealed){
-      feedback.className = 'mt-4';
-
+      feedback.className = 'mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm';
       const ok = state.lastResult === 'correct';
       const skipped = state.lastResult === 'skipped';
-
+      
       const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
+      const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
       const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
-      const statusClass = skipped ? 'feedback--skip' : (ok ? 'feedback--ok' : 'feedback--wrong');
-
-      // Keep feedback compact by default. Sentence is primary; metadata is unobtrusive.
-      const whyFull = (card.Why || '').trim();
-      const whyShort = (whyFull.length > 160) ? (whyFull.slice(0, 160).trim() + '…') : whyFull;
-      const needsMore = whyFull.length > 160;
-      const showDetails = Boolean(card.Trigger) || needsMore;
-      const moreLabel = (state.lang === 'cy') ? 'Mwy o fanylion' : 'More details';
-
+      // Build the revealed feedback section.  The sentence, answer details
+      // and audio button are grouped inside a soft-tinted box.  The
+      // audio button uses an inline icon for clarity and has been
+      // intentionally minimised in size.  Additional vertical spacing
+      // separates the action buttons from the feedback container.
       feedback.innerHTML = `
-        <div class="feedback-panel ${statusClass}">
-          <div class="feedback-head">
-            <div class="feedback-badge">
-              <span class="feedback-badge__icon" aria-hidden="true">${statusIcon}</span>
-              <span class="feedback-badge__text">${esc(statusText)}</span>
-            </div>
-            ${(!ok && !skipped)
-              ? `<div class="feedback-typed">${esc(t.youTyped)}: <span class="feedback-typed__value">${esc(state.guess) || esc(t.blank)}</span></div>`
-              : ''
-            }
+        <div class="feedback-box">
+          <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
+            ${statusIcon} ${esc(statusText)}
           </div>
-
-          <div class="feedback-sentence">
-            <div class="feedback-sentence__text">
-              <span class="feedback-sentence__before">${esc(card.Before || '')}</span>
-              <span class="feedback-answer">${esc(card.Answer)}</span>
-              <span class="feedback-sentence__after">${esc(card.After || '')}</span>
-            </div>
+          ${(!ok && !skipped)
+            ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
+            : ''
+          }
+          <!-- Completed sentence with inline audio button -->
+          <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-center flex-wrap gap-3">
+            <span>${esc(card.Before || '')}</span>
+            <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
+            <span>${esc(card.After || '')}</span>
             <button id="btnHear" class="btn-hear" type="button">
               <span class="icon" aria-hidden="true">&#128266;</span>
               <span>${esc(t.hear)}</span>
             </button>
           </div>
-
-          <div class="feedback-meta">
-            <div class="feedback-tags">
-              <span class="feedback-tag">${esc(card.RuleCategory || '—')}</span>
-              <span class="feedback-tag">${(card.Outcome || '—').toUpperCase()}</span>
-            </div>
-
-            ${whyShort ? `<p class="feedback-why">${esc(whyShort)}</p>` : ''}
-
-            ${showDetails ? `
-              <details class="feedback-details">
-                <summary>${esc(moreLabel)}</summary>
-                <div class="feedback-details__body">
-                  ${card.Trigger ? `<div class="feedback-detail-row"><span class="feedback-detail-k">${esc(t.triggerLabel)}:</span> <span class="feedback-detail-v">${esc(card.Trigger)}</span></div>` : ''}
-                  ${needsMore ? `<div class="feedback-detail-row"><div class="feedback-detail-v">${esc(whyFull)}</div></div>` : ''}
-                </div>
-              </details>
-            ` : ''}
+            <!-- Answer details with consistent spacing -->
+          <div class="mt-4 space-y-1 text-slate-700">
+            <div>${esc(t.answerLabel)}: <b>${esc(card.Answer)}</b></div>
+            <div>${esc(t.triggerLabel)}: <b>${esc(card.Trigger || '—')}</b></div>
+            <div><span class="font-medium">${esc(t.ruleLabel)}:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
+            ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
           </div>
         </div>
       `;
@@ -1337,15 +1307,6 @@ const headerRight = document.createElement('div');
       setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
       render();
     }
-
-    // Mobile bar: show either Check or Next (to reduce clutter)
-    const mbCheck = document.getElementById('mbCheck');
-    const mbNext = document.getElementById('mbNext');
-    if (mbCheck && mbNext){
-      mbCheck.classList.toggle('hidden', state.revealed);
-      mbNext.classList.toggle('hidden', !state.revealed);
-    }
-
   }
 
   function renderBrowse(){
@@ -1383,17 +1344,9 @@ const headerRight = document.createElement('div');
       const li1 = document.createElement('li'); li1.className='flex justify-between'; li1.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul1.appendChild(li1);
       const li2 = document.createElement('li'); li2.className='flex justify-between'; li2.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul2.appendChild(li2);
     }
-
-    // Mobile session chip (opens the session panel as a sheet)
-    const chip = document.getElementById('sessionChip');
-    if (chip){
-      chip.innerHTML = `<span class="session-chip__pct">${s.acc}%</span><span class="session-chip__meta">${s.correct}/${s.total}</span>`;
-      chip.setAttribute('aria-label', `Session ${s.acc}%`);
-    }
   }
 
   function render(){
-    if (state.mode !== 'practice') closeSessionSheet();
     $('#practiceView').classList.toggle('hidden', state.mode!=='practice');
     $('#browseView').classList.toggle('hidden', state.mode!=='browse');
     $('#statsView').classList.toggle('hidden', state.mode!=='stats');
@@ -1434,40 +1387,12 @@ const headerRight = document.createElement('div');
     render();
   }
 
-    // ---------- Mobile session sheet ----------
-  function openSessionSheet(){
-    const panel = $('#sessionPanel');
-    const overlay = $('#sessionOverlay');
-    if (!panel || !overlay) return;
-    panel.classList.remove('hidden');
-    overlay.classList.remove('hidden');
-    document.body.classList.add('no-scroll');
-  }
-
-  function closeSessionSheet(){
-    const panel = $('#sessionPanel');
-    const overlay = $('#sessionOverlay');
-    if (!panel || !overlay) return;
-    // Only hide as a sheet on small screens; keep visible on md+
-    if (window.matchMedia('(max-width: 767px)').matches){
-      panel.classList.add('hidden');
-      overlay.classList.add('hidden');
-      document.body.classList.remove('no-scroll');
-    }
-  }
-
-  window.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeSessionSheet(); });
-
-// ---------- Event wiring ----------
+  // ---------- Event wiring ----------
   function wireUi(){
     $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
     $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
     $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
     $('#btnFilters').onclick  = ()=>{ $('#filtersPanel')?.classList.toggle('hidden'); };
-    // Mobile session sheet
-    $('#btnCloseSession')?.addEventListener('click', closeSessionSheet);
-    $('#sessionOverlay')?.addEventListener('click', closeSessionSheet);
-
     $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
     // Language toggle: switch between English and Welsh
     $('#btnLangToggle')?.addEventListener('click', () => {
@@ -1554,6 +1479,11 @@ const headerRight = document.createElement('div');
   </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
