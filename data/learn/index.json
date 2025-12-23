@@ -48,7 +48,21 @@
       "tags": ["ASPIRATE", "TREIGLAD-LLAES", "POSSESSIVES", "FOUNDATIONS"],
       "slideCount": 19,
       "deck": "./data/learn/l1-aspirate-mutation-core.json"
-    }
+    },
+    {
+      "id": "l2-bod-yn-predicate",
+      "level": { "en": "Intermediate", "cy": "Canolradd" },
+      "minutes": 15,
+      "title": { "en": "Bod + ’n: the predicate ‘yn’ engine", "cy": "Bod + ’n: injan yr ‘yn’ rhagddyfarnol" },
+      "desc": {
+        "en": "Stop guessing after ‘mae/roedd/bydd’. Learn which ‘yn’ you’re seeing, and when it triggers soft mutation before adjectives and nouns.",
+        "cy": "Stopio dyfalu ar ôl ‘mae/roedd/bydd’. Dysga pa ‘yn’ sydd gen ti, a phryd mae’n sbarduno treiglad meddal cyn ansoddeiriau ac enwau."
+      },
+      "tags": ["BOD", "YN", "SOFT-MUTATION", "SENTENCES"],
+      "slideCount": 14,
+      "deck": "./data/learn/l2-bod-yn-predicate.json"
+}
+
   ]
 }
 
