@@ -1,0 +1,323 @@
+{
+  "id": "l2-bod-yn-predicate",
+  "slides": [
+    {
+      "title": { "en": "Bod + ’n (predicate ‘yn’)", "cy": "Bod + ’n (yr ‘yn’ rhagddyfarnol)" },
+      "html": {
+        "en": "<p>This lesson is about a high-frequency sentence engine:</p><ul><li><b>bod</b> + <b>’n</b> + <b>adjective</b> or <b>noun</b></li><li>e.g. <code>Mae hi’n falch</code>, <code>Roedd e’n feddyg</code></li></ul><p>&nbsp;</p><div class='callout'><p>You already know the soft mutation map. This lesson is about spotting the pattern fast in real sentences.</p></div>",
+        "cy": "<p>Mae’r wers hon am batrwm brawddeg cyffredin iawn:</p><ul><li><b>bod</b> + <b>’n</b> + <b>ansoddair</b> neu <b>enw</b></li><li>e.e. <code>Mae hi’n falch</code>, <code>Roedd e’n feddyg</code></li></ul><p>&nbsp;</p><div class='callout'><p>Rwyt ti eisoes yn gwybod map y treiglad meddal. Y nod yma yw gweld y patrwm yn syth mewn brawddegau go iawn.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Two ‘yn’ words that look identical 👀", "cy": "Dau ‘yn’ sy’n edrych yr un peth 👀" },
+      "html": {
+        "en": "<p>It’s easy to mix these up because they look the same on the page.</p><div class='table-wrap'><table><thead><tr><th>Which <code>yn</code>?</th><th>Job</th><th>Typical mutation</th><th>Example</th></tr></thead><tbody><tr><td><b>Preposition</b></td><td>means <i>in</i></td><td><b>nasal</b></td><td><code>yng Nghymru</code> (Cymru → Nghymru)</td></tr><tr><td><b>Predicate particle</b></td><td>links after <code>bod</code></td><td><b>soft</b> (before adj/noun)</td><td><code>Mae hi’n falch</code> (balch → falch)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Quick habit: ask “does this <code>yn</code> mean <i>in</i>?” If not, it is probably the predicate one after <code>bod</code>.</p></div>",
+        "cy": "<p>Mae’n hawdd cymysgu’r rhain oherwydd maen nhw’n edrych yr un fath.</p><div class='table-wrap'><table><thead><tr><th>Pa <code>yn</code>?</th><th>Swydd</th><th>Treiglad nodweddiadol</th><th>Enghraifft</th></tr></thead><tbody><tr><td><b>Arddodiad</b></td><td>yn golygu <i>yn</i></td><td><b>trwynol</b></td><td><code>yng Nghymru</code> (Cymru → Nghymru)</td></tr><tr><td><b>Gronyn rhagddyfarnol</b></td><td>cyswllt ar ôl <code>bod</code></td><td><b>meddal</b> (cyn ansoddair/enw)</td><td><code>Mae hi’n falch</code> (balch → falch)</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Arfer cyflym: gofyn “ydy’r <code>yn</code> yma’n golygu <i>yn (in)</i>?” Os nad ydy, mae’n debyg mai’r un rhagddyfarnol ar ôl <code>bod</code> ydy hi.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick checks: which ‘yn’ is it? 🧩", "cy": "Profi cyflym: pa ‘yn’ ydy hi? 🧩" },
+      "html": {
+        "en": "<p>Tap to reveal. The point is speed.</p>",
+        "cy": "<p>Tapia i ddatgelu. Y nod yw cyflymder.</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-rev-which-yn-1",
+          "type": "reveal",
+          "front": { "en": "Which <code>yn</code> is this? <code>Rydyn ni yng Nghymru</code>", "cy": "Pa <code>yn</code> ydy hwn? <code>Rydyn ni yng Nghymru</code>" },
+          "back": {
+            "en": "<b>Prepositional</b> <code>yn</code> = <i>in</i>. In this pattern you often see <code>yn</code>/<code>yng</code> and <b>nasal mutation</b> (Cymru → Nghymru).",
+            "cy": "<b>Arddodiadol</b> <code>yn</code> = <i>yn</i>. Yn y patrwm yma fe weli di <code>yn</code>/<code>yng</code> a <b>threiglad trwynol</b> (Cymru → Nghymru)."
+          }
+        },
+        {
+          "id": "l2-bodyn-rev-which-yn-2",
+          "type": "reveal",
+          "front": { "en": "Which <code>yn</code> is this? <code>Mae hi’n falch</code>", "cy": "Pa <code>yn</code> ydy hwn? <code>Mae hi’n falch</code>" },
+          "back": {
+            "en": "<b>Predicate</b> <code>(’n)</code> after <code>bod</code>. Here it triggers <b>soft mutation</b> before adjectives and nouns (balch → falch).",
+            "cy": "<b>Rhagddyfarnol</b> <code>(’n)</code> ar ôl <code>bod</code>. Yma mae’n sbarduno <b>treiglad meddal</b> cyn ansoddeiriau ac enwau (balch → falch)."
+          }
+        },
+        {
+          "id": "l2-bodyn-rev-which-yn-3",
+          "type": "reveal",
+          "front": { "en": "Which <code>yn</code> is this? <code>Mae e’n feddyg</code>", "cy": "Pa <code>yn</code> ydy hwn? <code>Mae e’n feddyg</code>" },
+          "back": {
+            "en": "Again: <b>predicate</b> <code>(’n)</code> after <code>bod</code>. Noun complement, so you get <b>soft mutation</b> (meddyg → feddyg).",
+            "cy": "Unwaith eto: <b>rhagddyfarnol</b> <code>(’n)</code> ar ôl <code>bod</code>. Enw fel cyflenwad, felly <b>treiglad meddal</b> (meddyg → feddyg)."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Real spelling: <code>yn</code> ➜ <code>’n</code>", "cy": "Sillafiad go iawn: <code>yn</code> ➜ <code>’n</code>" },
+      "html": {
+        "en": "<p>In everyday writing you’ll usually see the predicate particle contracted:</p><ul><li><code>Mae hi’n…</code></li><li><code>Roedd e’n…</code></li><li><code>Bydda i’n…</code></li></ul><p>&nbsp;</p><div class='callout'><p>In more careful or formal writing you may also see the full form: <code>Mae hi yn falch</code>. Same grammar, same meaning.</p></div>",
+        "cy": "<p>Mewn ysgrifennu bob dydd fe weli di’r gronyn rhagddyfarnol fel arfer wedi’i fyrhau:</p><ul><li><code>Mae hi’n…</code></li><li><code>Roedd e’n…</code></li><li><code>Bydda i’n…</code></li></ul><p>&nbsp;</p><div class='callout'><p>Mewn ysgrifennu mwy ffurfiol fe weli di’r ffurf lawn hefyd: <code>Mae hi yn falch</code>. Yr un gramadeg, yr un ystyr.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Predicate ’n + adjective = soft mutation ✅", "cy": "’n rhagddyfarnol + ansoddair = treiglad meddal ✅" },
+      "html": {
+        "en": "<p>When <code>’n</code> is the predicate particle, the next adjective often takes soft mutation:</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>After <code>’n</code></th><th>Sentence</th></tr></thead><tbody><tr><td><code>taclus</code></td><td><code>daclus</code></td><td><code>Mae e’n daclus</code></td></tr><tr><td><code>balch</code></td><td><code>falch</code></td><td><code>Mae hi’n falch</code></td></tr><tr><td><code>da</code></td><td><code>dda</code></td><td><code>Mae hi’n dda</code></td></tr><tr><td><code>prysur</code></td><td><code>brysur</code></td><td><code>Maen nhw’n brysur</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you catch this pattern, your writing instantly gets more “native-looking”.</p></div>",
+        "cy": "<p>Pan mai’r gronyn rhagddyfarnol yw <code>’n</code>, mae’r ansoddair nesaf yn aml yn cymryd treiglad meddal:</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Ar ôl <code>’n</code></th><th>Brawddeg</th></tr></thead><tbody><tr><td><code>taclus</code></td><td><code>daclus</code></td><td><code>Mae e’n daclus</code></td></tr><tr><td><code>balch</code></td><td><code>falch</code></td><td><code>Mae hi’n falch</code></td></tr><tr><td><code>da</code></td><td><code>dda</code></td><td><code>Mae hi’n dda</code></td></tr><tr><td><code>prysur</code></td><td><code>brysur</code></td><td><code>Maen nhw’n brysur</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Pan fyddi di’n gweld y patrwm yma’n syth, mae dy ysgrifennu’n edrych yn fwy “Cymraeg go iawn”.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Drill: make the final sentence (adjectives) ✍️", "cy": "Dril: gwna’r frawddeg derfynol (ansoddeiriau) ✍️" },
+      "html": {
+        "en": "<p>Type the final sentence. Focus on the first letter after <code>’n</code>.</p><p>&nbsp;</p>",
+        "cy": "<p>Teipia’r frawddeg derfynol. Canolbwyntia ar y llythyren gyntaf ar ôl <code>’n</code>.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-typein-adj-1",
+          "type": "typein",
+          "stem": { "en": "Mae e'n + taclus", "cy": "Mae e'n + taclus" },
+          "accept": ["Mae e'n daclus", "Mae e yn daclus"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Predicate <code>’n</code> triggers soft mutation: <code>t → d</code>.", "cy": "Mae <code>’n</code> rhagddyfarnol yn sbarduno treiglad meddal: <code>t → d</code>." }
+        },
+        {
+          "id": "l2-bodyn-typein-adj-2",
+          "type": "typein",
+          "stem": { "en": "Mae hi'n + balch", "cy": "Mae hi'n + balch" },
+          "accept": ["Mae hi'n falch", "Mae hi yn falch"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>b → f</code> in soft mutation.", "cy": "<code>b → f</code> mewn treiglad meddal." }
+        },
+        {
+          "id": "l2-bodyn-typein-adj-3",
+          "type": "typein",
+          "stem": { "en": "Mae hi'n + da", "cy": "Mae hi'n + da" },
+          "accept": ["Mae hi'n dda", "Mae hi yn dda"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>d → dd</code> in soft mutation.", "cy": "<code>d → dd</code> mewn treiglad meddal." }
+        },
+        {
+          "id": "l2-bodyn-typein-adj-4",
+          "type": "typein",
+          "stem": { "en": "Maen nhw'n + prysur", "cy": "Maen nhw'n + prysur" },
+          "accept": ["Maen nhw'n brysur", "Maen nhw yn brysur"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>p → b</code> in soft mutation.", "cy": "<code>p → b</code> mewn treiglad meddal." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Predicate ’n + noun = soft mutation ✅", "cy": "’n rhagddyfarnol + enw = treiglad meddal ✅" },
+      "html": {
+        "en": "<p>Same idea with nouns (\"She’s a …\", \"He’s a …\"):</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>After <code>’n</code></th><th>Sentence</th></tr></thead><tbody><tr><td><code>meddyg</code></td><td><code>feddyg</code></td><td><code>Mae hi’n feddyg</code></td></tr><tr><td><code>Cymro</code></td><td><code>Gymro</code></td><td><code>Mae e’n Gymro</code></td></tr><tr><td><code>mab</code></td><td><code>fab</code></td><td><code>Mae e’n fab</code></td></tr><tr><td><code>dysgwr</code></td><td><code>ddysgwr</code></td><td><code>Mae hi’n ddysgwr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Notice the pattern: the mutation belongs to the <code>’n</code> particle, not to the verb form (<code>mae</code>/<code>roedd</code>/<code>bydd</code>).</p></div>",
+        "cy": "<p>Yr un syniad gyda enwau (\"Mae hi’n …\", \"Mae e’n …\"):</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Ar ôl <code>’n</code></th><th>Brawddeg</th></tr></thead><tbody><tr><td><code>meddyg</code></td><td><code>feddyg</code></td><td><code>Mae hi’n feddyg</code></td></tr><tr><td><code>Cymro</code></td><td><code>Gymro</code></td><td><code>Mae e’n Gymro</code></td></tr><tr><td><code>mab</code></td><td><code>fab</code></td><td><code>Mae e’n fab</code></td></tr><tr><td><code>dysgwr</code></td><td><code>ddysgwr</code></td><td><code>Mae hi’n ddysgwr</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Sylwa ar y patrwm: mae’r treiglad yn perthyn i’r gronyn <code>’n</code>, nid i ffurf y ferf (<code>mae</code>/<code>roedd</code>/<code>bydd</code>).</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Drill: nouns (choose + type) ✍️", "cy": "Dril: enwau (dewis + teipio) ✍️" },
+      "html": {
+        "en": "<p>First pick the correct form, then type a couple yourself.</p><p>&nbsp;</p>",
+        "cy": "<p>Yn gyntaf dewis y ffurf gywir, wedyn teipia ychydig dy hun.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-mcq-noun-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct sentence:", "cy": "Dewisa’r frawddeg gywir:" },
+          "stem": { "en": "Mae hi'n + meddyg", "cy": "Mae hi'n + meddyg" },
+          "options": [
+            { "text": { "en": "Mae hi'n meddyg", "cy": "Mae hi'n meddyg" } },
+            { "text": { "en": "Mae hi'n feddyg", "cy": "Mae hi'n feddyg" } },
+            { "text": { "en": "Mae hi yng meddyg", "cy": "Mae hi yng meddyg" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Predicate <code>’n</code> triggers soft mutation on nouns: <code>m → f</code>.", "cy": "Mae <code>’n</code> rhagddyfarnol yn sbarduno treiglad meddal ar enwau: <code>m → f</code>." }
+        },
+        {
+          "id": "l2-bodyn-typein-noun-1",
+          "type": "typein",
+          "stem": { "en": "Mae e'n + Cymro", "cy": "Mae e'n + Cymro" },
+          "accept": ["Mae e'n Gymro", "Mae e yn Gymro"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>C → G</code> in soft mutation.", "cy": "<code>C → G</code> mewn treiglad meddal." }
+        },
+        {
+          "id": "l2-bodyn-typein-noun-2",
+          "type": "typein",
+          "stem": { "en": "Mae e'n + mab", "cy": "Mae e'n + mab" },
+          "accept": ["Mae e'n fab", "Mae e yn fab"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>m → f</code> in soft mutation.", "cy": "<code>m → f</code> mewn treiglad meddal." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Important boundary: <code>’n</code> + verbnoun usually does NOT mutate 🚦", "cy": "Ffin bwysig: <code>’n</code> + berfenw fel arfer DIM treiglad 🚦" },
+      "html": {
+        "en": "<p>You will see this constantly:</p><ul><li><code>Mae hi’n gweithio</code></li><li><code>Roedd e’n cerdded</code></li><li><code>Bydda i’n mynd</code></li></ul><p>&nbsp;</p><div class='callout'><p>So: <b>use soft mutation after <code>’n</code> for adjectives and nouns</b>. But when <code>’n</code> is followed by a verbnoun, it usually stays radical.</p></div>",
+        "cy": "<p>Byddi di’n gweld hyn drwy’r amser:</p><ul><li><code>Mae hi’n gweithio</code></li><li><code>Roedd e’n cerdded</code></li><li><code>Bydda i’n mynd</code></li></ul><p>&nbsp;</p><div class='callout'><p>Felly: <b>treiglad meddal ar ôl <code>’n</code> cyn ansoddair ac enw</b>. Ond pan fo <code>’n</code> cyn berfenw, mae fel arfer yn aros yn wreiddiol.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-mcq-verbnoun-boundary-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct form:", "cy": "Dewisa’r ffurf gywir:" },
+          "stem": { "en": "Mae hi'n + gweithio", "cy": "Mae hi'n + gweithio" },
+          "options": [
+            { "text": { "en": "Mae hi'n gweithio", "cy": "Mae hi'n gweithio" } },
+            { "text": { "en": "Mae hi'n weithio", "cy": "Mae hi'n weithio" } },
+            { "text": { "en": "Mae hi yng ngwaithio", "cy": "Mae hi yng ngwaithio" } }
+          ],
+          "correct": [0],
+          "explain": {
+            "en": "Here <code>’n</code> is followed by a verbnoun (progressive pattern), so you usually keep the radical form.",
+            "cy": "Yma mae <code>’n</code> cyn berfenw (patrwm parhaus), felly fel arfer rwyt ti’n cadw’r ffurf wreiddiol."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Negatives and questions: the same logic 🧠", "cy": "Negyddion a chwestiynau: yr un rhesymeg 🧠" },
+      "html": {
+        "en": "<p>The verb changes, but the <code>yn</code> logic stays the same.</p><div class='table-wrap'><table><thead><tr><th>Type</th><th>Example</th><th>What to watch</th></tr></thead><tbody><tr><td>negative</td><td><code>Dydy hi ddim yn falch</code></td><td>predicate <code>yn</code> + adjective</td></tr><tr><td>question</td><td><code>Oedd e’n feddyg?</code></td><td>predicate <code>’n</code> + noun</td></tr><tr><td>future negative</td><td><code>Fydd e ddim yn brysur</code></td><td>same soft mutation pattern</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>If you can spot the <code>yn</code> job, you can handle <code>mae</code>/<code>roedd</code>/<code>fydd</code> without panic.</p></div>",
+        "cy": "<p>Mae’r ferf yn newid, ond mae rhesymeg yr <code>yn</code> yr un fath.</p><div class='table-wrap'><table><thead><tr><th>Math</th><th>Enghraifft</th><th>Beth i’w weld</th></tr></thead><tbody><tr><td>negyddu</td><td><code>Dydy hi ddim yn falch</code></td><td><code>yn</code> rhagddyfarnol + ansoddair</td></tr><tr><td>cwestiwn</td><td><code>Oedd e’n feddyg?</code></td><td><code>’n</code> rhagddyfarnol + enw</td></tr><tr><td>dyfodol negyddol</td><td><code>Fydd e ddim yn brysur</code></td><td>yr un patrwm treiglad meddal</td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Os gelli di weld swydd yr <code>yn</code>, mae <code>mae</code>/<code>roedd</code>/<code>fydd</code> yn dod yn llawer haws.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Drill: negatives (choose + type) ✍️", "cy": "Dril: negyddion (dewis + teipio) ✍️" },
+      "html": {
+        "en": "<p>Same idea, just with <code>ddim</code> in the way.</p><p>&nbsp;</p>",
+        "cy": "<p>Yr un syniad, dim ond bod <code>ddim</code> yn y canol.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-mcq-neg-1",
+          "type": "mcq",
+          "prompt": { "en": "Choose the correct sentence:", "cy": "Dewisa’r frawddeg gywir:" },
+          "stem": { "en": "Dydy hi ddim yn + balch", "cy": "Dydy hi ddim yn + balch" },
+          "options": [
+            { "text": { "en": "Dydy hi ddim yn balch", "cy": "Dydy hi ddim yn balch" } },
+            { "text": { "en": "Dydy hi ddim yn falch", "cy": "Dydy hi ddim yn falch" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Still predicate <code>yn</code> + adjective, so soft mutation applies.", "cy": "Dal yn <code>yn</code> rhagddyfarnol + ansoddair, felly mae treiglad meddal yn berthnasol." }
+        },
+        {
+          "id": "l2-bodyn-typein-neg-1",
+          "type": "typein",
+          "stem": { "en": "Fydd e ddim yn + prysur", "cy": "Fydd e ddim yn + prysur" },
+          "accept": ["Fydd e ddim yn brysur"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>p → b</code> after predicate <code>yn</code>.", "cy": "<code>p → b</code> ar ôl <code>yn</code> rhagddyfarnol." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Contrast set: don’t mix up predicate vs preposition 🔍", "cy": "Set cyferbyniad: paid â chymysgu rhagddyfarnol ac arddodiadol 🔍" },
+      "html": {
+        "en": "<p>Read these as pairs:</p><div class='table-wrap'><table><thead><tr><th>Predicate <code>’n</code> (after <code>bod</code>)</th><th>Preposition <code>yn</code> (= in)</th></tr></thead><tbody><tr><td><code>Mae hi’n falch</code></td><td><code>Mae hi yng Nghymru</code></td></tr><tr><td><code>Dydy hi ddim yn feddyg</code></td><td><code>Dydy hi ddim yng Nghymru</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>They can look similar, but they are doing different grammar jobs, and the mutation you expect is different.</p></div>",
+        "cy": "<p>Darllena’r rhain fel parau:</p><div class='table-wrap'><table><thead><tr><th><code>’n</code> rhagddyfarnol (ar ôl <code>bod</code>)</th><th><code>yn</code> arddodiadol (= yn)</th></tr></thead><tbody><tr><td><code>Mae hi’n falch</code></td><td><code>Mae hi yng Nghymru</code></td></tr><tr><td><code>Dydy hi ddim yn feddyg</code></td><td><code>Dydy hi ddim yng Nghymru</code></td></tr></tbody></table></div><p>&nbsp;</p><div class='callout'><p>Mae’n gallu edrych yn debyg, ond mae’r swydd gramadegol yn wahanol, ac mae’r treiglad rwyt ti’n ei ddisgwyl hefyd yn wahanol.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Mini-quiz: fast recognition + production ⚡", "cy": "Mini-gwis: adnabod + cynhyrchu ⚡" },
+      "html": {
+        "en": "<p>Do these quickly. If you miss one, read the feedback and move on.</p><p>&nbsp;</p>",
+        "cy": "<p>Gwna’r rhain yn gyflym. Os wyt ti’n camu, darllena’r adborth a symud ymlaen.</p><p>&nbsp;</p>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-quiz-rev-1",
+          "type": "reveal",
+          "front": { "en": "Which <code>yn</code> is this? <code>Mae e’n Gymro</code>", "cy": "Pa <code>yn</code> ydy hwn? <code>Mae e’n Gymro</code>" },
+          "back": { "en": "Predicate <code>’n</code> after <code>bod</code> (soft mutation on a noun).", "cy": "<code>’n</code> rhagddyfarnol ar ôl <code>bod</code> (treiglad meddal ar enw)." }
+        },
+        {
+          "id": "l2-bodyn-quiz-rev-2",
+          "type": "reveal",
+          "front": { "en": "Which <code>yn</code> is this? <code>Maen nhw yng Nghaerdydd</code>", "cy": "Pa <code>yn</code> ydy hwn? <code>Maen nhw yng Nghaerdydd</code>" },
+          "back": { "en": "Prepositional <code>yn</code> (= in). This is the location pattern (often <code>yn</code>/<code>yng</code>) and ties in with nasal mutation rules.", "cy": "<code>yn</code> arddodiadol (= yn). Dyma’r patrwm lleoliad (yn aml <code>yn</code>/<code>yng</code>) ac mae’n cysylltu â rheolau treiglad trwynol." }
+        },
+        {
+          "id": "l2-bodyn-quiz-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the correct sentence:", "cy": "Dewisa’r frawddeg gywir:" },
+          "stem": { "en": "Oedd hi'n + taclus?", "cy": "Oedd hi'n + taclus?" },
+          "options": [
+            { "text": { "en": "Oedd hi'n taclus?", "cy": "Oedd hi'n taclus?" } },
+            { "text": { "en": "Oedd hi'n daclus?", "cy": "Oedd hi'n daclus?" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Predicate <code>’n</code> + adjective, so soft mutation: <code>t → d</code>.", "cy": "<code>’n</code> rhagddyfarnol + ansoddair, felly treiglad meddal: <code>t → d</code>." }
+        },
+        {
+          "id": "l2-bodyn-quiz-mcq-2",
+          "type": "mcq",
+          "prompt": { "en": "And this one:", "cy": "A hwn:" },
+          "stem": { "en": "Mae e'n + mab", "cy": "Mae e'n + mab" },
+          "options": [
+            { "text": { "en": "Mae e'n mab", "cy": "Mae e'n mab" } },
+            { "text": { "en": "Mae e'n fab", "cy": "Mae e'n fab" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "<code>m → f</code> after predicate <code>’n</code> (noun complement).", "cy": "<code>m → f</code> ar ôl <code>’n</code> rhagddyfarnol (enw fel cyflenwad)." }
+        },
+        {
+          "id": "l2-bodyn-quiz-mcq-3",
+          "type": "mcq",
+          "prompt": { "en": "Boundary check (verbnoun):", "cy": "Gwirio ffin (berfenw):" },
+          "stem": { "en": "Mae hi'n + cerdded", "cy": "Mae hi'n + cerdded" },
+          "options": [
+            { "text": { "en": "Mae hi'n gerdded", "cy": "Mae hi'n gerdded" } },
+            { "text": { "en": "Mae hi'n cerdded", "cy": "Mae hi'n cerdded" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "With a verbnoun, you usually keep the radical form after <code>’n</code>.", "cy": "Gyda berfenw, rwyt ti fel arfer yn cadw’r ffurf wreiddiol ar ôl <code>’n</code>." }
+        },
+        {
+          "id": "l2-bodyn-quiz-typein-1",
+          "type": "typein",
+          "stem": { "en": "Dydy e ddim yn + da", "cy": "Dydy e ddim yn + da" },
+          "accept": ["Dydy e ddim yn dda", "Dydy e ddim yn dda."],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>d → dd</code> after predicate <code>yn</code>.", "cy": "<code>d → dd</code> ar ôl <code>yn</code> rhagddyfarnol." }
+        },
+        {
+          "id": "l2-bodyn-quiz-typein-2",
+          "type": "typein",
+          "stem": { "en": "Mae hi'n + merch", "cy": "Mae hi'n + merch" },
+          "accept": ["Mae hi'n ferch", "Mae hi yn ferch"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Soft mutation: <code>m → f</code>.", "cy": "Treiglad meddal: <code>m → f</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Now practise ➜ (sentence mode) 🎯", "cy": "Nawr ymarfer ➜ (modd brawddegau) 🎯" },
+      "html": {
+        "en": "<p>Best next step: drill soft mutation in short sentence patterns, not isolated words.</p><p>&nbsp;</p><div class='callout'><p>Try saying the whole sentence out loud as you type it. It helps the pattern stick.</p></div>",
+        "cy": "<p>Cam nesaf gorau: drilia dreiglad meddal mewn patrymau brawddeg byr, nid geiriau ar eu pen eu hunain.</p><p>&nbsp;</p><div class='callout'><p>Rho gynnig ar ddweud y frawddeg gyfan yn uchel wrth i ti ei theipio. Mae’n helpu’r patrwm i aros.</p></div>"
+      },
+      "widgets": [
+        {
+          "id": "l2-bodyn-actions",
+          "type": "actions",
+          "prompt": { "en": "Open Practice and drill the same skill:", "cy": "Agor Ymarfer a drilio’r un sgìl:" },
+          "buttons": [
+            { "label": { "en": "Soft mutation drills", "cy": "Driliau treiglad meddal" }, "href": "./index.html", "kind": "primary" },
+            { "label": { "en": "Come back to Learn", "cy": "Nôl i Dysgu" }, "href": "./learn.html", "kind": "ghost" }
+          ]
+        }
+      ]
+    }
+  ]
+}
