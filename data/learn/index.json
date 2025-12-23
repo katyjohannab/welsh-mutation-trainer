@@ -61,7 +61,24 @@
       "tags": ["BOD", "YN", "SOFT-MUTATION", "SENTENCES"],
       "slideCount": 14,
       "deck": "./data/learn/l2-bod-yn-predicate.json"
-}
+},
+{
+      "id": "i3-numerals-that-trigger-mutation",
+      "level": { "en": "Intermediate", "cy": "Canolradd" },
+      "minutes": 18,
+      "title": {
+        "en": "Numerals that trigger mutation (and the stuff people actually say)",
+        "cy": "Rhifau sy’n sbarduno treiglad (a’r hyn mae pobl yn ei ddweud go iawn)"
+      },
+      "desc": {
+        "en": "A practical guide to number phrases: 1–10 triggers, gender forms (dau/dwy, tri/tair), the vigesimal (ugain) system, high-frequency big numbers (ugain, cant, mil), and years.",
+        "cy": "Canllaw ymarferol i ymadroddion rhif: sbardunau 1–10, ffurfiau rhyw (dau/dwy, tri/tair), y system ugeiniol, rhifau mawr cyffredin (ugain, cant, mil), a blynyddoedd."
+      },
+      "tags": ["INTERMEDIATE", "NUMERALS", "VIGESIMAL", "YEARS"],
+      "slideCount": 12,
+      "deck": "./data/learn/i3-numerals-that-trigger-mutation.json"
+    }
+
 
   ]
 }
