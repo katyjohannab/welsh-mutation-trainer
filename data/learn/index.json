@@ -65,19 +65,17 @@
 {
       "id": "i3-numerals-that-trigger-mutation",
       "level": { "en": "Intermediate", "cy": "Canolradd" },
-      "minutes": 18,
-      "title": {
-        "en": "Numerals that trigger mutation (and the stuff people actually say)",
-        "cy": "Rhifau sy’n sbarduno treiglad (a’r hyn mae pobl yn ei ddweud go iawn)"
-      },
+      "minutes": 30,
+      "title": { "en": "Numbers + mutation (in real Welsh)", "cy": "Rhifau + treiglad (mewn Cymraeg go iawn)" },
       "desc": {
-        "en": "A practical guide to number phrases: 1–10 triggers, gender forms (dau/dwy, tri/tair), the vigesimal (ugain) system, high-frequency big numbers (ugain, cant, mil), and years.",
-        "cy": "Canllaw ymarferol i ymadroddion rhif: sbardunau 1–10, ffurfiau rhyw (dau/dwy, tri/tair), y system ugeiniol, rhifau mawr cyffredin (ugain, cant, mil), a blynyddoedd."
+        "en": "How numbers behave, when they trigger mutation, and how to recognise the ugain system for time, age and money.",
+        "cy": "Sut mae rhifau’n gweithio, pryd maen nhw’n treiglo, a sut i adnabod y system ugain ar gyfer amser, oedran ac arian."
       },
-      "tags": ["INTERMEDIATE", "NUMERALS", "VIGESIMAL", "YEARS"],
-      "slideCount": 12,
+      "tags": ["NUMERALS", "MUTATION", "VIGESIMAL", "SYNTAX"],
+      "slideCount": 31,
       "deck": "./data/learn/i3-numerals-that-trigger-mutation.json"
     }
+
 
 
   ]
