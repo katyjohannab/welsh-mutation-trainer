@@ -2,185 +2,151 @@
   "id": "i3-numerals-that-trigger-mutation",
   "slides": [
     {
-      "title": { "en": "Numbers that trigger mutation", "cy": "Rhifau sy’n sbarduno treiglad" },
+      "title": { "en": "Numbers in Welsh", "cy": "Rhifau yn y Gymraeg" },
       "html": {
-        "en": "<p>This lesson is the <b>payoff</b> for your Soft + Aspirate lessons: you now get to apply them in one of the most common real-life domains.</p><ul><li>how numerals behave in Welsh <b>when counting things</b></li><li>which numerals <b>do</b> trigger mutation (and which do not)</li><li>gender splits: <b>dau/dwy</b>, <b>tri/tair</b>, <b>pedwar/pedair</b></li><li>the <b>vigesimal</b> system (ugain-based) so you can read what you’ll actually see</li><li>high-frequency bigger numbers: <b>ugain</b>, <b>cant</b>, <b>mil</b>, and how nouns follow them</li><li>years: how to read/write them without fear</li></ul><div class='callout'><p>If you ever found yourself avoiding numbers, this is the lesson that fixes it. You only need a few core patterns.</p></div>",
-        "cy": "<p>Dyma’r wers sy’n rhoi <b>gwerth</b> i’r gwersi Treiglad Meddal + Treiglad Llaes: rwyt ti’n eu defnyddio nawr mewn un o’r meysydd mwyaf cyffredin mewn Cymraeg go iawn.</p><ul><li>sut mae rhifau’n gweithio yn y Gymraeg <b>wrth gyfrif</b></li><li>pa rifau sy’n <b>sbarduno</b> treiglad (a pha rai nad ydyn nhw)</li><li>y rhaniad rhyw: <b>dau/dwy</b>, <b>tri/tair</b>, <b>pedwar/pedair</b></li><li>y system <b>ugeiniol</b> (ugain) fel y gelli di ddarllen yr hyn rwyt ti’n ei weld mewn bywyd go iawn</li><li>rhifau mawr cyffredin: <b>ugain</b>, <b>cant</b>, <b>mil</b>, a sut mae enwau’n dilyn</li><li>blynyddoedd: sut i’w darllen/ysgrifennu heb banicio</li></ul><div class='callout'><p>Os wyt ti wedi osgoi rhifau, dyma’r wers sy’n datrys hynny. Dim ond ychydig batrymau craidd sydd eu hangen.</p></div>"
+        "en": "<p>I used to tense up around numbers in Welsh. Not because the maths is hard, but because the forms look like they have a mind of their own.</p><p>This lesson is me trying to make it feel… normal.</p><ul><li>two counting systems (decimal and <b>ugain</b>-based)</li><li>syntax: when you get a singular noun, and when you see <b>o</b> + plural</li><li>which numerals <b>actually</b> trigger mutation</li><li>time, age, years, dates, money</li></ul><div class='callout'><p>You don’t need to produce every number perfectly to speak good Welsh. But recognising the patterns makes listening and reading so much easier.</p></div>",
+        "cy": "<p>Ro’n i’n tueddu i fynd yn dynn pan oedd rhifau’n dod i fyny yn y Gymraeg. Nid oherwydd bod y maths yn anodd, ond oherwydd bod y ffurfiau’n edrych fel petai ganddyn nhw feddwl eu hunain.</p><p>Mae’r wers hon yn ymgais i’w gwneud e’n teimlo’n… normal.</p><ul><li>dwy system gyfrif (ddegol ac un ar sail <b>ugain</b>)</li><li>cystrawen: pryd mae enw unigol, a phryd mae <b>o</b> + lluosog</li><li>pa rifau sy’n <b>wirioneddol</b> yn treiglo</li><li>amser, oedran, blynyddoedd, dyddiadau, arian</li></ul><div class='callout'><p>Does dim rhaid i ti gynhyrchu pob rhif yn berffaith i siarad Cymraeg da. Ond mae adnabod y patrymau’n gwneud gwrando a darllen yn llawer haws.</p></div>"
       }
     },
     {
-      "title": { "en": "Two big ideas first", "cy": "Dau syniad mawr yn gyntaf" },
+      "title": { "en": "Two counting systems (and where you’ll meet them)", "cy": "Dwy system gyfrif (a ble rwyt ti’n eu clywed)" },
       "html": {
-        "en": "<ol><li><b>Welsh traditionally uses the singular noun after numerals</b> (especially 1–10). You will still hear plurals in everyday speech, but the mutation patterns stay the same.</li><li><b>When a numeral triggers mutation, it hits the noun right after it</b> (direct contact).</li></ol><p>&nbsp;</p><div class='callout'><p>Practical mindset: learn <b>the triggers</b>, then stop guessing. If the trigger is not one of the known ones, assume <b>no mutation</b> unless something else is causing it.</p></div>",
-        "cy": "<ol><li><b>Yn draddodiadol, mae’r Gymraeg yn defnyddio’r enw unigol ar ôl rhifau</b> (yn enwedig 1–10). Cewch chi glywed lluosog ar lafar hefyd, ond mae’r patrymau treiglo’n aros yr un fath.</li><li><b>Pan mae rhif yn sbarduno treiglad, mae’n taro’r enw sy’n dod yn syth ar ei ôl</b> (cyswllt union).</li></ol><p>&nbsp;</p><div class='callout'><p>Meddylfryd defnyddiol: dysga’r <b>sbardunau</b>, wedyn stopia dyfalu. Os nad yw’r rhif yn un o’r sbardunau adnabyddus, cymryd <b>dim treiglad</b> fel y rhagosodiad (oni bai bod rhywbeth arall yn achosi treiglad).</p></div>"
+        "en": "<p>Welsh has two systems living side-by-side:</p><ul><li><b>Decimal</b>: undeg un, dauddeg, trideg… (common in writing and when people want clarity)</li><li><b>Vigesimal</b> (base-20): ugain, deugain, un ar hugain… (still very alive in speech)</li></ul><p>And the ugain system turns up a lot in:</p><ul><li>telling the time</li><li>age and numbers of years</li><li>money</li></ul><div class='callout'><p>One practical tip I wish someone had told me: <b>ugain</b> is worth learning properly. And it avoids a real confusion trap: <code>dauddeg</code> (20, decimal) can sound a lot like <code>deuddeg</code> (12).</p></div>",
+        "cy": "<p>Mae dwy system yn byw ochr yn ochr yn y Gymraeg:</p><ul><li><b>Ddegol</b>: undeg un, dauddeg, trideg… (yn gyffredin mewn ysgrifennu ac i fod yn glir)</li><li><b>Ugeiniol</b> (sylfaen-20): ugain, deugain, un ar hugain… (yn dal yn fyw iawn ar lafar)</li></ul><p>Ac mae’r system ugain yn dod i fyny’n aml gyda:</p><ul><li>dweud yr amser</li><li>oedran a nifer y blynyddoedd</li><li>arian</li></ul><div class='callout'><p>Awgrym ymarferol roeddwn i eisiau ei gael yn gynharach: mae <b>ugain</b> yn werth ei ddysgu’n iawn. Ac mae’n osgoi trap: gall <code>dauddeg</code> (20, ddegol) swnio’n debyg i <code>deuddeg</code> (12).</p></div>"
       }
     },
     {
-      "title": { "en": "Quick reference: 1–10 before a noun", "cy": "Cyfeirnod cyflym: 1–10 o flaen enw" },
+      "title": { "en": "Vigesimal cheat sheet (the ones worth knowing first)", "cy": "Rhestr ugeiniol (y rhai sy’n werth gwybod yn gyntaf)" },
       "html": {
-        "en": "<p>These are the high-frequency forms and what they do:</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Form(s)</th><th>Mutation on the noun?</th><th>Notes</th></tr></thead><tbody><tr><td>1</td><td><b>un</b></td><td><b>SM</b> on feminine singular</td><td>same word for masc/fem, but effect depends on noun gender</td></tr><tr><td>2</td><td><b>dau</b> (masc) / <b>dwy</b> (fem)</td><td><b>SM</b></td><td>soft mutation on the noun</td></tr><tr><td>3</td><td><b>tri</b> (masc) / <b>tair</b> (fem)</td><td><b>AM</b> after <b>tri</b>; <b>none</b> after <b>tair</b></td><td>aspirate only affects c/p/t</td></tr><tr><td>4</td><td><b>pedwar</b> (masc) / <b>pedair</b> (fem)</td><td><b>none</b> (normally)</td><td>gender choice matters, but it does not normally mutate the noun</td></tr><tr><td>5</td><td><b>pump</b> → <b>pum</b> (before a noun)</td><td>none</td><td>short form is extremely common</td></tr><tr><td>6</td><td><b>chwech</b> → <b>chwe</b> (before a noun)</td><td><b>AM</b> after <b>chwe</b></td><td>surprising but high value</td></tr><tr><td>7</td><td><b>saith</b></td><td>none</td><td></td></tr><tr><td>8</td><td><b>wyth</b></td><td>none</td><td></td></tr><tr><td>9</td><td><b>naw</b></td><td>none</td><td></td></tr><tr><td>10</td><td><b>deg</b></td><td>none</td><td></td></tr></tbody></table></div><div class='callout'><p>Key takeaway: the real mutation triggers in this range are <b>un</b> (fem), <b>dau/dwy</b>, <b>tri</b> (masc), and <b>chwe</b>.</p></div>",
-        "cy": "<p>Dyma’r ffurfiau mwyaf cyffredin a beth maen nhw’n ei wneud:</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf(iau)</th><th>Treiglad ar yr enw?</th><th>Nodiadau</th></tr></thead><tbody><tr><td>1</td><td><b>un</b></td><td><b>TM</b> ar enw benywaidd unigol</td><td>yr un gair i wryw/benyw, ond mae’r effaith yn dibynnu ar ryw’r enw</td></tr><tr><td>2</td><td><b>dau</b> (gwrywaidd) / <b>dwy</b> (benywaidd)</td><td><b>TM</b></td><td>treiglad meddal ar yr enw</td></tr><tr><td>3</td><td><b>tri</b> (gwrywaidd) / <b>tair</b> (benywaidd)</td><td><b>TL</b> ar ôl <b>tri</b>; <b>dim</b> ar ôl <b>tair</b></td><td>mae treiglad llaes yn effeithio ar c/p/t yn unig</td></tr><tr><td>4</td><td><b>pedwar</b> (gwrywaidd) / <b>pedair</b> (benywaidd)</td><td><b>dim</b> (fel arfer)</td><td>mae’r dewis rhyw yn bwysig, ond nid yw fel arfer yn treiglo’r enw</td></tr><tr><td>5</td><td><b>pump</b> → <b>pum</b> (o flaen enw)</td><td>dim</td><td>ffurf fer gyffredin iawn</td></tr><tr><td>6</td><td><b>chwech</b> → <b>chwe</b> (o flaen enw)</td><td><b>TL</b> ar ôl <b>chwe</b></td><td>syndod, ond gwerth uchel</td></tr><tr><td>7</td><td><b>saith</b></td><td>dim</td><td></td></tr><tr><td>8</td><td><b>wyth</b></td><td>dim</td><td></td></tr><tr><td>9</td><td><b>naw</b></td><td>dim</td><td></td></tr><tr><td>10</td><td><b>deg</b></td><td>dim</td><td></td></tr></tbody></table></div><div class='callout'><p>Y prif sbardunau yn y set yma yw <b>un</b> (benywaidd), <b>dau/dwy</b>, <b>tri</b> (gwrywaidd), a <b>chwe</b>.</p></div>"
-      },
-      "widgets": [
-        {
-          "id": "i3-num-rev-trigger-1",
-          "type": "reveal",
-          "front": { "en": "Which of these can trigger mutation on the noun: 4, 7, 9?", "cy": "Pa un sy’n gallu sbarduno treiglad ar yr enw: 4, 7, 9?" },
-          "back": { "en": "<b>Normally none of them.</b> (In this lesson, treat them as no-trigger numerals.)", "cy": "<b>Fel arfer dim un.</b> (Yn y wers hon, trinia nhw fel rhifau heb sbardun.)" }
-        }
-      ]
+        "en": "<p>If you only learn a handful at first, I’d pick these. They come up constantly.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Form</th><th>Where you’ll meet it</th></tr></thead><tbody><tr><td>12</td><td><b>deuddeg</b></td><td>everyday speech</td></tr><tr><td>15</td><td><b>pymtheg</b></td><td>everyday speech</td></tr><tr><td>18</td><td><b>deunaw</b></td><td>everyday speech</td></tr><tr><td>20</td><td><b>ugain</b></td><td>time, age, money</td></tr><tr><td>40</td><td><b>deugain</b></td><td>heard fairly often</td></tr><tr><td>50</td><td><b>hanner cant</b></td><td>very common</td></tr><tr><td>60</td><td><b>trigain</b></td><td>less common, but still seen</td></tr><tr><td>80</td><td><b>pedwar ugain</b></td><td>less common, but still seen</td></tr></tbody></table></div><div class='callout'><p>My goal with this is not “be able to recite it all”. It’s “stop freezing when you hear it”.</p></div>",
+        "cy": "<p>Os wyt ti’n dysgu ychydig yn gyntaf, byddwn i’n dewis y rhain. Maen nhw’n dod i fyny drwy’r amser.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf</th><th>Lle rwyt ti’n ei weld</th></tr></thead><tbody><tr><td>12</td><td><b>deuddeg</b></td><td>lleferydd bob dydd</td></tr><tr><td>15</td><td><b>pymtheg</b></td><td>lleferydd bob dydd</td></tr><tr><td>18</td><td><b>deunaw</b></td><td>lleferydd bob dydd</td></tr><tr><td>20</td><td><b>ugain</b></td><td>amser, oedran, arian</td></tr><tr><td>40</td><td><b>deugain</b></td><td>yn weddol gyffredin</td></tr><tr><td>50</td><td><b>hanner cant</b></td><td>cyffredin iawn</td></tr><tr><td>60</td><td><b>trigain</b></td><td>llai cyffredin, ond i’w weld</td></tr><tr><td>80</td><td><b>pedwar ugain</b></td><td>llai cyffredin, ond i’w weld</td></tr></tbody></table></div><div class='callout'><p>Nid “gallu adrodd popeth” yw’r nod. Y nod yw “peidio â rhewi pan wyt ti’n ei glywed”.</p></div>"
+      }
     },
     {
-      "title": { "en": "1: un (and feminine soft mutation)", "cy": "1: un (a TM benywaidd)" },
+      "title": { "en": "Syntax with numerals: singular vs “o + plural”", "cy": "Cystrawen: unigol vs “o + lluosog”" },
       "html": {
-        "en": "<p><b>un</b> is the same word with masculine and feminine nouns, but:</p><p>&nbsp;</p><p><b>With a feminine singular noun, <code>un</code> usually triggers soft mutation.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>After un</th></tr></thead><tbody><tr><td>cath (f.)</td><td>un gath</td></tr><tr><td>merch (f.)</td><td>un ferch</td></tr></tbody></table></div><div class='callout'><p>Don’t panic about gender. Learn it as you learn the noun. Dictionaries mark nouns as m/f.</p></div>",
-        "cy": "<p>Yr un gair yw <b>un</b> gyda enwau gwrywaidd a benywaidd, ond:</p><p>&nbsp;</p><p><b>Gyda enw benywaidd unigol, mae <code>un</code> fel arfer yn sbarduno treiglad meddal.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Ar ôl un</th></tr></thead><tbody><tr><td>cath (b.)</td><td>un gath</td></tr><tr><td>merch (b.)</td><td>un ferch</td></tr></tbody></table></div><div class='callout'><p>Paid â phoeni gormod am ryw. Dysga fe wrth i ti ddysgu’r enw. Mae geiriaduron yn nodi gw./b.</p></div>"
+        "en": "<p>Welsh often uses a <b>singular noun</b> after small numbers. It’s normal.</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Common Welsh</th><th>What to notice</th></tr></thead><tbody><tr><td>two men</td><td><code>dau ddyn</code></td><td>singular <code>dyn</code> after the number</td></tr><tr><td>four doors</td><td><code>pedair drws</code></td><td>still singular</td></tr></tbody></table></div><p>With higher numbers, you’ll often see <b>o</b> + a plural noun:</p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Common Welsh</th><th>What to notice</th></tr></thead><tbody><tr><td>ten men</td><td><code>deg o ddynion</code></td><td><code>o</code> introduces a plural noun phrase</td></tr><tr><td>a hundred doors</td><td><code>cant o ddrysau</code></td><td>plural after <code>o</code></td></tr></tbody></table></div><div class='callout'><p>The dividing line is not neat. You will hear both <code>saith tŷ</code> and <code>saith o dai</code>. This is a “feel for the language” area, so I focus on recognition first.</p></div>",
+        "cy": "<p>Mae’r Gymraeg yn aml yn defnyddio <b>enw unigol</b> ar ôl rhifau bach. Mae hynny’n normal.</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Cymraeg cyffredin</th><th>Beth i’w sylwi</th></tr></thead><tbody><tr><td>dau ddyn</td><td><code>dau ddyn</code></td><td>enw unigol <code>dyn</code> ar ôl y rhif</td></tr><tr><td>pedair drws</td><td><code>pedair drws</code></td><td>dal yn unigol</td></tr></tbody></table></div><p>Gyda rhifau uwch, byddi di’n aml yn gweld <b>o</b> + enw lluosog:</p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Cymraeg cyffredin</th><th>Beth i’w sylwi</th></tr></thead><tbody><tr><td>deg o ddynion</td><td><code>deg o ddynion</code></td><td><code>o</code> yn cyflwyno ymadrodd enw lluosog</td></tr><tr><td>cant o ddrysau</td><td><code>cant o ddrysau</code></td><td>lluosog ar ôl <code>o</code></td></tr></tbody></table></div><div class='callout'><p>Does dim “linell” berffaith. Byddi di’n clywed <code>saith tŷ</code> a <code>saith o dai</code>. Felly rwy’n blaenoriaethu adnabod y patrymau yn gyntaf.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: noun after numbers", "cy": "Profiad sydyn: enw ar ôl rhif" },
+      "html": {
+        "en": "<p>Two tiny checks. No overthinking.</p>",
+        "cy": "<p>Dau brawf bach. Paid â gorfeddwl.</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-mcq-un-1",
+          "id": "i3-num-syntax-mcq-1",
           "type": "mcq",
-          "prompt": { "en": "Choose the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
-          "stem": { "en": "un + merch", "cy": "un + merch" },
+          "prompt": { "en": "Pick the most natural (neutral) option:", "cy": "Dewisa’r opsiwn mwyaf naturiol (niwtral):" },
+          "stem": { "en": "ten men", "cy": "ten men" },
           "options": [
-            { "text": { "en": "un merch", "cy": "un merch" } },
-            { "text": { "en": "un ferch", "cy": "un ferch" } }
+            { "text": { "en": "deg dyn", "cy": "deg dyn" } },
+            { "text": { "en": "deg o ddynion", "cy": "deg o ddynion" } },
+            { "text": { "en": "deng dynion", "cy": "deng dynion" } }
           ],
           "correct": [1],
           "explain": {
-            "en": "With a feminine singular noun, <b>un</b> usually triggers soft mutation: <b>m → f</b>.",
-            "cy": "Gyda enw benywaidd unigol, mae <b>un</b> fel arfer yn sbarduno TM: <b>m → f</b>."
+            "en": "A very common pattern is <b>number + o + plural</b>: <code>deg o ddynion</code>.",
+            "cy": "Patrwm cyffredin iawn yw <b>rhif + o + lluosog</b>: <code>deg o ddynion</code>."
+          }
+        },
+        {
+          "id": "i3-num-syntax-typein-1",
+          "type": "typein",
+          "stem": { "en": "dau + dyn", "cy": "dau + dyn" },
+          "accept": ["dau ddyn"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": {
+            "en": "<b>dau</b> (with masculine nouns) triggers soft mutation: <code>dyn → ddyn</code>.",
+            "cy": "Mae <b>dau</b> (gyda gwrywaidd) yn sbarduno treiglad meddal: <code>dyn → ddyn</code>."
           }
         }
       ]
     },
     {
-      "title": { "en": "Drill: un + feminine nouns", "cy": "Dril: un + enwau benywaidd" },
+      "title": { "en": "2, 3, 4: masculine vs feminine forms", "cy": "2, 3, 4: ffurf gwrywaidd a benywaidd" },
       "html": {
-        "en": "<p>Type the final phrase.</p><p>&nbsp;</p><div class='callout'><p>If you get one wrong, slow down and run your workflow: trigger, mutable, blockers, one change only.</p></div>",
-        "cy": "<p>Teipia’r ymadrodd terfynol.</p><p>&nbsp;</p><div class='callout'><p>Os wyt ti’n camu, arafia a rhed dy lif gwaith: sbardun, treigladwy, blocwyr, unwaith yn unig.</p></div>"
-      },
-      "widgets": [
-        {
-          "id": "i3-num-typein-un-1",
-          "type": "typein",
-          "stem": { "en": "un + cath", "cy": "un + cath" },
-          "accept": ["un gath"],
-          "caseSensitive": false,
-          "trim": true,
-          "explain": { "en": "Feminine singular: <b>un</b> usually triggers SM: <b>c → g</b>.", "cy": "Benywaidd unigol: mae <b>un</b> fel arfer yn sbarduno TM: <b>c → g</b>." }
-        },
-        {
-          "id": "i3-num-typein-un-2",
-          "type": "typein",
-          "stem": { "en": "un + merch", "cy": "un + merch" },
-          "accept": ["un ferch"],
-          "caseSensitive": false,
-          "trim": true,
-          "explain": { "en": "<b>m → f</b> in soft mutation.", "cy": "<b>m → f</b> mewn treiglad meddal." }
-        }
-      ]
+        "en": "<p>This is one of the few places where noun gender really matters in everyday Welsh.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Masculine noun</th><th>Feminine noun</th></tr></thead><tbody><tr><td>2</td><td><code>dau</code></td><td><code>dwy</code></td></tr><tr><td>3</td><td><code>tri</code></td><td><code>tair</code></td></tr><tr><td>4</td><td><code>pedwar</code></td><td><code>pedair</code></td></tr></tbody></table></div><p>And then you apply mutation (sometimes):</p><ul><li><code>dwy ferch</code> (merch is feminine, and 2 triggers soft mutation)</li><li><code>tri char</code> (car is masculine, and 3 triggers aspirate mutation on <code>c</code>)</li><li><code>pedair drws</code> (4 normally causes no mutation)</li></ul><div class='callout'><p>When I’m unsure, I look the noun up. Getting gender wrong is normal. Fixing it is how it sticks.</p></div>",
+        "cy": "<p>Dyma un o’r ychydig feysydd lle mae rhyw’r enw yn bwysig iawn mewn Cymraeg bob dydd.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Enw gwrywaidd</th><th>Enw benywaidd</th></tr></thead><tbody><tr><td>2</td><td><code>dau</code></td><td><code>dwy</code></td></tr><tr><td>3</td><td><code>tri</code></td><td><code>tair</code></td></tr><tr><td>4</td><td><code>pedwar</code></td><td><code>pedair</code></td></tr></tbody></table></div><p>Ac wedyn rwyt ti’n treiglo (weithiau):</p><ul><li><code>dwy ferch</code> (merch yn fenywaidd, a 2 yn achosi TM)</li><li><code>tri char</code> (car yn wrywaidd, a 3 yn achosi TL ar <code>c</code>)</li><li><code>pedair drws</code> (4 fel arfer dim treiglad)</li></ul><div class='callout'><p>Pan dwi’n ansicr, dwi’n edrych yr enw lan. Mae camgymeriadau rhyw yn normal. Dyna sut mae’n glynu.</p></div>"
+      }
     },
     {
-      "title": { "en": "2: dau (m) / dwy (f) and soft mutation", "cy": "2: dau (gw.) / dwy (b.) a TM" },
+      "title": { "en": "Quick check: choose the right phrase", "cy": "Profiad sydyn: dewis yr ymadrodd cywir" },
       "html": {
-        "en": "<p>This is one of the most useful patterns in Welsh.</p><p>&nbsp;</p><p><b>dau</b> goes with masculine nouns, <b>dwy</b> goes with feminine nouns, and the noun takes <b>soft mutation</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Noun</th><th>Result</th></tr></thead><tbody><tr><td>dau</td><td>bachgen</td><td>dau fachgen</td></tr><tr><td>dwy</td><td>cadair</td><td>dwy gadair</td></tr></tbody></table></div><div class='callout'><p>Yes, it’s a lot at once: pick the right form, then apply mutation. After a week, it becomes automatic.</p></div>",
-        "cy": "<p>Dyma un o’r patrymau mwyaf defnyddiol yn y Gymraeg.</p><p>&nbsp;</p><p><b>dau</b> gyda enwau gwrywaidd, <b>dwy</b> gyda enwau benywaidd, ac mae’r enw’n cymryd <b>treiglad meddal</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Enw</th><th>Canlyniad</th></tr></thead><tbody><tr><td>dau</td><td>bachgen</td><td>dau fachgen</td></tr><tr><td>dwy</td><td>cadair</td><td>dwy gadair</td></tr></tbody></table></div><div class='callout'><p>Ydy, mae’n dipyn i gyd: dewis y ffurf gywir, wedyn treiglo. Ar ôl wythnos, mae’n dod yn awtomatig.</p></div>"
+        "en": "<p>Pick the phrase you’d actually want to say.</p>",
+        "cy": "<p>Dewisa’r ymadrodd byddet ti wir eisiau ei ddweud.</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-mcq-dau-dwy-1",
+          "id": "i3-num-gender-mcq-1",
           "type": "mcq",
-          "prompt": { "en": "Pick the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
-          "stem": { "en": "2 + cadair (feminine)", "cy": "2 + cadair (benywaidd)" },
+          "prompt": { "en": "2 + merch", "cy": "2 + merch" },
+          "stem": { "en": "Which is correct?", "cy": "Pa un sy’n gywir?" },
           "options": [
-            { "text": { "en": "dau cadair", "cy": "dau cadair" } },
-            { "text": { "en": "dwy gadair", "cy": "dwy gadair" } },
-            { "text": { "en": "dwy cadair", "cy": "dwy cadair" } }
-          ],
-          "correct": [1],
-          "explain": {
-            "en": "Feminine noun: choose <b>dwy</b>, then apply soft mutation: <b>c → g</b>.",
-            "cy": "Enw benywaidd: dewis <b>dwy</b>, wedyn TM: <b>c → g</b>."
-          }
-        }
-      ]
-    },
-    {
-      "title": { "en": "Drill: dau / dwy", "cy": "Dril: dau / dwy" },
-      "html": {
-        "en": "<p>Type the final phrase.</p><p>&nbsp;</p><div class='callout'><p>Tip: when you’re unsure, look the noun up. Getting gender wrong is normal. Correcting it is how you learn it.</p></div>",
-        "cy": "<p>Teipia’r ymadrodd terfynol.</p><p>&nbsp;</p><div class='callout'><p>Awgrym: os wyt ti’n ansicr, chwilia’r enw. Mae camgymeriadau rhyw yn normal. Dyna sut rwyt ti’n dysgu.</p></div>"
-      },
-      "widgets": [
-        {
-          "id": "i3-num-typein-dau-1",
-          "type": "typein",
-          "stem": { "en": "dau + bachgen", "cy": "dau + bachgen" },
-          "accept": ["dau fachgen"],
-          "caseSensitive": false,
-          "trim": true,
-          "explain": { "en": "Soft mutation after <b>dau</b>: <b>b → f</b>.", "cy": "TM ar ôl <b>dau</b>: <b>b → f</b>." }
-        },
-        {
-          "id": "i3-num-typein-dwy-1",
-          "type": "typein",
-          "stem": { "en": "dwy + cadair", "cy": "dwy + cadair" },
-          "accept": ["dwy gadair"],
-          "caseSensitive": false,
-          "trim": true,
-          "explain": { "en": "Soft mutation after <b>dwy</b>: <b>c → g</b>.", "cy": "TM ar ôl <b>dwy</b>: <b>c → g</b>." }
-        }
-      ]
-    },
-    {
-      "title": { "en": "3: tri (m) / tair (f)", "cy": "3: tri (gw.) / tair (b.)" },
-      "html": {
-        "en": "<p>Here is the split you actually need:</p><ul><li><b>tri</b> (with masculine nouns) triggers <b>aspirate mutation</b> on <b>c/p/t</b></li><li><b>tair</b> (with feminine nouns) normally causes <b>no mutation</b></li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Noun</th><th>Result</th></tr></thead><tbody><tr><td>tri</td><td>ci</td><td>tri chi</td></tr><tr><td>tri</td><td>tŷ</td><td>tri thŷ</td></tr><tr><td>tair</td><td>cadair</td><td>tair cadair</td></tr></tbody></table></div><div class='callout'><p>If the noun starts with something other than c/p/t, aspirate mutation won’t show up.</p></div>",
-        "cy": "<p>Dyma’r rhaniad sydd ei angen mewn gwirionedd:</p><ul><li><b>tri</b> (gyda enwau gwrywaidd) yn sbarduno <b>treiglad llaes</b> ar <b>c/p/t</b></li><li><b>tair</b> (gyda enwau benywaidd) fel arfer <b>dim treiglad</b></li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Enw</th><th>Canlyniad</th></tr></thead><tbody><tr><td>tri</td><td>ci</td><td>tri chi</td></tr><tr><td>tri</td><td>tŷ</td><td>tri thŷ</td></tr><tr><td>tair</td><td>cadair</td><td>tair cadair</td></tr></tbody></table></div><div class='callout'><p>Os nad yw’r enw’n dechrau gyda c/p/t, ni fydd treiglad llaes yn weladwy.</p></div>"
-      },
-      "widgets": [
-        {
-          "id": "i3-num-mcq-tri-tair-1",
-          "type": "mcq",
-          "prompt": { "en": "Choose the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
-          "stem": { "en": "tri + ci", "cy": "tri + ci" },
-          "options": [
-            { "text": { "en": "tri ci", "cy": "tri ci" } },
-            { "text": { "en": "tri gi", "cy": "tri gi" } },
-            { "text": { "en": "tri chi", "cy": "tri chi" } }
+            { "text": { "en": "dau merch", "cy": "dau merch" } },
+            { "text": { "en": "dwy merch", "cy": "dwy merch" } },
+            { "text": { "en": "dwy ferch", "cy": "dwy ferch" } }
           ],
           "correct": [2],
           "explain": {
-            "en": "After <b>tri</b> (with masculine nouns) you get aspirate mutation: <b>c → ch</b>.",
-            "cy": "Ar ôl <b>tri</b> (gyda gwrywaidd) ceir treiglad llaes: <b>c → ch</b>."
+            "en": "Feminine noun: use <b>dwy</b>, and 2 triggers soft mutation: <code>merch → ferch</code>.",
+            "cy": "Enw benywaidd: <b>dwy</b>, a 2 yn achosi TM: <code>merch → ferch</code>."
+          }
+        },
+        {
+          "id": "i3-num-gender-mcq-2",
+          "type": "mcq",
+          "prompt": { "en": "3 + car", "cy": "3 + car" },
+          "stem": { "en": "Which is correct?", "cy": "Pa un sy’n gywir?" },
+          "options": [
+            { "text": { "en": "tri car", "cy": "tri car" } },
+            { "text": { "en": "tri char", "cy": "tri char" } },
+            { "text": { "en": "tair char", "cy": "tair char" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<b>tri</b> (with masculine nouns) triggers aspirate mutation on <code>c/p/t</code>: <code>car → char</code>.",
+            "cy": "Mae <b>tri</b> (gyda gwrywaidd) yn achosi TL ar <code>c/p/t</code>: <code>car → char</code>."
           }
         }
       ]
     },
     {
-      "title": { "en": "4: pedwar (m) / pedair (f)", "cy": "4: pedwar (gw.) / pedair (b.)" },
+      "title": { "en": "Mutation chart: 1–10 before a noun", "cy": "Siart: 1–10 o flaen enw" },
       "html": {
-        "en": "<p><b>pedwar</b> (masc) and <b>pedair</b> (fem) are about choosing the right form for gender.</p><p>&nbsp;</p><p><b>They do not normally trigger a mutation on the noun.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Noun</th><th>Result</th></tr></thead><tbody><tr><td>pedwar</td><td>bachgen</td><td>pedwar bachgen</td></tr><tr><td>pedair</td><td>cadair</td><td>pedair cadair</td></tr></tbody></table></div><div class='callout'><p>This is a classic over-mutation trap. Save your energy for the real triggers.</p></div>",
-        "cy": "<p>Mae <b>pedwar</b> (gwrywaidd) a <b>pedair</b> (benywaidd) yn ymwneud â dewis y ffurf gywir ar gyfer rhyw.</p><p>&nbsp;</p><p><b>Nid ydynt fel arfer yn sbarduno treiglad ar yr enw.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Enw</th><th>Canlyniad</th></tr></thead><tbody><tr><td>pedwar</td><td>bachgen</td><td>pedwar bachgen</td></tr><tr><td>pedair</td><td>cadair</td><td>pedair cadair</td></tr></tbody></table></div><div class='callout'><p>Trap gortreiglo clasurol. Cadwa dy egni ar gyfer y sbardunau go iawn.</p></div>"
+        "en": "<p>This is the bit I keep coming back to. It stops me guessing.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Form before a noun</th><th>Mutation on the noun?</th><th>Example</th></tr></thead><tbody><tr><td>1</td><td><b>un</b></td><td><b>SM</b> on feminine singular</td><td><code>un ferch</code></td></tr><tr><td>2</td><td><b>dau</b> (m) / <b>dwy</b> (f)</td><td><b>SM</b></td><td><code>dau ddyn</code>, <code>dwy ferch</code></td></tr><tr><td>3</td><td><b>tri</b> (m) / <b>tair</b> (f)</td><td><b>AM</b> after <b>tri</b>; none after <b>tair</b></td><td><code>tri char</code>, <code>tair merch</code></td></tr><tr><td>4</td><td><b>pedwar</b> (m) / <b>pedair</b> (f)</td><td>normally none</td><td><code>pedair drws</code></td></tr><tr><td>5</td><td><b>pum</b></td><td>normally none</td><td><code>pum car</code></td></tr><tr><td>6</td><td><b>chwe</b></td><td><b>AM</b> (c/p/t)</td><td><code>chwe thŷ</code></td></tr><tr><td>7–10</td><td><b>saith</b>, <b>wyth</b>, <b>naw</b>, <b>deg</b></td><td>normally none</td><td><code>saith ci</code>, <code>deg munud</code></td></tr></tbody></table></div><div class='callout'><p>Important exception: some <b>time words</b> behave differently (we’ll do <code>blynedd</code> and <code>diwrnod</code> later).</p></div>",
+        "cy": "<p>Dyma’r peth dwi’n dod yn ôl ato. Mae’n stopio’r dyfalu.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf o flaen enw</th><th>Treiglad ar yr enw?</th><th>Enghraifft</th></tr></thead><tbody><tr><td>1</td><td><b>un</b></td><td><b>TM</b> ar fenywaidd unigol</td><td><code>un ferch</code></td></tr><tr><td>2</td><td><b>dau</b> (gw.) / <b>dwy</b> (b.)</td><td><b>TM</b></td><td><code>dau ddyn</code>, <code>dwy ferch</code></td></tr><tr><td>3</td><td><b>tri</b> (gw.) / <b>tair</b> (b.)</td><td><b>TL</b> ar ôl <b>tri</b>; dim ar ôl <b>tair</b></td><td><code>tri char</code>, <code>tair merch</code></td></tr><tr><td>4</td><td><b>pedwar</b> (gw.) / <b>pedair</b> (b.)</td><td>fel arfer dim</td><td><code>pedair drws</code></td></tr><tr><td>5</td><td><b>pum</b></td><td>fel arfer dim</td><td><code>pum car</code></td></tr><tr><td>6</td><td><b>chwe</b></td><td><b>TL</b> (c/p/t)</td><td><code>chwe thŷ</code></td></tr><tr><td>7–10</td><td><b>saith</b>, <b>wyth</b>, <b>naw</b>, <b>deg</b></td><td>fel arfer dim</td><td><code>saith ci</code>, <code>deg munud</code></td></tr></tbody></table></div><div class='callout'><p>Eithriad pwysig: mae rhai <b>geiriau amser</b> yn ymddwyn yn wahanol (awn ni at <code>blynedd</code> a <code>diwrnod</code> yn nes ymlaen).</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Fast trigger drill", "cy": "Dril sbardun cyflym" },
+      "html": {
+        "en": "<p>Tap through these until your brain stops treating numbers as scary.</p><div class='callout'><p>Goal: recognise the trigger, then either apply the mutation or confidently choose “no mutation”.</p></div>",
+        "cy": "<p>Tapia drwyddyn nhw nes bod dy ymennydd yn stopio trin rhifau fel rhywbeth brawychus.</p><div class='callout'><p>Nod: adnabod y sbardun, wedyn treiglo neu ddewis “dim treiglad” yn hyderus.</p></div>"
       },
       "widgets": [
         {
-          "id": "i3-num-typein-pedair-1",
-          "type": "typein",
-          "stem": { "en": "pedair + cadair", "cy": "pedair + cadair" },
-          "accept": ["pedair cadair"],
-          "caseSensitive": false,
-          "trim": true,
-          "explain": { "en": "No mutation is the correct outcome here.", "cy": "Dim treiglad yw’r canlyniad cywir yma." }
+          "id": "i3-num-fc-triggers-1",
+          "type": "flashcards",
+          "items": [
+            { "front": { "en": "un + drws (f.)", "cy": "un + drws (b.)" }, "back": { "en": "un ddrws (SM)", "cy": "un ddrws (TM)" } },
+            { "front": { "en": "dau + dyn (m.)", "cy": "dau + dyn (gw.)" }, "back": { "en": "dau ddyn (SM)", "cy": "dau ddyn (TM)" } },
+            { "front": { "en": "dwy + merch (f.)", "cy": "dwy + merch (b.)" }, "back": { "en": "dwy ferch (SM)", "cy": "dwy ferch (TM)" } },
+            { "front": { "en": "tri + car (m.)", "cy": "tri + car (gw.)" }, "back": { "en": "tri char (AM)", "cy": "tri char (TL)" } },
+            { "front": { "en": "tair + merch (f.)", "cy": "tair + merch (b.)" }, "back": { "en": "tair merch (no mutation)", "cy": "tair merch (dim treiglad)" } },
+            { "front": { "en": "chwe + tŷ", "cy": "chwe + tŷ" }, "back": { "en": "chwe thŷ (AM)", "cy": "chwe thŷ (TL)" } }
+          ]
         }
       ]
     },
     {
-      "title": { "en": "5–10: the real-life short forms", "cy": "5–10: y ffurfiau go iawn" },
+      "title": { "en": "Before a noun: pum and chwe", "cy": "O flaen enw: pum a chwe" },
       "html": {
-        "en": "<p>Two forms matter a lot in everyday Welsh:</p><ul><li><b>pum</b> (used before a noun)</li><li><b>chwe</b> (used before a noun)</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Before a noun</th><th>Example</th></tr></thead><tbody><tr><td>5</td><td>pum</td><td>pum munud</td></tr><tr><td>6</td><td>chwe</td><td>chwe phlentyn</td></tr><tr><td>7</td><td>saith</td><td>saith diwrnod</td></tr><tr><td>8</td><td>wyth</td><td>wyth wythnos</td></tr><tr><td>9</td><td>naw</td><td>naw mis</td></tr><tr><td>10</td><td>deg</td><td>deg munud</td></tr></tbody></table></div><div class='callout'><p>Notice: 5,7,8,9,10 do not normally trigger mutation. 6 is the special one when it becomes <b>chwe</b>.</p></div>",
-        "cy": "<p>Mae dwy ffurf yn bwysig iawn mewn Cymraeg bob dydd:</p><ul><li><b>pum</b> (o flaen enw)</li><li><b>chwe</b> (o flaen enw)</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>O flaen enw</th><th>Enghraifft</th></tr></thead><tbody><tr><td>5</td><td>pum</td><td>pum munud</td></tr><tr><td>6</td><td>chwe</td><td>chwe phlentyn</td></tr><tr><td>7</td><td>saith</td><td>saith diwrnod</td></tr><tr><td>8</td><td>wyth</td><td>wyth wythnos</td></tr><tr><td>9</td><td>naw</td><td>naw mis</td></tr><tr><td>10</td><td>deg</td><td>deg munud</td></tr></tbody></table></div><div class='callout'><p>Sylwa: nid yw 5,7,8,9,10 fel arfer yn sbarduno treiglad. 6 yw’r un arbennig pan fydd yn troi’n <b>chwe</b>.</p></div>"
+        "en": "<p>Two short forms matter constantly:</p><ul><li><code>pump → pum</code> before a noun</li><li><code>chwech → chwe</code> before a noun</li></ul><p>And <b>chwe</b> is a real mutation trigger (aspirate on c/p/t).</p><div class='callout'><p>I treat these like set pieces. They’re so common that it’s worth making them automatic.</p></div>",
+        "cy": "<p>Mae dwy ffurf fer yn dod i fyny drwy’r amser:</p><ul><li><code>pump → pum</code> o flaen enw</li><li><code>chwech → chwe</code> o flaen enw</li></ul><p>Ac mae <b>chwe</b> yn sbardun treiglo (treiglad llaes ar c/p/t).</p><div class='callout'><p>Dwi’n trin y rhain fel darnau “parod”. Maen nhw mor gyffredin fel ei bod hi’n werth eu gwneud yn awtomatig.</p></div>"
       },
       "widgets": [
         {
@@ -190,89 +156,164 @@
           "accept": ["pum munud"],
           "caseSensitive": false,
           "trim": true,
-          "explain": { "en": "Before a noun, <b>pump</b> commonly becomes <b>pum</b>.", "cy": "O flaen enw, mae <b>pump</b> yn aml yn troi’n <b>pum</b>." }
-        }
-      ]
-    },
-    {
-      "title": { "en": "6: chwe triggers aspirate mutation", "cy": "6: chwe yn sbarduno TL" },
-      "html": {
-        "en": "<p>This one is worth learning because it shows up everywhere.</p><p>&nbsp;</p><p><b>When “six” becomes <code>chwe</code> before a noun, it triggers aspirate mutation on c/p/t.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Radical</th><th>After chwe</th></tr></thead><tbody><tr><td>plentyn</td><td>chwe phlentyn</td></tr><tr><td>ci</td><td>chwe chi</td></tr><tr><td>tŷ</td><td>chwe thŷ</td></tr></tbody></table></div><div class='callout'><p>This is exactly the same mutation logic as your Aspirate lesson. Numbers are just a new trigger domain.</p></div>",
-        "cy": "<p>Mae hwn yn werth ei ddysgu oherwydd mae ym mhobman.</p><p>&nbsp;</p><p><b>Pan mae “chwech” yn troi’n <code>chwe</code> o flaen enw, mae’n sbarduno treiglad llaes ar c/p/t.</b></p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Ffurf wreiddiol</th><th>Ar ôl chwe</th></tr></thead><tbody><tr><td>plentyn</td><td>chwe phlentyn</td></tr><tr><td>ci</td><td>chwe chi</td></tr><tr><td>tŷ</td><td>chwe thŷ</td></tr></tbody></table></div><div class='callout'><p>Dyma’r un rhesymeg â’r wers Treiglad Llaes. Mae rhifau jyst yn sbardun newydd.</p></div>"
-      },
-      "widgets": [
-        {
-          "id": "i3-num-mcq-chwe-1",
-          "type": "mcq",
-          "prompt": { "en": "Choose the correct phrase:", "cy": "Dewisa’r ymadrodd cywir:" },
-          "stem": { "en": "chwe + plentyn", "cy": "chwe + plentyn" },
-          "options": [
-            { "text": { "en": "chwe plentyn", "cy": "chwe plentyn" } },
-            { "text": { "en": "chwe phlentyn", "cy": "chwe phlentyn" } },
-            { "text": { "en": "chwe bhlentyn", "cy": "chwe bhlentyn" } }
-          ],
-          "correct": [1],
-          "explain": {
-            "en": "Aspirate mutation after <b>chwe</b>: <b>p → ph</b>.",
-            "cy": "Treiglad llaes ar ôl <b>chwe</b>: <b>p → ph</b>."
-          }
+          "explain": { "en": "Before a noun, <code>pump</code> commonly becomes <code>pum</code>.", "cy": "O flaen enw, mae <code>pump</code> yn aml yn troi’n <code>pum</code>." }
         },
         {
           "id": "i3-num-typein-chwe-1",
           "type": "typein",
-          "stem": { "en": "chwe + tŷ", "cy": "chwe + tŷ" },
+          "stem": { "en": "chwech + tŷ", "cy": "chwech + tŷ" },
           "accept": ["chwe thŷ"],
           "caseSensitive": false,
           "trim": true,
-          "explain": { "en": "<b>t → th</b> in aspirate mutation.", "cy": "<b>t → th</b> mewn treiglad llaes." }
+          "explain": { "en": "Before a noun: <code>chwech → chwe</code>, then aspirate mutation <code>t → th</code>.", "cy": "O flaen enw: <code>chwech → chwe</code>, wedyn TL <code>t → th</code>." }
         }
       ]
     },
     {
-      "title": { "en": "Fast mixed drill: 1–6", "cy": "Dril cymysg cyflym: 1–6" },
+      "title": { "en": "Deg vs deng (a very practical pattern)", "cy": "Deg vs deng (patrwm ymarferol iawn)" },
       "html": {
-        "en": "<p>These are the triggers you actually need in your head.</p><p>&nbsp;</p><div class='callout'><p>Goal: recognise the trigger instantly, then apply the right mutation or confidently choose “no mutation”.</p></div>",
-        "cy": "<p>Dyma’r sbardunau sydd eu hangen mewn gwirionedd.</p><p>&nbsp;</p><div class='callout'><p>Nod: adnabod y sbardun ar unwaith, wedyn treiglo’n gywir neu ddewis “dim treiglad” yn hyderus.</p></div>"
+        "en": "<p><code>deg</code> has an alternative form <code>deng</code>.</p><p>You’ll often see <code>deng</code> right before time and measure words, especially ones beginning with <b>m</b>:</p><ul><li><code>deng munud</code> (ten minutes)</li><li><code>deng mis</code> (ten months)</li><li><code>deng mlynedd</code> (ten years, note <code>mlynedd</code>)</li><li><code>deng mil</code>, <code>deng miliwn</code></li></ul><p>In most other cases, the very readable pattern is <code>deg o</code> + plural:</p><ul><li><code>deg o fapiau</code> (ten maps)</li></ul><div class='callout'><p>You’ll hear variation in speech. But recognising <code>deng</code> is a big listening win.</p></div>",
+        "cy": "<p>Mae gan <code>deg</code> ffurf arall: <code>deng</code>.</p><p>Byddi di’n aml yn gweld <code>deng</code> cyn geiriau amser a mesur, yn enwedig rhai sy’n dechrau gyda <b>m</b>:</p><ul><li><code>deng munud</code></li><li><code>deng mis</code></li><li><code>deng mlynedd</code> (sylwa ar <code>mlynedd</code>)</li><li><code>deng mil</code>, <code>deng miliwn</code></li></ul><p>Mewn llawer o achosion eraill, mae’r patrwm darllenadwy <code>deg o</code> + lluosog yn gyffredin:</p><ul><li><code>deg o fapiau</code></li></ul><div class='callout'><p>Byddi di’n clywed amrywiad ar lafar. Ond mae adnabod <code>deng</code> yn ennill mawr wrth wrando.</p></div>"
       },
       "widgets": [
         {
-          "id": "i3-num-fc-1to6",
-          "type": "flashcards",
-          "items": [
-            { "front": { "en": "2 (masc): dau + bachgen", "cy": "2 (gw.): dau + bachgen" }, "back": { "en": "dau fachgen (SM)", "cy": "dau fachgen (TM)" } },
-            { "front": { "en": "2 (fem): dwy + cadair", "cy": "2 (b.): dwy + cadair" }, "back": { "en": "dwy gadair (SM)", "cy": "dwy gadair (TM)" } },
-            { "front": { "en": "3 (masc): tri + ci", "cy": "3 (gw.): tri + ci" }, "back": { "en": "tri chi (AM)", "cy": "tri chi (TL)" } },
-            { "front": { "en": "3 (fem): tair + cadair", "cy": "3 (b.): tair + cadair" }, "back": { "en": "tair cadair (no mutation)", "cy": "tair cadair (dim treiglad)" } },
-            { "front": { "en": "4 (fem): pedair + cadair", "cy": "4 (b.): pedair + cadair" }, "back": { "en": "pedair cadair (no mutation)", "cy": "pedair cadair (dim treiglad)" } },
-            { "front": { "en": "6: chwe + plentyn", "cy": "6: chwe + plentyn" }, "back": { "en": "chwe phlentyn (AM)", "cy": "chwe phlentyn (TL)" } }
-          ]
+          "id": "i3-num-deg-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Choose the more natural phrase:", "cy": "Dewisa’r ymadrodd mwy naturiol:" },
+          "stem": { "en": "ten minutes", "cy": "ten minutes" },
+          "options": [
+            { "text": { "en": "deg munud", "cy": "deg munud" } },
+            { "text": { "en": "deng munud", "cy": "deng munud" } },
+            { "text": { "en": "deg o funudau", "cy": "deg o funudau" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>deng</code> is very common before time words like <code>munud</code>.",
+            "cy": "Mae <code>deng</code> yn gyffredin iawn cyn geiriau amser fel <code>munud</code>."
+          }
+        },
+        {
+          "id": "i3-num-deg-typein-1",
+          "type": "typein",
+          "stem": { "en": "deg + mapiau", "cy": "deg + mapiau" },
+          "accept": ["deg o fapiau"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Common readable pattern: <code>deg o</code> + plural, with soft mutation after <code>o</code>: <code>mapiau → fapiau</code>.", "cy": "Patrwm cyffredin: <code>deg o</code> + lluosog, gyda TM ar ôl <code>o</code>: <code>mapiau → fapiau</code>." }
         }
       ]
     },
     {
-      "title": { "en": "11–19: forms you’ll see constantly", "cy": "11–19: ffurfiau cyffredin iawn" },
+      "title": { "en": "Can vs cant (like pum/pump)", "cy": "Can vs cant (fel pum/pump)" },
       "html": {
-        "en": "<p>Even if you prefer the decimal system, you will still see these constantly:</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Common Welsh form</th></tr></thead><tbody><tr><td>11</td><td>un ar ddeg</td></tr><tr><td>12</td><td>deuddeg</td></tr><tr><td>13</td><td>tri ar ddeg</td></tr><tr><td>14</td><td>pedwar ar ddeg</td></tr><tr><td>15</td><td>pymtheg</td></tr><tr><td>16</td><td>un ar bymtheg</td></tr><tr><td>18</td><td>deunaw</td></tr><tr><td>20</td><td>ugain</td></tr></tbody></table></div><div class='callout'><p>Mutation tip: if a compound number ends with a trigger unit (un, dau/dwy, tri, chwe), that’s the part that can matter when a noun comes right after it.</p></div>",
-        "cy": "<p>Hyd yn oed os wyt ti’n ffafrio’r system ddegol, byddi di’n gweld y rhain drwy’r amser:</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf Gymraeg gyffredin</th></tr></thead><tbody><tr><td>11</td><td>un ar ddeg</td></tr><tr><td>12</td><td>deuddeg</td></tr><tr><td>13</td><td>tri ar ddeg</td></tr><tr><td>14</td><td>pedwar ar ddeg</td></tr><tr><td>15</td><td>pymtheg</td></tr><tr><td>16</td><td>un ar bymtheg</td></tr><tr><td>18</td><td>deunaw</td></tr><tr><td>20</td><td>ugain</td></tr></tbody></table></div><div class='callout'><p>Awgrym treiglo: os yw rhif cyfansawdd yn gorffen gyda sbardun (un, dau/dwy, tri, chwe), dyna’r rhan sy’n gallu bod yn bwysig pan mae enw’n dod yn syth ar ei ôl.</p></div>"
+        "en": "<p><code>can</code> and <code>cant</code> behave a bit like <code>pum/pump</code>:</p><ul><li><b>cant</b> often shows up in the <code>cant o</code> pattern: <code>cant o bobl</code></li><li><b>can</b> is common with measure phrases like money: <code>can punt</code> (£100)</li></ul><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Common Welsh</th></tr></thead><tbody><tr><td>100 people</td><td><code>cant o bobl</code></td></tr><tr><td>£100</td><td><code>can punt</code></td></tr></tbody></table></div><div class='callout'><p>This is one of those places where it’s genuinely helpful to learn a couple of fixed patterns, not a million rules.</p></div>",
+        "cy": "<p>Mae <code>can</code> a <code>cant</code> ychydig fel <code>pum/pump</code>:</p><ul><li><b>cant</b> yn aml yn dod yn y patrwm <code>cant o</code>: <code>cant o bobl</code></li><li><b>can</b> yn gyffredin gyda mesur fel arian: <code>can punt</code> (£100)</li></ul><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Cymraeg cyffredin</th></tr></thead><tbody><tr><td>100 o bobl</td><td><code>cant o bobl</code></td></tr><tr><td>£100</td><td><code>can punt</code></td></tr></tbody></table></div><div class='callout'><p>Dyma un o’r meysydd hynny lle mae dysgu ychydig batrymau sefydlog yn fwy defnyddiol na cheisio cofio miliwn o reolau.</p></div>"
       },
       "widgets": [
         {
-          "id": "i3-num-rev-12",
+          "id": "i3-num-can-cant-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Pick the best match:", "cy": "Dewisa’r cyfatebiaeth gorau:" },
+          "stem": { "en": "£100", "cy": "£100" },
+          "options": [
+            { "text": { "en": "cant o bunt", "cy": "cant o bunt" } },
+            { "text": { "en": "can punt", "cy": "can punt" } },
+            { "text": { "en": "can o bunnoedd", "cy": "can o bunnoedd" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "For £100 you’ll very often hear <code>can punt</code>.",
+            "cy": "Am £100, byddi di’n aml iawn yn clywed <code>can punt</code>."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Large numbers: decimal system (quick map)", "cy": "Rhifau mawr: y system ddegol (map cyflym)" },
+      "html": {
+        "en": "<p>Here’s a compact map of the decimal system. You don’t need to memorise it all. It’s mainly for recognition.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Common form</th></tr></thead><tbody><tr><td>11</td><td><code>undeg un</code></td></tr><tr><td>12</td><td><code>undeg dau</code></td></tr><tr><td>20</td><td><code>dauddeg</code></td></tr><tr><td>21</td><td><code>dauddeg un</code></td></tr><tr><td>30</td><td><code>trideg</code></td></tr><tr><td>40</td><td><code>pedwardeg</code></td></tr><tr><td>50</td><td><code>pumdeg</code> / <code>hanner cant</code></td></tr><tr><td>100</td><td><code>cant</code> (often), and see <code>can punt</code> for £100</td></tr><tr><td>101</td><td><code>cant ag un</code></td></tr><tr><td>110</td><td><code>cant a deg</code></td></tr><tr><td>111</td><td><code>cant undeg un</code></td></tr><tr><td>200</td><td><code>dau gant</code></td></tr><tr><td>300</td><td><code>tri chant</code></td></tr><tr><td>1000</td><td><code>mil</code></td></tr><tr><td>2000</td><td><code>dwy fil</code></td></tr><tr><td>10,000</td><td><code>deng mil</code></td></tr><tr><td>1,000,000</td><td><code>miliwn</code></td></tr></tbody></table></div><div class='callout'><p>Notice how older mutation knowledge keeps showing up: <code>dau gant</code> (c→g), <code>tri chant</code> (c→ch), <code>dwy fil</code> (m→f).</p></div>",
+        "cy": "<p>Dyma fap cryno o’r system ddegol. Nid oes rhaid cofio popeth. Mae’n bennaf ar gyfer adnabod.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf gyffredin</th></tr></thead><tbody><tr><td>11</td><td><code>undeg un</code></td></tr><tr><td>12</td><td><code>undeg dau</code></td></tr><tr><td>20</td><td><code>dauddeg</code></td></tr><tr><td>21</td><td><code>dauddeg un</code></td></tr><tr><td>30</td><td><code>trideg</code></td></tr><tr><td>40</td><td><code>pedwardeg</code></td></tr><tr><td>50</td><td><code>pumdeg</code> / <code>hanner cant</code></td></tr><tr><td>100</td><td><code>cant</code> (yn aml), a gweler <code>can punt</code> am £100</td></tr><tr><td>101</td><td><code>cant ag un</code></td></tr><tr><td>110</td><td><code>cant a deg</code></td></tr><tr><td>111</td><td><code>cant undeg un</code></td></tr><tr><td>200</td><td><code>dau gant</code></td></tr><tr><td>300</td><td><code>tri chant</code></td></tr><tr><td>1000</td><td><code>mil</code></td></tr><tr><td>2000</td><td><code>dwy fil</code></td></tr><tr><td>10,000</td><td><code>deng mil</code></td></tr><tr><td>1,000,000</td><td><code>miliwn</code></td></tr></tbody></table></div><div class='callout'><p>Sylwa sut mae’r hen wybodaeth treiglo’n dod yn ôl: <code>dau gant</code> (c→g), <code>tri chant</code> (c→ch), <code>dwy fil</code> (m→f).</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: big numbers", "cy": "Profiad sydyn: rhifau mawr" },
+      "html": {
+        "en": "<p>Just recognition. No pressure.</p>",
+        "cy": "<p>Adnabod yn unig. Dim pwysau.</p>"
+      },
+      "widgets": [
+        {
+          "id": "i3-num-big-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Which is 200?", "cy": "Pa un yw 200?" },
+          "stem": { "en": "Pick the right form", "cy": "Dewisa’r ffurf gywir" },
+          "options": [
+            { "text": { "en": "dwy fil", "cy": "dwy fil" } },
+            { "text": { "en": "dau gant", "cy": "dau gant" } },
+            { "text": { "en": "tri chant", "cy": "tri chant" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>dau gant</code> is 200 (soft mutation of <code>cant</code> after <code>dau</code>).",
+            "cy": "<code>dau gant</code> yw 200 (TM ar <code>cant</code> ar ôl <code>dau</code>)."
+          }
+        },
+        {
+          "id": "i3-num-big-rev-1",
           "type": "reveal",
-          "front": { "en": "Welsh for 12 is…", "cy": "Y Gymraeg am 12 yw…" },
-          "back": { "en": "<b>deuddeg</b>", "cy": "<b>deuddeg</b>" }
+          "front": { "en": "Why is it <b>dwy fil</b> (not *dau mil) so often?", "cy": "Pam mae’n <b>dwy fil</b> (nid *dau mil) mor aml?" },
+          "back": { "en": "Because <code>mil</code> is treated as feminine in this pattern, so you use <code>dwy</code>, and 2 triggers soft mutation: <code>mil → fil</code>.", "cy": "Oherwydd bod <code>mil</code> yn cael ei drin fel benywaidd yn y patrwm hwn, felly defnyddir <code>dwy</code>, ac mae 2 yn achosi TM: <code>mil → fil</code>." }
         }
       ]
     },
     {
-      "title": { "en": "Vigesimal system: the essentials", "cy": "Y system ugeiniol: yr hanfodion" },
+      "title": { "en": "A few useful habits with big numbers", "cy": "Ychydig o arferion defnyddiol gyda rhifau mawr" },
       "html": {
-        "en": "<p>The traditional system is <b>vigesimal</b> (base-20). You do not have to produce it perfectly to be fluent, but you do need to <b>recognise it</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Vigesimal form</th><th>How to think</th></tr></thead><tbody><tr><td>20</td><td>ugain</td><td>20</td></tr><tr><td>30</td><td>deg ar hugain</td><td>10 on 20</td></tr><tr><td>40</td><td>deugain</td><td>2 × 20</td></tr><tr><td>50</td><td>hanner cant</td><td>half of 100</td></tr><tr><td>60</td><td>trigain</td><td>3 × 20</td></tr><tr><td>80</td><td>pedwar ugain</td><td>4 × 20</td></tr><tr><td>90</td><td>deg a phedwar ugain</td><td>10 and 80</td></tr><tr><td>100</td><td>cant (also: pum ugain)</td><td>100 (also: five twenties)</td></tr></tbody></table></div><div class='callout'><p>High-frequency win: once you know <b>ugain</b>, <b>deugain</b>, <b>hanner cant</b>, <b>trigain</b>, and <b>pedwar ugain</b>, a lot of Welsh numbers stop looking mysterious.</p></div>",
-        "cy": "<p>Mae’r system draddodiadol yn <b>ugeiniol</b> (sylfaen-20). Does dim rhaid i ti ei chynhyrchu’n berffaith i fod yn rhugl, ond mae angen i ti ei <b>hadnabod</b>.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf ugeiniol</th><th>Sut i feddwl</th></tr></thead><tbody><tr><td>20</td><td>ugain</td><td>20</td></tr><tr><td>30</td><td>deg ar hugain</td><td>10 ar 20</td></tr><tr><td>40</td><td>deugain</td><td>2 × 20</td></tr><tr><td>50</td><td>hanner cant</td><td>hanner 100</td></tr><tr><td>60</td><td>trigain</td><td>3 × 20</td></tr><tr><td>80</td><td>pedwar ugain</td><td>4 × 20</td></tr><tr><td>90</td><td>deg a phedwar ugain</td><td>10 a 80</td></tr><tr><td>100</td><td>cant (hefyd: pum ugain)</td><td>100 (hefyd: pum ugain)</td></tr></tbody></table></div><div class='callout'><p>Ennill cyflym: unwaith rwyt ti’n gwybod <b>ugain</b>, <b>deugain</b>, <b>hanner cant</b>, <b>trigain</b>, a <b>pedwar ugain</b>, mae lot o rifau Cymraeg yn stopio edrych yn ddirgel.</p></div>"
+        "en": "<ul><li><b>hanner cant</b> is very common for 50, but 51 is usually <code>pumdeg un</code> (you may still hear <code>hanner cant ac un</code> sometimes).</li><li><code>cant</code> and <code>mil</code> don’t usually have <code>un</code> prefixed. You just say <code>cant</code>, <code>mil</code>.</li><li>After a hundred: the first ten numbers often use <code>a/ac</code>, but after that they often don’t: <code>cant ac wyth</code> (108), but <code>cant dauddeg tri</code> (123).</li><li>Feminine variants still matter in bigger numbers when the noun is feminine: you’ll see <code>tair</code>/<code>pedair</code> in places you might not expect.</li></ul><div class='callout'><p>This is a “notice it in the wild” section. I didn’t get it by memorising. I got it by seeing it repeatedly.</p></div>",
+        "cy": "<ul><li>Mae <b>hanner cant</b> yn gyffredin iawn am 50, ond 51 fel arfer yw <code>pumdeg un</code> (byddi di’n clywed <code>hanner cant ac un</code> weithiau).</li><li>Fel arfer does dim <code>un</code> o flaen <code>cant</code> a <code>mil</code>. Jyst <code>cant</code>, <code>mil</code>.</li><li>Ar ôl cant: mae’r deg rhif cyntaf yn aml yn defnyddio <code>a/ac</code>, ond wedyn yn aml ddim: <code>cant ac wyth</code> (108), ond <code>cant dauddeg tri</code> (123).</li><li>Mae ffurfiau benywaidd yn dal yn bwysig gyda rhifau mwy pan mae’r enw’n fenywaidd: byddi di’n gweld <code>tair</code>/<code>pedair</code> mewn mannau annisgwyl.</li></ul><div class='callout'><p>Dyma adran “sylwa arno fe yn y gwyllt”. Dwi ddim wedi’i gael drwy rote. Dwi wedi’i gael drwy ei weld dro ar ôl tro.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: a/ac after hundreds", "cy": "Profiad sydyn: a/ac ar ôl cant" },
+      "html": {
+        "en": "<p>Pick the one that matches the common pattern.</p>",
+        "cy": "<p>Dewisa’r un sy’n cyd-fynd â’r patrwm cyffredin.</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-mcq-vigesimal-1",
+          "id": "i3-num-hundreds-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Which is a common way to write 123?", "cy": "Pa un yw ffordd gyffredin i ysgrifennu 123?" },
+          "stem": { "en": "Choose one", "cy": "Dewisa un" },
+          "options": [
+            { "text": { "en": "cant ac dauddeg tri", "cy": "cant ac dauddeg tri" } },
+            { "text": { "en": "cant dauddeg tri", "cy": "cant dauddeg tri" } },
+            { "text": { "en": "cant a dauddeg tri", "cy": "cant a dauddeg tri" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "After the first ten numbers past the hundred, <code>a/ac</code> often drops: <code>cant dauddeg tri</code>.",
+            "cy": "Ar ôl y deg cyntaf ar ôl cant, mae <code>a/ac</code> yn aml yn diflannu: <code>cant dauddeg tri</code>."
+          }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Large numbers: vigesimal system (recognise it)", "cy": "Rhifau mawr: y system ugeiniol (ei hadnabod)" },
+      "html": {
+        "en": "<p>You don’t need to use the ugain system all the time. But you do need to recognise it.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Vigesimal form</th><th>How it works</th></tr></thead><tbody><tr><td>11</td><td><code>un ar ddeg</code></td><td>one on ten</td></tr><tr><td>12</td><td><code>deuddeg</code></td><td>special form</td></tr><tr><td>15</td><td><code>pymtheg</code></td><td>special form</td></tr><tr><td>18</td><td><code>deunaw</code></td><td>special form</td></tr><tr><td>19</td><td><code>pedwar ar bymtheg</code></td><td>four on fifteen (with <code>bymtheg</code>)</td></tr><tr><td>20</td><td><code>ugain</code></td><td>20</td></tr><tr><td>21</td><td><code>un ar hugain</code></td><td>one on twenty</td></tr><tr><td>30</td><td><code>deg ar hugain</code></td><td>ten on twenty</td></tr><tr><td>40</td><td><code>deugain</code></td><td>2 × 20</td></tr><tr><td>50</td><td><code>deg a deugain</code> (rare) / <code>hanner cant</code> (common)</td><td>varies</td></tr><tr><td>60</td><td><code>trigain</code></td><td>3 × 20</td></tr><tr><td>80</td><td><code>pedwar ugain</code></td><td>4 × 20</td></tr><tr><td>100</td><td><code>cant</code></td><td>100</td></tr></tbody></table></div><div class='callout'><p>Above 50, some forms are less common now. But 12, 15, 18 and 20 are everyday Welsh.</p></div>",
+        "cy": "<p>Does dim rhaid defnyddio’r system ugain drwy’r amser. Ond mae angen ei hadnabod.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Ffurf ugeiniol</th><th>Sut mae’n gweithio</th></tr></thead><tbody><tr><td>11</td><td><code>un ar ddeg</code></td><td>un ar ddeg</td></tr><tr><td>12</td><td><code>deuddeg</code></td><td>ffurf arbennig</td></tr><tr><td>15</td><td><code>pymtheg</code></td><td>ffurf arbennig</td></tr><tr><td>18</td><td><code>deunaw</code></td><td>ffurf arbennig</td></tr><tr><td>19</td><td><code>pedwar ar bymtheg</code></td><td>pedwar ar bymtheg</td></tr><tr><td>20</td><td><code>ugain</code></td><td>20</td></tr><tr><td>21</td><td><code>un ar hugain</code></td><td>un ar ugain</td></tr><tr><td>30</td><td><code>deg ar hugain</code></td><td>deg ar ugain</td></tr><tr><td>40</td><td><code>deugain</code></td><td>2 × 20</td></tr><tr><td>50</td><td><code>deg a deugain</code> (prin) / <code>hanner cant</code> (cyffredin)</td><td>amrywiad</td></tr><tr><td>60</td><td><code>trigain</code></td><td>3 × 20</td></tr><tr><td>80</td><td><code>pedwar ugain</code></td><td>4 × 20</td></tr><tr><td>100</td><td><code>cant</code></td><td>100</td></tr></tbody></table></div><div class='callout'><p>Uwchlaw 50, mae rhai ffurfiau’n llai cyffredin bellach. Ond 12, 15, 18 a 20 yw Cymraeg bob dydd.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: vigesimal recognition", "cy": "Profiad sydyn: adnabod ugeiniol" },
+      "html": {
+        "en": "<p>Just recognition again.</p>",
+        "cy": "<p>Adnabod eto.</p>"
+      },
+      "widgets": [
+        {
+          "id": "i3-num-vig-mcq-1",
           "type": "mcq",
           "prompt": { "en": "Which one is 40?", "cy": "Pa un yw 40?" },
           "stem": { "en": "Pick the right word", "cy": "Dewisa’r gair cywir" },
@@ -282,122 +323,275 @@
             { "text": { "en": "trigain", "cy": "trigain" } }
           ],
           "correct": [1],
-          "explain": { "en": "<b>deugain</b> is 2 × 20.", "cy": "<b>deugain</b> = 2 × 20." }
+          "explain": { "en": "<code>deugain</code> = 2 × 20.", "cy": "<code>deugain</code> = 2 × 20." }
+        },
+        {
+          "id": "i3-num-vig-mcq-2",
+          "type": "mcq",
+          "prompt": { "en": "Which one is 19?", "cy": "Pa un yw 19?" },
+          "stem": { "en": "Pick the right phrase", "cy": "Dewisa’r ymadrodd cywir" },
+          "options": [
+            { "text": { "en": "pedwar ar ddeg", "cy": "pedwar ar ddeg" } },
+            { "text": { "en": "pedwar ar bymtheg", "cy": "pedwar ar bymtheg" } },
+            { "text": { "en": "un ar hugain", "cy": "un ar hugain" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "19 is <code>pedwar ar bymtheg</code> (built on 15).", "cy": "19 yw <code>pedwar ar bymtheg</code> (ar sail 15)." }
         }
       ]
     },
     {
-      "title": { "en": "Cant and mil: what follows bigger numbers", "cy": "Cant a mil: beth sy’n dilyn rhifau mwy" },
+      "title": { "en": "Vigesimal + ar: where the noun goes", "cy": "Ugeiniol + ar: ble mae’r enw’n mynd" },
       "html": {
-        "en": "<p>Once you get beyond small numerals, Welsh often uses two common structures:</p><ul><li><b>number + singular noun</b> (you’ll see this in careful/compact styles)</li><li><b>number + o + plural noun</b> (very common and very readable)</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Style</th><th>Example</th><th>What to notice</th></tr></thead><tbody><tr><td>compact</td><td>wythdeg saith car</td><td>noun right after the number</td></tr><tr><td>with o</td><td>wythdeg saith o geir</td><td><b>o</b> introduces the plural noun phrase</td></tr><tr><td>with o</td><td>cant o bobl</td><td>very common pattern</td></tr><tr><td>with o</td><td>mil o bobl</td><td>treat <b>mil</b> like a noun-like head</td></tr></tbody></table></div><div class='callout'><p>Mutation reminder: if you have <b>o</b> right before the noun, you’re back in the familiar territory of contact rules you already know.</p></div>",
-        "cy": "<p>Pan fyddi di’n symud y tu hwnt i rifau bach, mae’r Gymraeg yn aml yn defnyddio dau batrwm cyffredin:</p><ul><li><b>rhif + enw unigol</b> (mewn arddull gryno/ofalus)</li><li><b>rhif + o + enw lluosog</b> (cyffredin iawn ac yn hawdd i’w ddarllen)</li></ul><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Arddull</th><th>Enghraifft</th><th>Beth i’w sylwi</th></tr></thead><tbody><tr><td>cryno</td><td>wythdeg saith car</td><td>enw yn syth ar ôl y rhif</td></tr><tr><td>gyda o</td><td>wythdeg saith o geir</td><td><b>o</b> yn cyflwyno’r ymadrodd enw lluosog</td></tr><tr><td>gyda o</td><td>cant o bobl</td><td>patrwm cyffredin iawn</td></tr><tr><td>gyda o</td><td>mil o bobl</td><td>trin <b>mil</b> fel pen “enwol”</td></tr></tbody></table></div><div class='callout'><p>Nodyn treiglo: os oes <b>o</b> yn syth cyn yr enw, rwyt ti’n ôl mewn tiriogaeth “cyswllt” rwyt ti eisoes yn ei adnabod.</p></div>"
+        "en": "<p>This is a slightly weird one at first.</p><p><b>If the numeral contains <code>ar</code>, the noun usually comes <b>before</b> the <code>ar</code> part.</b></p><div class='table-wrap'><table><thead><tr><th>Meaning</th><th>Form</th></tr></thead><tbody><tr><td>£18</td><td><code>deunaw punt</code></td></tr><tr><td>£19</td><td><code>pedair punt ar bymtheg</code></td></tr><tr><td>thirteen cows</td><td><code>tair buwch ar ddeg</code></td></tr><tr><td>25 years</td><td><code>pum mlynedd ar hugain</code></td></tr></tbody></table></div><div class='callout'><p>I think of it as: the noun sticks close to the number chunk it belongs to.</p></div>",
+        "cy": "<p>Mae hwn yn teimlo’n od i ddechrau.</p><p><b>Os oes <code>ar</code> yn y rhif, mae’r enw fel arfer yn dod <b>cyn</b> y rhan <code>ar</code>.</b></p><div class='table-wrap'><table><thead><tr><th>Ystyr</th><th>Ffurf</th></tr></thead><tbody><tr><td>£18</td><td><code>deunaw punt</code></td></tr><tr><td>£19</td><td><code>pedair punt ar bymtheg</code></td></tr><tr><td>13 buwch</td><td><code>tair buwch ar ddeg</code></td></tr><tr><td>25 mlynedd</td><td><code>pum mlynedd ar hugain</code></td></tr></tbody></table></div><div class='callout'><p>Dwi’n meddwl amdano fel hyn: mae’r enw’n aros yn agos at y darn rhif mae’n perthyn iddo.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: the ar pattern", "cy": "Profiad sydyn: y patrwm ar" },
+      "html": {
+        "en": "<p>Type the full phrase.</p>",
+        "cy": "<p>Teipia’r ymadrodd llawn.</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-mcq-o-1",
+          "id": "i3-num-ar-typein-1",
+          "type": "typein",
+          "stem": { "en": "£19", "cy": "£19" },
+          "accept": ["pedair punt ar bymtheg"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "When the number has <code>ar</code>, the noun comes before it: <code>pedair punt ar bymtheg</code>.", "cy": "Pan mae <code>ar</code> yn y rhif, mae’r enw’n dod o’i flaen: <code>pedair punt ar bymtheg</code>." }
+        },
+        {
+          "id": "i3-num-ar-typein-2",
+          "type": "typein",
+          "stem": { "en": "25 years", "cy": "25 mlynedd" },
+          "accept": ["pum mlynedd ar hugain"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>blynedd</code> becomes <code>mlynedd</code> after 5 in this time pattern: <code>pum mlynedd</code>.", "cy": "Mae <code>blynedd</code> yn troi’n <code>mlynedd</code> ar ôl 5 yn y patrwm amser: <code>pum mlynedd</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Years and days: blynedd and diwrnod behave oddly", "cy": "Blynyddoedd a dyddiau: blynedd a diwrnod yn od" },
+      "html": {
+        "en": "<p>This is the most “specific exception” part of the lesson. But it’s worth it because it shows up constantly.</p><p><code>blynedd</code> (year, f.) often becomes <code>mlynedd</code> after many numbers, even though those numbers do <b>not</b> normally cause nasal mutation elsewhere.</p><p><code>diwrnod</code> (day, m., when counting) behaves similarly: <code>nniwrnod</code>.</p><div class='table-wrap'><table><thead><tr><th>Number</th><th>Years</th><th>Days</th></tr></thead><tbody><tr><td>2</td><td><code>dwy flynedd</code></td><td><code>dau ddiwrnod</code></td></tr><tr><td>3</td><td><code>tair blynedd</code></td><td><code>tri diwrnod</code></td></tr><tr><td>4</td><td><code>pedair blynedd</code></td><td><code>pedwar diwrnod</code></td></tr><tr><td>5</td><td><code>pum mlynedd</code></td><td><code>pum niwrnod</code> / <code>pum nniwrnod</code></td></tr><tr><td>7</td><td><code>saith mlynedd</code></td><td><code>saith nniwrnod</code></td></tr><tr><td>10</td><td><code>deng mlynedd</code></td><td><code>deng nniwrnod</code></td></tr><tr><td>12</td><td><code>deuddeng mlynedd</code></td><td><code>deuddeng nniwrnod</code></td></tr><tr><td>15</td><td><code>pymtheng mlynedd</code></td><td><code>pymtheng nniwrnod</code></td></tr><tr><td>18</td><td><code>deunaw mlynedd</code></td><td><code>deunaw nniwrnod</code></td></tr><tr><td>20</td><td><code>ugain mlynedd</code></td><td><code>ugain nniwrnod</code></td></tr><tr><td>50</td><td><code>hanner can mlynedd</code></td><td><code>hanner can nniwrnod</code></td></tr><tr><td>100</td><td><code>can mlynedd</code></td><td><code>can nniwrnod</code></td></tr></tbody></table></div><div class='callout'><p>If you’re thinking “why is this so specific?”, same. I treat it as a time-word pattern I just learn by exposure.</p></div>",
+        "cy": "<p>Dyma’r rhan fwyaf “eithriad penodol”. Ond mae’n werth e, achos mae’n dod i fyny drwy’r amser.</p><p>Mae <code>blynedd</code> (blwyddyn, b.) yn aml yn troi’n <code>mlynedd</code> ar ôl llawer o rifau, er nad yw’r rhifau hynny fel arfer yn achosi treiglad trwynol mewn mannau eraill.</p><p>Mae <code>diwrnod</code> (diwrnod, gw., wrth gyfrif) yn ymddwyn yn debyg: <code>nniwrnod</code>.</p><div class='table-wrap'><table><thead><tr><th>Rhif</th><th>Blynyddoedd</th><th>Dyddiau</th></tr></thead><tbody><tr><td>2</td><td><code>dwy flynedd</code></td><td><code>dau ddiwrnod</code></td></tr><tr><td>3</td><td><code>tair blynedd</code></td><td><code>tri diwrnod</code></td></tr><tr><td>4</td><td><code>pedair blynedd</code></td><td><code>pedwar diwrnod</code></td></tr><tr><td>5</td><td><code>pum mlynedd</code></td><td><code>pum nniwrnod</code></td></tr><tr><td>7</td><td><code>saith mlynedd</code></td><td><code>saith nniwrnod</code></td></tr><tr><td>10</td><td><code>deng mlynedd</code></td><td><code>deng nniwrnod</code></td></tr><tr><td>12</td><td><code>deuddeng mlynedd</code></td><td><code>deuddeng nniwrnod</code></td></tr><tr><td>15</td><td><code>pymtheng mlynedd</code></td><td><code>pymtheng nniwrnod</code></td></tr><tr><td>18</td><td><code>deunaw mlynedd</code></td><td><code>deunaw nniwrnod</code></td></tr><tr><td>20</td><td><code>ugain mlynedd</code></td><td><code>ugain nniwrnod</code></td></tr><tr><td>50</td><td><code>hanner can mlynedd</code></td><td><code>hanner can nniwrnod</code></td></tr><tr><td>100</td><td><code>can mlynedd</code></td><td><code>can nniwrnod</code></td></tr></tbody></table></div><div class='callout'><p>Os wyt ti’n meddwl “pam mor benodol?”, ie. Dwi’n trin e fel patrwm geiriau amser dwi’n ei ddysgu drwy ei weld dro ar ôl tro.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: mlynedd and nniwrnod", "cy": "Profiad sydyn: mlynedd a nniwrnod" },
+      "html": {
+        "en": "<p>These are the ones I’d actually want to be able to produce.</p>",
+        "cy": "<p>Dyma’r rhai byddwn i wir eisiau gallu eu cynhyrchu.</p>"
+      },
+      "widgets": [
+        {
+          "id": "i3-num-time-typein-1",
+          "type": "typein",
+          "stem": { "en": "5 years", "cy": "5 mlynedd" },
+          "accept": ["pum mlynedd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Time word pattern: <code>blynedd → mlynedd</code> after 5: <code>pum mlynedd</code>.", "cy": "Patrwm geiriau amser: <code>blynedd → mlynedd</code> ar ôl 5: <code>pum mlynedd</code>." }
+        },
+        {
+          "id": "i3-num-time-typein-2",
+          "type": "typein",
+          "stem": { "en": "10 years", "cy": "10 mlynedd" },
+          "accept": ["deng mlynedd"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "<code>deg</code> becomes <code>deng</code> before this time pattern: <code>deng mlynedd</code>.", "cy": "Mae <code>deg</code> yn troi’n <code>deng</code> yn y patrwm yma: <code>deng mlynedd</code>." }
+        },
+        {
+          "id": "i3-num-time-typein-3",
+          "type": "typein",
+          "stem": { "en": "7 days", "cy": "7 diwrnod" },
+          "accept": ["saith nniwrnod"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Counting days: <code>diwrnod → nniwrnod</code> in this pattern: <code>saith nniwrnod</code>.", "cy": "Wrth gyfrif dyddiau: <code>diwrnod → nniwrnod</code> yn y patrwm yma: <code>saith nniwrnod</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Ages: blwydd oed (and why the feminine forms show up)", "cy": "Oedran: blwydd oed (a pham mae’r ffurfiau benywaidd yma)" },
+      "html": {
+        "en": "<p>For ages you’ll often hear:</p><ul><li><code>dwy flwydd oed</code> (2 years old)</li><li><code>tair blwydd oed</code> (3 years old)</li><li><code>pum mlwydd oed</code> (5 years old)</li></ul><p>The key point is simple:</p><div class='callout'><p>When we talk about age, we’re really talking about a number of <b>years</b>, and that behaves like a feminine time pattern. So you’ll see <code>dwy</code>, <code>tair</code>, <code>pedair</code>.</p></div><p>And in real speech, people often simplify anyway, especially for teenagers: <code>Dw i’n ddeunaw oed</code>.</p>",
+        "cy": "<p>Wrth siarad am oedran, byddi di’n aml yn clywed:</p><ul><li><code>dwy flwydd oed</code></li><li><code>tair blwydd oed</code></li><li><code>pum mlwydd oed</code></li></ul><p>Y pwynt allweddol yn syml:</p><div class='callout'><p>Pan rydyn ni’n siarad am oedran, rydyn ni’n siarad am nifer y <b>blynyddoedd</b>, ac mae hynny’n ymddwyn fel patrwm amser benywaidd. Felly rwyt ti’n gweld <code>dwy</code>, <code>tair</code>, <code>pedair</code>.</p></div><p>Ac ar lafar, mae pobl yn aml yn symleiddio beth bynnag, yn enwedig gyda’r arddegau: <code>Dw i’n ddeunaw oed</code>.</p>"
+      },
+      "widgets": [
+        {
+          "id": "i3-num-age-rev-1",
+          "type": "reveal",
+          "front": { "en": "Why is it <b>dwy flwydd oed</b> (not *dau blwydd oed)?", "cy": "Pam mae’n <b>dwy flwydd oed</b> (nid *dau blwydd oed)?" },
+          "back": { "en": "Because this age pattern treats the “years” chunk as feminine, so you see <code>dwy/tair/pedair</code>, and 2 also triggers soft mutation: <code>blwydd → flwydd</code>.", "cy": "Oherwydd bod y patrwm oedran yn trin y darn “blynyddoedd” fel benywaidd, felly rwyt ti’n gweld <code>dwy/tair/pedair</code>, ac mae 2 hefyd yn achosi TM: <code>blwydd → flwydd</code>." }
+        }
+      ]
+    },
+    {
+      "title": { "en": "Ordinals: 1st–10th (and how mutation works)", "cy": "Trefnolion: 1af–10fed (a sut mae treiglad yn gweithio)" },
+      "html": {
+        "en": "<p>In practice, ordinals above 10th mainly matter for <b>dates</b>. But the core set is worth knowing:</p><div class='table-wrap'><table><thead><tr><th>Ordinal</th><th>Form</th></tr></thead><tbody><tr><td>1st</td><td><code>cynta</code></td></tr><tr><td>2nd</td><td><code>ail</code></td></tr><tr><td>3rd</td><td><code>trydydd</code> / <code>trydedd</code></td></tr><tr><td>4th</td><td><code>pedwerydd</code> / <code>pedwaredd</code></td></tr><tr><td>5th</td><td><code>pumed</code></td></tr><tr><td>6th</td><td><code>chweched</code></td></tr><tr><td>7th</td><td><code>seithfed</code></td></tr><tr><td>8th</td><td><code>wythfed</code></td></tr><tr><td>9th</td><td><code>nawfed</code></td></tr><tr><td>10th</td><td><code>degfed</code></td></tr></tbody></table></div><p>Three behaviour notes:</p><ul><li><code>cynta</code> comes <b>after</b> the noun, like an adjective: <code>y mis cynta</code>. And it soft-mutates after feminine nouns: <code>yr wythnos gynta</code>.</li><li><code>ail</code> comes <b>before</b> the noun and mutates the noun: <code>yr ail lyfr</code>, <code>yr ail ddesg</code>.</li><li>After that: with masculine nouns, the ordinal usually doesn’t cause mutation. With feminine nouns, you may see mutation on both the ordinal and the noun: <code>y drydedd goeden</code>, <code>y bumed orsaf</code>.</li></ul>",
+        "cy": "<p>Yn ymarferol, mae trefnolion uwch na 10fed yn bwysig yn bennaf ar gyfer <b>dyddiadau</b>. Ond mae’r set graidd yn werth ei gwybod:</p><div class='table-wrap'><table><thead><tr><th>Trefnol</th><th>Ffurf</th></tr></thead><tbody><tr><td>1af</td><td><code>cynta</code></td></tr><tr><td>2il</td><td><code>ail</code></td></tr><tr><td>3ydd</td><td><code>trydydd</code> / <code>trydedd</code></td></tr><tr><td>4ydd</td><td><code>pedwerydd</code> / <code>pedwaredd</code></td></tr><tr><td>5ed</td><td><code>pumed</code></td></tr><tr><td>6ed</td><td><code>chweched</code></td></tr><tr><td>7fed</td><td><code>seithfed</code></td></tr><tr><td>8fed</td><td><code>wythfed</code></td></tr><tr><td>9fed</td><td><code>nawfed</code></td></tr><tr><td>10fed</td><td><code>degfed</code></td></tr></tbody></table></div><p>Tair nodyn ymddygiad:</p><ul><li>Mae <code>cynta</code> yn dod <b>ar ôl</b> yr enw, fel ansoddair: <code>y mis cynta</code>. Ac mae’n treiglo ar ôl enwau benywaidd: <code>yr wythnos gynta</code>.</li><li>Mae <code>ail</code> yn dod <b>cyn</b> yr enw ac yn treiglo’r enw: <code>yr ail lyfr</code>, <code>yr ail ddesg</code>.</li><li>Ar ôl hynny: gyda gwrywaidd, fel arfer does dim treiglad. Gyda benywaidd, gelli di weld treiglad ar y trefnol a’r enw: <code>y drydedd goeden</code>, <code>y bumed orsaf</code>.</li></ul>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: ordinals", "cy": "Profiad sydyn: trefnolion" },
+      "html": {
+        "en": "<p>A couple of quick choices.</p>",
+        "cy": "<p>Dau ddewis cyflym.</p>"
+      },
+      "widgets": [
+        {
+          "id": "i3-num-ord-mcq-1",
           "type": "mcq",
-          "prompt": { "en": "Pick the most natural phrase:", "cy": "Dewisa’r ymadrodd mwyaf naturiol:" },
-          "stem": { "en": "100 + people", "cy": "100 + people" },
+          "prompt": { "en": "Which is “the first month”?", "cy": "Pa un yw “y mis cynta”?" },
+          "stem": { "en": "Choose one", "cy": "Dewisa un" },
           "options": [
-            { "text": { "en": "cant pobl", "cy": "cant pobl" } },
-            { "text": { "en": "cant o bobl", "cy": "cant o bobl" } },
-            { "text": { "en": "cant o phobl", "cy": "cant o phobl" } }
+            { "text": { "en": "y cynta mis", "cy": "y cynta mis" } },
+            { "text": { "en": "y mis cynta", "cy": "y mis cynta" } },
+            { "text": { "en": "y mis gynta", "cy": "y mis gynta" } }
           ],
           "correct": [1],
           "explain": {
-            "en": "A very common structure is <b>number + o + plural noun phrase</b>.",
-            "cy": "Patrwm cyffredin iawn yw <b>rhif + o + ymadrodd enw lluosog</b>."
+            "en": "<code>cynta</code> behaves like an adjective and comes after the noun: <code>y mis cynta</code>.",
+            "cy": "Mae <code>cynta</code> fel ansoddair ac yn dod ar ôl yr enw: <code>y mis cynta</code>."
+          }
+        },
+        {
+          "id": "i3-num-ord-mcq-2",
+          "type": "mcq",
+          "prompt": { "en": "Which is “the second book”?", "cy": "Pa un yw “yr ail lyfr”?" },
+          "stem": { "en": "Choose one", "cy": "Dewisa un" },
+          "options": [
+            { "text": { "en": "yr ail llyfr", "cy": "yr ail llyfr" } },
+            { "text": { "en": "yr ail lyfr", "cy": "yr ail lyfr" } },
+            { "text": { "en": "y llyfr ail", "cy": "y llyfr ail" } }
+          ],
+          "correct": [1],
+          "explain": {
+            "en": "<code>ail</code> comes before the noun and triggers soft mutation: <code>llyfr → lyfr</code>.",
+            "cy": "Mae <code>ail</code> yn dod cyn yr enw ac yn achosi TM: <code>llyfr → lyfr</code>."
           }
         }
       ]
     },
     {
-      "title": { "en": "Years: read them without fear", "cy": "Blynyddoedd: darllen heb banig" },
+      "title": { "en": "Dates: “the 5th of November”", "cy": "Dyddiadau: “y pumed o Dachwedd”" },
       "html": {
-        "en": "<p>You’ll meet both systems with years, depending on context and region.</p><p>&nbsp;</p><p><b>Key skill:</b> don’t freeze. Break the year into chunks you recognise.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Year</th><th>One common Welsh reading</th><th>What to notice</th></tr></thead><tbody><tr><td>1999</td><td>mil naw cant naw deg naw</td><td>chunked like English: 1000 + 900 + 99</td></tr><tr><td>2024</td><td>dwy fil a phedwar ar hugain</td><td><b>a</b> is why you see <b>phedwar</b></td></tr></tbody></table></div><div class='callout'><p>You do not need one “perfect” way. You need a way you can recognise and produce calmly.</p></div>",
-        "cy": "<p>Fe weli di’r ddwy system gyda blynyddoedd, yn dibynnu ar gyd-destun a rhanbarth.</p><p>&nbsp;</p><p><b>Sgil allweddol:</b> paid â rhewi. Torra’r flwyddyn yn ddarnau rwyt ti’n eu hadnabod.</p><p>&nbsp;</p><div class='table-wrap'><table><thead><tr><th>Blwyddyn</th><th>Un ffordd gyffredin</th><th>Beth i’w sylwi</th></tr></thead><tbody><tr><td>1999</td><td>mil naw cant naw deg naw</td><td>fel Saesneg: 1000 + 900 + 99</td></tr><tr><td>2024</td><td>dwy fil a phedwar ar hugain</td><td><b>a</b> yw pam rwyt ti’n gweld <b>phedwar</b></td></tr></tbody></table></div><div class='callout'><p>Does dim rhaid cael un ffordd “berffaith”. Mae angen ffordd rwyt ti’n gallu ei hadnabod a’i chynhyrchu’n bwyllog.</p></div>"
+        "en": "<p>The neat common pattern is:</p><ul><li><code>y pumed o Dachwedd</code></li><li>or: <code>y pumed o fis Tachwedd</code></li></ul><p>From 11th to 31st, Welsh uses the ugain-style ordinals:</p><div class='table-wrap'><table><thead><tr><th>Date</th><th>Form</th></tr></thead><tbody><tr><td>11th</td><td><code>yr unfed ar ddeg</code></td></tr><tr><td>12th</td><td><code>y deuddegfed</code></td></tr><tr><td>15th</td><td><code>y pymthegfed</code></td></tr><tr><td>18th</td><td><code>y deunawfed</code></td></tr><tr><td>20th</td><td><code>yr ugeinfed</code></td></tr><tr><td>22nd</td><td><code>yr ail ar hugain</code></td></tr><tr><td>30th</td><td><code>y degfed ar hugain</code></td></tr><tr><td>31st</td><td><code>yr unfed ar ddeg ar hugain</code></td></tr></tbody></table></div><div class='callout'><p>Written abbreviations often use <code>-eg</code>, <code>-fed</code>, <code>-ain</code>: <code>yr 11eg</code>, <code>y 15fed</code>, <code>y 30ain</code>.</p></div>",
+        "cy": "<p>Y patrwm taclus cyffredin yw:</p><ul><li><code>y pumed o Dachwedd</code></li><li>neu: <code>y pumed o fis Tachwedd</code></li></ul><p>O’r 11eg i’r 31ain, mae’r Gymraeg yn defnyddio trefnolion arddull ugain:</p><div class='table-wrap'><table><thead><tr><th>Dyddiad</th><th>Ffurf</th></tr></thead><tbody><tr><td>11eg</td><td><code>yr unfed ar ddeg</code></td></tr><tr><td>12fed</td><td><code>y deuddegfed</code></td></tr><tr><td>15fed</td><td><code>y pymthegfed</code></td></tr><tr><td>18fed</td><td><code>y deunawfed</code></td></tr><tr><td>20fed</td><td><code>yr ugeinfed</code></td></tr><tr><td>22il</td><td><code>yr ail ar hugain</code></td></tr><tr><td>30ain</td><td><code>y degfed ar hugain</code></td></tr><tr><td>31ain</td><td><code>yr unfed ar ddeg ar hugain</code></td></tr></tbody></table></div><div class='callout'><p>Mewn ysgrifennu, defnyddir byrhau’n aml: <code>yr 11eg</code>, <code>y 15fed</code>, <code>y 30ain</code>.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: write a date", "cy": "Profiad sydyn: ysgrifennu dyddiad" },
+      "html": {
+        "en": "<p>Type one clean version. (Both options below are accepted.)</p>",
+        "cy": "<p>Teipia un fersiwn glir. (Derbynnir y ddau opsiwn.)</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-rev-years-1",
-          "type": "reveal",
-          "front": { "en": "Why does “2024” often contain <b>phedwar</b>?", "cy": "Pam mae “2024” yn aml yn cynnwys <b>phedwar</b>?" },
-          "back": { "en": "Because the chunk often uses <b>a</b> (and), and <b>a</b> commonly causes mutation on the next word. Here it affects <b>pedwar</b>.", "cy": "Oherwydd bod y darn yn aml yn defnyddio <b>a</b>, ac mae <b>a</b> yn aml yn achosi treiglad ar y gair nesaf. Yma mae’n effeithio ar <b>pedwar</b>." }
-        },
-        {
-          "id": "i3-num-typein-years-1",
+          "id": "i3-num-date-typein-1",
           "type": "typein",
-          "stem": { "en": "Write 1999 in Welsh (one common way)", "cy": "Ysgrifenna 1999 yn Gymraeg (un ffordd gyffredin)" },
-          "accept": ["mil naw cant naw deg naw"],
+          "stem": { "en": "5 November", "cy": "5 Tachwedd" },
+          "accept": ["y pumed o dachwedd", "y pumed o fis tachwedd", "y pumed o Dachwedd", "y pumed o fis Tachwedd"],
           "caseSensitive": false,
           "trim": true,
-          "explain": { "en": "Chunk it: 1000 + 900 + 99.", "cy": "Torra fe: 1000 + 900 + 99." }
+          "explain": { "en": "Common pattern: <code>y pumed o Dachwedd</code> (or <code>y pumed o fis Tachwedd</code>).", "cy": "Patrwm cyffredin: <code>y pumed o Dachwedd</code> (neu <code>y pumed o fis Tachwedd</code>)." }
         }
       ]
     },
     {
-      "title": { "en": "Mini-quiz: fast number phrases", "cy": "Mini-gwis: ymadroddion rhif cyflym" },
+      "title": { "en": "Years: Welsh doesn’t do “seventeen eighty-nine”", "cy": "Blynyddoedd: dim “seventeen eighty-nine”" },
       "html": {
-        "en": "<p>Quick hits. Don’t overthink. Use the trigger table.</p><p>&nbsp;</p>",
-        "cy": "<p>Taro cyflym. Paid â gorfeddwl. Defnyddia’r tabl sbardun.</p><p>&nbsp;</p>"
+        "en": "<p>Welsh often reads years differently from English.</p><p>Instead of splitting into two two-digit chunks, Welsh commonly starts with <code>mil</code> and then three single digits:</p><ul><li>1789: <code>mil saith wyth naw</code></li></ul><p>For the 1900s you’ll often see <code>ym</code> + the year, with a digit-by-digit reading:</p><ul><li>1907: <code>ym 1907</code> = <code>mil naw dim saith</code></li></ul><p>For the 2000s:</p><ul><li>2000: <code>dwy fil</code></li><li>2001: <code>dwy fil ac un</code></li><li>2009: <code>dwy fil a naw</code></li></ul><div class='callout'><p>You will hear alternatives too. My main aim is to recognise the chunks calmly.</p></div>",
+        "cy": "<p>Mae’r Gymraeg yn aml yn darllen blynyddoedd yn wahanol i’r Saesneg.</p><p>Yn hytrach na rhannu’n ddau ddarn dau ddigid, mae’r Gymraeg yn aml yn dechrau gyda <code>mil</code> ac wedyn tri digid sengl:</p><ul><li>1789: <code>mil saith wyth naw</code></li></ul><p>Ar gyfer y 1900au, byddi di’n aml yn gweld <code>ym</code> + y flwyddyn, gyda darlleniad digid-wrth-ddigid:</p><ul><li>1907: <code>ym 1907</code> = <code>mil naw dim saith</code></li></ul><p>Ar gyfer y 2000au:</p><ul><li>2000: <code>dwy fil</code></li><li>2001: <code>dwy fil ac un</code></li><li>2009: <code>dwy fil a naw</code></li></ul><div class='callout'><p>Byddi di’n clywed dewisiadau eraill hefyd. Fy nod i yw adnabod y darnau’n bwyllog.</p></div>"
+      }
+    },
+    {
+      "title": { "en": "Quick check: say a year", "cy": "Profiad sydyn: dweud blwyddyn" },
+      "html": {
+        "en": "<p>Type one common reading.</p>",
+        "cy": "<p>Teipia un darlleniad cyffredin.</p>"
       },
       "widgets": [
         {
-          "id": "i3-num-quiz-1",
+          "id": "i3-num-year-typein-1",
           "type": "typein",
-          "stem": { "en": "tri + tŷ", "cy": "tri + tŷ" },
-          "accept": ["tri thŷ"],
+          "stem": { "en": "1789", "cy": "1789" },
+          "accept": ["mil saith wyth naw"],
           "caseSensitive": false,
           "trim": true,
-          "explain": { "en": "After <b>tri</b> (masc), aspirate mutation: <b>t → th</b>.", "cy": "Ar ôl <b>tri</b> (gw.), TL: <b>t → th</b>." }
+          "explain": { "en": "Common chunking: <code>mil</code> + three single digits.", "cy": "Toriad cyffredin: <code>mil</code> + tri digid sengl." }
         },
         {
-          "id": "i3-num-quiz-2",
-          "type": "mcq",
-          "stem": { "en": "dwy + cadair", "cy": "dwy + cadair" },
-          "options": [
-            { "text": { "en": "dwy cadair", "cy": "dwy cadair" } },
-            { "text": { "en": "dwy gadair", "cy": "dwy gadair" } }
-          ],
-          "correct": [1],
-          "explain": { "en": "Soft mutation after <b>dwy</b>: <b>c → g</b>.", "cy": "TM ar ôl <b>dwy</b>: <b>c → g</b>." }
-        },
-        {
-          "id": "i3-num-quiz-3",
-          "type": "mcq",
-          "stem": { "en": "pedair + cadair", "cy": "pedair + cadair" },
-          "options": [
-            { "text": { "en": "pedair gadair", "cy": "pedair gadair" } },
-            { "text": { "en": "pedair cadair", "cy": "pedair cadair" } }
-          ],
-          "correct": [1],
-          "explain": { "en": "4 does not normally trigger mutation here.", "cy": "Nid yw 4 fel arfer yn sbarduno treiglad yma." }
-        },
-        {
-          "id": "i3-num-quiz-4",
+          "id": "i3-num-year-typein-2",
           "type": "typein",
-          "stem": { "en": "chwe + ci", "cy": "chwe + ci" },
-          "accept": ["chwe chi"],
+          "stem": { "en": "1907", "cy": "1907" },
+          "accept": ["mil naw dim saith"],
           "caseSensitive": false,
           "trim": true,
-          "explain": { "en": "After <b>chwe</b>, aspirate mutation: <b>c → ch</b>.", "cy": "Ar ôl <b>chwe</b>, TL: <b>c → ch</b>." }
+          "explain": { "en": "A common reading: <code>mil naw dim saith</code>.", "cy": "Darlleniad cyffredin: <code>mil naw dim saith</code>." }
+        },
+        {
+          "id": "i3-num-year-typein-3",
+          "type": "typein",
+          "stem": { "en": "2001", "cy": "2001" },
+          "accept": ["dwy fil ac un"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "2000s often use <code>dwy fil</code>, then add on: <code>ac un</code>.", "cy": "Yn y 2000au, defnyddir <code>dwy fil</code>, wedyn ychwanegu: <code>ac un</code>." }
         }
       ]
     },
     {
-      "title": { "en": "Now practise: Numbers drill mode ➜", "cy": "Nawr ymarfer: modd rhifau ➜" },
+      "title": { "en": "Money: punt, ceiniog, and listening traps", "cy": "Arian: punt, ceiniog, a thrapiau wrth wrando" },
       "html": {
-        "en": "<p>Next step: drill number phrases until the triggers are automatic.</p><p>&nbsp;</p><div class='callout'><p>Best routine: 3–5 minutes a day. Numbers stop being scary when you see them daily.</p></div>",
-        "cy": "<p>Y cam nesaf: drilia ymadroddion rhif nes bod y sbardunau’n awtomatig.</p><p>&nbsp;</p><div class='callout'><p>Y drefn orau: 3–5 munud y dydd. Mae rhifau’n stopio bod yn frawychus pan fyddi di’n eu gweld bob dydd.</p></div>"
+        "en": "<p>Two quick basics:</p><ul><li><code>pwys</code> (m) = pound (weight)</li><li><code>punt</code> (f) = pound sterling</li></ul><p>For £1–£10, you normally use a singular noun, and the feminine number forms matter:</p><div class='table-wrap'><table><thead><tr><th>Amount</th><th>Common form</th></tr></thead><tbody><tr><td>£1</td><td><code>un bunt</code></td></tr><tr><td>£2</td><td><code>dwy bunt</code></td></tr><tr><td>£3</td><td><code>tair punt</code></td></tr><tr><td>£4</td><td><code>pedair punt</code></td></tr><tr><td>£6</td><td><code>chwe phunt</code></td></tr></tbody></table></div><div class='callout'><p>Listening trap: <code>dair punt</code> (£3) can sound deceptively close to what you might expect for £2. I had to get used to it by exposure.</p></div><p>For larger sums you’ll see both patterns:</p><ul><li>decimal + plural: <code>dauddeg tair o funnoedd</code></li><li>vigesimal + singular: <code>tair punt ar hugain</code> (£23)</li><li>£40: <code>deugain punt</code>, £50: <code>hanner cant punt</code></li><li>£100: <code>can punt</code> or <code>cant o funnoedd</code></li></ul><p><code>ceiniog</code> (penny) is feminine too, and prices are often said without a plural: <code>pedair punt wythdeg tair ceiniog</code> (£4.83).</p>",
+        "cy": "<p>Dau beth sylfaenol:</p><ul><li><code>pwys</code> (gw.) = pound (pwysau)</li><li><code>punt</code> (b.) = punt sterling</li></ul><p>Am £1–£10, defnyddir enw unigol fel arfer, ac mae’r ffurfiau benywaidd yn bwysig:</p><div class='table-wrap'><table><thead><tr><th>Swm</th><th>Ffurf gyffredin</th></tr></thead><tbody><tr><td>£1</td><td><code>un bunt</code></td></tr><tr><td>£2</td><td><code>dwy bunt</code></td></tr><tr><td>£3</td><td><code>tair punt</code></td></tr><tr><td>£4</td><td><code>pedair punt</code></td></tr><tr><td>£6</td><td><code>chwe phunt</code></td></tr></tbody></table></div><div class='callout'><p>Trap wrth wrando: gall <code>dair punt</code> (£3) swnio’n dwyllodrus o debyg i beth fyddech chi’n disgwyl am £2. Roedd rhaid i mi arfer drwy ei glywed dro ar ôl tro.</p></div><p>Am symiau mwy, byddi di’n gweld y ddau batrwm:</p><ul><li>ddegol + lluosog: <code>dauddeg tair o funnoedd</code></li><li>ugeiniol + unigol: <code>tair punt ar hugain</code> (£23)</li><li>£40: <code>deugain punt</code>, £50: <code>hanner cant punt</code></li><li>£100: <code>can punt</code> neu <code>cant o funnoedd</code></li></ul><p>Mae <code>ceiniog</code> (b.) hefyd, ac mae prisiau’n aml yn cael eu dweud heb luosog: <code>pedair punt wythdeg tair ceiniog</code> (£4.83).</p>"
+      }
+    },
+    {
+      "title": { "en": "Final quick check + go practise", "cy": "Profiad olaf + mynd i ymarfer" },
+      "html": {
+        "en": "<p>A couple of money checks, then you’re done.</p><div class='callout'><p>If you want to keep this lesson useful rather than overwhelming, my honest advice is: practise the tiny set that comes up daily (2, 3, 6, ugain, deuddeg, pymtheg, deunaw, hanner cant).</p></div>",
+        "cy": "<p>Dau brawf arian, ac wedyn gorffen.</p><div class='callout'><p>Os wyt ti eisiau i’r wers hon aros yn ddefnyddiol (nid yn llethol), fy nghyngor gonest yw: ymarfera’r set fach sy’n dod i fyny bob dydd (2, 3, 6, ugain, deuddeg, pymtheg, deunaw, hanner cant).</p></div>"
       },
       "widgets": [
         {
-          "id": "i3-num-actions",
+          "id": "i3-num-money-mcq-1",
+          "type": "mcq",
+          "prompt": { "en": "Which is £6?", "cy": "Pa un yw £6?" },
+          "stem": { "en": "Choose one", "cy": "Dewisa un" },
+          "options": [
+            { "text": { "en": "chwe punt", "cy": "chwe punt" } },
+            { "text": { "en": "chwe phunt", "cy": "chwe phunt" } },
+            { "text": { "en": "chwe bunt", "cy": "chwe bunt" } }
+          ],
+          "correct": [1],
+          "explain": { "en": "Before a noun, 6 is <code>chwe</code>, and it triggers aspirate mutation: <code>punt → phunt</code>.", "cy": "O flaen enw, 6 yw <code>chwe</code>, ac mae’n achosi TL: <code>punt → phunt</code>." }
+        },
+        {
+          "id": "i3-num-money-typein-1",
+          "type": "typein",
+          "stem": { "en": "£3", "cy": "£3" },
+          "accept": ["tair punt"],
+          "caseSensitive": false,
+          "trim": true,
+          "explain": { "en": "Because <code>punt</code> is feminine, you use <code>tair</code>: <code>tair punt</code>.", "cy": "Gan fod <code>punt</code> yn fenywaidd, defnyddir <code>tair</code>: <code>tair punt</code>." }
+        },
+        {
+          "id": "i3-num-actions-1",
           "type": "actions",
-          "prompt": { "en": "Open Practice:", "cy": "Agor Ymarfer:" },
+          "prompt": { "en": "Go practise (pick one):", "cy": "Mynd i ymarfer (dewis un):" },
           "buttons": [
-            { "label": { "en": "Practice (Numbers)", "cy": "Ymarfer (Rhifau)" }, "href": "./index.html", "kind": "primary" },
-            { "label": { "en": "Back to other drills", "cy": "Nôl i ddriliau eraill" }, "href": "./index.html", "kind": "ghost" }
+            { "label": { "en": "Practice mode", "cy": "Modd ymarfer" }, "href": "./index.html", "kind": "primary" },
+            { "label": { "en": "Soft mutation refresher", "cy": "Atgoffa TM" }, "href": "./learn.html", "kind": "ghost" },
+            { "label": { "en": "Aspirate mutation refresher", "cy": "Atgoffa TL" }, "href": "./learn.html", "kind": "ghost" }
           ]
         }
       ]
