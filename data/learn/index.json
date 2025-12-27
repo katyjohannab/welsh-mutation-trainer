@@ -66,7 +66,7 @@
       "id": "i3-numerals-that-trigger-mutation",
       "level": { "en": "Intermediate", "cy": "Canolradd" },
       "minutes": 30,
-      "title": { "en": "Numbers + mutation (in real Welsh)", "cy": "Rhifau + treiglad (mewn Cymraeg go iawn)" },
+      "title": { "en": "Numbers + mutation", "cy": "Rhifau + treiglad" },
       "desc": {
         "en": "How numbers behave, when they trigger mutation, and how to recognise the ugain system for time, age and money.",
         "cy": "Sut mae rhifau’n gweithio, pryd maen nhw’n treiglo, a sut i adnabod y system ugain ar gyfer amser, oedran ac arian."
