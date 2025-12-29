@@ -655,7 +655,6 @@ c000654,"Soft, Blocked",Article,y,cangen,noun-fem,Cwrddon ni yn y ganolfan ac we
 c000655,"Soft, Blocked",Preposition,am,llaw,noun-fem,Mae angen trefniant am y,ar unwaith.,llaw,NONE,"am would soften ll→l on contact, but the article y blocks it. Llaw is feminine, yet the visible change is prevented by the blocking article."
 c000656,None,Complement,heddiw,heddiw,time-adv,Dw i’n brysur,ond mi wnawn ni siarad fory.,heddiw,NONE,Heddiw (‘today’) doesn’t change at the start. There’s no softening here—this is its normal form.
 c000657,None,Complement,yfory,yfory,time-adv,Awn ni at y dref,os bydd amser.,yfory,NONE,"Yfory (‘tomorrow’) shows no softening. In phrases like bore fory you’ll see fory (spelling without the y), but that isn’t a mutation."
-c000658,"Soft, Fixed",Complement,ddoe,doe,time-adv,Bues i yn y llyfrgell bore,.,ddoe,SM,"In bore ddoe (‘yesterday morning’), doe is always ddoe in this time phrase. It’s a fixed soft form, not triggered by the word bore."
 c000659,None,Complement,heddiw,heddiw,time-adv,Roedd yr arholiad bore,.,heddiw,NONE,Bore heddiw uses the unchanged form heddiw; there’s no softening in this phrase.
 c000660,None,Complement,heddiw,heddiw,time-adv,Rydyn ni’n cyfarfod prynhawn,yn y ganolfan.,heddiw,NONE,Prynhawn heddiw has no softening; heddiw stays as it is.
 c000661,None,Complement,fory,yfory,time-adv,Mae gen i apwyntiad bore,.,yfory,NONE,"You’ll usually see bore yfory spelt fory. That’s standard spelling in this phrase, not a mutation of yfory."
@@ -753,7 +752,7 @@ c000752,"Soft, Contact",Article,y,tystiolaeth,noun-fem,Anfonwch gopi y,erbyn dyd
 c000753,"Soft, Contact",Article,’r,tywysoges,noun-fem,Clywsom stori am deulu’r,ar y radio.,dywysoges,SM,"With ’r inside the NP, a fem. noun softens. Tywysoges → dywysoges (t→d)."
 c000754,"Soft, Contact",Article,y,cofrestr,noun-fem,Gwiriwch enw ar frig y,.,gofrestr,SM,Cofrestr is feminine; after y it softens to gofrestr (c→g).
 c000755,"Soft, Contact",Article,y,torf,noun-fem,Gwelwyd ymyl y,wrth y llwyfan.,dorf,SM,Torf is feminine; the article causes softening to dorf (t→d).
-c000756,None,Article,y,llyfrgell,noun-fem,Edrychwch ar oriau agor y,cyn mynd.,llyfrgell,NONE,"The rule still applies, but some initials never show a change. Llyfrgell is feminine with ll-, which doesn’t soften, so there’s no visible change."
+c000756,None,Article,y,llyfrgell,noun-fem,Edrychwch ar oriau agor y,cyn mynd.,llyfrgell,NONE,"Llyfrgell is feminine but "ll" doesn’t soften with the article, so there’s no visible change."
 c000757,None,Article,y,rhifyn,noun-masc,Cafodd y clawr ei ddylunio ar gyfer y,arbennig.,rhifyn,NONE,"Masculine singular nouns don’t soften after the article. Rhifyn is masculine, and rh- doesn’t soften—so no change."
 c000758,"Soft, Contact",Preposition,ar,brys,noun-masc,Gadawodd neges ar,y bore.,frys,SM,"The mutation is from the preposition inside the phrase: ar softens the next noun. Brys is masc., so ar frys (b→f)."
 c000759,"Soft, Contact",Preposition,ar,troed,noun-fem,Aethon nhw ar,i’r gêm.,droed,SM,"ar softens the noun that follows. Troed is fem., so ar droed (t→d). It isn’t the earlier word doing this."
@@ -1047,6 +1046,7 @@ c001047,"None",PlaceName,yn (in),Sir Fynwy,placename,Maen nhw’n byw yn,ers tro
 c001048,"Nasal, Contact",PlaceName,yn (in),Dinas Powys,placename,Roedd hi’n byw yn,pan oedd yn yr ysgol.,Ninas Powys,NM,"After yn “in”, Welsh place names take nasal mutation. Here the preposition stays yn, and d changes to n: yn Ninas Powys."
 c001049,"Nasal, Contact",PlaceName,yn (in),Pontypŵl,placename,Mae’n gweithio ym,ddydd Llun.,Mhontypŵl,NM,"After yn “in”, Welsh place names take nasal mutation. Before p/b/m it becomes ym, and p changes to mh: ym Mhontypŵl."
 c001050,"Nasal, Contact",PlaceName,yn (in),Caernarfon,placename,Arhoson ni yng,am noson.,Nghaernarfon,NM,"After yn “in”, Welsh place names take nasal mutation. Before c- it becomes yng, and c changes to ngh: yng Nghaernarfon."
+
 
 
 
