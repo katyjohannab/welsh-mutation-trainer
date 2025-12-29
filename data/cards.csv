@@ -752,7 +752,7 @@ c000752,"Soft, Contact",Article,y,tystiolaeth,noun-fem,Anfonwch gopi y,erbyn dyd
 c000753,"Soft, Contact",Article,’r,tywysoges,noun-fem,Clywsom stori am deulu’r,ar y radio.,dywysoges,SM,"With ’r inside the NP, a fem. noun softens. Tywysoges → dywysoges (t→d)."
 c000754,"Soft, Contact",Article,y,cofrestr,noun-fem,Gwiriwch enw ar frig y,.,gofrestr,SM,Cofrestr is feminine; after y it softens to gofrestr (c→g).
 c000755,"Soft, Contact",Article,y,torf,noun-fem,Gwelwyd ymyl y,wrth y llwyfan.,dorf,SM,Torf is feminine; the article causes softening to dorf (t→d).
-c000756,None,Article,y,llyfrgell,noun-fem,Edrychwch ar oriau agor y,cyn mynd.,llyfrgell,NONE,"Llyfrgell is feminine but "ll" doesn’t soften with the article, so there’s no visible change."
+c000756,None,Article,y,llyfrgell,noun-fem,Edrychwch ar oriau agor y,cyn mynd.,llyfrgell,NONE,"Llyfrgell is feminine but "ll" doesn’t soften with the article so there’s no visible change."
 c000757,None,Article,y,rhifyn,noun-masc,Cafodd y clawr ei ddylunio ar gyfer y,arbennig.,rhifyn,NONE,"Masculine singular nouns don’t soften after the article. Rhifyn is masculine, and rh- doesn’t soften—so no change."
 c000758,"Soft, Contact",Preposition,ar,brys,noun-masc,Gadawodd neges ar,y bore.,frys,SM,"The mutation is from the preposition inside the phrase: ar softens the next noun. Brys is masc., so ar frys (b→f)."
 c000759,"Soft, Contact",Preposition,ar,troed,noun-fem,Aethon nhw ar,i’r gêm.,droed,SM,"ar softens the noun that follows. Troed is fem., so ar droed (t→d). It isn’t the earlier word doing this."
@@ -1046,6 +1046,7 @@ c001047,"None",PlaceName,yn (in),Sir Fynwy,placename,Maen nhw’n byw yn,ers tro
 c001048,"Nasal, Contact",PlaceName,yn (in),Dinas Powys,placename,Roedd hi’n byw yn,pan oedd yn yr ysgol.,Ninas Powys,NM,"After yn “in”, Welsh place names take nasal mutation. Here the preposition stays yn, and d changes to n: yn Ninas Powys."
 c001049,"Nasal, Contact",PlaceName,yn (in),Pontypŵl,placename,Mae’n gweithio ym,ddydd Llun.,Mhontypŵl,NM,"After yn “in”, Welsh place names take nasal mutation. Before p/b/m it becomes ym, and p changes to mh: ym Mhontypŵl."
 c001050,"Nasal, Contact",PlaceName,yn (in),Caernarfon,placename,Arhoson ni yng,am noson.,Nghaernarfon,NM,"After yn “in”, Welsh place names take nasal mutation. Before c- it becomes yng, and c changes to ngh: yng Nghaernarfon."
+
 
 
 
