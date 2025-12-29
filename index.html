@@ -1069,7 +1069,8 @@ async function playPollySentence(sentence) {
     const addChip = (label, onClear) => {
       const c = document.createElement('button');
       c.type = 'button';
-      c.className = 'chip';
+      // Clear chips are styled differently (e.g. red); other chips use default style
+      c.className = onClear ? 'chip chip-clear' : 'chip';
       c.innerHTML = `<span>${esc(label)}</span>`;
       if (onClear) {
         const x = document.createElement('span');
@@ -1082,63 +1083,58 @@ async function playPollySentence(sentence) {
     };
 
     
-    // Build active filter chips only if there are restrictions (fewer than all families/outcomes selected, any categories, trigger query, or nilOnly)
-    const anyRestriction =
-      (state.families.length && state.families.length < 4) ||
-      (state.outcomes.length && state.outcomes.length < 4) ||
-      state.categories.length ||
-      (state.triggerQuery && state.triggerQuery.trim()) ||
-      state.nilOnly;
-
-    if (anyRestriction) {
-      // Families: translate the mutation names via label() helper
-      if (state.families.length && state.families.length < 4) {
-        state.families.forEach(f => {
-          const translated = label('rulefamily', f);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Outcomes: also translate via rulefamily mapping (SM→Soft, etc.)
-      if (state.outcomes.length && state.outcomes.length < 4) {
-        state.outcomes.forEach(o => {
-          const translated = label('rulefamily', o);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Categories: translate category labels
-      if (state.categories.length) {
-        state.categories.forEach(ca => {
-          const translated = label('categories', ca);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Trigger query: show a label appropriate to the current language
-      if (state.triggerQuery && state.triggerQuery.trim()) {
-        const trigLabel = (state.lang === 'cy' ? 'Sbardun' : 'Trigger');
-        summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
-      }
-      // Nil-only: use the heading translation
-      if (state.nilOnly) {
-        summary.appendChild(addChip(label('headings', 'nilOnly')));
-      }
-      // Clear chip: provide a way to reset all filters
-      summary.appendChild(addChip(state.lang === 'cy' ? 'Clirio' : 'Clear', () => {
-        state.families = ["Soft","Aspirate","Nasal","None"];
-        state.categories = [];
-        state.outcomes = ["SM","AM","NM","NONE"];
-        state.triggerQuery = '';
-        state.nilOnly = false;
-        saveLS('wm_families', state.families);
-        saveLS('wm_categories', state.categories);
-        saveLS('wm_outcomes', state.outcomes);
-        saveLS('wm_trig', state.triggerQuery);
-        saveLS('wm_nil', state.nilOnly);
-        applyFilters(); rebuildDeck(); buildFilters(); render();
-      }));
+    // Build summary chips reflecting current filter selections
+    // Families: if fewer than all are selected, show each translated; otherwise show an "All families" chip
+    if (state.families.length && state.families.length < 4) {
+      state.families.forEach(f => {
+        const translated = label('rulefamily', f);
+        summary.appendChild(addChip(translated));
+      });
     } else {
-      // When there are no active filters, hide the summary row to save vertical space
-      summary.classList.add('hidden');
+      // All families selected
+      const famLabel = (state.lang === 'cy') ? 'Pob treiglad' : 'All families';
+      summary.appendChild(addChip(famLabel));
     }
+    // Outcomes: if fewer than all are selected, show each; otherwise omit to save space
+    if (state.outcomes.length && state.outcomes.length < 4) {
+      state.outcomes.forEach(o => {
+        const translated = label('rulefamily', o);
+        summary.appendChild(addChip(translated));
+      });
+    }
+    // Categories: if some categories are selected, list them; otherwise show the "All" chip
+    if (state.categories.length) {
+      state.categories.forEach(ca => {
+        const translated = label('categories', ca);
+        summary.appendChild(addChip(translated));
+      });
+    } else {
+      const allCatLabel = (LABEL[state.lang]?.categories?.All) || 'All';
+      summary.appendChild(addChip(allCatLabel));
+    }
+    // Trigger query: show a label appropriate to the current language when present
+    if (state.triggerQuery && state.triggerQuery.trim()) {
+      const trigLabel = (state.lang === 'cy' ? 'Sbardun' : 'Trigger');
+      summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
+    }
+    // Nil-only: include the translated label if set
+    if (state.nilOnly) {
+      summary.appendChild(addChip(label('headings', 'nilOnly')));
+    }
+    // Clear chip: always present so users know they can reset, tinted red via CSS
+    summary.appendChild(addChip(state.lang === 'cy' ? 'Clirio' : 'Clear', () => {
+      state.families = ["Soft","Aspirate","Nasal","None"];
+      state.categories = [];
+      state.outcomes = ["SM","AM","NM","NONE"];
+      state.triggerQuery = '';
+      state.nilOnly = false;
+      saveLS('wm_families', state.families);
+      saveLS('wm_categories', state.categories);
+      saveLS('wm_outcomes', state.outcomes);
+      saveLS('wm_trig', state.triggerQuery);
+      saveLS('wm_nil', state.nilOnly);
+      applyFilters(); rebuildDeck(); buildFilters(); render();
+    }));
     const chips = document.createElement('div'); chips.className = 'practice-base text-2xl md:text-3xl font-medium';
     chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
     const instruction = document.createElement('div'); instruction.className='practice-instruction text-lg md:text-xl text-slate-700 mb-6';
