@@ -618,6 +618,36 @@
       margin-bottom: 1.15rem !important;
     }
 
+/*
+ * Compose the answer moment (sentence, actions, hint, feedback) into a single
+ * block so its internal spacing is predictable.  The grid layout defines
+ * consistent vertical rhythm between the rows, and the top margin ensures
+ * breathing room under the base word capsule.
+ */
+#practiceCard .practice-answerBlock{
+  display: grid;
+  row-gap: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/*
+ * Secondary navigation buttons (Stats, Filters) should read as neutral rather than
+ * warning red.  Use the ghost-style palette (light background, subtle border)
+ * with emerald ink to tie into the brand colours.  Hover retains subtlety.
+ */
+#btnStats, #btnFilters{
+  background: rgba(255,255,255,0.85);
+  border-color: var(--border);
+  color: var(--emerald-ink);
+}
+#btnStats:hover, #btnFilters:hover{
+  background: rgba(255,255,255,1);
+  border-color: var(--emerald-ink);
+  color: var(--emerald-ink);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(2,6,23,0.10);
+}
+
     /* Base word: centred on mobile, aligned on desktop */
     #practiceCard .practice-base{
       justify-content: center;
