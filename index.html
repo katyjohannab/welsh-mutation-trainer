@@ -221,6 +221,7 @@
     tip.className = 'tooltip hidden';
     tip.textContent = text;
     document.body.appendChild(tip);
+    // Position the tooltip relative to the target element
     function positionTip(){
       const rect = el.getBoundingClientRect();
       tip.style.top = `${rect.bottom + window.scrollY + 6}px`;
@@ -1020,14 +1021,10 @@ async function playPollySentence(sentence) {
     const headerLeft = document.createElement('div');
     headerLeft.className = 'flex flex-wrap items-center gap-2 text-xs text-slate-500';
 
-    const modePill = document.createElement('span');
-    modePill.className = 'inline-flex items-center rounded-full border border-slate-200 bg-white/70 px-2 py-1 text-[11px] font-semibold text-slate-700';
-    modePill.textContent = (state.practiceMode === 'smart') ? t.smartModeLabel : t.shuffleModeLabel;
-
+    // The mode label pill is redundant with the segmented control; only show the position text.
     const posSpan = document.createElement('span');
     posSpan.textContent = posText;
-
-    headerLeft.append(modePill, posSpan);
+    headerLeft.append(posSpan);
 
     const headerRight = document.createElement('div');
     headerRight.className = 'flex items-center gap-2';
@@ -1194,87 +1191,96 @@ async function playPollySentence(sentence) {
     
       render();
     });
-    actions.append(btnCheck, btnHint, btnReveal, btnSkip);
-    const hint = document.createElement('div'); hint.className='hidden practice-hint text-sm text-slate-600';
-    hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
-    const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
-    let btnHear = null;
-    if (state.revealed){
-      feedback.className = 'mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm';
-      const ok = state.lastResult === 'correct';
-      const skipped = state.lastResult === 'skipped';
-      
-      const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
-      const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
-      const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
-      // Build the revealed feedback section.  The sentence, answer details
-      // and audio button are grouped inside a soft-tinted box.  The
-      // audio button uses an inline icon for clarity and has been
-      // intentionally minimised in size.  Additional vertical spacing
-      // separates the action buttons from the feedback container.
-      feedback.innerHTML = `
-        <div class="feedback-box">
-          <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-            ${statusIcon} ${esc(statusText)}
-          </div>
-          ${(!ok && !skipped)
-            ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
-            : ''
-          }
-          <!-- Completed sentence with inline audio button -->
-          <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-center flex-wrap gap-3">
-            <span>${esc(card.Before || '')}</span>
-            <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
-            <span>${esc(card.After || '')}</span>
-            <button id="btnHear" class="btn-hear" type="button">
-              <span class="icon" aria-hidden="true">&#128266;</span>
-              <span>${esc(t.hear)}</span>
-            </button>
-          </div>
-            <!-- Answer details with consistent spacing -->
-          <div class="mt-4 space-y-1 text-slate-700">
-            <div>${esc(t.answerLabel)}: <b>${esc(card.Answer)}</b></div>
-            <div>${esc(t.triggerLabel)}: <b>${esc(card.Trigger || '—')}</b></div>
-            <div><span class="font-medium">${esc(t.ruleLabel)}:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
-            ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
-          </div>
-        </div>
-      `;
+ actions.append(btnCheck, btnHint, btnReveal, btnSkip);
 
-      // Wire up the "Hear this" button (only exists when revealed)
-        setTimeout(() => {
-          const hearBtn = document.getElementById('btnHear');
-          if (!hearBtn) return;
-        
-          hearBtn.onclick = async () => {
-            try {
-              // Always read the correct sentence (Before + correct Answer + After)
-              const sentence = buildCompleteSentence({
-                Before: card.Before,
-                Answer: card.Answer,
-                After: card.After
-              });
-              await playPollySentence(sentence);
-            } catch (e) {
-              alert("Couldn't play audio: " + (e?.message || e));
-            }
-          };
-        }, 0);
-      const nb = document.createElement('button');
-      nb.id = 'inlineNext';
-      nb.className = 'mt-3 btn btn-primary shadow transition';
-      nb.title = t.next + ' (Enter)';
-      nb.textContent = t.next;
-      nb.onclick = ()=> nextCard(1);
-      feedback.appendChild(nb);
+// Hint (no mt-* here; let the layout wrapper control spacing)
+const hint = document.createElement('div');
+hint.className = 'hidden practice-hint text-sm text-slate-600';
+hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer || '').slice(0, 1) || '?'}</b>`;
+
+// Feedback container: always present, but only filled when revealed
+const feedback = document.createElement('div');
+feedback.setAttribute('aria-live', 'polite');
+feedback.className = 'practice-feedback';
+
+if (state.revealed) {
+  const ok = state.lastResult === 'correct';
+  const skipped = state.lastResult === 'skipped';
+
+  const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
+  const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
+  const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
+
+  feedback.innerHTML = `
+    <div class="feedback-box">
+      <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
+        ${statusIcon} ${esc(statusText)}
+      </div>
+
+      ${(!ok && !skipped)
+        ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
+        : ''
+      }
+
+      <!-- Completed sentence + audio -->
+      <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
+        <span>${esc(card.Before || '')}</span>
+        <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
+        <span>${esc(card.After || '')}</span>
+
+        <button id="btnHear" class="btn-hear" type="button">
+          <span class="icon" aria-hidden="true">&#128266;</span>
+          <span>${esc(t.hear)}</span>
+        </button>
+      </div>
+
+      <!-- Explanation: only the 'Why' text if present -->
+      ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ''}
+
+      <!-- Next stays visually "inside" the result card -->
+      <div class="mt-4 flex justify-end">
+        <button id="inlineNext"
+                class="btn btn-primary shadow transition"
+                type="button"
+                title="${esc(t.next)} (Enter)">
+          ${esc(t.next)}
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Wire up "Hear" and "Next" (they only exist when revealed)
+  setTimeout(() => {
+    const hearBtn = document.getElementById('btnHear');
+    if (hearBtn) {
+      hearBtn.onclick = async () => {
+        try {
+          const sentence = buildCompleteSentence({
+            Before: card.Before,
+            Answer: card.Answer,
+            After: card.After
+          });
+          await playPollySentence(sentence);
+        } catch (e) {
+          alert("Couldn't play audio: " + (e?.message || e));
+        }
+      };
     }
+
+    const nextBtn = document.getElementById('inlineNext');
+    if (nextBtn) nextBtn.onclick = () => nextCard(1);
+  }, 0);
+} else {
+  feedback.innerHTML = '';
+}
+
     // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
+    const parts = [header, summary, instruction];
+    if (helpBox) parts.push(helpBox);
+    // Compose sentence, actions, hint and feedback into a single block for consistent spacing
     const answerBlock = document.createElement('div');
     answerBlock.className = 'practice-answerBlock';
     answerBlock.append(row, actions, hint, feedback);
-
-    const parts = [header, summary, instruction];
-    if (helpBox) parts.push(helpBox);
     parts.push(chips, answerBlock);
     wrap.append(...parts);
     // If the helpBox is rendered, attach a click handler to dismiss it permanently
@@ -1483,6 +1489,8 @@ async function playPollySentence(sentence) {
   </script>
 </body>
 </html>
+
+
 
 
 
