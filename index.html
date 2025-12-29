@@ -1143,7 +1143,7 @@ async function playPollySentence(sentence) {
     }
 
     const row = document.createElement('div');
-    row.className = 'practice-sentence mt-2';
+    row.className = 'practice-sentence';
     row.innerHTML = `
       <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
         <span class="text-slate-600">${esc(card.Before || '')}</span>
@@ -1195,7 +1195,7 @@ async function playPollySentence(sentence) {
       render();
     });
     actions.append(btnCheck, btnHint, btnReveal, btnSkip);
-    const hint = document.createElement('div'); hint.className='hidden mt-3 text-sm text-slate-600';
+    const hint = document.createElement('div'); hint.className='hidden practice-hint text-sm text-slate-600';
     hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
     const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
     let btnHear = null;
@@ -1269,9 +1269,13 @@ async function playPollySentence(sentence) {
       feedback.appendChild(nb);
     }
     // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
+    const answerBlock = document.createElement('div');
+    answerBlock.className = 'practice-answerBlock';
+    answerBlock.append(row, actions, hint, feedback);
+
     const parts = [header, summary, instruction];
     if (helpBox) parts.push(helpBox);
-    parts.push(chips, row, actions, hint, feedback);
+    parts.push(chips, answerBlock);
     wrap.append(...parts);
     // If the helpBox is rendered, attach a click handler to dismiss it permanently
     if (helpBox) {
@@ -1479,8 +1483,6 @@ async function playPollySentence(sentence) {
   </script>
 </body>
 </html>
-
-
 
 
 
