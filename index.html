@@ -619,7 +619,7 @@
     // Language toggle text: show target language to switch to
     const langBtn = $('#btnLangToggle');
     if (langBtn) {
-      const nextLang = (lang === 'en') ? 'CY' : 'EN';
+      const nextLang = (lang === 'en') ? 'CYMRAEG' : 'ENGLISH';
       langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
       langBtn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
       langBtn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
