@@ -1143,7 +1143,7 @@ async function playPollySentence(sentence) {
     }
 
     const row = document.createElement('div');
-    row.className = 'practice-sentence';
+    row.className = 'practice-sentence mt-2';
     row.innerHTML = `
       <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
         <span class="text-slate-600">${esc(card.Before || '')}</span>
@@ -1194,94 +1194,19 @@ async function playPollySentence(sentence) {
     
       render();
     });
- actions.append(btnCheck, btnHint, btnReveal, btnSkip);
-
-// Hint (no mt-* here; let the layout wrapper control spacing)
-const hint = document.createElement('div');
-hint.className = 'hidden practice-hint text-sm text-slate-600';
-hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer || '').slice(0, 1) || '?'}</b>`;
-
-// Feedback container: always present, but only filled when revealed
-const feedback = document.createElement('div');
-feedback.setAttribute('aria-live', 'polite');
-feedback.className = 'practice-feedback';
-
-if (state.revealed) {
-  const ok = state.lastResult === 'correct';
-  const skipped = state.lastResult === 'skipped';
-
-  const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
-  const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
-  const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
-
-  feedback.innerHTML = `
-    <div class="feedback-box">
-      <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-        ${statusIcon} ${esc(statusText)}
-      </div>
-
-      ${(!ok && !skipped)
-        ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
-        : ''
-      }
-
-      <!-- Completed sentence + audio -->
-      <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
-        <span>${esc(card.Before || '')}</span>
-        <span class="font-semibold underline decoration-indigo-400">${esc(card.Answer)}</span>
-        <span>${esc(card.After || '')}</span>
-
-        <button id="btnHear" class="btn-hear" type="button">
-          <span class="icon" aria-hidden="true">&#128266;</span>
-          <span>${esc(t.hear)}</span>
-        </button>
-      </div>
-
-      <!-- Answer details -->
-      <div class="mt-4 space-y-1 text-slate-700">
-        <div>${esc(t.answerLabel)}: <b>${esc(card.Answer)}</b></div>
-        <div>${esc(t.triggerLabel)}: <b>${esc(card.Trigger || '—')}</b></div>
-        <div><span class="font-medium">${esc(t.ruleLabel)}:</span> ${esc(card.RuleCategory || '—')} • ${(card.Outcome || '').toUpperCase()}</div>
-        ${card.Why ? `<p class="mt-1">${esc(card.Why)}</p>` : ''}
-      </div>
-
-      <!-- Next stays visually "inside" the result card -->
-      <div class="mt-4 flex justify-end">
-        <button id="inlineNext"
-                class="btn btn-primary shadow transition"
-                type="button"
-                title="${esc(t.next)} (Enter)">
-          ${esc(t.next)}
-        </button>
-      </div>
-    </div>
-  `;
-
-  // Wire up "Hear" and "Next" (they only exist when revealed)
-  setTimeout(() => {
-    const hearBtn = document.getElementById('btnHear');
-    if (hearBtn) {
-      hearBtn.onclick = async () => {
-        try {
-          const sentence = buildCompleteSentence({
-            Before: card.Before,
-            Answer: card.Answer,
-            After: card.After
-          });
-          await playPollySentence(sentence);
-        } catch (e) {
-          alert("Couldn't play audio: " + (e?.message || e));
-        }
-      };
-    }
-
-    const nextBtn = document.getElementById('inlineNext');
-    if (nextBtn) nextBtn.onclick = () => nextCard(1);
-  }, 0);
-} else {
-  feedback.innerHTML = '';
-}
-
+    actions.append(btnCheck, btnHint, btnReveal, btnSkip);
+    const hint = document.createElement('div'); hint.className='hidden mt-3 text-sm text-slate-600';
+    hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer||'').slice(0,1) || '?'}</b>`;
+    const feedback = document.createElement('div'); feedback.setAttribute('aria-live','polite');
+    let btnHear = null;
+    if (state.revealed){
+      feedback.className = 'mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm';
+      const ok = state.lastResult === 'correct';
+      const skipped = state.lastResult === 'skipped';
+      
+      const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
+      const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
+      const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
       // Build the revealed feedback section.  The sentence, answer details
       // and audio button are grouped inside a soft-tinted box.  The
       // audio button uses an inline icon for clarity and has been
@@ -1382,7 +1307,7 @@ if (state.revealed) {
       setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
       render();
     }
-  
+  }
 
   function renderBrowse(){
     const head = $('#browseHead'); const body = $('#browseBody');
