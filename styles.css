@@ -840,4 +840,45 @@
   .btn-shuffleNow .btn-label{ display: inline; }
 }
 
+/* Practice: one composed “answer moment” block */
+#practiceCard .practice-answerBlock{
+  display: grid;
+  row-gap: 0.95rem;        /* your vertical rhythm */
+  margin-top: 0.4rem;      /* distance from chips */
+}
+
+#practiceCard .practice-sentenceLine{
+  align-items: baseline !important;
+}
+#practiceCard #answerBox{
+  align-self: baseline;
+}
+
+#practiceCard .practice-actions{
+  margin: 0 !important;
+  padding-top: 0.85rem !important;
+  gap: 0.65rem !important;
+  border-top: 0 !important;
+  position: relative;
+  justify-content: flex-start;
+}
+
+#practiceCard .practice-actions::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(6,78,59,0.18),
+    rgba(153,27,27,0.18)
+  );
+}
+
+#practiceCard .practice-feedback .feedback-box{
+  margin-top: 0 !important;
+}
+
+
 
