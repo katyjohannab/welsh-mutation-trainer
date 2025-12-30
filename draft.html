@@ -1009,6 +1009,21 @@ async function playPollySentence(sentence) {
 
     capsuleEl.appendChild(pop);
     btn.setAttribute('aria-expanded', 'true');
+    // Position after layout
+    setTimeout(() => placeBasePopover(pop, capsuleEl), 0);
+    
+    // Reposition on resize/scroll (mobile rotation etc.)
+    const onReflow = () => pop && placeBasePopover(pop, capsuleEl);
+    window.addEventListener('resize', onReflow, { passive: true });
+    window.addEventListener('scroll', onReflow, { passive: true });
+    
+    // Make sure we clean up on close
+    const oldClose = close;
+    close = () => {
+      window.removeEventListener('resize', onReflow);
+      window.removeEventListener('scroll', onReflow);
+      oldClose();
+    };
 
     // Close on outside click
     setTimeout(() => {
@@ -1023,6 +1038,34 @@ async function playPollySentence(sentence) {
   capsuleEl.appendChild(btn);
 }
 
+function placeBasePopover(pop, capsuleEl){
+  if (!pop || !capsuleEl) return;
+
+  pop.classList.remove('pos-right','pos-left','pos-top','pos-bottom');
+
+  const r = capsuleEl.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  // must measure AFTER it's in the DOM
+  const pr = pop.getBoundingClientRect();
+  const pad = 12;
+
+  if (vw >= 640){
+    const spaceRight = vw - r.right;
+    const spaceLeft  = r.left;
+
+    if (spaceRight >= pr.width + pad) pop.classList.add('pos-right');
+    else if (spaceLeft >= pr.width + pad) pop.classList.add('pos-left');
+    else pop.classList.add('pos-bottom');
+  } else {
+    const spaceBelow = vh - r.bottom;
+    const spaceAbove = r.top;
+
+    if (spaceBelow >= pr.height + pad) pop.classList.add('pos-bottom');
+    else pop.classList.add('pos-top');
+  }
+}
 
 
   // ---------- Render ----------
