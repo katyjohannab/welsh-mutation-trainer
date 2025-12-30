@@ -249,57 +249,53 @@
     }
 
     /* Custom style for the audio playback button.   */
+
 /* =========================
-   HEAR (audio) button — graphic, solid, matches Cymru red
+   HEAR button 
    ========================= */
 .btn-hear{
   display:inline-flex;
   align-items:center;
-  gap: .38rem;
+  gap: .42rem;
 
-  font: inherit;
+  font-family: inherit;
   font-weight: 750;
-  font-size: .72rem;
-  letter-spacing: .10em;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 
-  padding: .22rem .56rem;
+  padding: .18rem .55rem;     /* tighter */
   border-radius: 999px;
 
-  /* MATCH your theme reds exactly */
-  border: 2px solid var(--cymru-red);
-  background: #fff;                 /* solid, not pastel/translucent */
-  color: var(--emerald-ink);
+  color: #fff;
+  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%);
+  border: 1px solid rgba(255,255,255,0.22);
 
+  box-shadow: 0 2px 0 rgba(153,27,27,0.28);
   line-height: 1;
-  box-shadow: 0 1px 0 rgba(2,6,23,0.08);
 
-  transition:
-    transform .08s ease,
-    box-shadow .12s ease,
-    background .12s ease,
-    border-color .12s ease;
+  transition: transform .08s ease, box-shadow .12s ease, filter .12s ease;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn-hear .icon{
-  font-size: .95rem;
+  font-size: 0.95rem;
   line-height: 1;
 }
 
 .btn-hear:hover{
-  /* noticeable but not goofy */
-  background: rgba(185,28,28,0.06);
-  border-color: var(--cymru-red-ink);
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+  filter: brightness(1.05) saturate(1.06);
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.12),
+    0 0 0 3px rgba(185,28,28,0.14); /* clearer hover without being huge */
 }
 
 .btn-hear:active{
   transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.08);
+  box-shadow: 0 7px 12px rgba(2,6,23,0.10);
 }
 
 .btn-hear:focus-visible{
@@ -993,69 +989,49 @@
    Translation UI (red/green, subtle gold)
    ========================= */
 
-/* Base capsule needs positioning for the ? button and popover */
-.base-capsule{ position: relative; }
-
-/* “Graphic” ? buttons: white fill, red border, green text */
 /* =========================
-   “?” buttons — match HEAR exactly
+   “?” info buttons (match Cymru red + never transparent)
    ========================= */
 .base-info-btn,
 .sentence-info-btn{
   display: inline-grid;
   place-items: center;
 
-  border-radius: 999px;
-  border: 2px solid var(--cymru-red);
-  background: #fff;
-  color: var(--emerald-ink);
+  width: 1.18rem;
+  height: 1.18rem;
 
-  font: inherit;
+  border-radius: 999px;
+  border: 2px solid var(--cymru-red); /* SAME red token as everywhere */
+  background: #fff;                   /* solid (never see-through) */
+  color: var(--cymru-red-ink);        /* red ink reads cleaner here */
+
+  font-family: inherit;
   font-weight: 900;
+  font-size: 0.78rem;
   line-height: 1;
 
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  box-shadow: 0 1px 0 rgba(2,6,23,0.08);
-  transition:
-    transform .08s ease,
-    box-shadow .12s ease,
-    background .12s ease,
-    border-color .12s ease;
-}
-
-/* Slightly larger so the 2px border doesn’t look heavier than HEAR */
-.base-info-btn{
-  width: 1.22rem;
-  height: 1.22rem;
-  font-size: 0.82rem;
-
-  position: absolute;
-  top: -0.30rem;
-  right: -0.50rem;
-}
-
-.sentence-info-btn{
-  width: 1.08rem;
-  height: 1.08rem;
-  font-size: 0.76rem;
-  margin-left: 0.40rem;
+  box-shadow: 0 2px 0 rgba(153,27,27,0.14);
+  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
 }
 
 .base-info-btn:hover,
 .sentence-info-btn:hover{
-  background: rgba(185,28,28,0.06);
+  background: #fff; /* keep solid */
   border-color: var(--cymru-red-ink);
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.10),
+    0 0 0 3px rgba(185,28,28,0.10);
 }
 
 .base-info-btn:active,
 .sentence-info-btn:active{
   transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.08);
+  box-shadow: 0 7px 12px rgba(2,6,23,0.08);
 }
 
 .base-info-btn:focus-visible,
@@ -1063,6 +1039,22 @@
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
+
+/* Keep base ? nudged out */
+.base-info-btn{
+  position: absolute;
+  top: -0.30rem;
+  right: -0.50rem;
+}
+
+/* Sentence ? slightly smaller */
+.sentence-info-btn{
+  width: 1.08rem;
+  height: 1.08rem;
+  font-size: 0.74rem;
+  margin-left: 0.40rem;
+}
+
 
 
 /* NUDGE: move the base “?” slightly OUTSIDE the capsule so it never clips letters */
@@ -1101,6 +1093,42 @@
   left: 50%;
   transform: translateX(-50%);
 }
+
+/* Popover close “X” */
+.base-info-close{
+  position: absolute;
+  top: 0.45rem;
+  right: 0.45rem;
+
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius: 999px;
+
+  border: 1px solid rgba(15,23,42,0.14);
+  background: #fff;
+  color: rgba(15,23,42,0.72);
+
+  display: grid;
+  place-items: center;
+
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+
+  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.base-info-close:hover{
+  transform: translateY(-1px);
+  border-color: rgba(15,23,42,0.22);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+}
+
+.base-info-popover{
+  /* make room for the close button */
+  padding-top: 0.85rem;
+}
+
 
 /* Arrow (mobile: points down to capsule) */
 .base-info-popover::before{
