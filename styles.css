@@ -1499,3 +1499,144 @@
 
 .btn-shuffleNow:hover::before{ opacity: 0.55; }
 
+
+/* =========================================================
+   HARD PATCH (paste LAST in CSS) — wins over earlier rules
+   Fixes: header stacking, toggle typography, HEAR, Shuffle, ? hover
+   ========================================================= */
+
+/* 0) Header must always sit above panels when scrolling */
+#siteHeader{
+  position: sticky;
+  top: 0;
+  z-index: 2000; /* beats everything */
+}
+
+/* You set panels to z-index:30 earlier; keep them below the header */
+#practiceView > div.panel{
+  z-index: 20 !important;
+}
+
+/* 1) Ensure the base capsule is the positioning anchor for the ? */
+#practiceCard .practice-base > div,
+#practiceCard .practice-base .bg-indigo-100{
+  position: relative !important;
+}
+
+/* 2) MODE TOGGLE — correct weight + alignment + consistent height */
+#practiceCard .seg{
+  align-items: center !important;
+  padding: 0.18rem !important;
+}
+
+#practiceCard .seg-btn{
+  font-family: inherit !important;
+  font-weight: 800 !important;         /* matches your “button” feel */
+  font-size: 0.78rem !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+
+  height: 2.05rem !important;          /* fixes misalignment */
+  padding: 0 0.95rem !important;
+  line-height: 1 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#practiceCard .seg-btn.is-on{
+  font-weight: 800 !important;
+}
+
+/* 3) “?” BUTTON — never transparent, use theme reds, consistent border */
+.base-info-btn,
+.sentence-info-btn{
+  background: #fff !important;                      /* ALWAYS solid */
+  border: 2px solid var(--cymru-red-ink) !important;
+  color: var(--cymru-red-ink) !important;
+  opacity: 1 !important;
+}
+
+.base-info-btn:hover,
+.sentence-info-btn:hover{
+  background: #fff !important;                      /* STILL solid */
+  border-color: var(--cymru-red-ink) !important;
+  opacity: 1 !important;
+}
+
+/* Keep the base ? in the capsule corner */
+.base-info-btn{
+  position: absolute !important;
+  top: -0.30rem !important;
+  right: -0.50rem !important;
+}
+
+/* 4) HEAR BUTTON — solid red gradient, white text, uppercase, matches toggle typography */
+.btn-hear{
+  font-family: inherit !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.10em !important;
+  text-transform: uppercase !important;
+
+  color: #fff !important;
+  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%) !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+
+  padding: 0.34rem 0.72rem !important;
+  border-radius: 999px !important;
+
+  box-shadow: 0 2px 0 rgba(153,27,27,0.22) !important;
+}
+
+.btn-hear:hover{
+  filter: brightness(1.05) saturate(1.06) !important;
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.12),
+    0 0 0 3px rgba(185,28,28,0.14) !important;
+}
+
+.btn-hear .icon{
+  /* emoji looks bad on dark red — keep it smaller and less loud */
+  font-size: 0.85rem !important;
+  line-height: 1 !important;
+  opacity: 0.95 !important;
+}
+
+/* 5) SHUFFLE — remove gold vibe, make it clean + distinct */
+.btn-shuffleNow{
+  font-family: inherit !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+
+  background: #fff !important;
+  color: var(--emerald-ink) !important;
+  border: 1px solid rgba(6,78,59,0.26) !important;
+
+  padding: 0.48rem 0.95rem 0.48rem 1.20rem !important;
+  position: relative !important;
+}
+
+.btn-shuffleNow::before{
+  content:"";
+  position:absolute;
+  left: 0.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 58%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(6,78,59,0.95), rgba(153,27,27,0.95));
+  opacity: 0.35;
+}
+
+.btn-shuffleNow:hover{
+  background: rgba(4,120,87,0.06) !important;
+  border-color: rgba(6,78,59,0.34) !important;
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10) !important;
+}
+
+.btn-shuffleNow:hover::before{ opacity: 0.55; }
