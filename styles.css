@@ -1381,4 +1381,121 @@
 
 
 
+/* =========================================================
+   PATCH — fixes Toggle typography, HEAR, Shuffle, and ? button
+   Paste at the VERY BOTTOM of your CSS (last wins)
+   ========================================================= */
+
+/* 0) Anchor the base capsule so the ? stays on the capsule (not the whole card) */
+#practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+  position: relative !important;
+}
+
+/* 1) MODE TOGGLE typography + alignment (match your UI, stop shouty caps) */
+#practiceCard .seg{
+  align-items: center !important;
+}
+
+#practiceCard .seg-btn{
+  font-family: inherit !important;
+  font-weight: 600 !important;         /* match the rest of your UI */
+  font-size: 0.9rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+
+  line-height: 1 !important;
+  height: 2.05rem !important;          /* consistent vertical rhythm */
+  padding: 0 0.95rem !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Keep your on-state gradient, but ensure it doesn't change typography */
+#practiceCard .seg-btn.is-on{
+  font-weight: 600 !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+
+/* 2) ? button — SOLID WHITE background ALWAYS, and use the SAME RED token */
+.base-info-btn,
+.sentence-info-btn{
+  background: #fff !important;                       /* never see-through */
+  border: 2px solid var(--cymru-red-ink) !important; /* use SAME red ink as title */
+  color: var(--cymru-red-ink) !important;
+}
+
+.base-info-btn:hover,
+.sentence-info-btn:hover{
+  background: #fff !important;                       /* stays solid on hover */
+  border-color: var(--cymru-red-ink) !important;
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.10),
+    0 0 0 3px rgba(185,28,28,0.10) !important;
+}
+
+/* 3) HEAR button — solid red gradient + white text + SAME typography as toggle */
+.btn-hear{
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+
+  color: #fff !important;
+  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%) !important;
+  border: 1px solid rgba(255,255,255,0.22) !important;
+
+  padding: 0.38rem 0.72rem !important;
+  border-radius: 999px !important;
+
+  box-shadow: 0 2px 0 rgba(153,27,27,0.22) !important;
+}
+
+.btn-hear:hover{
+  filter: brightness(1.05) saturate(1.06) !important;
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.12),
+    0 0 0 3px rgba(185,28,28,0.14) !important;
+}
+
+/* 4) Shuffle cards — remove ugly gold border vibe, give a distinctive accent */
+.btn-shuffleNow{
+  font-family: inherit !important;
+  font-weight: 600 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+
+  background: #fff !important;
+  color: var(--emerald-ink) !important;
+  border: 1px solid rgba(6,78,59,0.26) !important;
+
+  position: relative;
+  padding-left: 1.15rem !important;
+}
+
+/* subtle “brand” accent bar so it’s distinguishable without gold border */
+.btn-shuffleNow::before{
+  content:"";
+  position:absolute;
+  left: 0.45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 58%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(6,78,59,0.95), rgba(153,27,27,0.95));
+  opacity: 0.32;
+}
+
+.btn-shuffleNow:hover{
+  background: rgba(4,120,87,0.06) !important;
+  border-color: rgba(6,78,59,0.34) !important;
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10) !important;
+}
+
+.btn-shuffleNow:hover::before{ opacity: 0.55; }
 
