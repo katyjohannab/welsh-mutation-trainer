@@ -353,6 +353,7 @@ function coerceRow(row) {
     Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
     Outcome: o,
     Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"]),
+    WhyCym: getVal(r, ["Why-Cym","WhyCym","Why Cym","Why (Cym)","Why Welsh","Why-Welsh"]),
     Translate: getVal(r, ["Translate","Translation","Gloss","Meaning"]),
   };
 }
@@ -567,7 +568,7 @@ async function initData() {
     rows = await loadAllDefault();
   }
 
-  const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Translate","Before","After","Answer","Outcome","Why"];
+  const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Translate","Before","After","Answer","Outcome","Why","WhyCym"];
   const cleaned = rows.map(r => {
     const m = coerceRow(r);
     const o = {};
@@ -1214,7 +1215,10 @@ function renderPractice() {
           </button>
         </div>
 
-        ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ""}
+        ${(() => {
+        const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
+        return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
+      })()}
 
         <div class="mt-4 flex justify-end">
           <button id="inlineNext"
