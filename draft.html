@@ -196,593 +196,579 @@
     </footer>
   </div>
 
-  <script>
-  // ---------- Utilities ----------
-  const $ = (sel, root=document) => root.querySelector(sel);
-  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+<script>
+/* ---------- Utilities ---------- */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  function normalize(s){
-    return (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\s+/g,' ');
-  }
-  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
-  function download(text, filename, type='text/plain'){
-    const blob = new Blob([text], {type});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/’/g, "'")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function esc(s) {
+  return (s == null ? "" : String(s)).replace(/[&<>"]/g, (ch) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+}
+
+function download(text, filename, type = "text/plain") {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// Tooltips (optional helper)
+function attachTooltip(el, text) {
+  if (!el || !text) return;
+  const tip = document.createElement("div");
+  tip.className = "tooltip hidden";
+  tip.textContent = text;
+  document.body.appendChild(tip);
+
+  function positionTip() {
+    const rect = el.getBoundingClientRect();
+    tip.style.top = `${rect.bottom + window.scrollY + 6}px`;
+    tip.style.left = `${rect.left + window.scrollX}px`;
   }
 
-  // Attach a simple tooltip to a target element.  The tooltip will appear near the
-  // element on mouseover and hide on mouseout.  It uses the provided text and
-  // leverages a global CSS class defined in the head.  Tooltips are appended
-  // to the document body and reposition on show.
-  function attachTooltip(el, text){
-    if (!el || !text) return;
-    const tip = document.createElement('div');
-    tip.className = 'tooltip hidden';
-    tip.textContent = text;
-    document.body.appendChild(tip);
-    // Position the tooltip relative to the target element
-    function positionTip(){
-      const rect = el.getBoundingClientRect();
-      tip.style.top = `${rect.bottom + window.scrollY + 6}px`;
-      tip.style.left = `${rect.left + window.scrollX}px`;
+  el.addEventListener("mouseenter", () => {
+    tip.classList.remove("hidden");
+    positionTip();
+  });
+  el.addEventListener("mouseleave", () => {
+    tip.classList.add("hidden");
+  });
+}
+
+function getParam(k) {
+  return new URLSearchParams(location.search).get(k);
+}
+
+function saveLS(k, v) {
+  try {
+    localStorage.setItem(k, JSON.stringify(v));
+  } catch (e) {}
+}
+function loadLS(k, d) {
+  try {
+    const r = localStorage.getItem(k);
+    return r ? JSON.parse(r) : d;
+  } catch (e) {
+    return d;
+  }
+}
+
+/* ---------- Smart review (Leitner) ---------- */
+const LEITNER_LS_KEY = "wm_leitner_boxes_v1";
+const PRACTICE_MODE_LS_KEY = "wm_practice_mode_v1";
+const LEITNER_MAX_BOX = 5;
+const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
+
+function getCardId(card, idxFallback) {
+  const raw = card && (card.CardId ?? card.CardID ?? card.ID ?? card.Id);
+  const s = raw == null ? "" : String(raw).trim();
+  return s ? s : `row_${idxFallback}`;
+}
+
+function clampBox(n) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return 1;
+  return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
+}
+
+function getBoxFor(cardId) {
+  return clampBox(state.leitner?.[cardId] ?? 1);
+}
+
+function setBoxFor(cardId, box) {
+  if (!state.leitner) state.leitner = {};
+  state.leitner[cardId] = clampBox(box);
+  saveLS(LEITNER_LS_KEY, state.leitner);
+}
+
+function updateLeitner(cardId, result) {
+  // result: 'correct' | 'wrong' | 'skipped'
+  const cur = getBoxFor(cardId);
+  const next = result === "correct" ? Math.min(LEITNER_MAX_BOX, cur + 1) : 1;
+  setBoxFor(cardId, next);
+}
+
+function weightedPickBox(candidatesByBox) {
+  let total = 0;
+  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+    if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
+  }
+  if (!total) return 1;
+
+  let r = Math.random() * total;
+  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+    if (!candidatesByBox[b]?.length) continue;
+    r -= LEITNER_WEIGHTS[b];
+    if (r <= 0) return b;
+  }
+  return 1;
+}
+
+function pickNextSmartIdx() {
+  const n = state.filtered?.length || 0;
+  if (!n) return 0;
+
+  // Serve due retries first (avoid immediate repeats).
+  if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+  if (state.smartQueue.length) {
+    state.smartQueue.forEach((item) => (item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1)));
+    const duePos = state.smartQueue.findIndex((item) => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
+    if (duePos >= 0) {
+      const item = state.smartQueue.splice(duePos, 1)[0];
+      return item.idx;
     }
-    el.addEventListener('mouseenter', () => {
-      tip.classList.remove('hidden');
-      positionTip();
-    });
-    el.addEventListener('mouseleave', () => {
-      tip.classList.add('hidden');
-    });
-  }
-  function getParam(k){ return new URLSearchParams(location.search).get(k); }
-
-  function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-  function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
-
-  // ---------- Smart review (Leitner) ----------
-  // Stored as: { [CardId]: boxNumber }
-  const LEITNER_LS_KEY = 'wm_leitner_boxes_v1';
-  const PRACTICE_MODE_LS_KEY = 'wm_practice_mode_v1';
-  const LEITNER_MAX_BOX = 5;
-  const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
-
-  function getCardId(card, idxFallback){
-    const raw = (card && (card.CardId ?? card.CardID ?? card.ID ?? card.Id));
-    const s = (raw == null ? '' : String(raw)).trim();
-    return s ? s : `row_${idxFallback}`;
-  }
-  function clampBox(n){
-    const x = Number(n);
-    if (!Number.isFinite(x)) return 1;
-    return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
-  }
-  function getBoxFor(cardId){
-    return clampBox(state.leitner?.[cardId] ?? 1);
-  }
-  function setBoxFor(cardId, box){
-    if (!state.leitner) state.leitner = {};
-    state.leitner[cardId] = clampBox(box);
-    saveLS(LEITNER_LS_KEY, state.leitner);
-  }
-  function updateLeitner(cardId, result){
-    // result: 'correct' | 'wrong' | 'skipped'
-    const cur = getBoxFor(cardId);
-    const next = (result === 'correct')
-      ? Math.min(LEITNER_MAX_BOX, cur + 1)
-      : 1;
-    setBoxFor(cardId, next);
   }
 
-  function weightedPickBox(candidatesByBox){
-    let total = 0;
-    for (let b=1; b<=LEITNER_MAX_BOX; b++){
-      if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
-    }
-    if (!total) return 1;
-    let r = Math.random() * total;
-    for (let b=1; b<=LEITNER_MAX_BOX; b++){
-      if (!candidatesByBox[b]?.length) continue;
-      r -= LEITNER_WEIGHTS[b];
-      if (r <= 0) return b;
-    }
-    return 1;
+  const byBox = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+  for (let i = 0; i < n; i++) {
+    const id = getCardId(state.filtered[i], i);
+    const box = getBoxFor(id);
+    byBox[box].push(i);
   }
 
-  function pickNextSmartIdx(){
-    const n = state.filtered?.length || 0;
-    if (!n) return 0;
-
-    // Decrement any queued retries, and serve the first due one (avoids immediate repeats).
-    if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-    if (state.smartQueue.length){
-      state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter||0) - 1));
-      const duePos = state.smartQueue.findIndex(item => (item.dueAfter||0) === 0 && item.idx !== state.smartIdx);
-      if (duePos >= 0){
-        const item = state.smartQueue.splice(duePos, 1)[0];
-        return item.idx;
+  let chosenBox = weightedPickBox(byBox);
+  if (!byBox[chosenBox].length) {
+    for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+      if (byBox[b].length) {
+        chosenBox = b;
+        break;
       }
     }
-
-    const byBox = {1:[],2:[],3:[],4:[],5:[]};
-    for (let i=0; i<n; i++){
-      const id = getCardId(state.filtered[i], i);
-      const box = getBoxFor(id);
-      byBox[box].push(i);
-    }
-
-    let chosenBox = weightedPickBox(byBox);
-    if (!byBox[chosenBox].length){
-      for (let b=1; b<=LEITNER_MAX_BOX; b++){
-        if (byBox[b].length){ chosenBox = b; break; }
-      }
-    }
-
-    const pool = byBox[chosenBox] || [];
-    if (!pool.length) return Math.floor(Math.random() * n);
-
-    let idx = pool[Math.floor(Math.random() * pool.length)];
-    for (let tries=0; tries<6 && idx === state.smartIdx && pool.length > 1; tries++){
-      idx = pool[Math.floor(Math.random() * pool.length)];
-    }
-    return idx;
   }
 
+  const pool = byBox[chosenBox] || [];
+  if (!pool.length) return Math.floor(Math.random() * n);
 
-  // ---------- Data coercion ----------
-  const PREP = new Set(["am","ar","at","dan","dros","tros","drwy","trwy","gan","heb","hyd","i","o","tan","wrth","yng","yn","gyda","hefo","â"]);
-  function getVal(row, names){
-    const keys = Object.keys(row || {});
-    for (const key of keys){
-      if (names.some(n => key.trim().toLowerCase() === n.trim().toLowerCase())){
-        return (row[key] ?? "").toString().trim();
-      }
+  let idx = pool[Math.floor(Math.random() * pool.length)];
+  for (let tries = 0; tries < 6 && idx === state.smartIdx && pool.length > 1; tries++) {
+    idx = pool[Math.floor(Math.random() * pool.length)];
+  }
+  return idx;
+}
+
+/* ---------- Data coercion ---------- */
+const PREP = new Set(["am", "ar", "at", "dan", "dros", "tros", "drwy", "trwy", "gan", "heb", "hyd", "i", "o", "tan", "wrth", "yng", "yn", "gyda", "hefo", "â"]);
+
+function getVal(row, names) {
+  const keys = Object.keys(row || {});
+  for (const key of keys) {
+    if (names.some((n) => key.trim().toLowerCase() === n.trim().toLowerCase())) {
+      return (row[key] ?? "").toString().trim();
     }
-    return "";
   }
-  function familyFromOutcome(outcome){
-    const o = (outcome||"").toUpperCase();
-    if (o==='SM') return 'Soft';
-    if (o==='AM') return 'Aspirate';
-    if (o==='NM') return 'Nasal';
-    if (o==='NONE') return 'None';
-    return '';
-  }
-  function coerceRow(row){
-    const r = row || {};
-    const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
-    const o = (rawOutcome || '').replace(/["']/g, '').toUpperCase();
-    const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
-    let famRaw = getVal(r, ["RuleFamily","Rule Family","Family"]).trim();
-    if (!famRaw) famRaw = familyFromOutcome(o);
-    let fam = famRaw;
-    if (famRaw.includes(',')) {
-      fam = famRaw.split(',')[0].trim();
-    }
-    return {
-      CardId: getVal(r, ["CardId","Card ID","ID","Id","id","cardId","card_id"]) || "",
-      RuleFamily: fam,
-      RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig||'').toLowerCase()) ? 'Preposition' : ''),
-      Trigger: trig,
-      Base: getVal(r, ["Base","Radical","Word","Base word","BaseWord"]),
-      WordCategory: getVal(r, ["WordCategory","Word Category","POS","Part of speech"]),
-      Before: getVal(r, ["Before","PromptBefore","Left","SentenceBefore"]),
-      After: getVal(r, ["After","PromptAfter","Right","SentenceAfter"]),
-      Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
-      Outcome: o,
-      Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"]),
-      Translate: getVal(r, ["Translate","Translation","Gloss","Meaning"]),
-    };
+  return "";
+}
 
-  }
+function familyFromOutcome(outcome) {
+  const o = (outcome || "").toUpperCase();
+  if (o === "SM") return "Soft";
+  if (o === "AM") return "Aspirate";
+  if (o === "NM") return "Nasal";
+  if (o === "NONE") return "None";
+  return "";
+}
 
-  // ---------- App State ----------
-  const state = {
-    rows: [],
-    filtered: [],
-    families: loadLS('wm_families',["Soft","Aspirate","Nasal","None"]),
-    categories: loadLS('wm_categories',[]),
-    outcomes: loadLS('wm_outcomes',["SM","AM","NM","NONE"]),
-    triggerQuery: loadLS('wm_trig',''),
-    nilOnly: loadLS('wm_nil', false),
-    mode: loadLS('wm_mode','practice'),
-    practiceMode: loadLS(PRACTICE_MODE_LS_KEY, 'shuffle'),
-    leitner: loadLS(LEITNER_LS_KEY, {}),
-    smartIdx: null,
-    smartCount: 0,
-    smartQueue: [],
-    deck: [],
-    p: 0,
-    guess: '',
-    revealed: false,
-    lastResult: null,
-    history: loadLS('wm_hist',[]),
-    admin: getParam('admin') === '1',
-    freezeIdx: null,
-    freezePos: null
+function coerceRow(row) {
+  const r = row || {};
+  const rawOutcome = getVal(r, ["Outcome", "Result", "Mutation", "Mut"]);
+  const o = (rawOutcome || "").replace(/["']/g, "").toUpperCase();
+  const trig = getVal(r, ["Trigger", "Trigger/Structure", "Structure", "Preposition"]);
+  let famRaw = getVal(r, ["RuleFamily", "Rule Family", "Family"]).trim();
+  if (!famRaw) famRaw = familyFromOutcome(o);
+  let fam = famRaw;
+  if (famRaw.includes(",")) fam = famRaw.split(",")[0].trim();
+
+  return {
+    CardId: getVal(r, ["CardId", "Card ID", "ID", "Id", "id", "cardId", "card_id"]) || "",
+    RuleFamily: fam,
+    RuleCategory: getVal(r, ["RuleCategory", "Rule Category", "Category"]) || (PREP.has((trig || "").toLowerCase()) ? "Preposition" : ""),
+    Trigger: trig,
+    Base: getVal(r, ["Base", "Radical", "Word", "Base word", "BaseWord"]),
+    WordCategory: getVal(r, ["WordCategory", "Word Category", "POS", "Part of speech"]),
+    Before: getVal(r, ["Before", "PromptBefore", "Left", "SentenceBefore"]),
+    After: getVal(r, ["After", "PromptAfter", "Right", "SentenceAfter"]),
+    Answer: getVal(r, ["Answer", "Expected", "Mutated", "Target"]),
+    Outcome: o,
+    Why: getVal(r, ["Why", "Note", "Rule", "Explanation", "Notes"]),
+    Translate: getVal(r, ["Translate", "Translation", "Gloss", "Meaning"]),
   };
+}
 
-  // Track the UI language (default to English); persisted via localStorage
-  state.lang = loadLS('wm_lang', 'en');
+/* ---------- App State ---------- */
+const state = {
+  rows: [],
+  filtered: [],
+  families: loadLS("wm_families", ["Soft", "Aspirate", "Nasal", "None"]),
+  categories: loadLS("wm_categories", []),
+  outcomes: loadLS("wm_outcomes", ["SM", "AM", "NM", "NONE"]),
+  triggerQuery: loadLS("wm_trig", ""),
+  nilOnly: loadLS("wm_nil", false),
+  mode: loadLS("wm_mode", "practice"),
 
-  // ---------- UI Translations ----------
-  // Provide translations for navigation, headings, instructions and other labels.
-  const LABEL = {
-    en: {
-      nav: {
-        Learn: 'Learn',
-        Practice: 'Practice',
-        Browse: 'Browse',
-        Stats: 'Stats',
-        Filters: 'Filters',
-        Help: 'Help'
-      },
-      headings: {
-        focus: 'Focus',
-        rulefamily: 'RuleFamily',
-        outcome: 'Outcome',
-        categories: 'Categories',
-        trigger: 'Filter by Trigger',
-        nilOnly: 'Nil-cases only (no mutation expected)'
-      },
-      categories: {
-        All: 'All',
-        'Adjective+Noun': 'Adjective+Noun',
-        Article: 'Article',
-        'Bod+yn' : 'Bod+Yn',
-        Complement: 'Complement',
-        Conjunction: 'Conjunction',
-        Deictic: 'Deictic',
-        Determiner: 'Determiner',
-        Intensifier: 'Intensifier',
-        Interrogative: 'Interrogative',
-        Negation: 'Negation',
-        Numerals: 'Numerals',
-        Particle: 'Particle',
-        PlaceName: 'PlaceName',
-        Possessive: 'Possessive',
-        Preposition: 'Preposition',
-        Presentative: 'Presentative',
-        Relative: 'Relative',
-        SubjectBoundary: 'SubjectBoundary',
-        Subordinator: 'Subordinator',
-        TimeExpressions: 'TimeExpressions'
-      },
-      rulefamily: {
-        Soft: 'Soft',
-        Aspirate: 'Aspirate',
-        Nasal: 'Nasal',
-        None: 'None',
-        SM: 'Soft',
-        AM: 'Aspirate',
-        NM: 'Nasal',
-        NONE: 'None'
-      },
-      instruction: 'Type the correct form. If no change is needed, repeat the base form.',
-      hint: 'Hint',
-      reveal: 'Reveal',
-      skip: 'Skip',
-      check: 'Check',
-      next: 'Next',
-      // Descriptive tooltips for practice modes
-      shuffleModeDesc: 'Random review: cards appear in a truly random order.',
-      smartModeDesc: 'Smart review: adapts to your progress and focuses on mistakes, repeating those cards more often.',
-      // Tooltip description for the shuffle action
-      shuffleNowDesc: 'Reshuffle the current deck (useful if you are seeing the same cards repeatedly).',
-      // Updated labels to clearly distinguish practice mode and shuffle action
-      shuffleNow: 'Shuffle cards',
-      shuffleModeLabel: 'Random review',
-      smartModeLabel: 'Smart review',
-      shuffleModeShort: 'Random',
-      smartModeShort: 'Smart',
-      cardLabel: 'Card',
-      reviewedLabel: 'Reviewed',
-      poolLabel: 'Pool',
-      howItWorksTitle: 'Practice modes',
-      // Updated descriptions: single language versions used per locale
-      howItWorksEN: 'Practice has two modes. In Random review cards appear in a truly random order – you can reshuffle the deck at any time. In Smart review the trainer adapts to you using a spaced‑repetition (Leitner) system: correct answers move cards up and they appear less often; wrong or skipped answers reset them to box 1 so they reappear sooner.',
-      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap – gallwch ailgymysgu’r dec unrhyw bryd. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae cardiau rydych yn eu hateb yn gywir yn symud i fyny ac yn ymddangos yn llai aml; mae cardiau anghywir neu wedi’u hepgor yn cael eu hailosod i flwch 1 fel eich bod yn eu gweld eto cyn bo hir.',
+  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
+  leitner: loadLS(LEITNER_LS_KEY, {}),
+  smartIdx: null,
+  smartCount: 0,
+  smartQueue: [],
 
-      answerLabel: 'Answer',
-      triggerLabel: 'Trigger',
-      ruleLabel: 'Rule',
-      statuses: {
-        correct: 'Correct!',
-        wrong: 'Not quite',
-        skipped: 'Skipped'
-      },
-      youTyped: 'You typed',
-      blank: '(blank)',
-      hear: 'Hear'
+  deck: [],
+  p: 0,
+  guess: "",
+  revealed: false,
+  lastResult: null,
+  history: loadLS("wm_hist", []),
+
+  admin: getParam("admin") === "1",
+  freezeIdx: null,
+  freezePos: null,
+};
+
+// UI language
+state.lang = loadLS("wm_lang", "en");
+
+/* ---------- UI Translations ---------- */
+const LABEL = {
+  en: {
+    nav: { Learn: "Learn", Practice: "Practice", Browse: "Browse", Stats: "Stats", Filters: "Filters", Help: "Help" },
+    headings: {
+      focus: "Focus",
+      rulefamily: "RuleFamily",
+      outcome: "Outcome",
+      categories: "Categories",
+      trigger: "Filter by Trigger",
+      nilOnly: "Nil-cases only (no mutation expected)",
     },
-    cy: {
-      nav: {
-        Learn: 'Dysgu',
-        Practice: 'Ymarfer',
-        Browse: 'Pori',
-        Stats: 'Ystadegau',
-        Filters: 'Hidiau',
-        Help: 'Cymorth'
-      },
-      headings: {
-        focus: 'Ffocws',
-        rulefamily: 'Math Treiglad',
-        outcome: 'Canlyniad',
-        categories: 'Categorïau',
-        trigger: 'Hidlo yn ôl y sbardun',
-        nilOnly: 'Achosion dim-treiglad yn unig (dim treiglad disgwyliedig)'
-      },
-      categories: {
-        All: 'Pob un',
-        'Adjective+Noun': 'Ansoddair+Enw',
-        Article: 'Erthygl',
-        'Bod+yn': 'Bod+Yn',
-        Complement: 'Cyflenwad',
-        Conjunction: 'Cysylltair',
-        Deictic: 'Deictig',
-        Determiner: 'Penderfyniadur',
-        Intensifier: 'Dwysydd',
-        Interrogative: 'Holiadol',
-        Negation: 'Negydd',
-        Numerals: 'Rhifau',
-        Particle: 'Gronyn',
-        PlaceName: 'Enw lle',
-        Possessive: 'Meddiannol',
-        Preposition: 'Arddodiad',
-        Presentative: 'Cyflwyniadur',
-        Relative: 'Perthynol',
-        SubjectBoundary: 'Ar ôl pwnc',
-        Subordinator: 'Isgysylltair',
-        TimeExpressions: 'Mynegiadau Amser'
-      },
-      rulefamily: {
-        Soft: 'Meddal',
-        Aspirate: 'Llaes',
-        Nasal: 'Trwynol',
-        None: 'Dim',
-        SM: 'Meddal',
-        AM: 'Llaes',
-        NM: 'Trwynol',
-        NONE: 'Dim'
-      },
-      instruction: 'Teipiwch y ffurf gywir. Os nad oes treiglad, ailysgrifennwch y ffurf wreiddiol.',
-      hint: 'Awgrym',
-      reveal: 'Datgelu',
-      skip: 'Hepgor',
-      check: 'Gwirio',
-      next: 'Nesaf',
-      // Disgrifiadau cryno ar gyfer moddau ymarfer (ar gyfer hoff fanylion)
-      shuffleModeDesc: 'Adolygu ar hap: mae cardiau’n ymddangos mewn trefn wirioneddol ar hap.',
-      smartModeDesc: 'Adolygu clyfar: addasu i’ch cynnydd a phwysleisio camgymeriadau; mae’n ailadrodd cardiau anghywir yn amlach.',
-      // Disgrifiad ar gyfer ailgymysgu’r dec
-      shuffleNowDesc: 'Ailgymysgu’r dec presennol (yn ddefnyddiol os ydych chi’n gweld yr un cardiau dro ar ôl tro).',
-      shuffleNow: 'Cymysgu cardiau',
-      shuffleModeLabel: 'Adolygu ar hap',
-      smartModeLabel: 'Adolygu clyfar',
-      shuffleModeShort: 'Ar hap',
-      smartModeShort: 'Clyfar',
-      cardLabel: 'Cerdyn',
-      reviewedLabel: 'Wedi adolygu',
-      poolLabel: 'Set',
-      howItWorksTitle: 'Moddau ymarfer',
-      howItWorksEN: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae atebion cywir yn symud cardiau i fyny fel eu bod yn ymddangos yn llai aml; mae atebion anghywir neu wedi’u hepgor yn eu hailosod i flwch 1 fel eu bod yn ymddangos yn fuanach.',
-      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae atebion cywir yn symud cardiau i fyny fel eu bod yn ymddangos yn llai aml; mae atebion anghywir neu wedi’u hepgor yn eu hailosod i flwch 1 fel eu bod yn ymddangos yn fuanach.',
+    categories: {
+      All: "All",
+      "Adjective+Noun": "Adjective+Noun",
+      Article: "Article",
+      "Bod+yn": "Bod+Yn",
+      Complement: "Complement",
+      Conjunction: "Conjunction",
+      Deictic: "Deictic",
+      Determiner: "Determiner",
+      Intensifier: "Intensifier",
+      Interrogative: "Interrogative",
+      Negation: "Negation",
+      Numerals: "Numerals",
+      Particle: "Particle",
+      PlaceName: "PlaceName",
+      Possessive: "Possessive",
+      Preposition: "Preposition",
+      Presentative: "Presentative",
+      Relative: "Relative",
+      SubjectBoundary: "SubjectBoundary",
+      Subordinator: "Subordinator",
+      TimeExpressions: "TimeExpressions",
+    },
+    rulefamily: { Soft: "Soft", Aspirate: "Aspirate", Nasal: "Nasal", None: "None", SM: "Soft", AM: "Aspirate", NM: "Nasal", NONE: "None" },
+    instruction: "Type the correct form. If no change is needed, repeat the base form.",
+    hint: "Hint",
+    reveal: "Reveal",
+    skip: "Skip",
+    check: "Check",
+    next: "Next",
+    shuffleModeDesc: "Random review: cards appear in a truly random order.",
+    smartModeDesc: "Smart review: adapts to your progress and focuses on mistakes, repeating those cards more often.",
+    shuffleNowDesc: "Reshuffle the current deck (useful if you are seeing the same cards repeatedly).",
+    shuffleNow: "Shuffle cards",
+    shuffleModeShort: "Random",
+    smartModeShort: "Smart",
+    cardLabel: "Card",
+    reviewedLabel: "Reviewed",
+    poolLabel: "Pool",
+    answerLabel: "Answer",
+    statuses: { correct: "Correct!", wrong: "Not quite", skipped: "Skipped" },
+    youTyped: "You typed",
+    blank: "(blank)",
+    hear: "Hear",
+  },
+  cy: {
+    nav: { Learn: "Dysgu", Practice: "Ymarfer", Browse: "Pori", Stats: "Ystadegau", Filters: "Hidiau", Help: "Cymorth" },
+    headings: {
+      focus: "Ffocws",
+      rulefamily: "Math Treiglad",
+      outcome: "Canlyniad",
+      categories: "Categorïau",
+      trigger: "Hidlo yn ôl y sbardun",
+      nilOnly: "Achosion dim-treiglad yn unig (dim treiglad disgwyliedig)",
+    },
+    categories: {
+      All: "Pob un",
+      "Adjective+Noun": "Ansoddair+Enw",
+      Article: "Erthygl",
+      "Bod+yn": "Bod+Yn",
+      Complement: "Cyflenwad",
+      Conjunction: "Cysylltair",
+      Deictic: "Deictig",
+      Determiner: "Penderfyniadur",
+      Intensifier: "Dwysydd",
+      Interrogative: "Holiadol",
+      Negation: "Negydd",
+      Numerals: "Rhifau",
+      Particle: "Gronyn",
+      PlaceName: "Enw lle",
+      Possessive: "Meddiannol",
+      Preposition: "Arddodiad",
+      Presentative: "Cyflwyniadur",
+      Relative: "Perthynol",
+      SubjectBoundary: "Ar ôl pwnc",
+      Subordinator: "Isgysylltair",
+      TimeExpressions: "Mynegiadau Amser",
+    },
+    rulefamily: { Soft: "Meddal", Aspirate: "Llaes", Nasal: "Trwynol", None: "Dim", SM: "Meddal", AM: "Llaes", NM: "Trwynol", NONE: "Dim" },
+    instruction: "Teipiwch y ffurf gywir. Os nad oes treiglad, ailysgrifennwch y ffurf wreiddiol.",
+    hint: "Awgrym",
+    reveal: "Datgelu",
+    skip: "Hepgor",
+    check: "Gwirio",
+    next: "Nesaf",
+    shuffleModeDesc: "Adolygu ar hap: mae cardiau’n ymddangos mewn trefn wirioneddol ar hap.",
+    smartModeDesc: "Adolygu clyfar: addasu i’ch cynnydd a phwysleisio camgymeriadau; mae’n ailadrodd cardiau anghywir yn amlach.",
+    shuffleNowDesc: "Ailgymysgu’r dec presennol (yn ddefnyddiol os ydych chi’n gweld yr un cardiau dro ar ôl tro).",
+    shuffleNow: "Cymysgu cardiau",
+    shuffleModeShort: "Ar hap",
+    smartModeShort: "Clyfar",
+    cardLabel: "Cerdyn",
+    reviewedLabel: "Wedi adolygu",
+    poolLabel: "Set",
+    answerLabel: "Ateb",
+    statuses: { correct: "Cywir!", wrong: "Dim yn hollol gywir", skipped: "Wedi ei hepgor" },
+    youTyped: "Teipioch chi",
+    blank: "(gwag)",
+    hear: "Gwrando",
+  },
+};
 
-      answerLabel: 'Ateb',
-      triggerLabel: 'Sbardun',
-      ruleLabel: 'Rheol',
-      statuses: {
-        correct: 'Cywir!',
-        wrong: 'Dim yn hollol gywir',
-        skipped: 'Wedi ei hepgor'
-      },
-      youTyped: 'Teipioch chi',
-      blank: '(gwag)',
-      hear: 'Gwrando'
-    }
-  };
+function label(section, key) {
+  const lang = state.lang || "en";
+  return LABEL?.[lang]?.[section]?.[key] || key;
+}
 
-  // Translate a label based on section and key
-  function label(section, key) {
-    const lang = state.lang || 'en';
-    return (LABEL?.[lang]?.[section]?.[key]) || key;
+function applyLanguage() {
+  const lang = state.lang || "en";
+  const navLabels = LABEL[lang].nav;
+
+  if ($("#btnPractice")) {
+    $("#btnPractice").setAttribute("title", navLabels.Practice);
+    $("#btnPractice").textContent = navLabels.Practice;
+  }
+  if ($("#btnLearn")) {
+    $("#btnLearn").setAttribute("title", navLabels.Learn);
+    $("#btnLearn").textContent = navLabels.Learn;
+  }
+  if ($("#btnBrowse")) {
+    $("#btnBrowse").setAttribute("title", navLabels.Browse);
+    $("#btnBrowse").textContent = navLabels.Browse;
+  }
+  if ($("#btnStats")) {
+    $("#btnStats").setAttribute("title", navLabels.Stats);
+    $("#btnStats").textContent = navLabels.Stats;
+  }
+  if ($("#btnFilters")) {
+    $("#btnFilters").setAttribute("title", navLabels.Filters + " (F)");
+    $("#btnFilters").textContent = navLabels.Filters;
+  }
+  if ($("#btnHelp")) {
+    $("#btnHelp").setAttribute("title", navLabels.Help);
+    $("#btnHelp").textContent = navLabels.Help;
   }
 
-  // Apply current language to UI elements. Called on load and when toggling.
-  function applyLanguage() {
-    const lang = state.lang || 'en';
-    // Nav buttons
-    const navLabels = LABEL[lang].nav;
-    if ($('#btnPractice')) {
-      $('#btnPractice').setAttribute('title', navLabels.Practice);
-      $('#btnPractice').textContent = navLabels.Practice;
-    }
-    if ($('#btnLearn')) {
-      $('#btnLearn').setAttribute('title', navLabels.Learn);
-      $('#btnLearn').textContent = navLabels.Learn;
-    }
-    if ($('#btnBrowse')) {
-      $('#btnBrowse').setAttribute('title', navLabels.Browse);
-      $('#btnBrowse').textContent = navLabels.Browse;
-    }
-    if ($('#btnStats')) {
-      $('#btnStats').setAttribute('title', navLabels.Stats);
-      $('#btnStats').textContent = navLabels.Stats;
-    }
-    if ($('#btnFilters')) {
-      $('#btnFilters').setAttribute('title', navLabels.Filters + ' (F)');
-      $('#btnFilters').textContent = navLabels.Filters;
-    }
-    if ($('#btnHelp')) {
-      $('#btnHelp').setAttribute('title', navLabels.Help);
-      $('#btnHelp').textContent = navLabels.Help;
-    }
-    // Language toggle text: show target language to switch to
-    const langBtn = $('#btnLangToggle');
-    if (langBtn) {
-      const nextLang = (lang === 'en') ? 'CY' : 'EN';
-      langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
-      langBtn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
-      langBtn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
-    }
-    // Filter headings
-    if ($('#focusTitle')) $('#focusTitle').textContent = LABEL[lang].headings.focus;
-    if ($('#rulefamilyTitle')) $('#rulefamilyTitle').textContent = LABEL[lang].headings.rulefamily;
-    if ($('#outcomeTitle')) $('#outcomeTitle').textContent = LABEL[lang].headings.outcome;
-    if ($('#categoriesTitle')) $('#categoriesTitle').textContent = LABEL[lang].headings.categories;
-    if ($('#triggerLabel')) $('#triggerLabel').textContent = LABEL[lang].headings.trigger;
-    if ($('#nilOnlyText')) $('#nilOnlyText').textContent = LABEL[lang].headings.nilOnly;
-    // Onboarding welcome message translation (simple example)
-    const onboardInst = $('#onboard .font-medium.mb-1');
-    if (onboardInst) {
-      if (lang === 'cy') onboardInst.textContent = "Croeso! Sut i ddefnyddio'r hyfforddwr hwn.";
-      else onboardInst.textContent = 'Welcome! How to use this trainer.';
-    }
-    // Onboarding buttons
-    if ($('#onboardFilters')) $('#onboardFilters').textContent = navLabels.Filters;
-    if ($('#onboardDismiss')) $('#onboardDismiss').textContent = (lang === 'cy' ? 'Iawn' : 'Got it');
-    // Stats panel buttons
-    if ($('#btnResetStats')) $('#btnResetStats').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
-    if ($('#btnResetStats2')) $('#btnResetStats2').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
-    if ($('#btnTop')) $('#btnTop').textContent = (lang === 'cy' ? 'Yn ôl i’r brig' : 'Back to top');
-    // Rebuild filters to apply translations to chips and headings
-    buildFilters();
-    // Re-render practice card with translated labels
-    render();
+  const langBtn = $("#btnLangToggle");
+  if (langBtn) {
+    const nextLang = lang === "en" ? "CY" : "EN";
+    langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
+    langBtn.title = lang === "en" ? "Switch to Cymraeg" : "Switch to English";
+    langBtn.setAttribute("aria-label", lang === "en" ? "Switch language to Cymraeg" : "Switch language to English");
   }
 
-  // ---------- Data loading ----------
-// Loads ONLY the sources listed in data/index.json (e.g. ["data/cards.csv"]).
+  if ($("#focusTitle")) $("#focusTitle").textContent = LABEL[lang].headings.focus;
+  if ($("#rulefamilyTitle")) $("#rulefamilyTitle").textContent = LABEL[lang].headings.rulefamily;
+  if ($("#outcomeTitle")) $("#outcomeTitle").textContent = LABEL[lang].headings.outcome;
+  if ($("#categoriesTitle")) $("#categoriesTitle").textContent = LABEL[lang].headings.categories;
+  if ($("#triggerLabel")) $("#triggerLabel").textContent = LABEL[lang].headings.trigger;
+  if ($("#nilOnlyText")) $("#nilOnlyText").textContent = LABEL[lang].headings.nilOnly;
 
+  const onboardInst = $("#onboard .font-medium.mb-1");
+  if (onboardInst) onboardInst.textContent = lang === "cy" ? "Croeso! Sut i ddefnyddio'r hyfforddwr hwn." : "Welcome! How to use this trainer.";
 
-const FALLBACK_INDEX_URL = 'https://katyjohannab.github.io/welsh-mutation-trainer/data/test.json';
-const FALLBACK_SITE_ROOT = 'https://katyjohannab.github.io/welsh-mutation-trainer/';
+  if ($("#onboardFilters")) $("#onboardFilters").textContent = navLabels.Filters;
+  if ($("#onboardDismiss")) $("#onboardDismiss").textContent = lang === "cy" ? "Iawn" : "Got it";
 
-async function loadCsvUrl(u){
+  if ($("#btnResetStats")) $("#btnResetStats").textContent = lang === "cy" ? "Ailosod ystadegau" : "Reset stats";
+  if ($("#btnResetStats2")) $("#btnResetStats2").textContent = lang === "cy" ? "Ailosod ystadegau" : "Reset stats";
+  if ($("#btnTop")) $("#btnTop").textContent = lang === "cy" ? "Yn ôl i’r brig" : "Back to top";
+
+  buildFilters();
+  render();
+}
+
+/* ---------- Data loading ---------- */
+const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/test.json";
+const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
+
+async function loadCsvUrl(u) {
   return new Promise((resolve, reject) => {
     Papa.parse(u, {
-      download:true,
-      header:true,
-      skipEmptyLines:true,
+      download: true,
+      header: true,
+      skipEmptyLines: true,
       complete: (res) => resolve(res.data),
-      error: reject
+      error: reject,
     });
   });
 }
 
-function isAbsUrl(u){ return /^https?:\/\//i.test(u || ''); }
-function resolveFromRoot(path, root){
-  const p = (path || '').toString().trim();
-  if (!p) return '';
-  if (isAbsUrl(p)) return p;
-  // treat entries like "data/cards.csv" as site-root relative
-  return new URL(p.replace(/^\/+/,''), root).toString();
+function isAbsUrl(u) {
+  return /^https?:\/\//i.test(u || "");
 }
 
-async function fetchIndexList(url){
-  const r = await fetch(url, { cache: 'no-store' });
-  if (!r.ok) throw new Error('Failed to fetch index: ' + url);
+function resolveFromRoot(path, root) {
+  const p = (path || "").toString().trim();
+  if (!p) return "";
+  if (isAbsUrl(p)) return p;
+  return new URL(p.replace(/^\/+/, ""), root).toString();
+}
+
+async function fetchIndexList(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error("Failed to fetch index: " + url);
   const j = await r.json();
-  if (!Array.isArray(j)) throw new Error('Index JSON is not an array: ' + url);
+  if (!Array.isArray(j)) throw new Error("Index JSON is not an array: " + url);
   return j;
 }
 
-async function loadAllDefault(){
+async function loadAllDefault() {
   let list = null;
   let usingFallbackRoot = false;
 
-  // Try local relative first (works on your deployed site)
-  try{
-    list = await fetchIndexList('data/test.json');
-  }catch(e){
-    // Canvas preview often needs absolute
-    try{
+  try {
+    list = await fetchIndexList("data/test.json");
+  } catch (e) {
+    try {
       list = await fetchIndexList(FALLBACK_INDEX_URL);
       usingFallbackRoot = true;
-    }catch(e2){
-      console.warn('Failed to load both local and fallback index.json', e, e2);
+    } catch (e2) {
+      console.warn("Failed to load both local and fallback index.json", e, e2);
       return [];
     }
   }
 
-  const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL('.', location.href).toString();
+  const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL(".", location.href).toString();
   let merged = [];
-  for (const p of list){
+  for (const p of list) {
     const url = resolveFromRoot(p, root);
     if (!url) continue;
-    try{
+    try {
       const d = await loadCsvUrl(url);
       merged = merged.concat(d);
-    }catch(err){
-      console.warn('Failed to load source:', url, err);
+    } catch (err) {
+      console.warn("Failed to load source:", url, err);
     }
   }
   return merged;
 }
 
-async function initData(){
-
-    const sheet = getParam('sheet');
-    let rows = [];
-    try{
-      if (sheet){ rows = await loadCsvUrl(sheet); }
-      else { rows = await loadAllDefault(); }
-    }catch(e){ console.warn('Data load failed; no demo fallback configured.', e); rows = await loadAllDefault(); }
-    const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Translate","Before","After","Answer","Outcome","Why"];
-    const cleaned = rows.map(r => {
-      const m = coerceRow(r); const o = {};
-      for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
-      return o;
-    });
-    state.rows = cleaned;
-    $('#itemCount').textContent = `${state.rows.length} items`;
-    applyFilters();
-    rebuildDeck();
-    buildFilters();
-    render();
+async function initData() {
+  const sheet = getParam("sheet");
+  let rows = [];
+  try {
+    rows = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
+  } catch (e) {
+    console.warn("Data load failed; falling back.", e);
+    rows = await loadAllDefault();
   }
 
-  // ---------- Filters & Deck ----------
-  function buildFilters(){
-    const fams = new Set(); const cats = new Set();
-    for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
-    const outcomes = ["SM","AM","NM","NONE"];
+  const expected = ["CardId", "RuleFamily", "RuleCategory", "Trigger", "Base", "WordCategory", "Translate", "Before", "After", "Answer", "Outcome", "Why"];
+  const cleaned = rows.map((r) => {
+    const m = coerceRow(r);
+    const o = {};
+    for (const k of expected) o[k] = (m?.[k] ?? "").toString().trim();
+    return o;
+  });
 
-    const qs = $('#qs');
-    if (qs) {
-      qs.innerHTML = '';
-      qs.classList.add('hidden');
-    }
+  state.rows = cleaned;
 
-    const famEl = $('#familyBtns'); famEl.innerHTML='';
-    for (const f of ["Soft","Aspirate","Nasal","None"]) {
-      // Translate the label but keep the original value as data-key
-      const labelText = (LABEL[state.lang]?.rulefamily?.[f]) || f;
-      const b = toggleBtn(labelText, state.families.includes(f), (on)=>{
-        state.families = on? Array.from(new Set([...state.families, f])) : state.families.filter(x=>x!==f);
-        saveLS('wm_families',state.families); applyFilters(); rebuildDeck(); buildFilters(); render();
+  const itemCount = $("#itemCount");
+  if (itemCount) itemCount.textContent = `${state.rows.length} items`;
+
+  applyFilters();
+  rebuildDeck();
+  buildFilters();
+  render();
+}
+
+/* ---------- Filters & Deck ---------- */
+function toggleBtn(text, active, onToggle) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = `pill ${active ? "pill-on" : ""}`;
+  b.textContent = text;
+  b.onclick = () => onToggle(!active);
+  return b;
+}
+
+function buildFilters() {
+  const cats = new Set();
+  for (const r of state.rows) if (r.RuleCategory) cats.add(r.RuleCategory);
+
+  const outcomes = ["SM", "AM", "NM", "NONE"];
+
+  const qs = $("#qs");
+  if (qs) {
+    qs.innerHTML = "";
+    qs.classList.add("hidden");
+  }
+
+  const famEl = $("#familyBtns");
+  if (famEl) {
+    famEl.innerHTML = "";
+    for (const f of ["Soft", "Aspirate", "Nasal", "None"]) {
+      const labelText = LABEL[state.lang]?.rulefamily?.[f] || f;
+      const b = toggleBtn(labelText, state.families.includes(f), (on) => {
+        state.families = on ? Array.from(new Set([...state.families, f])) : state.families.filter((x) => x !== f);
+        saveLS("wm_families", state.families);
+        applyFilters();
+        rebuildDeck();
+        buildFilters();
+        render();
       });
       b.dataset.key = f;
       famEl.appendChild(b);
     }
+  }
 
-    const outEl = $('#outcomeBtns');
-    outEl.innerHTML = '';
+  const outEl = $("#outcomeBtns");
+  if (outEl) {
+    outEl.innerHTML = "";
     const outcomeCounts = {};
-    state.filtered.forEach(r => {
-      const o = (r.Outcome || '').toUpperCase();
+    state.filtered.forEach((r) => {
+      const o = (r.Outcome || "").toUpperCase();
       if (!o) return;
       outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
     });
+
     for (const o of outcomes) {
       const count = outcomeCounts[o] || 0;
-      const label = `${o} (${count})`;
+      const txt = `${o} (${count})`;
       outEl.appendChild(
-        toggleBtn(label, state.outcomes.includes(o), (on) => {
-          state.outcomes = on
-            ? Array.from(new Set([...state.outcomes, o]))
-            : state.outcomes.filter((x) => x !== o);
-          saveLS('wm_outcomes', state.outcomes);
+        toggleBtn(txt, state.outcomes.includes(o), (on) => {
+          state.outcomes = on ? Array.from(new Set([...state.outcomes, o])) : state.outcomes.filter((x) => x !== o);
+          saveLS("wm_outcomes", state.outcomes);
           applyFilters();
           rebuildDeck();
           buildFilters();
@@ -790,37 +776,31 @@ async function initData(){
         })
       );
     }
+  }
 
-    const catEl = $('#catBtns');
-    catEl.innerHTML = '';
-    const allCatsActive = !state.categories.length;
-    const allLabel = (LABEL[state.lang]?.categories?.All) || 'All';
+  const catEl = $("#catBtns");
+  if (catEl) {
+    catEl.innerHTML = "";
+    const allActive = !state.categories.length;
+    const allLabel = LABEL[state.lang]?.categories?.All || "All";
+
     catEl.appendChild(
-      toggleBtn(
-        allLabel,
-        allCatsActive,
-        (on) => {
-          if (on) {
-            state.categories = [];
-          } else {
-            state.categories = [];
-          }
-          saveLS('wm_categories', state.categories);
-          applyFilters();
-          rebuildDeck();
-          buildFilters();
-          render();
-        }
-      )
+      toggleBtn(allLabel, allActive, () => {
+        state.categories = [];
+        saveLS("wm_categories", state.categories);
+        applyFilters();
+        rebuildDeck();
+        buildFilters();
+        render();
+      })
     );
+
     for (const c of Array.from(cats).sort()) {
       const active = state.categories.includes(c);
-      const cLabel = (LABEL[state.lang]?.categories?.[c]) || c;
+      const cLabel = LABEL[state.lang]?.categories?.[c] || c;
       const b = toggleBtn(cLabel, active, (on) => {
-        state.categories = on
-          ? Array.from(new Set([...state.categories, c]))
-          : state.categories.filter((x) => x !== c);
-        saveLS('wm_categories', state.categories);
+        state.categories = on ? Array.from(new Set([...state.categories, c])) : state.categories.filter((x) => x !== c);
+        saveLS("wm_categories", state.categories);
         applyFilters();
         rebuildDeck();
         buildFilters();
@@ -829,88 +809,102 @@ async function initData(){
       b.dataset.key = c;
       catEl.appendChild(b);
     }
-
-    $('#triggerFilter').value = state.triggerQuery;
-    $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); buildFilters(); render(); };
-    $('#nilOnly').checked = !!state.nilOnly;
-    $('#nilOnly').onchange = (e)=>{ state.nilOnly = e.target.checked; saveLS('wm_nil',state.nilOnly); applyFilters(); rebuildDeck(); buildFilters(); render(); };
   }
 
-  function applyFilters(){
-    const allowedOutcomes = state.outcomes && state.outcomes.length ? state.outcomes : ['SM','AM','NM','NONE'];
-    let list = state.rows.filter(r =>
+  const triggerInput = $("#triggerFilter");
+  if (triggerInput) {
+    triggerInput.value = state.triggerQuery;
+    triggerInput.oninput = (e) => {
+      state.triggerQuery = e.target.value;
+      saveLS("wm_trig", state.triggerQuery);
+      applyFilters();
+      rebuildDeck();
+      buildFilters();
+      render();
+    };
+  }
+
+  const nilOnly = $("#nilOnly");
+  if (nilOnly) {
+    nilOnly.checked = !!state.nilOnly;
+    nilOnly.onchange = (e) => {
+      state.nilOnly = e.target.checked;
+      saveLS("wm_nil", state.nilOnly);
+      applyFilters();
+      rebuildDeck();
+      buildFilters();
+      render();
+    };
+  }
+}
+
+function applyFilters() {
+  const allowedOutcomes = state.outcomes && state.outcomes.length ? state.outcomes : ["SM", "AM", "NM", "NONE"];
+  let list = state.rows.filter(
+    (r) =>
       (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
       (state.categories.length ? state.categories.includes(r.RuleCategory) : true) &&
-      (allowedOutcomes.includes((r.Outcome||'').toUpperCase()))
-    );
-    if (state.nilOnly) list = list.filter(r => (r.Outcome||'').toUpperCase()==='NONE');
-    if ((state.triggerQuery||'').trim()){
-      const q = normalize(state.triggerQuery);
-      list = list.filter(r => normalize(r.Trigger).includes(q));
-    }
-    state.filtered = list;
+      allowedOutcomes.includes((r.Outcome || "").toUpperCase())
+  );
+
+  if (state.nilOnly) list = list.filter((r) => (r.Outcome || "").toUpperCase() === "NONE");
+
+  if ((state.triggerQuery || "").trim()) {
+    const q = normalize(state.triggerQuery);
+    list = list.filter((r) => normalize(r.Trigger).includes(q));
+  }
+  state.filtered = list;
+}
+
+function rebuildDeck() {
+  const n = state.filtered.length;
+  const d = Array.from({ length: n }, (_, i) => i);
+  for (let i = d.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [d[i], d[j]] = [d[j], d[i]];
   }
 
-  function rebuildDeck(){
-    const n = state.filtered.length;
-    const d = Array.from({length:n}, (_,i)=>i);
-    for (let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
-    state.deck = d;
-    state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
-    state.freezeIdx = null; state.freezePos = null;
+  state.deck = d;
+  state.p = 0;
+  state.guess = "";
+  state.revealed = false;
+  state.lastResult = null;
+  state.freezeIdx = null;
+  state.freezePos = null;
 
-    // Reset any "show again soon" queue used by Smart review.
-    state.smartQueue = [];
+  state.smartQueue = [];
 
-    if (state.practiceMode === 'smart'){
-      state.smartCount = 0;
-      state.smartIdx = pickNextSmartIdx();
-    } else {
-      state.smartIdx = null;
-      state.smartCount = 0;
-    }
+  if (state.practiceMode === "smart") {
+    state.smartCount = 0;
+    state.smartIdx = pickNextSmartIdx();
+  } else {
+    state.smartIdx = null;
+    state.smartCount = 0;
   }
+}
 
-//build Sentence
+/* ---------- Sentence builder (ONE copy only) ---------- */
 function buildCompleteSentence(card) {
-  const before = (card.Before || '').trimEnd();
-  const answer = (card.Answer || '').trim();
-  const after  = (card.After  || '').trimStart();
+  const before = (card.Before || "").trimEnd();
+  const answer = (card.Answer || "").trim();
+  const after = (card.After || "").trimStart();
 
-  let s = [before, answer, after].filter(Boolean).join(' ');
-  s = s.replace(/\s+/g, ' ').trim();
-  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
+  let s = [before, answer, after].filter(Boolean).join(" ");
+  s = s.replace(/\s+/g, " ").trim();
+  s = s.replace(/\s+([,.;:!?])/g, "$1");
   return s;
 }
 
-// ---------- TTS (Amazon Polly via your Lambda Function URL) ----------
-// PUT YOUR REAL FUNCTION URL HERE:
-// The user has provided their deployed Amazon Polly Lambda function URL.
-// Use this value to call the TTS service.
+/* ---------- TTS (Amazon Polly via Lambda Function URL) ---------- */
 const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
-
-// Cache MP3 blobs in-memory so repeated clicks don't keep calling AWS
 const ttsCache = new Map();
-
-//build Sentence
-function buildCompleteSentence(card) {
-  const before = (card.Before || '').trimEnd();
-  const answer = (card.Answer || '').trim();
-  const after  = (card.After  || '').trimStart();
-
-  let s = [before, answer, after].filter(Boolean).join(' ');
-  s = s.replace(/\s+/g, ' ').trim();
-  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
-  return s;
-}
 
 async function playPollySentence(sentence) {
   if (!sentence) throw new Error("No sentence to speak.");
   if (!POLLY_FUNCTION_URL || POLLY_FUNCTION_URL.includes("PASTE_YOUR_LAMBDA_FUNCTION_URL_HERE")) {
-    throw new Error("POLLY_FUNCTION_URL isn't set. Paste your Lambda Function URL into the script.");
+    throw new Error("POLLY_FUNCTION_URL isn't set.");
   }
 
-  // Use cache if already generated this exact sentence
   const cachedUrl = ttsCache.get(sentence);
   if (cachedUrl) {
     const audio = new Audio(cachedUrl);
@@ -921,7 +915,7 @@ async function playPollySentence(sentence) {
   const res = await fetch(POLLY_FUNCTION_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: sentence })
+    body: JSON.stringify({ text: sentence }),
   });
 
   if (!res.ok) {
@@ -929,9 +923,7 @@ async function playPollySentence(sentence) {
     throw new Error(msg || `TTS failed (${res.status})`);
   }
 
-  // Be tolerant: Lambda might return raw MP3 bytes OR JSON with base64
   const ct = (res.headers.get("content-type") || "").toLowerCase();
-
   let url = null;
 
   if (ct.includes("audio") || ct.includes("octet-stream")) {
@@ -939,13 +931,12 @@ async function playPollySentence(sentence) {
     const blob = new Blob([buf], { type: "audio/mpeg" });
     url = URL.createObjectURL(blob);
   } else {
-    // JSON fallback: expects { audioBase64: "..."} or { audioContent: "..."} or { url: "..." }
     const j = await res.json();
     if (j.url) {
       url = j.url;
     } else if (j.audioBase64 || j.audioContent) {
       const b64 = j.audioBase64 || j.audioContent;
-      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
       const blob = new Blob([bytes], { type: "audio/mpeg" });
       url = URL.createObjectURL(blob);
     } else {
@@ -954,601 +945,714 @@ async function playPollySentence(sentence) {
   }
 
   ttsCache.set(sentence, url);
-
   const audio = new Audio(url);
   await audio.play();
 }
 
-    // -------? popover helper function ------
-  mountBaseTranslationUI
+/* ---------- ? Translation popover (FIXED + X close) ---------- */
+function mountBaseTranslationUI(capsuleEl, card) {
+  const tr = (card?.Translate || "").toString().trim();
+  if (!capsuleEl || !tr) return;
 
-function placeBasePopover(pop, capsuleEl){
-  if (!pop || !capsuleEl) return;
+  capsuleEl.classList.add("base-capsule", "base-capsule--hasInfo");
 
-  pop.classList.remove('pos-right','pos-left','pos-top','pos-bottom');
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "base-info-btn";
+  btn.textContent = "?";
+  btn.setAttribute("aria-label", state.lang === "cy" ? "Dangos ystyr" : "Show translation");
+  btn.setAttribute("title", state.lang === "cy" ? "Ystyr" : "Meaning");
+  btn.setAttribute("aria-expanded", "false");
 
-  const r = capsuleEl.getBoundingClientRect();
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+  let pop = null;
 
-  // must measure AFTER it's in the DOM
-  const pr = pop.getBoundingClientRect();
-  const pad = 12;
+  const onKey = (ev) => {
+    if (ev.key === "Escape") close();
+  };
 
-  if (vw >= 640){
-    const spaceRight = vw - r.right;
-    const spaceLeft  = r.left;
+  const close = () => {
+    if (pop) {
+      pop.remove();
+      pop = null;
+    }
+    btn.setAttribute("aria-expanded", "false");
+    document.removeEventListener("keydown", onKey);
+  };
 
-    if (spaceRight >= pr.width + pad) pop.classList.add('pos-right');
-    else if (spaceLeft >= pr.width + pad) pop.classList.add('pos-left');
-    else pop.classList.add('pos-bottom');
-  } else {
-    const spaceBelow = vh - r.bottom;
-    const spaceAbove = r.top;
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-    if (spaceBelow >= pr.height + pad) pop.classList.add('pos-bottom');
-    else pop.classList.add('pos-top');
-  }
+    if (pop) {
+      close();
+      return;
+    }
+
+    pop = document.createElement("div");
+    pop.className = "base-info-popover animate-pop";
+    pop.addEventListener("click", (ev) => ev.stopPropagation());
+
+    const wc = (card?.WordCategory || "").toString().trim();
+    const catLabel = state.lang === "cy" ? "Categori" : "Category";
+
+    pop.innerHTML = `
+      <button type="button" class="base-info-close" aria-label="Close">×</button>
+      <div class="base-info-meaning">${esc(tr)}</div>
+      ${wc ? `<div class="base-info-meta"><span class="base-info-label">${esc(catLabel)}:</span> <span class="base-info-tag">${esc(wc)}</span></div>` : ``}
+    `;
+
+    capsuleEl.appendChild(pop);
+    btn.setAttribute("aria-expanded", "true");
+
+    pop.querySelector(".base-info-close")?.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      close();
+    });
+
+    document.addEventListener("keydown", onKey);
+
+    // outside click close
+    setTimeout(() => {
+      document.addEventListener("click", close, { once: true });
+    }, 0);
+  });
+
+  capsuleEl.appendChild(btn);
 }
 
+/* ---------- Render ---------- */
+function btn(text, extraClass, onClick) {
+  const b = document.createElement("button");
+  b.className = `btn ${extraClass}`;
+  b.textContent = text;
+  b.onclick = onClick;
+  return b;
+}
 
-  // ---------- Render ----------
-  function btn(label, extraClass, onClick){
-    const b = document.createElement('button');
-    b.className = `btn ${extraClass}`; b.textContent = label; b.onclick = onClick; return b;
-  }
+function renderPractice() {
+  const host = $("#practiceCard");
+  if (!host) return;
+  host.innerHTML = "";
 
-  function toggleBtn(label, active, onToggle){
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = `pill ${active ? 'pill-on' : ''}`;
-    b.textContent = label;
-    b.onclick = ()=> onToggle(!active);
-    return b;
-  }
+  const lang = state.lang || "en";
+  const t = LABEL[lang] || LABEL.en;
+  const n = state.filtered.length;
 
-  function renderPractice(){
-    const host = $('#practiceCard'); host.innerHTML='';
-    // Determine current language and translation set
-    const lang = state.lang || 'en';
-    const t = LABEL[lang] || LABEL.en;
-    const n = state.filtered.length;
-    if (!n){ host.innerHTML = `<div class="text-slate-700 panel rounded-xl p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button></div>`;
-      const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{
-        state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false;
-        saveLS('wm_families',state.families); saveLS('wm_categories',state.categories); saveLS('wm_outcomes',state.outcomes); saveLS('wm_trig',state.triggerQuery); saveLS('wm_nil',state.nilOnly);
-        buildFilters(); applyFilters(); rebuildDeck(); render();
-      }); }
-      return; }
-    // Pick a current card depending on practice mode.
-    let idxNow;
-    let posText = '';
-    if (state.practiceMode === 'smart'){
-      if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
-      idxNow = state.smartIdx;
-      state.currentDeckPos = -1;
-      const reviewed = (state.smartCount || 0) + 1;
-      posText = `${t.reviewedLabel} ${reviewed} · ${t.poolLabel} ${n}`;
-      $('#cardPos').textContent = `${t.smartModeShort} · ${posText}`;
-    } else {
-      const deckIdx = state.p % state.deck.length;
-      idxNow = state.deck[deckIdx];
-      state.currentDeckPos = deckIdx;
-      const pos = state.deck.length ? (state.p % state.deck.length) + 1 : 0;
-      posText = `${t.cardLabel} ${pos} / ${state.deck.length || 0}`;
-      $('#cardPos').textContent = posText;
-    }
-
-    const idx = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
-    const card = state.filtered[idx];
-    state.currentIdx = idxNow;
-
-    const wrap = document.createElement('div');
-
-    // Header row (mode toggle + shuffle button)
-    const header = document.createElement('div');
-    header.className = 'flex flex-wrap items-center justify-between gap-2 mb-2';
-
-    const headerLeft = document.createElement('div');
-    headerLeft.className = 'flex flex-wrap items-center gap-2 text-xs text-slate-500';
-
-    // The mode label pill is redundant with the segmented control; only show the position text.
-    const posSpan = document.createElement('span');
-    posSpan.textContent = posText;
-    headerLeft.append(posSpan);
-
-    const headerRight = document.createElement('div');
-    headerRight.className = 'flex items-center gap-2';
-
-    const seg = document.createElement('div');
-    seg.className = 'seg';
-
-    const mkSegBtn = (label, value) => {
-      const b = document.createElement('button');
-      b.title = (value === 'shuffle') ? (t.shuffleModeDesc || '') : (t.smartModeDesc || '');
-      b.type = 'button';
-      const on = state.practiceMode === value;
-
-      // Styled segmented control button (see .seg / .seg-btn in styles.css)
-      b.className = `seg-btn ${on ? 'is-on' : ''}`;
-      b.textContent = label;
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-
-      b.onclick = () => {
-        if (state.practiceMode === value) return;
-        state.practiceMode = value;
-        saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
+  if (!n) {
+    host.innerHTML = `<div class="text-slate-700 panel rounded-xl p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button></div>`;
+    const cf = document.getElementById("btnClearFilters");
+    if (cf) {
+      cf.addEventListener("click", () => {
+        state.families = ["Soft", "Aspirate", "Nasal", "None"];
+        state.categories = [];
+        state.outcomes = ["SM", "AM", "NM", "NONE"];
+        state.triggerQuery = "";
+        state.nilOnly = false;
+        saveLS("wm_families", state.families);
+        saveLS("wm_categories", state.categories);
+        saveLS("wm_outcomes", state.outcomes);
+        saveLS("wm_trig", state.triggerQuery);
+        saveLS("wm_nil", state.nilOnly);
+        buildFilters();
+        applyFilters();
         rebuildDeck();
         render();
-      };
-      return b;
-    };
-
-    seg.append(mkSegBtn(t.shuffleModeShort, 'shuffle'), mkSegBtn(t.smartModeShort, 'smart'));
-
-    const btnShuffleNow = document.createElement('button');
-    btnShuffleNow.type = 'button';
-    btnShuffleNow.title = t.shuffleNowDesc || '';
-    // Use utility button styling (amber tinted) so it stands apart from primary/secondary buttons
-    btnShuffleNow.className = 'btn btn-utility btn-shuffleNow';
-    btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
-    btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
-
-    headerRight.append(seg);
-    header.append(headerLeft, headerRight);
-
-    // Active filters summary as chips
-    const summary = document.createElement('div');
-    summary.className = 'flex flex-wrap items-center gap-2 mb-4';
-    const addChip = (label, onClear) => {
-      const c = document.createElement('button');
-      c.type = 'button';
-      c.className = 'chip';
-      c.innerHTML = `<span>${esc(label)}</span>`;
-      if (onClear) {
-        const x = document.createElement('span');
-        x.className = 'ml-1';
-        x.textContent = '✕';
-        c.appendChild(x);
-        c.onclick = onClear;
-      }
-      return c;
-    };
-
-    
-    // Build active filter chips only if there are restrictions (fewer than all families/outcomes selected, any categories, trigger query, or nilOnly)
-    const anyRestriction =
-      (state.families.length && state.families.length < 4) ||
-      (state.outcomes.length && state.outcomes.length < 4) ||
-      state.categories.length ||
-      (state.triggerQuery && state.triggerQuery.trim()) ||
-      state.nilOnly;
-
-    if (anyRestriction) {
-      // Families: translate the mutation names via label() helper
-      if (state.families.length && state.families.length < 4) {
-        state.families.forEach(f => {
-          const translated = label('rulefamily', f);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Outcomes: also translate via rulefamily mapping (SM→Soft, etc.)
-      if (state.outcomes.length && state.outcomes.length < 4) {
-        state.outcomes.forEach(o => {
-          const translated = label('rulefamily', o);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Categories: translate category labels
-      if (state.categories.length) {
-        state.categories.forEach(ca => {
-          const translated = label('categories', ca);
-          summary.appendChild(addChip(translated));
-        });
-      }
-      // Trigger query: show a label appropriate to the current language
-      if (state.triggerQuery && state.triggerQuery.trim()) {
-        const trigLabel = (state.lang === 'cy' ? 'Sbardun' : 'Trigger');
-        summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
-      }
-      // Nil-only: use the heading translation
-      if (state.nilOnly) {
-        summary.appendChild(addChip(label('headings', 'nilOnly')));
-      }
-      // Clear chip: provide a way to reset all filters
-      summary.appendChild(addChip(state.lang === 'cy' ? 'Clirio' : 'Clear', () => {
-        state.families = ["Soft","Aspirate","Nasal","None"];
-        state.categories = [];
-        state.outcomes = ["SM","AM","NM","NONE"];
-        state.triggerQuery = '';
-        state.nilOnly = false;
-        saveLS('wm_families', state.families);
-        saveLS('wm_categories', state.categories);
-        saveLS('wm_outcomes', state.outcomes);
-        saveLS('wm_trig', state.triggerQuery);
-        saveLS('wm_nil', state.nilOnly);
-        applyFilters(); rebuildDeck(); buildFilters(); render();
-      }));
-    } else {
-      // When there are no active filters, hide the summary row to save vertical space
-      summary.classList.add('hidden');
-    }
-
-    // --- Base word capsule (with optional ? popover) ---
-    const chips = document.createElement('div');
-    chips.className = 'practice-base text-2xl md:text-3xl font-medium';
-    
-    const capsule = document.createElement('div');
-    capsule.className = 'inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm';
-    
-    const baseSpan = document.createElement('span');
-    baseSpan.className = 'base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight';
-    baseSpan.textContent = (card.Base || '—');
-    
-    capsule.appendChild(baseSpan);
-    chips.appendChild(capsule);
-
-    // ✅ add the ? to the big base word (only if Translate exists)
-    mountBaseTranslationUI(capsule, card);
-
-    
-   
-
-    
-    // --- Instruction ---
-    const instruction = document.createElement('div');
-    instruction.className = 'practice-instruction text-lg md:text-xl text-slate-700 mb-6';
-    instruction.innerHTML = esc(t.instruction);
-
-
-
-
-    const row = document.createElement('div');
-    row.className = 'practice-sentence';
-    row.innerHTML = `
-      <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
-        <span class="text-slate-600">${esc(card.Before || '')}</span>
-        <input id="answerBox" class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0" placeholder="${esc(t.answerLabel)}" aria-label="${esc(t.answerLabel)}" />
-        <span class="text-slate-600">${esc(card.After || '')}</span>
-      </div>
-    `;
-    const actions = document.createElement('div'); actions.className='practice-actions flex flex-wrap gap-3';
-    const btnCheck = btn(t.check,'btn-primary shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title = t.check + ' (Enter)';
-    const btnHint  = btn(t.hint,'btn-ghost', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title = t.hint + ' (H)';
-    const btnReveal= btn(t.reveal,'btn-ghost', ()=>{ state.revealed = !state.revealed; render(); });
-    const btnSkip  = btn(t.skip,'btn-ghost', ()=>{
-      // Reveal the answer instead of jumping away, so we have a full sentence to speak.
-      state.guess = '';
-      state.revealed = true;
-      state.lastResult = 'skipped';
-      state.freezeIdx = state.currentIdx;
-      state.freezePos = state.currentDeckPos;
-
-
-      // Record skip as a miss (for stats + Smart review).
-      const shownIdx = state.freezeIdx;
-      const shownCard = state.filtered[shownIdx];
-      const cardId = getCardId(shownCard, shownIdx);
-      state.history.push({
-        t: Date.now(),
-        ok: false,
-        key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
-        cardId,
-        expected: shownCard.Answer,
-        got: '',
-        mode: state.practiceMode,
-        skipped: true,
       });
-      saveLS('wm_hist', state.history);
-      updateLeitner(cardId, 'skipped');
-      if (state.practiceMode === 'smart'){
-        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-        state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
-      }
-    
-      // Disable input like Check does (so it feels consistent)
-      const ab2 = document.getElementById('answerBox');
-      if (ab2){
-        ab2.disabled = true;
-        ab2.classList.add('opacity-70','cursor-not-allowed');
-      }
-    
+    }
+    return;
+  }
+
+  // Pick card depending on practice mode
+  let idxNow;
+  let posText = "";
+
+  if (state.practiceMode === "smart") {
+    if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
+    idxNow = state.smartIdx;
+    state.currentDeckPos = -1;
+    const reviewed = (state.smartCount || 0) + 1;
+    posText = `${t.reviewedLabel} ${reviewed} · ${t.poolLabel} ${n}`;
+    const cardPos = $("#cardPos");
+    if (cardPos) cardPos.textContent = `${t.smartModeShort} · ${posText}`;
+  } else {
+    const deckIdx = state.p % state.deck.length;
+    idxNow = state.deck[deckIdx];
+    state.currentDeckPos = deckIdx;
+    const pos = state.deck.length ? (state.p % state.deck.length) + 1 : 0;
+    posText = `${t.cardLabel} ${pos} / ${state.deck.length || 0}`;
+    const cardPos = $("#cardPos");
+    if (cardPos) cardPos.textContent = posText;
+  }
+
+  const idx = state.revealed && state.freezeIdx != null ? state.freezeIdx : idxNow;
+  const card = state.filtered[idx];
+  state.currentIdx = idxNow;
+
+  const wrap = document.createElement("div");
+
+  /* Header: position + segmented control */
+  const header = document.createElement("div");
+  header.className = "flex flex-wrap items-center justify-between gap-2 mb-2";
+
+  const headerLeft = document.createElement("div");
+  headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
+  const posSpan = document.createElement("span");
+  posSpan.textContent = posText;
+  headerLeft.append(posSpan);
+
+  const headerRight = document.createElement("div");
+  headerRight.className = "flex items-center gap-2";
+
+  const seg = document.createElement("div");
+  seg.className = "seg";
+
+  const mkSegBtn = (labelTxt, value) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.title = value === "shuffle" ? t.shuffleModeDesc || "" : t.smartModeDesc || "";
+    const on = state.practiceMode === value;
+    b.className = `seg-btn ${on ? "is-on" : ""}`;
+    b.textContent = labelTxt;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+
+    b.onclick = () => {
+      if (state.practiceMode === value) return;
+      state.practiceMode = value;
+      saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
+      rebuildDeck();
       render();
-    });
-    actions.append(btnCheck, btnHint, btnReveal, btnSkip, btnShuffleNow);
+    };
+    return b;
+  };
 
+  seg.append(mkSegBtn(t.shuffleModeShort, "shuffle"), mkSegBtn(t.smartModeShort, "smart"));
+  headerRight.append(seg);
+  header.append(headerLeft, headerRight);
 
-// Hint (no mt-* here; let the layout wrapper control spacing)
-const hint = document.createElement('div');
-hint.className = 'hidden practice-hint text-sm text-slate-600';
-hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer || '').slice(0, 1) || '?'}</b>`;
+  /* Active filters summary chips */
+  const summary = document.createElement("div");
+  summary.className = "flex flex-wrap items-center gap-2 mb-4";
 
-// Feedback container: always present, but only filled when revealed
-const feedback = document.createElement('div');
-feedback.setAttribute('aria-live', 'polite');
-feedback.className = 'practice-feedback';
+  const addChip = (txt, onClear) => {
+    const c = document.createElement("button");
+    c.type = "button";
+    c.className = "chip";
+    c.innerHTML = `<span>${esc(txt)}</span>`;
+    if (onClear) {
+      const x = document.createElement("span");
+      x.className = "ml-1";
+      x.textContent = "✕";
+      c.appendChild(x);
+      c.onclick = onClear;
+    }
+    return c;
+  };
 
-if (state.revealed) {
-  const ok = state.lastResult === 'correct';
-  const skipped = state.lastResult === 'skipped';
+  const anyRestriction =
+    (state.families.length && state.families.length < 4) ||
+    (state.outcomes.length && state.outcomes.length < 4) ||
+    state.categories.length ||
+    (state.triggerQuery && state.triggerQuery.trim()) ||
+    state.nilOnly;
 
-  const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
-  const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
-  const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
+  if (anyRestriction) {
+    if (state.families.length && state.families.length < 4) state.families.forEach((f) => summary.appendChild(addChip(label("rulefamily", f))));
+    if (state.outcomes.length && state.outcomes.length < 4) state.outcomes.forEach((o) => summary.appendChild(addChip(label("rulefamily", o))));
+    if (state.categories.length) state.categories.forEach((ca) => summary.appendChild(addChip(label("categories", ca))));
+    if (state.triggerQuery && state.triggerQuery.trim()) {
+      const trigLabel = state.lang === "cy" ? "Sbardun" : "Trigger";
+      summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
+    }
+    if (state.nilOnly) summary.appendChild(addChip(label("headings", "nilOnly")));
 
-  feedback.innerHTML = `
-    <div class="feedback-box">
-      <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-        ${statusIcon} ${esc(statusText)}
-      </div>
+    summary.appendChild(
+      addChip(state.lang === "cy" ? "Clirio" : "Clear", () => {
+        state.families = ["Soft", "Aspirate", "Nasal", "None"];
+        state.categories = [];
+        state.outcomes = ["SM", "AM", "NM", "NONE"];
+        state.triggerQuery = "";
+        state.nilOnly = false;
+        saveLS("wm_families", state.families);
+        saveLS("wm_categories", state.categories);
+        saveLS("wm_outcomes", state.outcomes);
+        saveLS("wm_trig", state.triggerQuery);
+        saveLS("wm_nil", state.nilOnly);
+        applyFilters();
+        rebuildDeck();
+        buildFilters();
+        render();
+      })
+    );
+  } else {
+    summary.classList.add("hidden");
+  }
 
-      ${(!ok && !skipped)
-        ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
-        : ''
-      }
+  /* Base capsule + ? */
+  const chips = document.createElement("div");
+  chips.className = "practice-base text-2xl md:text-3xl font-medium";
 
-      <!-- Completed sentence + audio -->
-      <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
-        <span>${esc(card.Before || '')}</span>
-      
-        <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
-      
+  const capsule = document.createElement("div");
+  capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm";
 
-      
-        <span>${esc(card.After || '')}</span>
-      
-        <button id="btnHear" class="btn-hear" type="button">
-          <span class="icon" aria-hidden="true">&#128266;</span>
-          <span>${esc(t.hear)}</span>
-        </button>
-      </div>
+  const baseSpan = document.createElement("span");
+  baseSpan.className = "base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight";
+  baseSpan.textContent = card.Base || "—";
 
+  capsule.appendChild(baseSpan);
+  chips.appendChild(capsule);
 
-      <!-- Explanation: only the 'Why' text if present -->
-      ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ''}
+  // ✅ FIXED: function exists again
+  mountBaseTranslationUI(capsule, card);
 
-      <!-- Next stays visually "inside" the result card -->
-      <div class="mt-4 flex justify-end">
-        <button id="inlineNext"
-                class="btn btn-primary shadow transition"
-                type="button"
-                title="${esc(t.next)} (Enter)">
-          ${esc(t.next)}
-        </button>
-      </div>
+  /* Instruction */
+  const instruction = document.createElement("div");
+  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-6";
+  instruction.innerHTML = esc(t.instruction);
+
+  /* Sentence + answer */
+  const row = document.createElement("div");
+  row.className = "practice-sentence";
+  row.innerHTML = `
+    <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
+      <span class="text-slate-600">${esc(card.Before || "")}</span>
+      <input id="answerBox" class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0" placeholder="${esc(
+        t.answerLabel
+      )}" aria-label="${esc(t.answerLabel)}" />
+      <span class="text-slate-600">${esc(card.After || "")}</span>
     </div>
   `;
-  
-// Wire up "Hear", the sentence ?, and "Next" (they only exist when revealed)
+
+  /* Actions (shuffle moved here, aligned right) */
+  const actions = document.createElement("div");
+  actions.className = "practice-actions flex flex-wrap gap-3";
+
+  const onCheck = () => {
+    const ok = normalize(state.guess) === normalize(card.Answer);
+    state.revealed = true;
+    state.lastResult = ok ? "correct" : "wrong";
+    state.freezeIdx = state.currentIdx;
+    state.freezePos = state.currentDeckPos;
+
+    const cardId = getCardId(card, idx);
+    const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, cardId, expected: card.Answer, got: state.guess, mode: state.practiceMode };
+    state.history = [rec, ...state.history].slice(0, 500);
+    saveLS("wm_hist", state.history);
+
+    updateLeitner(cardId, ok ? "correct" : "wrong");
+    if (!ok && state.practiceMode === "smart") {
+      if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+      state.smartQueue.push({ idx, dueAfter: 2 });
+    }
+
+    const ab2 = document.getElementById("answerBox");
+    if (ab2) {
+      ab2.disabled = true;
+      ab2.classList.add("opacity-70", "cursor-not-allowed");
+    }
+
+    setTimeout(() => document.getElementById("inlineNext")?.focus(), 0);
+    render();
+  };
+
+  const btnCheck = btn(t.check, "btn-primary shadow", onCheck);
+  btnCheck.id = "btnCheck";
+  btnCheck.title = t.check + " (Enter)";
+
+  const hint = document.createElement("div");
+  hint.className = "hidden practice-hint text-sm text-slate-600";
+  hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer || "").slice(0, 1) || "?"}</b>`;
+
+  const btnHint = btn(t.hint, "btn-ghost", () => {
+    hint.classList.toggle("hidden");
+    document.getElementById("answerBox")?.focus();
+  });
+  btnHint.id = "btnHint";
+  btnHint.title = t.hint + " (H)";
+
+  const btnReveal = btn(t.reveal, "btn-ghost", () => {
+    state.revealed = !state.revealed;
+    render();
+  });
+
+  const btnSkip = btn(t.skip, "btn-ghost", () => {
+    state.guess = "";
+    state.revealed = true;
+    state.lastResult = "skipped";
+    state.freezeIdx = state.currentIdx;
+    state.freezePos = state.currentDeckPos;
+
+    const shownIdx = state.freezeIdx;
+    const shownCard = state.filtered[shownIdx];
+    const cardId = getCardId(shownCard, shownIdx);
+
+    state.history.push({
+      t: Date.now(),
+      ok: false,
+      key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
+      cardId,
+      expected: shownCard.Answer,
+      got: "",
+      mode: state.practiceMode,
+      skipped: true,
+    });
+    saveLS("wm_hist", state.history);
+
+    updateLeitner(cardId, "skipped");
+    if (state.practiceMode === "smart") {
+      if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+      state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
+    }
+
+    const ab2 = document.getElementById("answerBox");
+    if (ab2) {
+      ab2.disabled = true;
+      ab2.classList.add("opacity-70", "cursor-not-allowed");
+    }
+    render();
+  });
+
+  // Shuffle button (moved here)
+  const btnShuffleNow = document.createElement("button");
+  btnShuffleNow.type = "button";
+  btnShuffleNow.title = t.shuffleNowDesc || "";
+  btnShuffleNow.className = "btn btn-ghost btn-shuffleNow ml-auto";
+  btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
+  btnShuffleNow.onclick = () => {
+    rebuildDeck();
+    render();
+  };
+
+  actions.append(btnCheck, btnHint, btnReveal, btnSkip, btnShuffleNow);
+
+  /* Feedback */
+  const feedback = document.createElement("div");
+  feedback.setAttribute("aria-live", "polite");
+  feedback.className = "practice-feedback";
+
+  if (state.revealed) {
+    const ok = state.lastResult === "correct";
+    const skipped = state.lastResult === "skipped";
+
+    const statusIcon = skipped ? "⏭️" : ok ? "✅" : "❌";
+    const statusColor = skipped ? "text-slate-800" : ok ? "text-indigo-900" : "text-rose-900";
+    const statusText = skipped ? t.statuses.skipped : ok ? t.statuses.correct : t.statuses.wrong;
+
+    feedback.innerHTML = `
+      <div class="feedback-box">
+        <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
+          ${statusIcon} ${esc(statusText)}
+        </div>
+
+        ${!ok && !skipped ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>` : ""}
+
+        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
+          <span>${esc(card.Before || "")}</span>
+          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
+          <span>${esc(card.After || "")}</span>
+
+          <button id="btnHear" class="btn-hear" type="button">
+            <span class="icon" aria-hidden="true">&#128266;</span>
+            <span>${esc(t.hear)}</span>
+          </button>
+        </div>
+
+        ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ""}
+
+        <div class="mt-4 flex justify-end">
+          <button id="inlineNext" class="btn btn-primary shadow transition" type="button" title="${esc(t.next)} (Enter)">
+            ${esc(t.next)}
+          </button>
+        </div>
+      </div>
+    `;
+
     setTimeout(() => {
-      const hearBtn = document.getElementById('btnHear');
+      const hearBtn = document.getElementById("btnHear");
       if (hearBtn) {
         hearBtn.onclick = async () => {
           try {
-            const sentence = buildCompleteSentence({
-              Before: card.Before,
-              Answer: card.Answer,
-              After: card.After
-            });
+            const sentence = buildCompleteSentence({ Before: card.Before, Answer: card.Answer, After: card.After });
             await playPollySentence(sentence);
           } catch (e) {
             alert("Couldn't play audio: " + (e?.message || e));
           }
         };
       }
-    
 
-    
-      const nextBtn = document.getElementById('inlineNext');
+      const nextBtn = document.getElementById("inlineNext");
       if (nextBtn) nextBtn.onclick = () => nextCard(1);
     }, 0);
+  } else {
+    feedback.innerHTML = "";
+  }
 
+  /* Assemble */
+  const answerBlock = document.createElement("div");
+  answerBlock.className = "practice-answerBlock";
+  answerBlock.append(row, actions, hint, feedback);
 
-} else {
-  feedback.innerHTML = '';
+  wrap.append(header, summary, instruction, chips, answerBlock);
+  host.appendChild(wrap);
+
+  const ab = document.getElementById("answerBox");
+  if (ab) {
+    ab.value = state.guess;
+    ab.focus();
+    ab.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        e.stopPropagation();
+        onCheck();
+      }
+    });
+    ab.addEventListener("input", (e) => (state.guess = e.target.value));
+  }
 }
 
-    // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
-    const parts = [header, summary, instruction];
-    // Compose sentence, actions, hint and feedback into a single block for consistent spacing
-    const answerBlock = document.createElement('div');
-    answerBlock.className = 'practice-answerBlock';
-    answerBlock.append(row, actions, hint, feedback);
-    parts.push(chips, answerBlock);
-    wrap.append(...parts);
+function renderBrowse() {
+  const head = $("#browseHead");
+  const body = $("#browseBody");
+  if (!head || !body) return;
 
-    host.appendChild(wrap);
-    const ab = $('#answerBox');
-    ab.value = state.guess; ab.focus();
-    ab.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { e.preventDefault(); e.stopPropagation(); onCheck(); } });
-    ab.addEventListener('input', (e)=>{ state.guess = e.target.value; });
-    function onCheck(){
-      const ok = normalize(state.guess) === normalize(card.Answer);
-      state.revealed = true; state.lastResult = ok? 'correct':'wrong';
-      state.freezeIdx = state.currentIdx;
-      state.freezePos = state.currentDeckPos;
+  head.innerHTML = "";
+  body.innerHTML = "";
 
-      const cardId = getCardId(card, idx);
-      const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, cardId, expected: card.Answer, got: state.guess, mode: state.practiceMode };
-      state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
-      updateLeitner(cardId, ok ? 'correct' : 'wrong');
-      if (!ok && state.practiceMode === 'smart'){
-        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-        state.smartQueue.push({ idx, dueAfter: 2 });
-      }
-      const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
-      setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
-      render();
-    }
+  const cols = ["RuleFamily", "RuleCategory", "Trigger", "Base", "WordCategory", "Before", "After", "Answer", "Outcome", "Why"];
+  for (const h of cols) {
+    const th = document.createElement("th");
+    th.className = "text-left p-2 border-b";
+    th.textContent = h;
+    head.appendChild(th);
   }
 
-  function renderBrowse(){
-    const head = $('#browseHead'); const body = $('#browseBody');
-    head.innerHTML = ''; body.innerHTML = '';
-    const cols = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
-    for (const h of cols){ const th = document.createElement('th'); th.className='text-left p-2 border-b'; th.textContent = h; head.appendChild(th); }
-    state.filtered.forEach((r,i)=>{
-      const tr = document.createElement('tr'); tr.className = (i%2? 'bg-white':'bg-slate-50');
-      for (const k of cols){ const td = document.createElement('td'); td.className='p-2 align-top'; td.textContent = (k==='Outcome'? (r[k]||'').toUpperCase(): r[k]); if (k==='Answer') td.classList.add('font-semibold'); if (k==='Why') td.classList.add('text-slate-600'); tr.appendChild(td); }
-      body.appendChild(tr);
-    });
-  }
-
-  function computeStats(){
-    const total = state.history.length; const correct = state.history.filter(h=>h.ok).length;
-    const acc = total? Math.round((correct/total)*100) : 0;
-    const by = {};
-    for (const h of state.history){
-      const r = state.rows.find(r => `${r.RuleCategory}:${r.Trigger}:${r.Base}`===h.key); const out = (r?.Outcome||'?').toUpperCase();
-      by[out] = by[out] || { total:0, ok:0 }; by[out].total++; if (h.ok) by[out].ok++;
+  state.filtered.forEach((r, i) => {
+    const tr = document.createElement("tr");
+    tr.className = i % 2 ? "bg-white" : "bg-slate-50";
+    for (const k of cols) {
+      const td = document.createElement("td");
+      td.className = "p-2 align-top";
+      td.textContent = k === "Outcome" ? (r[k] || "").toUpperCase() : r[k];
+      if (k === "Answer") td.classList.add("font-semibold");
+      if (k === "Why") td.classList.add("text-slate-600");
+      tr.appendChild(td);
     }
-    return { total, correct, acc, by };
-  }
+    body.appendChild(tr);
+  });
+}
 
-  function renderStatsPanels(){
-    const s = computeStats();
-    $('#accBig').textContent = `${s.acc}%`;
-    $('#accText').textContent = `${s.correct} / ${s.total} correct`;
-    $('#statsAcc').textContent = `${s.acc}%`;
-    $('#statsText').textContent = `${s.correct} correct out of ${s.total}`;
-    const ul1 = $('#byOutcome'); ul1.innerHTML='';
-    const ul2 = $('#statsByOutcome'); ul2.innerHTML='';
-    for (const [k,v] of Object.entries(s.by)){
-      const li1 = document.createElement('li'); li1.className='flex justify-between'; li1.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul1.appendChild(li1);
-      const li2 = document.createElement('li'); li2.className='flex justify-between'; li2.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul2.appendChild(li2);
+function computeStats() {
+  const total = state.history.length;
+  const correct = state.history.filter((h) => h.ok).length;
+  const acc = total ? Math.round((correct / total) * 100) : 0;
+
+  const by = {};
+  for (const h of state.history) {
+    const r = state.rows.find((r) => `${r.RuleCategory}:${r.Trigger}:${r.Base}` === h.key);
+    const out = (r?.Outcome || "?").toUpperCase();
+    by[out] = by[out] || { total: 0, ok: 0 };
+    by[out].total++;
+    if (h.ok) by[out].ok++;
+  }
+  return { total, correct, acc, by };
+}
+
+function renderStatsPanels() {
+  const s = computeStats();
+  if ($("#accBig")) $("#accBig").textContent = `${s.acc}%`;
+  if ($("#accText")) $("#accText").textContent = `${s.correct} / ${s.total} correct`;
+  if ($("#statsAcc")) $("#statsAcc").textContent = `${s.acc}%`;
+  if ($("#statsText")) $("#statsText").textContent = `${s.correct} correct out of ${s.total}`;
+
+  const ul1 = $("#byOutcome");
+  const ul2 = $("#statsByOutcome");
+  if (ul1) ul1.innerHTML = "";
+  if (ul2) ul2.innerHTML = "";
+
+  for (const [k, v] of Object.entries(s.by)) {
+    if (ul1) {
+      const li1 = document.createElement("li");
+      li1.className = "flex justify-between";
+      li1.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul1.appendChild(li1);
+    }
+    if (ul2) {
+      const li2 = document.createElement("li");
+      li2.className = "flex justify-between";
+      li2.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul2.appendChild(li2);
     }
   }
+}
 
-  function render(){
-    $('#practiceView').classList.toggle('hidden', state.mode!=='practice');
-    $('#browseView').classList.toggle('hidden', state.mode!=='browse');
-    $('#statsView').classList.toggle('hidden', state.mode!=='stats');
-    renderPractice();
-    if (state.mode==='browse') renderBrowse();
-    renderStatsPanels();
-  }
+function render() {
+  $("#practiceView")?.classList.toggle("hidden", state.mode !== "practice");
+  $("#browseView")?.classList.toggle("hidden", state.mode !== "browse");
+  $("#statsView")?.classList.toggle("hidden", state.mode !== "stats");
 
-  function nextCard(offset=1){
-    if (state.practiceMode === 'smart'){
-      if (!state.filtered.length) return;
-      state.freezeIdx = null; state.freezePos = null;
-      state.smartIdx = pickNextSmartIdx();
-      state.smartCount = (state.smartCount || 0) + 1;
-      state.guess=''; state.revealed=false; state.lastResult=null;
-      render();
-      return;
-    }
+  renderPractice();
+  if (state.mode === "browse") renderBrowse();
+  renderStatsPanels();
+}
 
-    if (!state.deck.length) return;
-    if (state.lastResult === 'wrong' && state.freezeIdx != null && state.freezePos != null){
-      const idxVal = state.freezeIdx;
-      let deckPos = state.freezePos;
-      if (state.deck[deckPos] !== idxVal){
-        deckPos = state.deck.indexOf(idxVal);
-      }
-      if (deckPos >= 0){
-        const newDeck = state.deck.slice();
-        newDeck.splice(deckPos, 1);
-        const insertAt = Math.min(deckPos + 3, newDeck.length);
-        newDeck.splice(insertAt, 0, idxVal);
-        state.deck = newDeck;
-      }
-    }
-    state.freezeIdx = null; state.freezePos = null;
-    state.p = (state.p + offset + state.deck.length) % state.deck.length;
-    state.guess=''; state.revealed=false; state.lastResult=null;
+function nextCard(offset = 1) {
+  if (state.practiceMode === "smart") {
+    if (!state.filtered.length) return;
+    state.freezeIdx = null;
+    state.freezePos = null;
+    state.smartIdx = pickNextSmartIdx();
+    state.smartCount = (state.smartCount || 0) + 1;
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
     render();
+    return;
   }
 
-  // ---------- Event wiring ----------
-  function wireUi(){
-    $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
-    $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
-    $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
-    $('#btnFilters').onclick  = ()=>{ $('#filtersPanel')?.classList.toggle('hidden'); };
-    $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
-    // Language toggle: switch between English and Welsh
-    $('#btnLangToggle')?.addEventListener('click', () => {
-      state.lang = (state.lang === 'en') ? 'cy' : 'en';
-      saveLS('wm_lang', state.lang);
-      applyLanguage();
-    });
-    $('#onboardFilters')?.addEventListener('click', () => {
-      const onboard = $('#onboard');
-      if (onboard) onboard.classList.add('hidden');
-      $('#filtersPanel')?.classList.remove('hidden');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    $('#onboardDismiss')?.addEventListener('click', () => {
-      const onboard = $('#onboard');
-      if (onboard) onboard.classList.add('hidden');
-    });
-    $('#btnResetStats').onclick = $('#btnResetStats2').onclick = ()=>{ state.history=[]; saveLS('wm_hist',state.history); render(); };
-    $('#btnTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
-    document.addEventListener('keydown', (e)=>{
-      const tag = (e.target && e.target.tagName) || '';
-      if (['INPUT','TEXTAREA'].includes(tag.toUpperCase())) return;
-      if (state.mode !== 'practice') return;
-      const k = e.key;
-      if (k === 'Enter') {
-        e.preventDefault();
-        if (!state.revealed) { document.getElementById('btnCheck')?.click(); }
-        else { document.getElementById('inlineNext')?.click(); }
-      } else if (k.toLowerCase() === 'n') {
-        document.getElementById('inlineNext')?.click();
-      } else if (k.toLowerCase() === 'h') {
-        document.getElementById('btnHint')?.click();
-      } else if (k.toLowerCase() === 's') {
-        nextCard(1);
-      } else if (k.toLowerCase() === 'f') {
-        document.getElementById('btnFilters')?.click();
-      }
-    });
-    $('#mbCheck')?.addEventListener('click', ()=> document.getElementById('btnCheck')?.click());
-    $('#mbNext')?.addEventListener('click', ()=> document.getElementById('inlineNext')?.click() || nextCard(1));
-    $('#mbHint')?.addEventListener('click', ()=> document.getElementById('btnHint')?.click());
-    if (state.admin){
-      $('#adminBadge').classList.remove('hidden');
-      $('#adminPanel').classList.remove('hidden');
-      $('#dataUrl').value = getParam('sheet') || '';
-      $('#btnLoadUrl').onclick = async ()=>{
-        const u = $('#dataUrl').value.trim(); if (!u) return;
-        const d = await loadCsvUrl(u); state.rows = d.map(coerceRow);
-        applyFilters(); rebuildDeck(); render();
-      };
-      $('#btnShareable').onclick = ()=>{
-        const u = $('#dataUrl').value.trim(); if (!u) return alert('Enter a URL first.');
-        const link = location.origin + location.pathname + `?sheet=${encodeURIComponent(u)}`;
-        navigator.clipboard?.writeText(link); alert('Copied: '+link);
-      };
-      $('#btnExportMisses').onclick = ()=>{
-        const misses = state.history.filter(h=>!h.ok);
-        const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
-        for (const m of misses){
-          const [cat,trig,base] = m.key.split(':');
-          lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`\"${(s||'').replaceAll('\"','\"\"')}\"`).join(','));
-        }
-        download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
-      };
-      $('#fileCsv').onchange = (e)=>{
-        const f = e.target.files?.[0]; if (!f) return;
-        Papa.parse(f, { header:true, skipEmptyLines:true, complete:(res)=>{ state.rows = res.data.map(coerceRow); applyFilters(); rebuildDeck(); render(); } });
-      };
-    }
-    if (getParam('preset')==='prepositions'){
-      state.categories=['Preposition']; saveLS('wm_categories',state.categories);
+  if (!state.deck.length) return;
+
+  if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
+    const idxVal = state.freezeIdx;
+    let deckPos = state.freezePos;
+    if (state.deck[deckPos] !== idxVal) deckPos = state.deck.indexOf(idxVal);
+    if (deckPos >= 0) {
+      const newDeck = state.deck.slice();
+      newDeck.splice(deckPos, 1);
+      const insertAt = Math.min(deckPos + 3, newDeck.length);
+      newDeck.splice(insertAt, 0, idxVal);
+      state.deck = newDeck;
     }
   }
 
+  state.freezeIdx = null;
+  state.freezePos = null;
+  state.p = (state.p + offset + state.deck.length) % state.deck.length;
+  state.guess = "";
+  state.revealed = false;
+  state.lastResult = null;
+  render();
+}
 
-  
-  // ---------- Boot ----------
-  (async function(){
-    wireUi();
-    await initData();
-    // Apply language settings after data and UI are ready
+/* ---------- Event wiring ---------- */
+function wireUi() {
+  $("#btnPractice") && ($("#btnPractice").onclick = () => ((state.mode = "practice"), saveLS("wm_mode", state.mode), render()));
+  $("#btnBrowse") && ($("#btnBrowse").onclick = () => ((state.mode = "browse"), saveLS("wm_mode", state.mode), render()));
+  $("#btnStats") && ($("#btnStats").onclick = () => ((state.mode = "stats"), saveLS("wm_mode", state.mode), render()));
+  $("#btnFilters") && ($("#btnFilters").onclick = () => $("#filtersPanel")?.classList.toggle("hidden"));
+  $("#btnHelp") && ($("#btnHelp").onclick = () => ($("#onboard")?.classList.remove("hidden"), window.scrollTo({ top: 0, behavior: "smooth" })));
+
+  $("#btnLangToggle")?.addEventListener("click", () => {
+    state.lang = state.lang === "en" ? "cy" : "en";
+    saveLS("wm_lang", state.lang);
     applyLanguage();
-  })();
-  </script>
+  });
+
+  $("#onboardFilters")?.addEventListener("click", () => {
+    $("#onboard")?.classList.add("hidden");
+    $("#filtersPanel")?.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  $("#onboardDismiss")?.addEventListener("click", () => $("#onboard")?.classList.add("hidden"));
+
+  const reset = () => {
+    state.history = [];
+    saveLS("wm_hist", state.history);
+    render();
+  };
+  if ($("#btnResetStats")) $("#btnResetStats").onclick = reset;
+  if ($("#btnResetStats2")) $("#btnResetStats2").onclick = reset;
+
+  $("#btnTop") && ($("#btnTop").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    if (["INPUT", "TEXTAREA"].includes(tag.toUpperCase())) return;
+    if (state.mode !== "practice") return;
+
+    const k = e.key;
+    if (k === "Enter") {
+      e.preventDefault();
+      if (!state.revealed) document.getElementById("btnCheck")?.click();
+      else document.getElementById("inlineNext")?.click();
+    } else if (k.toLowerCase() === "n") {
+      document.getElementById("inlineNext")?.click();
+    } else if (k.toLowerCase() === "h") {
+      document.getElementById("btnHint")?.click();
+    } else if (k.toLowerCase() === "s") {
+      nextCard(1);
+    } else if (k.toLowerCase() === "f") {
+      document.getElementById("btnFilters")?.click();
+    }
+  });
+
+  $("#mbCheck")?.addEventListener("click", () => document.getElementById("btnCheck")?.click());
+  $("#mbNext")?.addEventListener("click", () => document.getElementById("inlineNext")?.click() || nextCard(1));
+  $("#mbHint")?.addEventListener("click", () => document.getElementById("btnHint")?.click());
+
+  if (state.admin) {
+    $("#adminBadge")?.classList.remove("hidden");
+    $("#adminPanel")?.classList.remove("hidden");
+
+    if ($("#dataUrl")) $("#dataUrl").value = getParam("sheet") || "";
+
+    $("#btnLoadUrl") && ($("#btnLoadUrl").onclick = async () => {
+      const u = $("#dataUrl")?.value?.trim();
+      if (!u) return;
+      const d = await loadCsvUrl(u);
+      state.rows = d.map(coerceRow);
+      applyFilters();
+      rebuildDeck();
+      render();
+    });
+
+    $("#btnShareable") && ($("#btnShareable").onclick = () => {
+      const u = $("#dataUrl")?.value?.trim();
+      if (!u) return alert("Enter a URL first.");
+      const link = location.origin + location.pathname + `?sheet=${encodeURIComponent(u)}`;
+      navigator.clipboard?.writeText(link);
+      alert("Copied: " + link);
+    });
+
+    $("#btnExportMisses") && ($("#btnExportMisses").onclick = () => {
+      const misses = state.history.filter((h) => !h.ok);
+      const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
+      for (const m of misses) {
+        const [cat, trig, base] = m.key.split(":");
+        lines.push([cat, trig, base, m.expected, m.got, new Date(m.t).toISOString()].map((s) => `"${(s || "").replaceAll('"', '""')}"`).join(","));
+      }
+      download(lines.join("\n"), "mutation-trainer-misses.csv", "text/csv");
+    });
+
+    $("#fileCsv") && ($("#fileCsv").onchange = (e) => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      Papa.parse(f, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (res) => {
+          state.rows = res.data.map(coerceRow);
+          applyFilters();
+          rebuildDeck();
+          render();
+        },
+      });
+    });
+  }
+
+  if (getParam("preset") === "prepositions") {
+    state.categories = ["Preposition"];
+    saveLS("wm_categories", state.categories);
+  }
+}
+
+/* ---------- Boot ---------- */
+(async function () {
+  wireUi();
+  await initData();
+  applyLanguage();
+})();
+</script>
+
 </body>
 </html>
