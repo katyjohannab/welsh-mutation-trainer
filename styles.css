@@ -997,9 +997,9 @@
 
 .base-info-btn:hover,
 .sentence-info-btn:hover{
-  background: rgba(4,120,87,0.08);                 /* subtle green wash */
+ background: rgba(255,255,255,1);
+  border-color: rgba(185,28,28,0.92);
   box-shadow: 0 12px 18px rgba(2,6,23,0.10);
-  transform: translateY(-1px);
 }
 
 .base-info-btn:active,
@@ -1017,8 +1017,8 @@
 /* NUDGE: move the base “?” slightly OUTSIDE the capsule so it never clips letters */
 .base-info-btn{
   position: absolute;
-  top: -0.28rem;
-  right: -0.32rem;
+  top: -0.30rem;
+  right: -0.50rem;     
 }
 
 /* Sentence info stays inline and a touch smaller */
@@ -1029,24 +1029,24 @@
   margin-left: 0.40rem;
 }
 
-/* Popover: smaller, and positioned to avoid covering the sentence/answer */
+/* Popover: smaller + always above right panels */
 .base-info-popover{
   position: absolute;
-  z-index: 50;
+  z-index: 2000;
 
-  width: 14.5rem;                                  /* smaller than before */
-  max-width: min(14.5rem, calc(100vw - 24px));
+  width: 13.25rem;
+  max-width: min(13.25rem, calc(100vw - 20px));
 
   background: rgba(255,255,255,0.98);
   border: 1px solid rgba(15,23,42,0.14);
   border-radius: 0.95rem;
-  padding: 0.70rem 0.80rem;
+  padding: 0.62rem 0.72rem;
 
   box-shadow: 0 18px 40px rgba(2,6,23,0.12);
   backdrop-filter: blur(12px);
 
-  /* MOBILE-FIRST: open ABOVE the capsule so it never covers the answer box */
-  bottom: calc(100% + 0.70rem);
+  /* MOBILE: open ABOVE the capsule so it doesn't cover the answer */
+  bottom: calc(100% + 0.80rem);
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1055,32 +1055,33 @@
 .base-info-popover::before{
   content:"";
   position:absolute;
-  width: 12px;
-  height: 12px;
+  width: 11px;
+  height: 11px;
   background: rgba(255,255,255,0.98);
   border: 1px solid rgba(15,23,42,0.14);
-  transform: translateX(-50%) rotate(45deg);
 
   left: 50%;
   bottom: -6px;
+  transform: translateX(-50%) rotate(45deg);
 }
 
-/* DESKTOP+: open to the RIGHT of the capsule (won’t overlap sentence) */
+/* DESKTOP: open to the RIGHT and align nearer the top of the capsule */
 @media (min-width: 640px){
   .base-info-popover{
     bottom: auto;
-    left: calc(100% + 0.75rem);
-    top: 50%;
-    transform: translateY(-50%);
+    left: calc(100% + 0.85rem);
+    top: 0.15rem;              /* aligns better with the ? / base word */
+    transform: none;
   }
 
   .base-info-popover::before{
     left: -6px;
+    top: 0.95rem;
     bottom: auto;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
+    transform: rotate(45deg);
   }
 }
+
 
 /* Popover typography: slightly smaller/cleaner */
 .base-info-meaning{
@@ -1124,6 +1125,12 @@
   font-size: 0.9rem;
   line-height: 1.25;
   white-space: pre-line; /* allow \n line breaks */
+}
+
+/* Ensure left practice panel stacks above right column panels */
+#practiceView > div.panel{
+  position: relative;
+  z-index: 30;
 }
 
 
