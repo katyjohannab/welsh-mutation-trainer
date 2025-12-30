@@ -778,7 +778,7 @@ c000778,"Soft, Contact",Preposition,heb,gofyn,verb-noun,Newidiodd e’r trefniad
 c000779,"Soft, Contact",Preposition,trwy,gwneud,verb-noun,Fe lwyddon ni trwy,bopeth yn ofalus.,wneud,SM,trwy ‘by/through’ softens: g- disappears → gwneud → gwneud. Set ‘by doing …’ frame.
 c000780,"Soft, Contact",Preposition,trwy,darllen,verb-noun,Gellir gwella sgiliau trwy,yn aml.,ddarllen,SM,"After trwy, d→dd: darllen → ddarllen. Natural ‘by reading …’ phrasing."
 c000781,"Soft, Contact",Preposition,tan,dechrau,verb-noun,Arhoswch tan," y rhaglen, plis.",ddechrau,SM,tan ‘until’ softens the action word (d→dd): dechrau → ddechrau.
-c000782,"Soft, Contact",Preposition,am,mynd,verb-noun,Wnest ti ddweud wrtho fe am,"i'r sinema?",fynd,SM,"Preposition "am" causes the following verb to soft-mutate."
+c000782,"Soft, Contact",Preposition,am,mynd,verb-noun,Wnest ti ddweud wrtho fe am,?,fynd,SM,Preposition am causes the following verb to soft mutate
 c000783,"Soft, Contact",Preposition,am,dangos,verb-noun,Mae hi,sut mae’n gweithio.,ddangos,SM,am can introduce an intended action; the action word softens (d→dd): dangos → ddangos.
 c000784,"Soft, Contact",Preposition,o,gweld,verb-noun,O," y gwir, newidon nhw’r cynllun.",weld,SM,o ‘on/upon’ softens; g- drops: gweld → weld. Think ‘upon seeing …’.
 c000785,"Soft, Contact",Preposition,o,clywed,verb-noun,," y newyddion, aeth hi adref.",glywed,SM,"After o, c→g: clywed → glywed."
@@ -1146,6 +1146,7 @@ c001147,None,Bod+yn,yn,astudio,verb-noun,Dw i'n,gartref.,astudio,NONE,With bod a
 c001148,None,Bod+yn,yn,helpu,verb-noun,Mae'r nyrs yn,pawb.,helpu,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep helpu.
 c001149,None,Bod+yn,yn,gwrando,verb-noun,Rydyn ni'n,ar y radio.,gwrando,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep gwrando.
 c001150,None,Bod+yn,yn,cerdded,verb-noun,Mae'r ci yn,yn araf.,cerdded,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep cerdded.
+
 
 
 
