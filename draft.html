@@ -1424,37 +1424,40 @@ if (state.revealed) {
   `;
   
 // Wire up "Hear", the sentence ?, and "Next" (they only exist when revealed)
-setTimeout(() => {
-    const hearBtn = document.getElementById('btnHear');
-    if (hearBtn) {
-      hearBtn.onclick = async () => {
-        try {
-          const sentence = buildCompleteSentence({
-            Before: card.Before,
-            Answer: card.Answer,
-            After: card.After
-          });
-          await playPollySentence(sentence);
-        } catch (e) {
-          alert("Couldn't play audio: " + (e?.message || e));
+    setTimeout(() => {
+      const hearBtn = document.getElementById('btnHear');
+      if (hearBtn) {
+        hearBtn.onclick = async () => {
+          try {
+            const sentence = buildCompleteSentence({
+              Before: card.Before,
+              Answer: card.Answer,
+              After: card.After
+            });
+            await playPollySentence(sentence);
+          } catch (e) {
+            alert("Couldn't play audio: " + (e?.message || e));
+          }
+        };
+      }
+    
+      const infoBtn = document.getElementById('btnSentenceInfo');
+      if (infoBtn) {
+        const tr = (card.Translate || '').toString().trim();
+        const wc = (card.WordCategory || '').toString().trim();
+        if (tr) {
+          // Prevent tooltip duplicates accumulating in <body>
+          if (!infoBtn.dataset.tipMounted) {
+            attachTooltip(infoBtn, wc ? `${tr}\n${wc}` : tr);
+            infoBtn.dataset.tipMounted = "1";
+          }
         }
-      };
-    }
+      }
+    
+      const nextBtn = document.getElementById('inlineNext');
+      if (nextBtn) nextBtn.onclick = () => nextCard(1);
+    }, 0);
 
-  const infoBtn = document.getElementById('btnSentenceInfo');
-if (infoBtn){
-  const tr = (card.Translate || '').toString().trim();
-  const wc = (card.WordCategory || '').toString().trim();
-  if (tr){
-    attachTooltip(infoBtn, wc ? `${tr}\n${wc}` : tr);
-  }
-}
-
-
-  
-    const nextBtn = document.getElementById('inlineNext');
-    if (nextBtn) nextBtn.onclick = () => nextCard(1);
-  }, 0);
 
 } else {
   feedback.innerHTML = '';
