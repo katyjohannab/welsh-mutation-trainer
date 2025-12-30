@@ -1388,20 +1388,25 @@ if (state.revealed) {
       <!-- Completed sentence + audio -->
       <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
         <span>${esc(card.Before || '')}</span>
+      
         <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
-        <span>${esc(card.After || '')}</span>
-        ${((card.Translate || '').trim())
+      
+        ${(card.Translate || '').trim()
           ? `<button id="btnSentenceInfo"
+                    class="sentence-info-btn"
                     type="button"
-                    class="inline-info-btn"
-                    aria-label="${esc(state.lang === 'cy' ? 'Dangos ystyr' : 'Show translation')}">?</button>`
+                    aria-label="${esc(state.lang === 'cy' ? 'Ystyr' : 'Meaning')}"
+                    title="${esc(state.lang === 'cy' ? 'Ystyr' : 'Meaning')}">?</button>`
           : ``}
-
+      
+        <span>${esc(card.After || '')}</span>
+      
         <button id="btnHear" class="btn-hear" type="button">
           <span class="icon" aria-hidden="true">&#128266;</span>
           <span>${esc(t.hear)}</span>
         </button>
       </div>
+
 
       <!-- Explanation: only the 'Why' text if present -->
       ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ''}
@@ -1435,13 +1440,17 @@ setTimeout(() => {
         }
       };
     }
-  
-    const infoBtn = document.getElementById('btnSentenceInfo');
-    if (infoBtn) {
-      const tr = (card.Translate || '').toString().trim();
-      const wc = (card.WordCategory || '').toString().trim();
-      if (tr) attachTooltip(infoBtn, wc ? `${tr} · ${wc}` : tr);
-    }
+
+  const infoBtn = document.getElementById('btnSentenceInfo');
+if (infoBtn){
+  const tr = (card.Translate || '').toString().trim();
+  const wc = (card.WordCategory || '').toString().trim();
+  if (tr){
+    attachTooltip(infoBtn, wc ? `${tr}\n${wc}` : tr);
+  }
+}
+
+
   
     const nextBtn = document.getElementById('inlineNext');
     if (nextBtn) nextBtn.onclick = () => nextCard(1);
