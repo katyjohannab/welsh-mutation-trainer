@@ -679,7 +679,7 @@ function resolveFromRoot(path, root){
   if (!p) return '';
   if (isAbsUrl(p)) return p;
   // treat entries like "data/cards.csv" as site-root relative
-  return new URL(p.replace(/^\/+/,' '), root).toString();
+  return new URL(p.replace(/^\/+/,''), root).toString();
 }
 
 async function fetchIndexList(url){
@@ -696,7 +696,7 @@ async function loadAllDefault(){
 
   // Try local relative first (works on your deployed site)
   try{
-    list = await fetchIndexList('data/index.json');
+    list = await fetchIndexList('data/test.json');
   }catch(e){
     // Canvas preview often needs absolute
     try{
@@ -1206,27 +1206,29 @@ async function playPollySentence(sentence) {
       // When there are no active filters, hide the summary row to save vertical space
       summary.classList.add('hidden');
     }
-      const chips = document.createElement('div');
-      chips.className = 'practice-base text-2xl md:text-3xl font-medium';
-      
-      const capsule = document.createElement('div');
-      capsule.className = 'inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm';
-      
-      const baseSpan = document.createElement('span');
-      baseSpan.className = 'text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight';
-      baseSpan.textContent = (card.Base || '—');
-      
-      capsule.appendChild(baseSpan);
-      chips.appendChild(capsule);
-      
-      // Adds the ? only if card.Translate has content
-      mountBaseTranslationUI(capsule, card);
-      
 
-
+    // --- Base word capsule (with optional ? popover) ---
+    const chips = document.createElement('div');
+    chips.className = 'practice-base text-2xl md:text-3xl font-medium';
     
-    // Use translated instruction text
+    const capsule = document.createElement('div');
+    capsule.className = 'inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm';
+    
+    const baseSpan = document.createElement('span');
+    baseSpan.className = 'text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight';
+    baseSpan.textContent = (card.Base || '—');
+    
+    capsule.appendChild(baseSpan);
+    chips.appendChild(capsule);
+    
+    // Adds the ? only if card.Translate has content
+    mountBaseTranslationUI(capsule, card);
+    
+    // --- Instruction (THIS is what you accidentally removed) ---
+    const instruction = document.createElement('div');
+    instruction.className = 'practice-instruction text-lg md:text-xl text-slate-700 mb-6';
     instruction.innerHTML = esc(t.instruction);
+
 
     // Help box: show explanation in current language only, unless dismissed.  Use a collapsible
     // details element so users can expand/collapse.  Include a small dismiss button to
@@ -1335,6 +1337,12 @@ if (state.revealed) {
         <span>${esc(card.Before || '')}</span>
         <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
         <span>${esc(card.After || '')}</span>
+        ${((card.Translate || '').trim())
+          ? `<button id="btnSentenceInfo"
+                    type="button"
+                    class="inline-info-btn"
+                    aria-label="${esc(state.lang === 'cy' ? 'Dangos ystyr' : 'Show translation')}">?</button>`
+          : ``}
 
         <button id="btnHear" class="btn-hear" type="button">
           <span class="icon" aria-hidden="true">&#128266;</span>
@@ -1356,9 +1364,9 @@ if (state.revealed) {
       </div>
     </div>
   `;
-
-  // Wire up "Hear" and "Next" (they only exist when revealed)
-  setTimeout(() => {
+  
+// Wire up "Hear", the sentence ?, and "Next" (they only exist when revealed)
+setTimeout(() => {
     const hearBtn = document.getElementById('btnHear');
     if (hearBtn) {
       hearBtn.onclick = async () => {
@@ -1374,10 +1382,18 @@ if (state.revealed) {
         }
       };
     }
-
+  
+    const infoBtn = document.getElementById('btnSentenceInfo');
+    if (infoBtn) {
+      const tr = (card.Translate || '').toString().trim();
+      const wc = (card.WordCategory || '').toString().trim();
+      if (tr) attachTooltip(infoBtn, wc ? `${tr} · ${wc}` : tr);
+    }
+  
     const nextBtn = document.getElementById('inlineNext');
     if (nextBtn) nextBtn.onclick = () => nextCard(1);
   }, 0);
+
 } else {
   feedback.innerHTML = '';
 }
