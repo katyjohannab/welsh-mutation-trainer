@@ -984,40 +984,66 @@
 }
 
 /* Base popover */
-/* Base popover (move ABOVE the base capsule + slightly smaller) */
+
+/* Base popover: RIGHT of the base capsule on desktop */
 .base-info-popover{
   position: absolute;
-  top: auto;
-  bottom: calc(100% + 0.55rem);   /* ⬅️ opens upwards now */
-  right: 0;
-  z-index: 50;
+  left: calc(100% + 0.7rem);   /* opens to the right */
+  top: 50%;
+  transform: translateY(-50%);
+  right: auto;
+  bottom: auto;
 
-  width: min(16rem, calc(100vw - 24px));  /* smaller than before */
+  z-index: 50;
+  width: min(16rem, calc(100vw - 24px)); /* smaller + responsive */
   background: rgba(255,255,255,0.97);
   border: 1px solid rgba(15,23,42,0.14);
   border-radius: 0.9rem;
-  padding: 0.7rem 0.8rem;         /* tighter */
+  padding: 0.7rem 0.8rem;
   box-shadow: 0 18px 40px rgba(2,6,23,0.12);
   backdrop-filter: blur(12px);
 }
 
-/* Arrow now points DOWN to the capsule (because popover is above) */
+/* Arrow points LEFT toward the capsule */
 .base-info-popover::before{
   content:"";
   position:absolute;
-  top: auto;
-  bottom: -7px;                   /* ⬅️ moved to bottom */
-  right: 1.1rem;
+  left: -7px;
+  top: 50%;
   width: 14px;
   height: 14px;
-  transform: rotate(45deg);
+  transform: translateY(-50%) rotate(45deg);
   background: rgba(255,255,255,0.97);
 
-  border-right: 1px solid rgba(15,23,42,0.14);
+  border-left: 1px solid rgba(15,23,42,0.14);
   border-bottom: 1px solid rgba(15,23,42,0.14);
-  border-left: 0;
-  border-top: 0;
 }
+
+/* Make popover content a touch smaller */
+.base-info-meaning{ font-size: 0.92rem; }
+.base-info-meta{ font-size: 0.82rem; margin-top: 0.45rem; }
+.base-info-tag{ font-size: 0.78rem; padding: 0.12rem 0.45rem; }
+
+/* MOBILE: switch to BELOW + centered so it never goes off-screen */
+@media (max-width: 640px){
+  .base-info-popover{
+    left: 50%;
+    top: calc(100% + 0.6rem);
+    transform: translateX(-50%);
+    width: min(18rem, calc(100vw - 24px));
+  }
+
+  .base-info-popover::before{
+    left: 50%;
+    top: -7px;
+    transform: translateX(-50%) rotate(45deg);
+
+    border-left: 1px solid rgba(15,23,42,0.14);
+    border-top: 1px solid rgba(15,23,42,0.14);
+    border-bottom: 0;
+  }
+}
+
 
 /* Optional: slightly smaller text inside the popover */
 .base-info-meaning{
