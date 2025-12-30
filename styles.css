@@ -1185,6 +1185,160 @@
 }
 
 
+/* =========================
+   FINAL polish overrides
+   - HEAR + ? match
+   - Toggle typography fix
+   - Shuffle moved into actions row
+   ========================= */
+
+/* --- HEAR button: solid, crisp, matches theme reds/greens --- */
+.btn-hear{
+  display:inline-flex;
+  align-items:center;
+  gap: .42rem;
+
+  font-family: inherit;
+  font-weight: 750;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  padding: .26rem .62rem;
+  border-radius: 999px;
+
+  border: 2px solid var(--cymru-red);   /* ✅ uses your theme red */
+  background: #fff;                     /* ✅ NOT pastel/transparent */
+  color: var(--emerald-ink);            /* ✅ matches your green ink */
+
+  line-height: 1;
+  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.btn-hear .icon{
+  font-size: 0.95rem;
+  line-height: 1;
+  transform: translateY(-0.02em);
+}
+
+.btn-hear:hover{
+  background: rgba(4,120,87,0.06);      /* slightly stronger than before */
+  border-color: var(--cymru-red-ink);   /* ✅ stronger red on hover */
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.12);
+}
+
+.btn-hear:active{
+  transform: translateY(0px);
+  box-shadow: 0 6px 12px rgba(2,6,23,0.10);
+}
+
+/* --- ? buttons: EXACT same red + border weight feel as HEAR --- */
+.base-info-btn,
+.sentence-info-btn{
+  border: 2px solid var(--cymru-red);
+  background: #fff;
+  color: var(--emerald-ink);
+  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.base-info-btn:hover,
+.sentence-info-btn:hover{
+  background: rgba(4,120,87,0.06);
+  border-color: var(--cymru-red-ink);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.12);
+}
+
+.base-info-btn:active,
+.sentence-info-btn:active{
+  transform: translateY(0px);
+  box-shadow: 0 6px 12px rgba(2,6,23,0.10);
+}
+
+/* --- Segmented control: fix “ugly toggle font” + make it match page typography --- */
+#practiceCard .seg{
+  padding: 0.18rem;
+  gap: 0.22rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 8px 18px rgba(2,6,23,0.06);
+}
+
+#practiceCard .seg-btn{
+  padding: 0.44rem 0.90rem;
+  border-radius: 999px;
+
+  font-family: inherit;
+  font-size: 0.86rem;     /* closer to your UI text */
+  font-weight: 650;       /* less shouty */
+  letter-spacing: 0;      /* remove “weird badge” vibe */
+  text-transform: none;   /* stop accidental all-caps inheritance */
+
+  color: rgba(15,23,42,0.78);
+  background: transparent;
+  border: 1px solid transparent;
+
+  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
+              border-color .12s ease, filter .12s ease, color .12s ease;
+}
+
+#practiceCard .seg-btn:hover{
+  background: rgba(255,255,255,0.98);
+  border-color: rgba(148,163,184,0.34);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+}
+
+#practiceCard .seg-btn.is-on{
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+  border-color: rgba(255,255,255,0.16);
+  box-shadow: 0 12px 22px rgba(2,6,23,0.14), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+/* --- Actions row layout: main buttons left, Shuffle right with divider --- */
+#practiceCard .practice-actions{
+  justify-content: space-between !important;
+  align-items: center;
+  gap: 0.75rem !important;
+}
+
+#practiceCard .practice-actions-main{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap: 0.65rem;
+}
+
+#practiceCard .practice-actions-aux{
+  display:flex;
+  align-items:center;
+  margin-left:auto;
+}
+
+@media (min-width: 768px){
+  #practiceCard .practice-actions-aux{
+    padding-left: 0.85rem;
+    border-left: 1px solid rgba(15,23,42,0.10);
+  }
+}
+
+/* Shuffle button: secondary action, consistent with page */
+.btn-shuffle{
+  gap: .5rem;
+  border-color: rgba(217,119,6,0.35);
+  background: rgba(255,255,255,0.90);
+  color: var(--emerald-ink);
+}
+
+.btn-shuffle:hover{
+  background: rgba(217,119,6,0.10);
+  border-color: rgba(217,119,6,0.55);
+}
 
 
 
