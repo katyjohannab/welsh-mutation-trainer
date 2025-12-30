@@ -249,55 +249,55 @@
     }
 
     /* Custom style for the audio playback button.   */
+/* HEAR button — compact “chip-action”, crisp red/green, subtle gold */
+   .btn-hear{
+     display: inline-flex;
+     align-items: center;
+     gap: 0.38rem;
+   
+     padding: 0.22rem 0.58rem;
+     border-radius: 999px;
+   
+     background: #fff; /* solid, not translucent */
+     border: 1.5px solid var(--cymru-red-ink);
+     color: var(--emerald-ink);
+   
+     font-family: inherit;
+     font-weight: 600;
+     font-size: 0.80rem;
+     line-height: 1;
+     letter-spacing: 0.06em;
+     text-transform: uppercase;
+   
+     box-shadow: 0 1px 2px rgba(2,6,23,0.06);
+     transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
+     cursor: pointer;
+     user-select: none;
+     -webkit-tap-highlight-color: transparent;
+   }
+   
+   .btn-hear .icon{
+     font-size: 0.95rem;
+     line-height: 1;
+   }
+   
+   .btn-hear:hover{
+     background: #fff; /* keep crisp */
+     border-color: var(--cymru-red); /* slightly brighter red */
+     box-shadow:
+       0 2px 6px rgba(2,6,23,0.08),
+       inset 0 0 0 1px rgba(217,119,6,0.22); /* subtle gold highlight */
+   }
+   
+   .btn-hear:active{
+     box-shadow: 0 1px 2px rgba(2,6,23,0.06);
+   }
+   
+   .btn-hear:focus-visible{
+     outline: 3px solid var(--focus);
+     outline-offset: 2px;
+   }
 
-.btn-hear{
-  display:inline-flex;
-  align-items:center;
-  gap: .42rem;
-
-  font-family: inherit;
-  font-weight: 600;              /* matches your UI buttons */
-  font-size: 0.88rem;            /* explicitly prevents inheriting huge line text */
-  letter-spacing: 0;
-  text-transform: none;
-
-  padding: .26rem .58rem;        /* smaller */
-  border-radius: 999px;
-
-  border: 2px solid rgba(185,28,28,0.75);          /* red border */
-  background: linear-gradient(to bottom,
-    rgba(255,255,255,0.98),
-    rgba(217,119,6,0.06)                           /* subtle gold highlight */
-  );
-  color: rgba(6,78,59,0.98);                       /* green text */
-
-  box-shadow: 0 2px 0 rgba(6,78,59,0.10);
-  line-height: 1;
-
-  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
-  cursor: pointer;
-  user-select: none;
-}
-
-.btn-hear .icon{
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.btn-hear:hover{
-  background: linear-gradient(to bottom,
-    rgba(255,255,255,1),
-    rgba(4,120,87,0.08)                             /* gentle green wash */
-  );
-  border-color: rgba(185,28,28,0.9);
-  transform: translateY(-1px);
-  box-shadow: 0 12px 18px rgba(2,6,23,0.10);
-}
-
-.btn-hear:active{
-  transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.08);
-}
 
 
     /* Utility buttons (e.g. Shuffle cards). These echo the gold accent like the Hear button but take standard padding */
