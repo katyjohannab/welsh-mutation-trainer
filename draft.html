@@ -1342,13 +1342,7 @@ if (state.revealed) {
       
         <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
       
-        ${(card.Translate || '').trim()
-          ? `<button id="btnSentenceInfo"
-                    class="sentence-info-btn"
-                    type="button"
-                    aria-label="${esc(state.lang === 'cy' ? 'Ystyr' : 'Meaning')}"
-                    title="${esc(state.lang === 'cy' ? 'Ystyr' : 'Meaning')}">?</button>`
-          : ``}
+
       
         <span>${esc(card.After || '')}</span>
       
@@ -1392,18 +1386,7 @@ if (state.revealed) {
         };
       }
     
-      const infoBtn = document.getElementById('btnSentenceInfo');
-      if (infoBtn) {
-        const tr = (card.Translate || '').toString().trim();
-        const wc = (card.WordCategory || '').toString().trim();
-        if (tr) {
-          // Prevent tooltip duplicates accumulating in <body>
-          if (!infoBtn.dataset.tipMounted) {
-            attachTooltip(infoBtn, wc ? `${tr}\n${wc}` : tr);
-            infoBtn.dataset.tipMounted = "1";
-          }
-        }
-      }
+
     
       const nextBtn = document.getElementById('inlineNext');
       if (nextBtn) nextBtn.onclick = () => nextCard(1);
