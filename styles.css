@@ -452,6 +452,14 @@ body{
   margin-left:auto;
 }
 
+/*fix button alignment*/
+
+#practiceCard .practice-feedback .btn-hear{
+  align-self: center;      /* beats the flex baseline alignment */
+  vertical-align: middle;  /* helps if it ever becomes inline */
+  margin-left: .1rem;
+}
+
 /* Shuffle button should look like a real button (both class names supported) */
 .btn-shuffle,
 .btn-shuffleNow{
