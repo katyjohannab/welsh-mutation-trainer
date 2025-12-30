@@ -1,0 +1,1518 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welsh Mutation Trainer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
+  </style>
+<!-- Tailwind via CDN -->
+  
+  <!-- PapaParse for CSV loading -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  
+</head>
+
+<body class="min-h-screen text-slate-900">
+  <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
+
+    <header id="siteHeader" class="sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+
+        <div class="brand-lockup grow min-w-0">
+          <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyfforddwr</span><span class="title-trei">Treiglad</span></h1>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
+          <span id="itemCount" class="hidden text-xs text-slate-500"></span>
+          <span id="adminBadge" class="hidden text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Admin</span>
+
+          <!-- Primary nav -->
+          <div class="flex flex-wrap items-center gap-2">
+            <a id="btnLearn" class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
+            <button id="btnPractice" class="btn btn-primary" title="Practice mode">Practice</button>
+          </div>
+
+          <!-- Secondary actions for the Practice page -->
+          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="btnStats" class="btn btn-ghost" title="Stats">Stats</button>
+            <button id="btnFilters" class="btn btn-ghost" title="Filters">Filters</button>
+            <button id="btnBrowse" class="btn btn-ghost hidden" title="Browse all cards">Browse</button>
+            <button id="btnHelp" class="btn btn-ghost hidden" title="Help">Help</button>
+          </div>
+
+          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
+
+          <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
+        </div>
+
+      </div>
+      <div class="cymru-red-bar" aria-hidden="true"></div>
+    </header>
+
+    <!-- Onboarding -->
+    <section id="onboard" class="max-w-6xl mx-auto p-4 mt-3">
+      <div class="panel rounded-2xl p-4 flex items-start gap-3">
+        <div class="text-2xl">💡</div>
+        <div class="text-sm text-slate-700">
+          <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
+          <ol class="list-decimal ml-5 leading-relaxed">
+            <!-- Added explicit explanation of practice modes. Users can choose Random (random order) or Smart (adaptive Leitner) before practising. -->
+            <li>Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle the deck at any time. <b>Smart review</b> adapts to your progress using a spaced‑repetition (Leitner) system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at the top of the card to switch modes.</li>
+            <li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
+            <li>Read the sentence and type the correct form in the box.</li>
+            <li>Press <b>Check</b> to mark your answer.</li>
+            <li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li>
+          </ol>
+          <div class="mt-3 flex gap-2">
+            <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
+            <button id="onboardDismiss" class="btn btn-ghost">Got it</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main panels -->
+    <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
+      <div id="practiceView" class="grid md:grid-cols-3 gap-4 items-start">
+        <!-- Left: practice card -->
+        <div class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
+          <div id="practiceCard"></div>
+        </div>
+
+        <!-- Right: filters + session (stacked so layout never "jumps" when filters are hidden) -->
+        <div class="md:col-span-1 flex flex-col gap-4">
+          <!-- Filter controls (hidden by default; toggled via Filters button) -->
+          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+            <!-- Admin / Data panel: only visible when admin=1 -->
+            <div id="adminPanel" class="hidden mb-4">
+              <div class="text-sm font-medium mb-2">Admin tools</div>
+              <label class="text-sm font-medium">Data URL </label>
+              <div class="mt-2 flex gap-2">
+                <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
+                <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
+              </div>
+              <div class="mt-2 flex flex-wrap gap-2 text-sm">
+                <button id="btnShareable" class="btn btn-ghost px-3 py-1.5">Shareable link</button>
+                <button id="btnExportMisses" class="btn btn-ghost px-3 py-1.5">Export misses</button>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-medium mb-1">Load local CSV</div>
+                <input id="fileCsv" type="file" accept=".csv" />
+              </div>
+              <hr class="my-4" />
+            </div>
+            <!-- Focus filters -->
+            <div id="focusTitle" class="text-sm font-medium mb-2">Focus</div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div id="familyCol">
+                <div id="rulefamilyTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
+                <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div id="outcomeCol">
+                <div id="outcomeTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
+                <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div class="col-span-2">
+                <div id="categoriesTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
+                <div id="catBtns" class="flex flex-wrap gap-1"></div>
+              </div>
+              <div class="col-span-2">
+                <label id="triggerLabel" class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
+                <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
+              </div>
+              <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
+                <input id="nilOnly" type="checkbox" />
+                <span id="nilOnlyText">Nil‑cases only (no mutation expected)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Session / stats panel -->
+          <aside id="sessionPanel" class="panel rounded-2xl p-4">
+            <div class="text-sm font-medium mb-2">Session</div>
+            <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
+            <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
+            <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
+            <div class="mt-2 text-sm">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By outcome</div>
+              <ul id="byOutcome" class="space-y-1"></ul>
+              <div class="mt-2 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
+            </div>
+            <div class="mt-3 flex gap-2">
+              <button id="btnResetStats" class="btn btn-ghost px-3 py-1.5">Reset stats</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div id="browseView" class="hidden panel rounded-2xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr id="browseHead"></tr>
+          </thead>
+          <tbody id="browseBody"></tbody>
+        </table>
+      </div>
+
+      <div id="statsView" class="hidden grid md:grid-cols-2 gap-4">
+        <div class="panel rounded-2xl p-6">
+          <h2 class="text-lg font-medium mb-2">Accuracy</h2>
+          <div id="statsAcc" class="text-5xl font-bold">0%</div>
+          <div id="statsText" class="text-slate-600">0 correct out of 0</div>
+          <button id="btnResetStats2" class="mt-4 btn btn-ghost px-3 py-1.5">Reset</button>
+        </div>
+        <div class="panel rounded-2xl p-6">
+          <h2 class="text-lg font-medium mb-2">By outcome</h2>
+          <ul id="statsByOutcome" class="space-y-1 text-sm"></ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile action bar -->
+    <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
+      <div class="max-w-6xl mx-auto flex gap-2">
+        <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
+        <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
+        <button id="mbNext" title="Next (Enter)" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
+      </div>
+    </div>
+
+    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+      <div class="flex flex-wrap gap-4 items-center">
+        <span>© Hyffordwr Treiglad</span>
+        <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">Back to top</button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+  // ---------- Utilities ----------
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+
+  function normalize(s){
+    return (s||"").toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/’/g,"'").toLowerCase().trim().replace(/\s+/g,' ');
+  }
+  function esc(s){ return (s==null?'' : String(s)).replace(/[&<>"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+  function download(text, filename, type='text/plain'){
+    const blob = new Blob([text], {type});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+  }
+
+  // Attach a simple tooltip to a target element.  The tooltip will appear near the
+  // element on mouseover and hide on mouseout.  It uses the provided text and
+  // leverages a global CSS class defined in the head.  Tooltips are appended
+  // to the document body and reposition on show.
+  function attachTooltip(el, text){
+    if (!el || !text) return;
+    const tip = document.createElement('div');
+    tip.className = 'tooltip hidden';
+    tip.textContent = text;
+    document.body.appendChild(tip);
+    // Position the tooltip relative to the target element
+    function positionTip(){
+      const rect = el.getBoundingClientRect();
+      tip.style.top = `${rect.bottom + window.scrollY + 6}px`;
+      tip.style.left = `${rect.left + window.scrollX}px`;
+    }
+    el.addEventListener('mouseenter', () => {
+      tip.classList.remove('hidden');
+      positionTip();
+    });
+    el.addEventListener('mouseleave', () => {
+      tip.classList.add('hidden');
+    });
+  }
+  function getParam(k){ return new URLSearchParams(location.search).get(k); }
+
+  function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+  function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
+
+  // ---------- Smart review (Leitner) ----------
+  // Stored as: { [CardId]: boxNumber }
+  const LEITNER_LS_KEY = 'wm_leitner_boxes_v1';
+  const PRACTICE_MODE_LS_KEY = 'wm_practice_mode_v1';
+  const LEITNER_MAX_BOX = 5;
+  const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
+
+  function getCardId(card, idxFallback){
+    const raw = (card && (card.CardId ?? card.CardID ?? card.ID ?? card.Id));
+    const s = (raw == null ? '' : String(raw)).trim();
+    return s ? s : `row_${idxFallback}`;
+  }
+  function clampBox(n){
+    const x = Number(n);
+    if (!Number.isFinite(x)) return 1;
+    return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
+  }
+  function getBoxFor(cardId){
+    return clampBox(state.leitner?.[cardId] ?? 1);
+  }
+  function setBoxFor(cardId, box){
+    if (!state.leitner) state.leitner = {};
+    state.leitner[cardId] = clampBox(box);
+    saveLS(LEITNER_LS_KEY, state.leitner);
+  }
+  function updateLeitner(cardId, result){
+    // result: 'correct' | 'wrong' | 'skipped'
+    const cur = getBoxFor(cardId);
+    const next = (result === 'correct')
+      ? Math.min(LEITNER_MAX_BOX, cur + 1)
+      : 1;
+    setBoxFor(cardId, next);
+  }
+
+  function weightedPickBox(candidatesByBox){
+    let total = 0;
+    for (let b=1; b<=LEITNER_MAX_BOX; b++){
+      if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
+    }
+    if (!total) return 1;
+    let r = Math.random() * total;
+    for (let b=1; b<=LEITNER_MAX_BOX; b++){
+      if (!candidatesByBox[b]?.length) continue;
+      r -= LEITNER_WEIGHTS[b];
+      if (r <= 0) return b;
+    }
+    return 1;
+  }
+
+  function pickNextSmartIdx(){
+    const n = state.filtered?.length || 0;
+    if (!n) return 0;
+
+    // Decrement any queued retries, and serve the first due one (avoids immediate repeats).
+    if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+    if (state.smartQueue.length){
+      state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter||0) - 1));
+      const duePos = state.smartQueue.findIndex(item => (item.dueAfter||0) === 0 && item.idx !== state.smartIdx);
+      if (duePos >= 0){
+        const item = state.smartQueue.splice(duePos, 1)[0];
+        return item.idx;
+      }
+    }
+
+    const byBox = {1:[],2:[],3:[],4:[],5:[]};
+    for (let i=0; i<n; i++){
+      const id = getCardId(state.filtered[i], i);
+      const box = getBoxFor(id);
+      byBox[box].push(i);
+    }
+
+    let chosenBox = weightedPickBox(byBox);
+    if (!byBox[chosenBox].length){
+      for (let b=1; b<=LEITNER_MAX_BOX; b++){
+        if (byBox[b].length){ chosenBox = b; break; }
+      }
+    }
+
+    const pool = byBox[chosenBox] || [];
+    if (!pool.length) return Math.floor(Math.random() * n);
+
+    let idx = pool[Math.floor(Math.random() * pool.length)];
+    for (let tries=0; tries<6 && idx === state.smartIdx && pool.length > 1; tries++){
+      idx = pool[Math.floor(Math.random() * pool.length)];
+    }
+    return idx;
+  }
+
+
+  // ---------- Data coercion ----------
+  const PREP = new Set(["am","ar","at","dan","dros","tros","drwy","trwy","gan","heb","hyd","i","o","tan","wrth","yng","yn","gyda","hefo","â"]);
+  function getVal(row, names){
+    const keys = Object.keys(row || {});
+    for (const key of keys){
+      if (names.some(n => key.trim().toLowerCase() === n.trim().toLowerCase())){
+        return (row[key] ?? "").toString().trim();
+      }
+    }
+    return "";
+  }
+  function familyFromOutcome(outcome){
+    const o = (outcome||"").toUpperCase();
+    if (o==='SM') return 'Soft';
+    if (o==='AM') return 'Aspirate';
+    if (o==='NM') return 'Nasal';
+    if (o==='NONE') return 'None';
+    return '';
+  }
+  function coerceRow(row){
+    const r = row || {};
+    const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
+    const o = (rawOutcome || '').replace(/["']/g, '').toUpperCase();
+    const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
+    let famRaw = getVal(r, ["RuleFamily","Rule Family","Family"]).trim();
+    if (!famRaw) famRaw = familyFromOutcome(o);
+    let fam = famRaw;
+    if (famRaw.includes(',')) {
+      fam = famRaw.split(',')[0].trim();
+    }
+    return {
+      CardId: getVal(r, ["CardId","Card ID","ID","Id","id","cardId","card_id"]) || "",
+      RuleFamily: fam,
+      RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig||'').toLowerCase()) ? 'Preposition' : ''),
+      Trigger: trig,
+      Base: getVal(r, ["Base","Radical","Word","Base word","BaseWord"]),
+      WordCategory: getVal(r, ["WordCategory","Word Category","POS","Part of speech"]),
+      Before: getVal(r, ["Before","PromptBefore","Left","SentenceBefore"]),
+      After: getVal(r, ["After","PromptAfter","Right","SentenceAfter"]),
+      Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
+      Outcome: o,
+      Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"])
+    };
+  }
+
+  // ---------- App State ----------
+  const state = {
+    rows: [],
+    filtered: [],
+    families: loadLS('wm_families',["Soft","Aspirate","Nasal","None"]),
+    categories: loadLS('wm_categories',[]),
+    outcomes: loadLS('wm_outcomes',["SM","AM","NM","NONE"]),
+    triggerQuery: loadLS('wm_trig',''),
+    nilOnly: loadLS('wm_nil', false),
+    mode: loadLS('wm_mode','practice'),
+    practiceMode: loadLS(PRACTICE_MODE_LS_KEY, 'shuffle'),
+    leitner: loadLS(LEITNER_LS_KEY, {}),
+    smartIdx: null,
+    smartCount: 0,
+    smartQueue: [],
+    deck: [],
+    p: 0,
+    guess: '',
+    revealed: false,
+    lastResult: null,
+    history: loadLS('wm_hist',[]),
+    admin: getParam('admin') === '1',
+    freezeIdx: null,
+    freezePos: null
+  };
+  // Persist whether the user has dismissed the practice modes help box.  This prevents it
+  // from appearing again until localStorage is cleared.
+  const HELP_DISMISSED_KEY = 'wm_help_dismissed_v1';
+  state.helpDismissed = loadLS(HELP_DISMISSED_KEY, false);
+  // Track the UI language (default to English); persisted via localStorage
+  state.lang = loadLS('wm_lang', 'en');
+
+  // ---------- UI Translations ----------
+  // Provide translations for navigation, headings, instructions and other labels.
+  const LABEL = {
+    en: {
+      nav: {
+        Learn: 'Learn',
+        Practice: 'Practice',
+        Browse: 'Browse',
+        Stats: 'Stats',
+        Filters: 'Filters',
+        Help: 'Help'
+      },
+      headings: {
+        focus: 'Focus',
+        rulefamily: 'RuleFamily',
+        outcome: 'Outcome',
+        categories: 'Categories',
+        trigger: 'Filter by Trigger',
+        nilOnly: 'Nil-cases only (no mutation expected)'
+      },
+      categories: {
+        All: 'All',
+        'Adjective+Noun': 'Adjective+Noun',
+        Article: 'Article',
+        'Bod+yn' : 'Bod+Yn',
+        Complement: 'Complement',
+        Conjunction: 'Conjunction',
+        Deictic: 'Deictic',
+        Determiner: 'Determiner',
+        Intensifier: 'Intensifier',
+        Interrogative: 'Interrogative',
+        Negation: 'Negation',
+        Numerals: 'Numerals',
+        Particle: 'Particle',
+        PlaceName: 'PlaceName',
+        Possessive: 'Possessive',
+        Preposition: 'Preposition',
+        Presentative: 'Presentative',
+        Relative: 'Relative',
+        SubjectBoundary: 'SubjectBoundary',
+        Subordinator: 'Subordinator',
+        TimeExpressions: 'TimeExpressions'
+      },
+      rulefamily: {
+        Soft: 'Soft',
+        Aspirate: 'Aspirate',
+        Nasal: 'Nasal',
+        None: 'None',
+        SM: 'Soft',
+        AM: 'Aspirate',
+        NM: 'Nasal',
+        NONE: 'None'
+      },
+      instruction: 'Type the correct form. If no change is needed, repeat the base form.',
+      hint: 'Hint',
+      reveal: 'Reveal',
+      skip: 'Skip',
+      check: 'Check',
+      next: 'Next',
+      // Descriptive tooltips for practice modes
+      shuffleModeDesc: 'Random review: cards appear in a truly random order.',
+      smartModeDesc: 'Smart review: adapts to your progress and focuses on mistakes, repeating those cards more often.',
+      // Tooltip description for the shuffle action
+      shuffleNowDesc: 'Reshuffle the current deck (useful if you are seeing the same cards repeatedly).',
+      // Updated labels to clearly distinguish practice mode and shuffle action
+      shuffleNow: 'Shuffle cards',
+      shuffleModeLabel: 'Random review',
+      smartModeLabel: 'Smart review',
+      shuffleModeShort: 'Random',
+      smartModeShort: 'Smart',
+      cardLabel: 'Card',
+      reviewedLabel: 'Reviewed',
+      poolLabel: 'Pool',
+      howItWorksTitle: 'Practice modes',
+      // Updated descriptions: single language versions used per locale
+      howItWorksEN: 'Practice has two modes. In Random review cards appear in a truly random order – you can reshuffle the deck at any time. In Smart review the trainer adapts to you using a spaced‑repetition (Leitner) system: correct answers move cards up and they appear less often; wrong or skipped answers reset them to box 1 so they reappear sooner.',
+      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap – gallwch ailgymysgu’r dec unrhyw bryd. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae cardiau rydych yn eu hateb yn gywir yn symud i fyny ac yn ymddangos yn llai aml; mae cardiau anghywir neu wedi’u hepgor yn cael eu hailosod i flwch 1 fel eich bod yn eu gweld eto cyn bo hir.',
+
+      answerLabel: 'Answer',
+      triggerLabel: 'Trigger',
+      ruleLabel: 'Rule',
+      statuses: {
+        correct: 'Correct!',
+        wrong: 'Not quite',
+        skipped: 'Skipped'
+      },
+      youTyped: 'You typed',
+      blank: '(blank)',
+      hear: 'Hear'
+    },
+    cy: {
+      nav: {
+        Learn: 'Dysgu',
+        Practice: 'Ymarfer',
+        Browse: 'Pori',
+        Stats: 'Ystadegau',
+        Filters: 'Hidiau',
+        Help: 'Cymorth'
+      },
+      headings: {
+        focus: 'Ffocws',
+        rulefamily: 'Math Treiglad',
+        outcome: 'Canlyniad',
+        categories: 'Categorïau',
+        trigger: 'Hidlo yn ôl y sbardun',
+        nilOnly: 'Achosion dim-treiglad yn unig (dim treiglad disgwyliedig)'
+      },
+      categories: {
+        All: 'Pob un',
+        'Adjective+Noun': 'Ansoddair+Enw',
+        Article: 'Erthygl',
+        'Bod+yn': 'Bod+Yn',
+        Complement: 'Cyflenwad',
+        Conjunction: 'Cysylltair',
+        Deictic: 'Deictig',
+        Determiner: 'Penderfyniadur',
+        Intensifier: 'Dwysydd',
+        Interrogative: 'Holiadol',
+        Negation: 'Negydd',
+        Numerals: 'Rhifau',
+        Particle: 'Gronyn',
+        PlaceName: 'Enw lle',
+        Possessive: 'Meddiannol',
+        Preposition: 'Arddodiad',
+        Presentative: 'Cyflwyniadur',
+        Relative: 'Perthynol',
+        SubjectBoundary: 'Ar ôl pwnc',
+        Subordinator: 'Isgysylltair',
+        TimeExpressions: 'Mynegiadau Amser'
+      },
+      rulefamily: {
+        Soft: 'Meddal',
+        Aspirate: 'Llaes',
+        Nasal: 'Trwynol',
+        None: 'Dim',
+        SM: 'Meddal',
+        AM: 'Llaes',
+        NM: 'Trwynol',
+        NONE: 'Dim'
+      },
+      instruction: 'Teipiwch y ffurf gywir. Os nad oes treiglad, ailysgrifennwch y ffurf wreiddiol.',
+      hint: 'Awgrym',
+      reveal: 'Datgelu',
+      skip: 'Hepgor',
+      check: 'Gwirio',
+      next: 'Nesaf',
+      // Disgrifiadau cryno ar gyfer moddau ymarfer (ar gyfer hoff fanylion)
+      shuffleModeDesc: 'Adolygu ar hap: mae cardiau’n ymddangos mewn trefn wirioneddol ar hap.',
+      smartModeDesc: 'Adolygu clyfar: addasu i’ch cynnydd a phwysleisio camgymeriadau; mae’n ailadrodd cardiau anghywir yn amlach.',
+      // Disgrifiad ar gyfer ailgymysgu’r dec
+      shuffleNowDesc: 'Ailgymysgu’r dec presennol (yn ddefnyddiol os ydych chi’n gweld yr un cardiau dro ar ôl tro).',
+      shuffleNow: 'Cymysgu cardiau',
+      shuffleModeLabel: 'Adolygu ar hap',
+      smartModeLabel: 'Adolygu clyfar',
+      shuffleModeShort: 'Ar hap',
+      smartModeShort: 'Clyfar',
+      cardLabel: 'Cerdyn',
+      reviewedLabel: 'Wedi adolygu',
+      poolLabel: 'Set',
+      howItWorksTitle: 'Moddau ymarfer',
+      howItWorksEN: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae atebion cywir yn symud cardiau i fyny fel eu bod yn ymddangos yn llai aml; mae atebion anghywir neu wedi’u hepgor yn eu hailosod i flwch 1 fel eu bod yn ymddangos yn fuanach.',
+      howItWorksCY: 'Mae dau fodd ymarfer. Mae adolygu ar hap yn dangos cardiau mewn trefn wirioneddol ar hap. Mae adolygu clyfar yn addasu i’ch cynnydd gan ddefnyddio system Leitner: mae atebion cywir yn symud cardiau i fyny fel eu bod yn ymddangos yn llai aml; mae atebion anghywir neu wedi’u hepgor yn eu hailosod i flwch 1 fel eu bod yn ymddangos yn fuanach.',
+
+      answerLabel: 'Ateb',
+      triggerLabel: 'Sbardun',
+      ruleLabel: 'Rheol',
+      statuses: {
+        correct: 'Cywir!',
+        wrong: 'Dim yn hollol gywir',
+        skipped: 'Wedi ei hepgor'
+      },
+      youTyped: 'Teipioch chi',
+      blank: '(gwag)',
+      hear: 'Gwrando'
+    }
+  };
+
+  // Translate a label based on section and key
+  function label(section, key) {
+    const lang = state.lang || 'en';
+    return (LABEL?.[lang]?.[section]?.[key]) || key;
+  }
+
+  // Apply current language to UI elements. Called on load and when toggling.
+  function applyLanguage() {
+    const lang = state.lang || 'en';
+    // Nav buttons
+    const navLabels = LABEL[lang].nav;
+    if ($('#btnPractice')) {
+      $('#btnPractice').setAttribute('title', navLabels.Practice);
+      $('#btnPractice').textContent = navLabels.Practice;
+    }
+    if ($('#btnLearn')) {
+      $('#btnLearn').setAttribute('title', navLabels.Learn);
+      $('#btnLearn').textContent = navLabels.Learn;
+    }
+    if ($('#btnBrowse')) {
+      $('#btnBrowse').setAttribute('title', navLabels.Browse);
+      $('#btnBrowse').textContent = navLabels.Browse;
+    }
+    if ($('#btnStats')) {
+      $('#btnStats').setAttribute('title', navLabels.Stats);
+      $('#btnStats').textContent = navLabels.Stats;
+    }
+    if ($('#btnFilters')) {
+      $('#btnFilters').setAttribute('title', navLabels.Filters + ' (F)');
+      $('#btnFilters').textContent = navLabels.Filters;
+    }
+    if ($('#btnHelp')) {
+      $('#btnHelp').setAttribute('title', navLabels.Help);
+      $('#btnHelp').textContent = navLabels.Help;
+    }
+    // Language toggle text: show target language to switch to
+    const langBtn = $('#btnLangToggle');
+    if (langBtn) {
+      const nextLang = (lang === 'en') ? 'CY' : 'EN';
+      langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
+      langBtn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
+      langBtn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
+    }
+    // Filter headings
+    if ($('#focusTitle')) $('#focusTitle').textContent = LABEL[lang].headings.focus;
+    if ($('#rulefamilyTitle')) $('#rulefamilyTitle').textContent = LABEL[lang].headings.rulefamily;
+    if ($('#outcomeTitle')) $('#outcomeTitle').textContent = LABEL[lang].headings.outcome;
+    if ($('#categoriesTitle')) $('#categoriesTitle').textContent = LABEL[lang].headings.categories;
+    if ($('#triggerLabel')) $('#triggerLabel').textContent = LABEL[lang].headings.trigger;
+    if ($('#nilOnlyText')) $('#nilOnlyText').textContent = LABEL[lang].headings.nilOnly;
+    // Onboarding welcome message translation (simple example)
+    const onboardInst = $('#onboard .font-medium.mb-1');
+    if (onboardInst) {
+      if (lang === 'cy') onboardInst.textContent = "Croeso! Sut i ddefnyddio'r hyfforddwr hwn.";
+      else onboardInst.textContent = 'Welcome! How to use this trainer.';
+    }
+    // Onboarding buttons
+    if ($('#onboardFilters')) $('#onboardFilters').textContent = navLabels.Filters;
+    if ($('#onboardDismiss')) $('#onboardDismiss').textContent = (lang === 'cy' ? 'Iawn' : 'Got it');
+    // Stats panel buttons
+    if ($('#btnResetStats')) $('#btnResetStats').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
+    if ($('#btnResetStats2')) $('#btnResetStats2').textContent = (lang === 'cy' ? 'Ailosod ystadegau' : 'Reset stats');
+    if ($('#btnTop')) $('#btnTop').textContent = (lang === 'cy' ? 'Yn ôl i’r brig' : 'Back to top');
+    // Rebuild filters to apply translations to chips and headings
+    buildFilters();
+    // Re-render practice card with translated labels
+    render();
+  }
+
+  // ---------- Data loading ----------
+// Loads ONLY the sources listed in data/index.json (e.g. ["data/cards.csv"]).
+// In GitHub Pages this works via relative paths. In canvas preview, relative fetches may not resolve,
+// so we also try your live URLs as a fallback (NOT a demo dataset).
+
+const FALLBACK_INDEX_URL = 'https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json';
+const FALLBACK_SITE_ROOT = 'https://katyjohannab.github.io/welsh-mutation-trainer/';
+
+async function loadCsvUrl(u){
+  return new Promise((resolve, reject) => {
+    Papa.parse(u, {
+      download:true,
+      header:true,
+      skipEmptyLines:true,
+      complete: (res) => resolve(res.data),
+      error: reject
+    });
+  });
+}
+
+function isAbsUrl(u){ return /^https?:\/\//i.test(u || ''); }
+function resolveFromRoot(path, root){
+  const p = (path || '').toString().trim();
+  if (!p) return '';
+  if (isAbsUrl(p)) return p;
+  // treat entries like "data/cards.csv" as site-root relative
+  return new URL(p.replace(/^\/+/,' '), root).toString();
+}
+
+async function fetchIndexList(url){
+  const r = await fetch(url, { cache: 'no-store' });
+  if (!r.ok) throw new Error('Failed to fetch index: ' + url);
+  const j = await r.json();
+  if (!Array.isArray(j)) throw new Error('Index JSON is not an array: ' + url);
+  return j;
+}
+
+async function loadAllDefault(){
+  let list = null;
+  let usingFallbackRoot = false;
+
+  // Try local relative first (works on your deployed site)
+  try{
+    list = await fetchIndexList('data/index.json');
+  }catch(e){
+    // Canvas preview often needs absolute
+    try{
+      list = await fetchIndexList(FALLBACK_INDEX_URL);
+      usingFallbackRoot = true;
+    }catch(e2){
+      console.warn('Failed to load both local and fallback index.json', e, e2);
+      return [];
+    }
+  }
+
+  const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL('.', location.href).toString();
+  let merged = [];
+  for (const p of list){
+    const url = resolveFromRoot(p, root);
+    if (!url) continue;
+    try{
+      const d = await loadCsvUrl(url);
+      merged = merged.concat(d);
+    }catch(err){
+      console.warn('Failed to load source:', url, err);
+    }
+  }
+  return merged;
+}
+
+async function initData(){
+
+    const sheet = getParam('sheet');
+    let rows = [];
+    try{
+      if (sheet){ rows = await loadCsvUrl(sheet); }
+      else { rows = await loadAllDefault(); }
+    }catch(e){ console.warn('Data load failed; no demo fallback configured.', e); rows = await loadAllDefault(); }
+    const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+    const cleaned = rows.map(r => {
+      const m = coerceRow(r); const o = {};
+      for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
+      return o;
+    });
+    state.rows = cleaned;
+    $('#itemCount').textContent = `${state.rows.length} items`;
+    applyFilters();
+    rebuildDeck();
+    buildFilters();
+    render();
+  }
+
+  // ---------- Filters & Deck ----------
+  function buildFilters(){
+    const fams = new Set(); const cats = new Set();
+    for (const r of state.rows){ if (r.RuleFamily) fams.add(r.RuleFamily); if (r.RuleCategory) cats.add(r.RuleCategory); }
+    const outcomes = ["SM","AM","NM","NONE"];
+
+    const qs = $('#qs');
+    if (qs) {
+      qs.innerHTML = '';
+      qs.classList.add('hidden');
+    }
+
+    const famEl = $('#familyBtns'); famEl.innerHTML='';
+    for (const f of ["Soft","Aspirate","Nasal","None"]) {
+      // Translate the label but keep the original value as data-key
+      const labelText = (LABEL[state.lang]?.rulefamily?.[f]) || f;
+      const b = toggleBtn(labelText, state.families.includes(f), (on)=>{
+        state.families = on? Array.from(new Set([...state.families, f])) : state.families.filter(x=>x!==f);
+        saveLS('wm_families',state.families); applyFilters(); rebuildDeck(); buildFilters(); render();
+      });
+      b.dataset.key = f;
+      famEl.appendChild(b);
+    }
+
+    const outEl = $('#outcomeBtns');
+    outEl.innerHTML = '';
+    const outcomeCounts = {};
+    state.filtered.forEach(r => {
+      const o = (r.Outcome || '').toUpperCase();
+      if (!o) return;
+      outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
+    });
+    for (const o of outcomes) {
+      const count = outcomeCounts[o] || 0;
+      const label = `${o} (${count})`;
+      outEl.appendChild(
+        toggleBtn(label, state.outcomes.includes(o), (on) => {
+          state.outcomes = on
+            ? Array.from(new Set([...state.outcomes, o]))
+            : state.outcomes.filter((x) => x !== o);
+          saveLS('wm_outcomes', state.outcomes);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();
+          render();
+        })
+      );
+    }
+
+    const catEl = $('#catBtns');
+    catEl.innerHTML = '';
+    const allCatsActive = !state.categories.length;
+    const allLabel = (LABEL[state.lang]?.categories?.All) || 'All';
+    catEl.appendChild(
+      toggleBtn(
+        allLabel,
+        allCatsActive,
+        (on) => {
+          if (on) {
+            state.categories = [];
+          } else {
+            state.categories = [];
+          }
+          saveLS('wm_categories', state.categories);
+          applyFilters();
+          rebuildDeck();
+          buildFilters();
+          render();
+        }
+      )
+    );
+    for (const c of Array.from(cats).sort()) {
+      const active = state.categories.includes(c);
+      const cLabel = (LABEL[state.lang]?.categories?.[c]) || c;
+      const b = toggleBtn(cLabel, active, (on) => {
+        state.categories = on
+          ? Array.from(new Set([...state.categories, c]))
+          : state.categories.filter((x) => x !== c);
+        saveLS('wm_categories', state.categories);
+        applyFilters();
+        rebuildDeck();
+        buildFilters();
+        render();
+      });
+      b.dataset.key = c;
+      catEl.appendChild(b);
+    }
+
+    $('#triggerFilter').value = state.triggerQuery;
+    $('#triggerFilter').oninput = (e)=>{ state.triggerQuery = e.target.value; saveLS('wm_trig',state.triggerQuery); applyFilters(); rebuildDeck(); buildFilters(); render(); };
+    $('#nilOnly').checked = !!state.nilOnly;
+    $('#nilOnly').onchange = (e)=>{ state.nilOnly = e.target.checked; saveLS('wm_nil',state.nilOnly); applyFilters(); rebuildDeck(); buildFilters(); render(); };
+  }
+
+  function applyFilters(){
+    const allowedOutcomes = state.outcomes && state.outcomes.length ? state.outcomes : ['SM','AM','NM','NONE'];
+    let list = state.rows.filter(r =>
+      (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
+      (state.categories.length ? state.categories.includes(r.RuleCategory) : true) &&
+      (allowedOutcomes.includes((r.Outcome||'').toUpperCase()))
+    );
+    if (state.nilOnly) list = list.filter(r => (r.Outcome||'').toUpperCase()==='NONE');
+    if ((state.triggerQuery||'').trim()){
+      const q = normalize(state.triggerQuery);
+      list = list.filter(r => normalize(r.Trigger).includes(q));
+    }
+    state.filtered = list;
+  }
+
+  function rebuildDeck(){
+    const n = state.filtered.length;
+    const d = Array.from({length:n}, (_,i)=>i);
+    for (let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+    state.deck = d;
+    state.p = 0; state.guess=''; state.revealed=false; state.lastResult=null;
+    state.freezeIdx = null; state.freezePos = null;
+
+    // Reset any "show again soon" queue used by Smart review.
+    state.smartQueue = [];
+
+    if (state.practiceMode === 'smart'){
+      state.smartCount = 0;
+      state.smartIdx = pickNextSmartIdx();
+    } else {
+      state.smartIdx = null;
+      state.smartCount = 0;
+    }
+  }
+
+//build Sentence
+function buildCompleteSentence(card) {
+  const before = (card.Before || '').trimEnd();
+  const answer = (card.Answer || '').trim();
+  const after  = (card.After  || '').trimStart();
+
+  let s = [before, answer, after].filter(Boolean).join(' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
+  return s;
+}
+
+// ---------- TTS (Amazon Polly via your Lambda Function URL) ----------
+// PUT YOUR REAL FUNCTION URL HERE:
+// The user has provided their deployed Amazon Polly Lambda function URL.
+// Use this value to call the TTS service.
+const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
+
+// Cache MP3 blobs in-memory so repeated clicks don't keep calling AWS
+const ttsCache = new Map();
+
+//build Sentence
+function buildCompleteSentence(card) {
+  const before = (card.Before || '').trimEnd();
+  const answer = (card.Answer || '').trim();
+  const after  = (card.After  || '').trimStart();
+
+  let s = [before, answer, after].filter(Boolean).join(' ');
+  s = s.replace(/\s+/g, ' ').trim();
+  s = s.replace(/\s+([,.;:!?])/g, '$1'); // remove space before punctuation
+  return s;
+}
+
+async function playPollySentence(sentence) {
+  if (!sentence) throw new Error("No sentence to speak.");
+  if (!POLLY_FUNCTION_URL || POLLY_FUNCTION_URL.includes("PASTE_YOUR_LAMBDA_FUNCTION_URL_HERE")) {
+    throw new Error("POLLY_FUNCTION_URL isn't set. Paste your Lambda Function URL into the script.");
+  }
+
+  // Use cache if already generated this exact sentence
+  const cachedUrl = ttsCache.get(sentence);
+  if (cachedUrl) {
+    const audio = new Audio(cachedUrl);
+    await audio.play();
+    return;
+  }
+
+  const res = await fetch(POLLY_FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: sentence })
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(msg || `TTS failed (${res.status})`);
+  }
+
+  // Be tolerant: Lambda might return raw MP3 bytes OR JSON with base64
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+
+  let url = null;
+
+  if (ct.includes("audio") || ct.includes("octet-stream")) {
+    const buf = await res.arrayBuffer();
+    const blob = new Blob([buf], { type: "audio/mpeg" });
+    url = URL.createObjectURL(blob);
+  } else {
+    // JSON fallback: expects { audioBase64: "..."} or { audioContent: "..."} or { url: "..." }
+    const j = await res.json();
+    if (j.url) {
+      url = j.url;
+    } else if (j.audioBase64 || j.audioContent) {
+      const b64 = j.audioBase64 || j.audioContent;
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const blob = new Blob([bytes], { type: "audio/mpeg" });
+      url = URL.createObjectURL(blob);
+    } else {
+      throw new Error("TTS response wasn't audio and didn't include url/audioBase64/audioContent.");
+    }
+  }
+
+  ttsCache.set(sentence, url);
+
+  const audio = new Audio(url);
+  await audio.play();
+}
+
+
+
+  // ---------- Render ----------
+  function btn(label, extraClass, onClick){
+    const b = document.createElement('button');
+    b.className = `btn ${extraClass}`; b.textContent = label; b.onclick = onClick; return b;
+  }
+
+  function toggleBtn(label, active, onToggle){
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = `pill ${active ? 'pill-on' : ''}`;
+    b.textContent = label;
+    b.onclick = ()=> onToggle(!active);
+    return b;
+  }
+
+  function renderPractice(){
+    const host = $('#practiceCard'); host.innerHTML='';
+    // Determine current language and translation set
+    const lang = state.lang || 'en';
+    const t = LABEL[lang] || LABEL.en;
+    const n = state.filtered.length;
+    if (!n){ host.innerHTML = `<div class="text-slate-700 panel rounded-xl p-4">No cards match your filters. <button id="btnClearFilters" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button></div>`;
+      const cf = document.getElementById('btnClearFilters'); if (cf){ cf.addEventListener('click', ()=>{
+        state.families = ["Soft","Aspirate","Nasal","None"]; state.categories = []; state.outcomes = ["SM","AM","NM","NONE"]; state.triggerQuery = ''; state.nilOnly = false;
+        saveLS('wm_families',state.families); saveLS('wm_categories',state.categories); saveLS('wm_outcomes',state.outcomes); saveLS('wm_trig',state.triggerQuery); saveLS('wm_nil',state.nilOnly);
+        buildFilters(); applyFilters(); rebuildDeck(); render();
+      }); }
+      return; }
+    // Pick a current card depending on practice mode.
+    let idxNow;
+    let posText = '';
+    if (state.practiceMode === 'smart'){
+      if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
+      idxNow = state.smartIdx;
+      state.currentDeckPos = -1;
+      const reviewed = (state.smartCount || 0) + 1;
+      posText = `${t.reviewedLabel} ${reviewed} · ${t.poolLabel} ${n}`;
+      $('#cardPos').textContent = `${t.smartModeShort} · ${posText}`;
+    } else {
+      const deckIdx = state.p % state.deck.length;
+      idxNow = state.deck[deckIdx];
+      state.currentDeckPos = deckIdx;
+      const pos = state.deck.length ? (state.p % state.deck.length) + 1 : 0;
+      posText = `${t.cardLabel} ${pos} / ${state.deck.length || 0}`;
+      $('#cardPos').textContent = posText;
+    }
+
+    const idx = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
+    const card = state.filtered[idx];
+    state.currentIdx = idxNow;
+
+    const wrap = document.createElement('div');
+
+    // Header row (mode toggle + shuffle button)
+    const header = document.createElement('div');
+    header.className = 'flex flex-wrap items-center justify-between gap-2 mb-2';
+
+    const headerLeft = document.createElement('div');
+    headerLeft.className = 'flex flex-wrap items-center gap-2 text-xs text-slate-500';
+
+    // The mode label pill is redundant with the segmented control; only show the position text.
+    const posSpan = document.createElement('span');
+    posSpan.textContent = posText;
+    headerLeft.append(posSpan);
+
+    const headerRight = document.createElement('div');
+    headerRight.className = 'flex items-center gap-2';
+
+    const seg = document.createElement('div');
+    seg.className = 'seg';
+
+    const mkSegBtn = (label, value) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      const on = state.practiceMode === value;
+
+      // Styled segmented control button (see .seg / .seg-btn in styles.css)
+      b.className = `seg-btn ${on ? 'is-on' : ''}`;
+      b.textContent = label;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+
+      b.onclick = () => {
+        if (state.practiceMode === value) return;
+        state.practiceMode = value;
+        saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
+        rebuildDeck();
+        render();
+      };
+      return b;
+    };
+
+    seg.append(mkSegBtn(t.shuffleModeShort, 'shuffle'), mkSegBtn(t.smartModeShort, 'smart'));
+
+    const btnShuffleNow = document.createElement('button');
+    btnShuffleNow.type = 'button';
+    // Use utility button styling (amber tinted) so it stands apart from primary/secondary buttons
+    btnShuffleNow.className = 'btn btn-utility btn-shuffleNow';
+    btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
+    btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
+
+    headerRight.append(seg, btnShuffleNow);
+    header.append(headerLeft, headerRight);
+    // Active filters summary as chips
+    const summary = document.createElement('div');
+    summary.className = 'flex flex-wrap items-center gap-2 mb-4';
+    const addChip = (label, onClear) => {
+      const c = document.createElement('button');
+      c.type = 'button';
+      c.className = 'chip';
+      c.innerHTML = `<span>${esc(label)}</span>`;
+      if (onClear) {
+        const x = document.createElement('span');
+        x.className = 'ml-1';
+        x.textContent = '✕';
+        c.appendChild(x);
+        c.onclick = onClear;
+      }
+      return c;
+    };
+
+    
+    // Build active filter chips only if there are restrictions (fewer than all families/outcomes selected, any categories, trigger query, or nilOnly)
+    const anyRestriction =
+      (state.families.length && state.families.length < 4) ||
+      (state.outcomes.length && state.outcomes.length < 4) ||
+      state.categories.length ||
+      (state.triggerQuery && state.triggerQuery.trim()) ||
+      state.nilOnly;
+
+    if (anyRestriction) {
+      // Families: translate the mutation names via label() helper
+      if (state.families.length && state.families.length < 4) {
+        state.families.forEach(f => {
+          const translated = label('rulefamily', f);
+          summary.appendChild(addChip(translated));
+        });
+      }
+      // Outcomes: also translate via rulefamily mapping (SM→Soft, etc.)
+      if (state.outcomes.length && state.outcomes.length < 4) {
+        state.outcomes.forEach(o => {
+          const translated = label('rulefamily', o);
+          summary.appendChild(addChip(translated));
+        });
+      }
+      // Categories: translate category labels
+      if (state.categories.length) {
+        state.categories.forEach(ca => {
+          const translated = label('categories', ca);
+          summary.appendChild(addChip(translated));
+        });
+      }
+      // Trigger query: show a label appropriate to the current language
+      if (state.triggerQuery && state.triggerQuery.trim()) {
+        const trigLabel = (state.lang === 'cy' ? 'Sbardun' : 'Trigger');
+        summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
+      }
+      // Nil-only: use the heading translation
+      if (state.nilOnly) {
+        summary.appendChild(addChip(label('headings', 'nilOnly')));
+      }
+      // Clear chip: provide a way to reset all filters
+      summary.appendChild(addChip(state.lang === 'cy' ? 'Clirio' : 'Clear', () => {
+        state.families = ["Soft","Aspirate","Nasal","None"];
+        state.categories = [];
+        state.outcomes = ["SM","AM","NM","NONE"];
+        state.triggerQuery = '';
+        state.nilOnly = false;
+        saveLS('wm_families', state.families);
+        saveLS('wm_categories', state.categories);
+        saveLS('wm_outcomes', state.outcomes);
+        saveLS('wm_trig', state.triggerQuery);
+        saveLS('wm_nil', state.nilOnly);
+        applyFilters(); rebuildDeck(); buildFilters(); render();
+      }));
+    } else {
+      // When there are no active filters, hide the summary row to save vertical space
+      summary.classList.add('hidden');
+    }
+    const chips = document.createElement('div'); chips.className = 'practice-base text-2xl md:text-3xl font-medium';
+    chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
+    const instruction = document.createElement('div'); instruction.className='practice-instruction text-lg md:text-xl text-slate-700 mb-6';
+    // Use translated instruction text
+    instruction.innerHTML = esc(t.instruction);
+
+    // Help box: show explanation in current language only, unless dismissed.  Use a collapsible
+    // details element so users can expand/collapse.  Include a small dismiss button to
+    // permanently hide this panel.  Once dismissed it will not render again (until localStorage is cleared).
+    let helpBox = null;
+    if (!state.helpDismissed) {
+      helpBox = document.createElement('details');
+      helpBox.className = 'practice-help panel p-3 rounded-2xl mb-4 text-sm text-slate-700';
+      const desc = (state.lang === 'cy') ? t.howItWorksCY : t.howItWorksEN;
+      helpBox.innerHTML = `
+        <summary class="cursor-pointer font-semibold text-slate-800">${esc(t.howItWorksTitle)}</summary>
+        <div class="mt-3 space-y-3">
+          <p>${esc(desc)}</p>
+          <div class="flex justify-end">
+            <button type="button" id="dismissHelp" class="btn btn-ghost px-2 py-1 text-xs">${state.lang === 'cy' ? 'Cau' : 'Close'}</button>
+          </div>
+        </div>
+      `;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'practice-sentence';
+    row.innerHTML = `
+      <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
+        <span class="text-slate-600">${esc(card.Before || '')}</span>
+        <input id="answerBox" class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0" placeholder="${esc(t.answerLabel)}" aria-label="${esc(t.answerLabel)}" />
+        <span class="text-slate-600">${esc(card.After || '')}</span>
+      </div>
+    `;
+    const actions = document.createElement('div'); actions.className='practice-actions flex flex-wrap gap-3';
+    const btnCheck = btn(t.check,'btn-primary shadow', onCheck); btnCheck.id='btnCheck'; btnCheck.title = t.check + ' (Enter)';
+    const btnHint  = btn(t.hint,'btn-ghost', ()=>{ hint.classList.toggle('hidden'); $('#answerBox').focus(); }); btnHint.id='btnHint'; btnHint.title = t.hint + ' (H)';
+    const btnReveal= btn(t.reveal,'btn-ghost', ()=>{ state.revealed = !state.revealed; render(); });
+    const btnSkip  = btn(t.skip,'btn-ghost', ()=>{
+      // Reveal the answer instead of jumping away, so we have a full sentence to speak.
+      state.guess = '';
+      state.revealed = true;
+      state.lastResult = 'skipped';
+      state.freezeIdx = state.currentIdx;
+      state.freezePos = state.currentDeckPos;
+
+
+      // Record skip as a miss (for stats + Smart review).
+      const shownIdx = state.freezeIdx;
+      const shownCard = state.filtered[shownIdx];
+      const cardId = getCardId(shownCard, shownIdx);
+      state.history.push({
+        t: Date.now(),
+        ok: false,
+        key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
+        cardId,
+        expected: shownCard.Answer,
+        got: '',
+        mode: state.practiceMode,
+        skipped: true,
+      });
+      saveLS('wm_hist', state.history);
+      updateLeitner(cardId, 'skipped');
+      if (state.practiceMode === 'smart'){
+        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+        state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
+      }
+    
+      // Disable input like Check does (so it feels consistent)
+      const ab2 = document.getElementById('answerBox');
+      if (ab2){
+        ab2.disabled = true;
+        ab2.classList.add('opacity-70','cursor-not-allowed');
+      }
+    
+      render();
+    });
+ actions.append(btnCheck, btnHint, btnReveal, btnSkip);
+
+// Hint (no mt-* here; let the layout wrapper control spacing)
+const hint = document.createElement('div');
+hint.className = 'hidden practice-hint text-sm text-slate-600';
+hint.innerHTML = `${esc(t.hint)}: starts with <b>${(card.Answer || '').slice(0, 1) || '?'}</b>`;
+
+// Feedback container: always present, but only filled when revealed
+const feedback = document.createElement('div');
+feedback.setAttribute('aria-live', 'polite');
+feedback.className = 'practice-feedback';
+
+if (state.revealed) {
+  const ok = state.lastResult === 'correct';
+  const skipped = state.lastResult === 'skipped';
+
+  const statusIcon = skipped ? '⏭️' : (ok ? '✅' : '❌');
+  const statusColor = skipped ? 'text-slate-800' : (ok ? 'text-indigo-900' : 'text-rose-900');
+  const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
+
+  feedback.innerHTML = `
+    <div class="feedback-box">
+      <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
+        ${statusIcon} ${esc(statusText)}
+      </div>
+
+      ${(!ok && !skipped)
+        ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
+        : ''
+      }
+
+      <!-- Completed sentence + audio -->
+      <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
+        <span>${esc(card.Before || '')}</span>
+        <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
+        <span>${esc(card.After || '')}</span>
+
+        <button id="btnHear" class="btn-hear" type="button">
+          <span class="icon" aria-hidden="true">&#128266;</span>
+          <span>${esc(t.hear)}</span>
+        </button>
+      </div>
+
+      <!-- Explanation: only the 'Why' text if present -->
+      ${card.Why ? `<div class="mt-4 text-slate-700">${esc(card.Why)}</div>` : ''}
+
+      <!-- Next stays visually "inside" the result card -->
+      <div class="mt-4 flex justify-end">
+        <button id="inlineNext"
+                class="btn btn-primary shadow transition"
+                type="button"
+                title="${esc(t.next)} (Enter)">
+          ${esc(t.next)}
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Wire up "Hear" and "Next" (they only exist when revealed)
+  setTimeout(() => {
+    const hearBtn = document.getElementById('btnHear');
+    if (hearBtn) {
+      hearBtn.onclick = async () => {
+        try {
+          const sentence = buildCompleteSentence({
+            Before: card.Before,
+            Answer: card.Answer,
+            After: card.After
+          });
+          await playPollySentence(sentence);
+        } catch (e) {
+          alert("Couldn't play audio: " + (e?.message || e));
+        }
+      };
+    }
+
+    const nextBtn = document.getElementById('inlineNext');
+    if (nextBtn) nextBtn.onclick = () => nextCard(1);
+  }, 0);
+} else {
+  feedback.innerHTML = '';
+}
+
+    // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
+    const parts = [header, summary, instruction];
+    if (helpBox) parts.push(helpBox);
+    // Compose sentence, actions, hint and feedback into a single block for consistent spacing
+    const answerBlock = document.createElement('div');
+    answerBlock.className = 'practice-answerBlock';
+    answerBlock.append(row, actions, hint, feedback);
+    parts.push(chips, answerBlock);
+    wrap.append(...parts);
+    // If the helpBox is rendered, attach a click handler to dismiss it permanently
+    if (helpBox) {
+      const dismissBtn = helpBox.querySelector('#dismissHelp');
+      if (dismissBtn) {
+        dismissBtn.onclick = () => {
+          state.helpDismissed = true;
+          saveLS(HELP_DISMISSED_KEY, true);
+          render();
+        };
+      }
+    }
+    host.appendChild(wrap);
+    const ab = $('#answerBox');
+    ab.value = state.guess; ab.focus();
+    ab.addEventListener('keydown', (e)=>{ if (e.key==='Enter') { e.preventDefault(); e.stopPropagation(); onCheck(); } });
+    ab.addEventListener('input', (e)=>{ state.guess = e.target.value; });
+    function onCheck(){
+      const ok = normalize(state.guess) === normalize(card.Answer);
+      state.revealed = true; state.lastResult = ok? 'correct':'wrong';
+      state.freezeIdx = state.currentIdx;
+      state.freezePos = state.currentDeckPos;
+
+      const cardId = getCardId(card, idx);
+      const rec = { t: Date.now(), ok, key: `${card.RuleCategory}:${card.Trigger}:${card.Base}`, cardId, expected: card.Answer, got: state.guess, mode: state.practiceMode };
+      state.history = [rec, ...state.history].slice(0, 500); saveLS('wm_hist', state.history);
+      updateLeitner(cardId, ok ? 'correct' : 'wrong');
+      if (!ok && state.practiceMode === 'smart'){
+        if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
+        state.smartQueue.push({ idx, dueAfter: 2 });
+      }
+      const ab2 = document.getElementById('answerBox'); if (ab2){ ab2.disabled = true; ab2.classList.add('opacity-70','cursor-not-allowed'); }
+      setTimeout(()=> document.getElementById('inlineNext')?.focus(), 0);
+      render();
+    }
+  }
+
+  function renderBrowse(){
+    const head = $('#browseHead'); const body = $('#browseBody');
+    head.innerHTML = ''; body.innerHTML = '';
+    const cols = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+    for (const h of cols){ const th = document.createElement('th'); th.className='text-left p-2 border-b'; th.textContent = h; head.appendChild(th); }
+    state.filtered.forEach((r,i)=>{
+      const tr = document.createElement('tr'); tr.className = (i%2? 'bg-white':'bg-slate-50');
+      for (const k of cols){ const td = document.createElement('td'); td.className='p-2 align-top'; td.textContent = (k==='Outcome'? (r[k]||'').toUpperCase(): r[k]); if (k==='Answer') td.classList.add('font-semibold'); if (k==='Why') td.classList.add('text-slate-600'); tr.appendChild(td); }
+      body.appendChild(tr);
+    });
+  }
+
+  function computeStats(){
+    const total = state.history.length; const correct = state.history.filter(h=>h.ok).length;
+    const acc = total? Math.round((correct/total)*100) : 0;
+    const by = {};
+    for (const h of state.history){
+      const r = state.rows.find(r => `${r.RuleCategory}:${r.Trigger}:${r.Base}`===h.key); const out = (r?.Outcome||'?').toUpperCase();
+      by[out] = by[out] || { total:0, ok:0 }; by[out].total++; if (h.ok) by[out].ok++;
+    }
+    return { total, correct, acc, by };
+  }
+
+  function renderStatsPanels(){
+    const s = computeStats();
+    $('#accBig').textContent = `${s.acc}%`;
+    $('#accText').textContent = `${s.correct} / ${s.total} correct`;
+    $('#statsAcc').textContent = `${s.acc}%`;
+    $('#statsText').textContent = `${s.correct} correct out of ${s.total}`;
+    const ul1 = $('#byOutcome'); ul1.innerHTML='';
+    const ul2 = $('#statsByOutcome'); ul2.innerHTML='';
+    for (const [k,v] of Object.entries(s.by)){
+      const li1 = document.createElement('li'); li1.className='flex justify-between'; li1.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul1.appendChild(li1);
+      const li2 = document.createElement('li'); li2.className='flex justify-between'; li2.innerHTML = `<span>${k}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`; ul2.appendChild(li2);
+    }
+  }
+
+  function render(){
+    $('#practiceView').classList.toggle('hidden', state.mode!=='practice');
+    $('#browseView').classList.toggle('hidden', state.mode!=='browse');
+    $('#statsView').classList.toggle('hidden', state.mode!=='stats');
+    renderPractice();
+    if (state.mode==='browse') renderBrowse();
+    renderStatsPanels();
+  }
+
+  function nextCard(offset=1){
+    if (state.practiceMode === 'smart'){
+      if (!state.filtered.length) return;
+      state.freezeIdx = null; state.freezePos = null;
+      state.smartIdx = pickNextSmartIdx();
+      state.smartCount = (state.smartCount || 0) + 1;
+      state.guess=''; state.revealed=false; state.lastResult=null;
+      render();
+      return;
+    }
+
+    if (!state.deck.length) return;
+    if (state.lastResult === 'wrong' && state.freezeIdx != null && state.freezePos != null){
+      const idxVal = state.freezeIdx;
+      let deckPos = state.freezePos;
+      if (state.deck[deckPos] !== idxVal){
+        deckPos = state.deck.indexOf(idxVal);
+      }
+      if (deckPos >= 0){
+        const newDeck = state.deck.slice();
+        newDeck.splice(deckPos, 1);
+        const insertAt = Math.min(deckPos + 3, newDeck.length);
+        newDeck.splice(insertAt, 0, idxVal);
+        state.deck = newDeck;
+      }
+    }
+    state.freezeIdx = null; state.freezePos = null;
+    state.p = (state.p + offset + state.deck.length) % state.deck.length;
+    state.guess=''; state.revealed=false; state.lastResult=null;
+    render();
+  }
+
+  // ---------- Event wiring ----------
+  function wireUi(){
+    $('#btnPractice').onclick = ()=>{ state.mode='practice'; saveLS('wm_mode',state.mode); render(); };
+    $('#btnBrowse').onclick   = ()=>{ state.mode='browse';   saveLS('wm_mode',state.mode); render(); };
+    $('#btnStats').onclick    = ()=>{ state.mode='stats';    saveLS('wm_mode',state.mode); render(); };
+    $('#btnFilters').onclick  = ()=>{ $('#filtersPanel')?.classList.toggle('hidden'); };
+    $('#btnHelp').onclick     = ()=>{ $('#onboard')?.classList.remove('hidden'); window.scrollTo({top:0, behavior:'smooth'}); };
+    // Language toggle: switch between English and Welsh
+    $('#btnLangToggle')?.addEventListener('click', () => {
+      state.lang = (state.lang === 'en') ? 'cy' : 'en';
+      saveLS('wm_lang', state.lang);
+      applyLanguage();
+    });
+    $('#onboardFilters')?.addEventListener('click', () => {
+      const onboard = $('#onboard');
+      if (onboard) onboard.classList.add('hidden');
+      $('#filtersPanel')?.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    $('#onboardDismiss')?.addEventListener('click', () => {
+      const onboard = $('#onboard');
+      if (onboard) onboard.classList.add('hidden');
+    });
+    $('#btnResetStats').onclick = $('#btnResetStats2').onclick = ()=>{ state.history=[]; saveLS('wm_hist',state.history); render(); };
+    $('#btnTop').onclick = ()=> window.scrollTo({top:0, behavior:'smooth'});
+    document.addEventListener('keydown', (e)=>{
+      const tag = (e.target && e.target.tagName) || '';
+      if (['INPUT','TEXTAREA'].includes(tag.toUpperCase())) return;
+      if (state.mode !== 'practice') return;
+      const k = e.key;
+      if (k === 'Enter') {
+        e.preventDefault();
+        if (!state.revealed) { document.getElementById('btnCheck')?.click(); }
+        else { document.getElementById('inlineNext')?.click(); }
+      } else if (k.toLowerCase() === 'n') {
+        document.getElementById('inlineNext')?.click();
+      } else if (k.toLowerCase() === 'h') {
+        document.getElementById('btnHint')?.click();
+      } else if (k.toLowerCase() === 's') {
+        nextCard(1);
+      } else if (k.toLowerCase() === 'f') {
+        document.getElementById('btnFilters')?.click();
+      }
+    });
+    $('#mbCheck')?.addEventListener('click', ()=> document.getElementById('btnCheck')?.click());
+    $('#mbNext')?.addEventListener('click', ()=> document.getElementById('inlineNext')?.click() || nextCard(1));
+    $('#mbHint')?.addEventListener('click', ()=> document.getElementById('btnHint')?.click());
+    if (state.admin){
+      $('#adminBadge').classList.remove('hidden');
+      $('#adminPanel').classList.remove('hidden');
+      $('#dataUrl').value = getParam('sheet') || '';
+      $('#btnLoadUrl').onclick = async ()=>{
+        const u = $('#dataUrl').value.trim(); if (!u) return;
+        const d = await loadCsvUrl(u); state.rows = d.map(coerceRow);
+        applyFilters(); rebuildDeck(); render();
+      };
+      $('#btnShareable').onclick = ()=>{
+        const u = $('#dataUrl').value.trim(); if (!u) return alert('Enter a URL first.');
+        const link = location.origin + location.pathname + `?sheet=${encodeURIComponent(u)}`;
+        navigator.clipboard?.writeText(link); alert('Copied: '+link);
+      };
+      $('#btnExportMisses').onclick = ()=>{
+        const misses = state.history.filter(h=>!h.ok);
+        const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
+        for (const m of misses){
+          const [cat,trig,base] = m.key.split(':');
+          lines.push([cat,trig,base,m.expected,m.got,new Date(m.t).toISOString()].map(s=>`\"${(s||'').replaceAll('\"','\"\"')}\"`).join(','));
+        }
+        download(lines.join('\n'), 'mutation-trainer-misses.csv', 'text/csv');
+      };
+      $('#fileCsv').onchange = (e)=>{
+        const f = e.target.files?.[0]; if (!f) return;
+        Papa.parse(f, { header:true, skipEmptyLines:true, complete:(res)=>{ state.rows = res.data.map(coerceRow); applyFilters(); rebuildDeck(); render(); } });
+      };
+    }
+    if (getParam('preset')==='prepositions'){
+      state.categories=['Preposition']; saveLS('wm_categories',state.categories);
+    }
+  }
+
+
+  
+  // ---------- Boot ----------
+  (async function(){
+    wireUi();
+    await initData();
+    // Apply language settings after data and UI are ready
+    applyLanguage();
+  })();
+  </script>
+</body>
+</html>
