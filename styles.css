@@ -1,708 +1,258 @@
- html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html{
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial,
+    "Apple Color Emoji","Segoe UI Emoji";
+}
+body{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-    /*Fonts Styling*/
-    .bbh-bogle-regular {
-      font-family: "BBH Bogle", sans-serif;
-      font-weight: 400;
-      font-style: normal;
-    }
+/* Fonts Styling */
+.bbh-bogle-regular{ font-family: "BBH Bogle", sans-serif; font-weight: 400; font-style: normal; }
+.bbh-hegarty-regular{ font-family: "BBH Hegarty", sans-serif; font-weight: 400; font-style: normal; }
+.merriweather-title{
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: italic;
+  font-variation-settings: "wdth" 100;
+}
+.inter-body{
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.roboto-body{
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
 
-    .bbh-hegarty-regular {
-      font-family: "BBH Hegarty", sans-serif;
-      font-weight: 400;
-      font-style: normal;
-    }
+/* -------------------------
+   Theme
+------------------------- */
+:root{
+  --primary-from: #0b7a5a;
+  --primary-mid:  #065f46;
+  --primary-to:   #064e3b;
 
-    .merriweather-title {
-      font-family: "Merriweather", serif;
-      font-optical-sizing: auto;
-      font-weight: 700;
-      font-style: italic;
-      font-variation-settings:
-        "wdth" 100;
-    }
+  --page: #fbfbf7;
+  --page-tint: rgba(6,95,70,0.04);
 
-    .inter-body {
-      font-family: "Inter", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-    }
+  --surface: rgba(255,255,255,0.94);
+  --border: rgba(15,23,42,0.10);
+  --shadow: 0 12px 30px rgba(15,23,42,0.06);
 
-    .roboto-body {
-      font-family: "Roboto", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-      font-variation-settings:
-        "wdth" 100;
-    }
+  --text: #0f172a;
+  --muted: #475569;
 
-    /* -------------------------
-       Theme
-    ------------------------- */
-    :root {
-      /* primary button gradient (emerald) */
-      --primary-from: #0b7a5a; /* lighter title-green */
-      --primary-mid:  #065f46; /* title-green mid */
-      --primary-to:   #064e3b; /* title ink */
+  --emerald-ink: #064e3b;
+  --gold: #d97706;
+  --cymru-red: #b91c1c;
+  --cymru-red-ink: #991b1b;
 
-      /* page */
-      --page: #fbfbf7;                 /* warm paper */
-      --page-tint: rgba(6,95,70,0.04); /* faint green wash */
+  --chip-bg: rgba(4,120,87,0.10);
+  --chip-bd: rgba(4,120,87,0.22);
+  --chip-fg: #065f46;
 
-      /* surfaces */
-      --surface: rgba(255,255,255,0.94);
-      --border: rgba(15,23,42,0.10);
-      --shadow: 0 12px 30px rgba(15,23,42,0.06);
+  --focus: rgba(4,120,87,0.35);
 
-      /* text */
-      --text: #0f172a;
-      --muted: #475569;
+  /* Shared caps style (toggle / hear / shuffle) */
+  --ui-caps-size: 0.78rem;
+  --ui-caps-weight: 800;
+  --ui-caps-track: 0.10em;
+}
 
-      /* accents */
-      --emerald-ink: #064e3b;
-      --gold: #d97706;
-      --cymru-red: #b91c1c;      /* red-700 */
-      --cymru-red-ink: #991b1b;  /* red-800 */
+body{
+  background: var(--page);
+  background-image:
+    radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
+    radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%),
+    radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.015), transparent 55%);
+  color: var(--text);
+}
 
-      /* chips */
-      --chip-bg: rgba(4,120,87,0.10);
-      --chip-bd: rgba(4,120,87,0.22);
-      --chip-fg: #065f46;
+/* Glass panel */
+.panel{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+}
 
-      --focus: rgba(4,120,87,0.35);
-    }
+/* Header must always be on top */
+#siteHeader{
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 
-    body{
-      background: var(--page);
-      background-image:
-        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
-        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.03), transparent 55%),
-        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.02), transparent 60%);
-      color: var(--text);
-    }
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+}
 
-    /* Glass panel used for cards, filters and stats */
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
+/* Red ribbon */
+.cymru-red-bar{
+  height: 3px;
+  background: linear-gradient(90deg,
+    rgba(6,78,59,0) 0%,
+    rgba(6,78,59,1) 30%,
+    rgba(153,27,27,1) 70%,
+    rgba(153,27,27,0) 100%
+  );
+}
 
-    /* red gradient bar under header */
-    .cymru-red-bar{
-      height: 3px;
-      /* Tie the brand together: emerald → Cymru red */
-      background: linear-gradient(to right,
-        transparent 0%,
-        rgba(4,120,87,0.20) 12%,
-        rgba(4,120,87,0.92) 28%,
-        rgba(4,120,87,1.00) 40%,
-        rgba(185,28,28,1.00) 60%,
-        rgba(185,28,28,0.92) 72%,
-        rgba(185,28,28,0.20) 88%,
-        transparent 100%
-      );
-    }
+/* Brand lockup */
+.brand-lockup{
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+  min-width:0;
+}
 
-    /* Brand lockup (icon + title) */
-    .brand-lockup{
-      display:flex;
-      align-items:center;
-      gap:.65rem;
-      min-width:0;
-    }
+.brand-title{
+  display:flex;
+  align-items:center;
+  gap:0;
+  line-height:1;
+  white-space:nowrap;
+}
+.title-hy{ color: var(--emerald-ink); }
+.title-trei{ color: var(--cymru-red-ink); margin-left: .06em; }
 
-    /* Title colours + dot separator (green → red) */
-    .brand-title{
-      display:flex;
-      align-items:center;
-      gap:0;
-      line-height:1;
-      white-space:nowrap;
-    }
-    .title-hy{ color: var(--emerald-ink); }
-    .title-trei{ color: var(--cymru-red-ink); margin-left: .06em; }
-    .cymru-dot{
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--cymru-red-ink);
-      margin: 0 .55rem;
-      flex: 0 0 auto;
-      display: inline-block;
-      align-self: center;
-    }
-    @media (min-width: 768px){
-      .cymru-dot{ width: 9px; height: 9px; margin: 0 .65rem; }
-    }
+/* Brand dot (final tight version) */
+.cymru-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  margin: 0 .18rem;
+  background: var(--cymru-red-ink);
+  box-shadow: none;
+  transform: translateY(-0.06em);
+  flex: 0 0 auto;
+  display: inline-block;
+  align-self: center;
+}
+@media (min-width: 768px){
+  .cymru-dot{ width: 9px; height: 9px; margin: 0 .22rem; }
+}
 
-    .brand-dragon{
-      width: 34px;
-      height: 34px;
-      display:block;
-      flex: 0 0 auto;
-      background: transparent;
-      border: 0;
-      filter: drop-shadow(0 10px 18px rgba(2,6,23,0.10));
-      transform: translateY(-1px);
-    }
-    @media (min-width: 768px){
-      .brand-dragon{ width: 44px; height: 44px; }
-      .cymru-dot{
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--cymru-red-ink);
-      box-shadow: 0 0 0 4px rgba(153,27,27,0.10);
-      flex: 0 0 auto;
-      align-self: center;
-    }
-    }
+.brand-dragon{
+  width: 34px;
+  height: 34px;
+  display:block;
+  flex: 0 0 auto;
+  background: transparent;
+  border: 0;
+  filter: drop-shadow(0 10px 18px rgba(2,6,23,0.10));
+  transform: translateY(-1px);
+}
+@media (min-width: 768px){
+  .brand-dragon{ width: 44px; height: 44px; }
+}
 
+/* Anim */
 @keyframes pop{0%{transform:scale(.98);opacity:0}100%{transform:scale(1);opacity:1}}
-    .animate-pop{animation:pop .18s ease-out both}
+.animate-pop{animation:pop .18s ease-out both}
 
-    .kbd { padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      text-transform: none;
-      border: 1px solid var(--chip-bd);
-      background: var(--chip-bg);
-      color: var(--chip-fg);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-      cursor: default;
-    }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+/* Utilities */
+.kbd{ padding: 2px 6px; border: 1px solid #cbd5e1; border-radius: 6px; background:#f8fafc; font-size: 12px; }
+.mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+.subtle{ color: var(--muted); }
 
-    /* Button styles */
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:.5rem;
-      padding:.55rem .95rem;
-      border-radius:999px;
-      border:1px solid transparent;
-      font-weight:600;
-      line-height:1;
-      transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .btn:active{transform:translateY(1px)}
-    .btn:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
-
-    .btn-primary{
-      color:#fff;
-      font-weight:600;
-      /* Gradient colours for the primary actions */
-      background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
-      /* Provide extra space for a subtle motion effect on hover */
-      background-size: 220% 220%;
-      background-position: 0% 50%;
-      border: 1px solid rgba(255,255,255,0.14);
-      position: relative;
-      overflow:hidden;
-      box-shadow: 0 10px 20px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
-    }
-    .btn-primary:hover{
-      transform: translateY(-1px);
-      filter: saturate(1.06) brightness(1.02);
-      box-shadow:0 14px 28px rgba(2,6,23,.16);
-      /* Shift the background to reveal a new portion of the gradient */
-      background-position: 100% 50%;
-    }
-    .btn-primary::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
-      transform: translateX(-120%);
-      transition: transform .55s ease;
-      pointer-events:none;
-    }
-    .btn-primary:hover::after{ transform: translateX(120%); }
-
-    .btn-ghost{
-      background:rgba(255,255,255,.76);
-      border:1px solid var(--border);
-      color:#0f172a;
-      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
-    }
-    .btn-ghost:hover{
-      background:rgba(255,255,255,.94);
-      /* Neutral hover border colour avoids red so that ghost buttons feel secondary */
-      border-color: var(--chip-bd);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(2,6,23,0.08);
-    }
-
-    /* Custom style for the audio playback button.   */
-
-/* =========================
-   HEAR button 
-   ========================= */
-.btn-hear{
+/* Chips (final: subtle red tint, clear chip special-case below) */
+.chip{
   display:inline-flex;
   align-items:center;
-  gap: .42rem;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.02em;
+  text-transform:none;
 
-  font-family: inherit;
-  font-weight: 750;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  background: rgba(185,28,28,0.055);
+  border: 1px solid rgba(185,28,28,0.20);
+  color: rgba(15,23,42,0.88);
 
-  padding: .18rem .55rem;     /* tighter */
-  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  cursor: default;
+}
 
-  color: #fff;
-  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%);
-  border: 1px solid rgba(255,255,255,0.22);
+/* -------------------------
+   Buttons
+------------------------- */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.5rem;
 
-  box-shadow: 0 2px 0 rgba(153,27,27,0.28);
-  line-height: 1;
+  padding:.55rem .95rem;
+  border-radius:999px;
+  border:1px solid transparent;
 
-  transition: transform .08s ease, box-shadow .12s ease, filter .12s ease;
-  cursor: pointer;
-  user-select: none;
+  font-weight:600;
+  line-height:1;
+
+  transition:transform .06s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, filter .12s ease;
+  cursor:pointer;
+  user-select:none;
   -webkit-tap-highlight-color: transparent;
 }
+.btn:active{ transform: translateY(1px); }
+.btn:focus-visible{ outline: 3px solid var(--focus); outline-offset: 2px; }
 
-.btn-hear .icon{
-  font-size: 0.95rem;
-  line-height: 1;
+.btn-primary{
+  color:#fff;
+  background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+  background-size: 220% 220%;
+  background-position: 0% 50%;
+  border: 1px solid rgba(255,255,255,0.14);
+  position: relative;
+  overflow:hidden;
+  box-shadow: 0 10px 20px rgba(2,6,23,0.12), inset 0 1px 0 rgba(255,255,255,0.18);
 }
-
-.btn-hear:hover{
+.btn-primary:hover{
   transform: translateY(-1px);
-  filter: brightness(1.05) saturate(1.06);
-  box-shadow:
-    0 12px 18px rgba(2,6,23,0.12),
-    0 0 0 3px rgba(185,28,28,0.14); /* clearer hover without being huge */
+  filter: saturate(1.06) brightness(1.02);
+  box-shadow:0 14px 28px rgba(2,6,23,.16);
+  background-position: 100% 50%;
 }
-
-.btn-hear:active{
-  transform: translateY(0px);
-  box-shadow: 0 7px 12px rgba(2,6,23,0.10);
+.btn-primary::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: translateX(-120%);
+  transition: transform .55s ease;
+  pointer-events:none;
 }
+.btn-primary:hover::after{ transform: translateX(120%); }
 
-.btn-hear:focus-visible{
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
+.btn-ghost{
+  background: rgba(255,255,255,.76);
+  border: 1px solid var(--border);
+  color: #0f172a;
+  box-shadow: 0 1px 0 rgba(2,6,23,0.02);
 }
-
-
-
-
-    /* Utility buttons (e.g. Shuffle cards). These echo the gold accent like the Hear button but take standard padding */
-   /* Secondary utility (Shuffle) — solid white, subtle gold accent */
-.btn-utility{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-
-  background: #fff;
-  border: 1px solid rgba(217,119,6,0.32);
-  color: var(--emerald-ink);
-
-  font-weight: 600;
-  line-height: 1;
-
-  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
-  transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
-}
-
-.btn-utility:hover{
-  background: rgba(217,119,6,0.10);
-  border-color: rgba(217,119,6,0.48);
+.btn-ghost:hover{
+  background: rgba(255,255,255,.94);
+  border-color: var(--chip-bd);
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+  box-shadow: 0 10px 22px rgba(2,6,23,0.08);
 }
 
-/* Put Shuffle on the right of the actions row */
-#practiceCard .practice-actions{
-  align-items: center;
-}
-#practiceCard .practice-actions .btn-shuffleNow{
-  margin-left: auto;
-}
-
-
-    /* Container styling for revealed feedback. 
-       correctness message, completed sentence, answer details and the
-       audio button.   */
-    .feedback-box{
-      background: rgba(4,120,87,0.05);
-      border: 1px solid rgba(4,120,87,0.20);
-      border-radius: 0.75rem;
-      padding: 1rem;
-      margin-top: 1.5rem;
-    }
-
-    /* Toggle pill used in filter selectors */
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:.35rem;
-      border-radius:999px;
-      padding:.32rem .62rem;
-      font-weight:650;
-      font-size:10.5px;
-      border:1px solid rgba(148,163,184,.28);
-      background:rgba(255,255,255,.82);
-      cursor:pointer;
-    }
-    .pill-on{
-      background:rgba(4,120,87,.12);
-      border-color:rgba(4,120,87,.26);
-      box-shadow: inset 0 0 0 1px rgba(217,119,6,0.14);
-    }
-
-    /* --------- Theme overrides for Tailwind utilities used in JS output ---------
-    */
-    .bg-indigo-100{ background-color: rgba(4,120,87,0.12) !important; }
-    .ring-indigo-300{ --tw-ring-color: rgba(4,120,87,0.30) !important; }
-    .text-indigo-900{ color: var(--emerald-ink) !important; }
-
-    .bg-indigo-50{ background-color: rgba(16,185,129,0.10) !important; }
-    .ring-indigo-200{ --tw-ring-color: rgba(16,185,129,0.25) !important; }
-
-    .bg-rose-50{ background-color: rgba(185,28,28,0.06) !important; }
-    .ring-rose-200{ --tw-ring-color: rgba(185,28,28,0.22) !important; }
-    .text-rose-900{ color: rgba(127,29,29,0.95) !important; }
-
-    .decoration-indigo-400{ text-decoration-color: rgba(4,120,87,0.55) !important; }
-
-   /* Make ONLY the base-word text bigger (not every span inside bg-indigo-100) */
-   #practiceCard .practice-base .base-word-text{
-     font-size: clamp(2.55rem, 4.6vw, 3.55rem) !important;
-     letter-spacing: -0.02em;
-   }
-
-
-
-/* Answer box: light gold background with darker gold border; flex to allow wrapping */
-    #answerBox{
-      background: rgba(217,119,6,0.08) !important;
-      /* darker gold border for definition */
-      border-color: rgba(217,119,6,0.45) !important;
-      width: clamp(10rem, 22vw, 16rem) !important;
-      flex: 0 1 clamp(10rem, 22vw, 16rem) !important;
-      flex-shrink: 1 !important;
-      line-height: 1.15;
-    }
-    #answerBox::placeholder{ color: rgba(100,116,139,0.85); }
-    #answerBox:focus{
-      border-color: rgba(4,120,87,0.72) !important;
-      box-shadow: 0 0 0 4px rgba(4,120,87,0.12) !important;
-    }
-
-
-    /* Header: clean, lightly glassy */
-    #siteHeader{
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* Slightly tighter subtitle colour */
-    .subtle{ color: var(--muted); }
-
-    /* -------------------------
-       2025-12 tweaks: make Practice card feel centred + stronger Cymru palette
- 
-    ------------------------- */
-
-    /* Reduce gold in the page wash*/
-    body{
-      background-image:
-        radial-gradient(900px 520px at 20% -10%, var(--page-tint), transparent 60%),
-        radial-gradient(900px 560px at 95% 95%, rgba(185,28,28,0.025), transparent 60%),
-        radial-gradient(900px 620px at 90% 0%, rgba(217,119,6,0.015), transparent 55%);
-    }
-
-    /* Centre the practice content within the big left panel so it doesn't feel "lost" */
-    #practiceCard > div{
-      max-width: 46rem;
-      margin-inline: auto;
-    }
-
-    /* Card counter(tiny caps + tracking) */
-    #practiceCard .text-slate-500.text-xs.mb-2{
-      letter-spacing: .12em;
-      text-transform: uppercase;
-    }
-
-    /* Base word capsule: centred focal point */
-    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
-      display: flex !important;
-      width: fit-content;
-      margin: 0 auto;
-      box-shadow:
-        0 12px 26px rgba(2,6,23,0.08),
-        inset 0 -2px 0 rgba(185,28,28,0.20);
-    }
-
-    /* Keep sentence alignment feeling "text-like" */
-    #practiceCard .mt-2 > .flex.items-baseline{
-      align-items: baseline !important;
-    }
-
-
-
-
-
-    /* Active filter chips: red-tinted (echo the red bar) while staying subtle */
-    .chip{
-      background: rgba(185,28,28,0.055) !important;
-      border-color: rgba(185,28,28,0.20) !important;
-      color: rgba(15,23,42,0.88) !important;
-    }
-
-    /* Make the final "Clear" chip your main gold accent */
-    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
-      background: rgba(217,119,6,0.085) !important;
-      border-color: rgba(217,119,6,0.30) !important;
-    }
-
-    /* remove the gold-ish inner stroke from active filter pills */
-    .pill-on{
-      box-shadow: none !important;
-    }
-
-    /* -------------------------
-       Polish pass: alignment + hover
-  
-    ------------------------- */
-
-    /* Base word capsule: true visual centring + calmer shadow */
-    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
-      align-items:center !important;
-      justify-content:center !important;
-      padding-top: .9rem !important;
-      padding-bottom: .9rem !important;
-      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
-    }
-
-    /* Sentence → actions: give the controls a clear "breath", a subtle red divider,
-       and ensure controls align to the left */
-    #practiceCard .mt-2 + .flex.flex-wrap.gap-2{
-      margin-top: 1.55rem !important;
-      padding-top: 1.05rem !important;
-      gap: 1rem !important;
-      border-top: 1px solid rgba(185,28,28,0.14);
-      justify-content: flex-start !important;
-    }
-
-    /* Chips: keep active filters subtly red-tinted, but make CLEAR green */
-    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip{ cursor: default; }
-    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
-      cursor: pointer;
-      background: rgba(4,120,87,0.10) !important;
-      border-color: rgba(4,120,87,0.28) !important;
-      color: rgba(6,78,59,0.95) !important;
-    }
-    #practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
-      filter: saturate(1.02) brightness(1.01);
-    }
-
-    /* Filter pills: add hover so they feel interactive */
-    .pill{
-      transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
-    }
-    .pill:hover{
-      background: rgba(255,255,255,0.96);
-      border-color: rgba(4,120,87,0.24);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(2,6,23,0.07);
-    }
-    .pill:active{
-      transform: translateY(0px);
-      box-shadow: 0 6px 12px rgba(2,6,23,0.05);
-    }
-    .pill-on:hover{
-      background: rgba(4,120,87,0.15);
-      border-color: rgba(4,120,87,0.34);
-    }
-
-  
-
-    /* -------------------------
-       Layout tightening
-       - Stop grid rows stretching panels to 1fr heights
-       - Keep Filters (row 1) and Session (row 2) stable
-    ------------------------- */
-    @media (min-width: 768px){
-      #practiceView{
-        grid-template-rows: auto auto !important;
-        align-items: start !important;
-      }
-      #filtersPanel{
-        grid-row: 1 / 2 !important;
-        align-self: start !important;
-      }
-      #practiceView > aside{
-        grid-row: 2 / 3 !important;
-        align-self: start !important;
-        height: fit-content;
-      }
-      /* Left practice panel */
-      #practiceView > div:nth-child(1){
-        align-self: start !important;
-      }
-    }
-
-
-    /* Keep the content column a sensible width, but don't centre the text itself */
-    #practiceCard > div{
-      max-width: 46rem;
-      margin-inline: auto;
-    }
-
-    /* Copy should read like copy: left aligned */
-    #practiceCard .practice-instruction{
-      text-align: left;
-      text-wrap: pretty;
-    }
-
-    /* Base word capsule: centred focal point + calmer shadow */
-    #practiceCard .practice-base{
-      display:flex;
-      justify-content:center;
-      margin: .35rem 0 1.65rem;
-    }
-    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      padding: .95rem 1.25rem !important;
-      box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
-    }
-
-   /* Only affect the big base word, not popover internals */
-   #practiceCard .base-word-text{
-     line-height: 1 !important;
-     display: block !important;
-     transform: translateY(0px);
-   }
-
-
-    /* Sentence line: keep it left aligned, but with a bit more air under the base word */
-    #practiceCard .practice-sentence{
-      margin-top: .25rem;
-    }
-
-    /* Buttons: clear separation + consistent spacing */
-    #practiceCard .practice-actions{
-      margin-top: 1.25rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(185,28,28,0.14);
-      justify-content: flex-start;
-      gap: 1rem;
-    }
-
-    /* Remove any lingering centring from older CSS experiments */
-    #practiceCard > div > div.text-lg.md\:text-xl.text-slate-700{ text-align:left !important; }
-    #practiceCard > div > div.mt-2 > div.flex{ justify-content:flex-start !important; text-align:left !important; }
-
-
-
-    /* Header nav buttons: slightly lighter weight + clearer gradient hero */
-    #siteHeader .btn{ font-weight: 600; }
-
-    /* --- Header nav buttons: make Practice the hero, Stats/Filters secondary (red) --- */
-    #btnStats, #btnFilters{
-      padding: .5rem .9rem;
-      border-radius: 999px;
-      font-weight: 600;
-      background: rgba(185,28,28,0.08);
-      border-color: rgba(185,28,28,0.24);
-      color: rgba(127,29,29,0.96);
-    }
-    #btnStats:hover, #btnFilters:hover{
-      background: linear-gradient(to right, rgba(185,28,28,0.96), rgba(153,27,27,0.96));
-      border-color: rgba(185,28,28,0.55);
-      color: #fff;
-      transform: translateY(-1px);
-      box-shadow: 0 14px 28px rgba(2,6,23,0.14);
-    }
-
-    /* --- Filters: hide redundant Outcome column --- */
-    #outcomeCol{ display:none; }
-    #familyCol{ grid-column: 1 / -1; }
-
-    /* --- Filters panel: stop it forcing huge page height on desktop --- */
-    @media (min-width: 768px){
-      #filtersPanel{
-        max-height: calc(100vh - 190px);
-        overflow: auto;
-        overscroll-behavior: contain;
-      }
-      #filtersPanel::-webkit-scrollbar{ width: 10px; }
-      #filtersPanel::-webkit-scrollbar-thumb{
-        background: rgba(15,23,42,0.12);
-        border-radius: 999px;
-        border: 3px solid rgba(255,255,255,0.70);
-      }
-    }
-
-    /* --- Practice sentence line: centre it --- */
-    #practiceCard .practice-sentenceLine{ align-items: center !important; }
-
-    /* Slightly tighter right panels (reduce dead space) */
-    #sessionPanel{ padding-bottom: 1.05rem !important; }
-
-    /* Ribbon: match the exact inks used in the title */
-    .cymru-red-bar{
-      background: linear-gradient(90deg,
-        rgba(6,78,59,0) 0%,
-        rgba(6,78,59,1) 30%,
-        rgba(153,27,27,1) 70%,
-        rgba(153,27,27,0) 100%
-      ) !important;
-    }
-
-    /* Instruction reads like copy, not a banner */
-    #practiceCard .practice-instruction{
-      max-width: 42rem;
-      margin-bottom: 1.15rem !important;
-    }
-
-/*
- * Compose the answer moment (sentence, actions, hint, feedback) into a single
- * block so its internal spacing is predictable.  The grid layout defines
- * consistent vertical rhythm between the rows, and the top margin ensures
- * breathing room under the base word capsule.
- */
-#practiceCard .practice-answerBlock{
-  display: grid;
-  row-gap: 1.1rem;
-  margin-top: 0.5rem;
-}
-
-/*
- * Secondary navigation buttons (Stats, Filters) should read as neutral rather than
- * warning red.  Use the ghost-style palette (light background, subtle border)
- * with emerald ink to tie into the brand colours.  Hover retains subtlety.
- */
+/* Header nav buttons (final: neutral ghost, emerald ink) */
 #btnStats, #btnFilters{
+  padding: .5rem .9rem;
+  border-radius: 999px;
+  font-weight: 500;
   background: rgba(255,255,255,0.85);
-  border-color: var(--border);
+  border: 1px solid var(--border);
   color: var(--emerald-ink);
 }
 #btnStats:hover, #btnFilters:hover{
@@ -713,171 +263,257 @@
   box-shadow: 0 10px 20px rgba(2,6,23,0.10);
 }
 
-    /* Base word: centred on mobile, aligned on desktop */
-    #practiceCard .practice-base{
-      justify-content: center;
-      margin: .8rem 0 2.35rem !important;
-    }
-    @media (min-width: 768px){
-      #practiceCard .practice-base{ justify-content: flex-start; }
-    }
+/* Language toggle */
+.btn-lang{
+  display:inline-flex;
+  align-items:center;
+  gap:0.4rem;
+  background: rgba(217,119,6,0.10);
+  border: 1px solid rgba(217,119,6,0.32);
+  color: rgba(15,23,42,0.92);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-lang:hover{
+  background: rgba(217,119,6,0.20);
+  border-color: rgba(217,119,6,0.45);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2,6,23,0.08);
+}
+.btn-lang:focus-visible{ outline:3px solid var(--focus); outline-offset:2px; }
 
-    /* Base capsule: calm shadow, no weird baseline wobble */
-    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
-      box-shadow: 0 5px 12px rgba(2,6,23,0.06) !important;
-    }
+.langtag{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width: 2.2rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,0.55);
+  background: rgba(255,255,255,0.75);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgba(15,23,42,0.78);
+  flex: 0 0 auto;
+}
 
-    /* Actions row: gradient divider instead of a plain rule */
-    #practiceCard .practice-actions{
-      position: relative;
-      border-top: 0 !important;
-      padding-top: 1.05rem !important;
-      margin-top: 1.35rem !important;
-    }
-    #practiceCard .practice-actions::before{
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 1px;
-      background: linear-gradient(90deg,
-        rgba(6,78,59,0.24),
-        rgba(153,27,27,0.24)
-      );
-    }
+/* -------------------------
+   Practice layout
+------------------------- */
+#practiceCard > div{
+  max-width: 46rem;
+  margin-inline: auto;
+}
 
-    /* Buttons: centred on mobile feels intentional, left on desktop */
-    #practiceCard .practice-actions{ justify-content: center; }
-    @media (min-width: 768px){
-      #practiceCard .practice-actions{ justify-content: flex-start; }
-    }
+#practiceCard .practice-instruction{
+  text-align: left;
+  text-wrap: pretty;
+  max-width: 42rem;
+  margin-bottom: 1.15rem;
+}
 
+/* Base word capsule container: center on mobile, left on desktop */
+#practiceCard .practice-base{
+  display:flex;
+  justify-content:center;
+  margin: .8rem 0 2.35rem;
+}
+@media (min-width: 768px){
+  #practiceCard .practice-base{ justify-content:flex-start; }
+}
 
+/* Base capsule itself (anchor + allow ? to sit outside) */
+#practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding: .95rem 1.25rem !important;
 
-    /* --- Brand dot: tighter spacing + vertical centring (dot replaces the word-space) --- */
-    .cymru-dot{
-      width: 8px !important;
-      height: 8px !important;
-      margin: 0 .18rem !important; /* much tighter than before */
-      background: var(--cymru-red-ink) !important; /* must match Treiglad */
-      box-shadow: none !important;
-      transform: translateY(-0.06em);
-    }
-    @media (min-width: 768px){
-      .cymru-dot{
-        width: 9px !important;
-        height: 9px !important;
-        margin: 0 .22rem !important;
-      }
-    }
+  position: relative;      /* ✅ fixes ? jumping to card corner */
+  overflow: visible;       /* ✅ allow the ? to sit outside */
 
+  box-shadow: 0 5px 12px rgba(2,6,23,0.06) !important;
+}
 
+/* Base word text size */
+#practiceCard .practice-base .base-word-text{
+  font-size: clamp(2.55rem, 4.6vw, 3.55rem) !important;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  display:block;
+}
 
-    /* =========================
-       2025-12-17 polish tweaks
-       - Cleaner Cymru ribbon (no muddy mid-colour)
-       - More obvious (but on-brand) green gradient on primary buttons
-       - Tighter practice action buttons spacing
-       ========================= */
+/* Answer box */
+#answerBox{
+  background: rgba(217,119,6,0.08) !important;
+  border-color: rgba(217,119,6,0.45) !important;
+  width: clamp(10rem, 22vw, 16rem) !important;
+  flex: 0 1 clamp(10rem, 22vw, 16rem) !important;
+  flex-shrink: 1 !important;
+  line-height: 1.15;
+}
+#answerBox::placeholder{ color: rgba(100,116,139,0.85); }
+#answerBox:focus{
+  border-color: rgba(4,120,87,0.72) !important;
+  box-shadow: 0 0 0 4px rgba(4,120,87,0.12) !important;
+}
 
-    /* Removed duplicate :root primary colour overrides */
+/* Feedback box */
+.feedback-box{
+  background: rgba(4,120,87,0.05);
+  border: 1px solid rgba(4,120,87,0.20);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
 
-    /* Removed duplicate ribbon, title and primary button overrides to simplify CSS */
+/* Compose answer block */
+#practiceCard .practice-answerBlock{
+  display:grid;
+  row-gap: 0.95rem;
+  margin-top: 0.4rem;
+}
+#practiceCard .practice-sentenceLine{ align-items: baseline !important; }
+#practiceCard #answerBox{ align-self: baseline; }
 
-    /* Header nav: slightly lighter weight on secondary buttons */
-    #btnStats, #btnFilters{ font-weight: 500 !important; }
+/* Actions row: consistent spacing + gradient divider */
+#practiceCard .practice-actions{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+  gap: .65rem;
 
-    /* Filter pills: a touch smaller/tighter */
-    .pill{
-      padding: .28rem .56rem !important;
-      font-size: 10px !important;
-    }
+  margin-top: 1.05rem;
+  padding-top: .75rem;
 
-    /* Practice actions row: reduce spacing + pull it slightly closer to the sentence */
-    #practiceCard .practice-actions{
-      margin-top: 1.05rem !important;
-      padding-top: .75rem !important;
-      gap: .65rem !important;
-    }
-    #practiceCard .practice-actions .btn{
-      padding: .5rem .85rem !important;
-    }
+  position: relative;
+}
+#practiceCard .practice-actions::before{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height:1px;
+  background: linear-gradient(90deg, rgba(6,78,59,0.18), rgba(153,27,27,0.18));
+}
 
-    /* Base word capsule: left-align (always) */
-    #practiceCard .practice-base{
-      justify-content: flex-start !important;
-    }
+/* Put Shuffle at far right when there’s space */
+#practiceCard .practice-actions .btn-shuffleNow{
+  margin-left: auto;
+}
+@media (max-width: 520px){
+  #practiceCard .practice-actions .btn-shuffleNow{ margin-left: 0; }
+}
 
+/* -------------------------
+   Filters / pills
+------------------------- */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  border-radius:999px;
+  padding:.28rem .56rem;
+  font-weight:650;
+  font-size:10px;
+  border:1px solid rgba(148,163,184,.28);
+  background:rgba(255,255,255,.82);
+  cursor:pointer;
+  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+}
+.pill:hover{
+  background: rgba(255,255,255,0.96);
+  border-color: rgba(4,120,87,0.24);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+}
+.pill:active{
+  transform: translateY(0px);
+  box-shadow: 0 6px 12px rgba(2,6,23,0.05);
+}
+.pill-on{
+  background:rgba(4,120,87,.12);
+  border-color:rgba(4,120,87,.26);
+  box-shadow: none;
+}
+.pill-on:hover{
+  background: rgba(4,120,87,0.15);
+  border-color: rgba(4,120,87,0.34);
+}
 
-    /* Language toggle button (small, separated from main nav) */
-    .btn-lang{
-      display:inline-flex;
-      align-items:center;
-      gap:0.4rem;
-      background: rgba(217,119,6,0.10);
-      border: 1px solid rgba(217,119,6,0.32);
-      color: rgba(15,23,42,0.92);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      padding: 0.22rem 0.55rem;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 0.78rem;
-      line-height: 1;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .btn-lang:hover{
-      background: rgba(217,119,6,0.20);
-      border-color: rgba(217,119,6,0.45);
-      transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(2,6,23,0.08);
-    }
-    .btn-lang:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+/* Clear chip (last chip) becomes green */
+#practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child{
+  cursor:pointer;
+  background: rgba(4,120,87,0.10) !important;
+  border-color: rgba(4,120,87,0.28) !important;
+  color: rgba(6,78,59,0.95) !important;
+}
+#practiceCard .flex.flex-wrap.items-center.gap-2.mb-4 .chip:last-child:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+  filter: saturate(1.02) brightness(1.01);
+}
 
-    .langtag{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width: 2.2rem;
-      padding: 0.12rem 0.55rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.55);
-      background: rgba(255,255,255,0.75);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: rgba(15,23,42,0.78);
-      flex: 0 0 auto;
-    }
-    details.practice-help summary::-webkit-details-marker{ display:none; }
-    details.practice-help summary{ list-style:none; }
-    details.practice-help summary::after{
-      content: '▾';
-      float: right;
-      opacity: 0.55;
-    }
-    details.practice-help[open] summary::after{ content: '▴'; }
+/* Filters panel scrolling */
+@media (min-width: 768px){
+  #filtersPanel{
+    max-height: calc(100vh - 190px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  #filtersPanel::-webkit-scrollbar{ width: 10px; }
+  #filtersPanel::-webkit-scrollbar-thumb{
+    background: rgba(15,23,42,0.12);
+    border-radius: 999px;
+    border: 3px solid rgba(255,255,255,0.70);
+  }
+}
 
-/* =========================
+/* Hide redundant outcome column */
+#outcomeCol{ display:none; }
+#familyCol{ grid-column: 1 / -1; }
+
+/* Desktop grid rows */
+@media (min-width: 768px){
+  #practiceView{
+    grid-template-rows: auto auto !important;
+    align-items: start !important;
+  }
+  #filtersPanel{
+    grid-row: 1 / 2 !important;
+    align-self: start !important;
+  }
+  #practiceView > aside{
+    grid-row: 2 / 3 !important;
+    align-self: start !important;
+    height: fit-content;
+  }
+  #practiceView > div:nth-child(1){
+    align-self: start !important;
+  }
+}
+
+/* -------------------------
    Segmented control (Random / Smart)
-   ========================= */
-/* =========================
-   Segmented control (Random / Smart) — tighter + better typography
-   ========================= */
-/* =========================
-   Segmented control (Random / Smart) — cleaner typography
-   ========================= */
+   FIXED typography + alignment
+------------------------- */
 .seg{
   display:inline-flex;
   align-items:center;
-  gap: 0.20rem;
+  gap: 0.22rem;
   padding: 0.18rem;
 
   border-radius: 999px;
@@ -887,178 +523,104 @@
   box-shadow: 0 10px 18px rgba(2,6,23,0.06);
   backdrop-filter: blur(10px);
 }
-
 .seg-btn{
-  appearance: none;
+  appearance:none;
   border: 1px solid transparent;
   border-radius: 999px;
 
-  padding: 0.42rem 0.78rem;
+  height: 2.05rem;
+  padding: 0 0.95rem;
 
-  font-family: inherit;          /* important */
-  font-size: 0.74rem;
-  font-weight: 800;
-  letter-spacing: 0.10em;
+  font-family: inherit;
+  font-size: var(--ui-caps-size);
+  font-weight: var(--ui-caps-weight);
+  letter-spacing: var(--ui-caps-track);
   text-transform: uppercase;
-
   line-height: 1;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
   color: rgba(15,23,42,0.72);
   background: transparent;
 
-  cursor: pointer;
-  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
-              border-color .12s ease, filter .12s ease, color .12s ease;
+  cursor:pointer;
   user-select:none;
   -webkit-tap-highlight-color: transparent;
+  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
+              border-color .12s ease, filter .12s ease, color .12s ease;
 }
-
 .seg-btn:hover{
   background: rgba(6,78,59,0.06);
   border-color: rgba(6,78,59,0.16);
   transform: translateY(-1px);
   box-shadow: 0 10px 16px rgba(2,6,23,0.07);
 }
-
 .seg-btn.is-on{
-  color: #fff;
+  color:#fff;
   background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
-  border-color: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.16);
   box-shadow: 0 12px 20px rgba(2,6,23,0.14), inset 0 1px 0 rgba(255,255,255,0.18);
 }
+.seg-btn.is-on:hover{ filter: saturate(1.06) brightness(1.03); }
+.seg-btn:focus-visible{ outline: 3px solid var(--focus); outline-offset: 2px; }
 
-.seg-btn.is-on:hover{
-  filter: saturate(1.06) brightness(1.03);
-}
-
-.seg-btn:focus-visible{
-  outline: 3px solid var(--focus);
-  outline-offset: 2px;
-}
-
-/* Shuffle action: icon-first, label only on md+ */
-/* Shuffle button: clean secondary action (no gold) */
-.btn-shuffleNow{
-  padding: 0.50rem 0.90rem;
-  gap: 0.45rem;
-  font-weight: 650;
-  color: var(--emerald-ink);
-
-  border-color: rgba(6,78,59,0.22);
-  background: rgba(255,255,255,0.90);
-}
-
-.btn-shuffleNow:hover{
-  background: rgba(4,120,87,0.08);
-  border-color: rgba(6,78,59,0.30);
-}
-
-/* Practice: one composed “answer moment” block */
-#practiceCard .practice-answerBlock{
-  display: grid;
-  row-gap: 0.95rem;        /* your vertical rhythm */
-  margin-top: 0.4rem;      /* distance from chips */
-}
-
-#practiceCard .practice-sentenceLine{
-  align-items: baseline !important;
-}
-#practiceCard #answerBox{
-  align-self: baseline;
-}
-
-#practiceCard .practice-actions{
-  margin: 0 !important;
-  padding-top: 0.85rem !important;
-  gap: 0.65rem !important;
-  border-top: 0 !important;
-  position: relative;
-  justify-content: flex-start;
-}
-
-#practiceCard .practice-actions::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(90deg,
-    rgba(6,78,59,0.18),
-    rgba(153,27,27,0.18)
-  );
-}
-
-#practiceCard .practice-feedback .feedback-box{
-  margin-top: 0 !important;
-}
-
-
-/* =========================
-   Base word “?” translation popover
-   ========================= */
-/* =========================
-   Translation UI (red/green, subtle gold)
-   ========================= */
-
-/* =========================
-   “?” info buttons (match Cymru red + never transparent)
-   ========================= */
+/* -------------------------
+   “?” info buttons (never transparent, correct reds)
+------------------------- */
 .base-info-btn,
 .sentence-info-btn{
-  display: inline-grid;
-  place-items: center;
+  display:inline-grid;
+  place-items:center;
 
   width: 1.18rem;
   height: 1.18rem;
+  border-radius:999px;
 
-  border-radius: 999px;
-  border: 2px solid var(--cymru-red); /* SAME red token as everywhere */
-  background: #fff;                   /* solid (never see-through) */
-  color: var(--cymru-red-ink);        /* red ink reads cleaner here */
+  border: 2px solid var(--cymru-red);
+  background: #fff;               /* ✅ stays solid */
+  color: var(--cymru-red-ink);
 
   font-family: inherit;
   font-weight: 900;
   font-size: 0.78rem;
   line-height: 1;
 
-  cursor: pointer;
-  user-select: none;
+  cursor:pointer;
+  user-select:none;
   -webkit-tap-highlight-color: transparent;
 
   box-shadow: 0 2px 0 rgba(153,27,27,0.14);
-  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
 }
-
 .base-info-btn:hover,
 .sentence-info-btn:hover{
-  background: #fff; /* keep solid */
+  background: #fff;               /* ✅ never transparent on hover */
   border-color: var(--cymru-red-ink);
   transform: translateY(-1px);
   box-shadow:
     0 12px 18px rgba(2,6,23,0.10),
     0 0 0 3px rgba(185,28,28,0.10);
 }
-
 .base-info-btn:active,
 .sentence-info-btn:active{
   transform: translateY(0px);
   box-shadow: 0 7px 12px rgba(2,6,23,0.08);
 }
-
 .base-info-btn:focus-visible,
 .sentence-info-btn:focus-visible{
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
 
-/* Keep base ? nudged out */
+/* Base “?” position on capsule */
 .base-info-btn{
-  position: absolute;
+  position:absolute;
   top: -0.30rem;
   right: -0.50rem;
 }
-
-/* Sentence ? slightly smaller */
+/* Sentence “?” slightly smaller */
 .sentence-info-btn{
   width: 1.08rem;
   height: 1.08rem;
@@ -1066,27 +628,12 @@
   margin-left: 0.40rem;
 }
 
-
-
-/* NUDGE: move the base “?” slightly OUTSIDE the capsule so it never clips letters */
-.base-info-btn{
-  position: absolute;
-  top: -0.30rem;
-  right: -0.50rem;     
-}
-
-/* Sentence info stays inline and a touch smaller */
-.sentence-info-btn{
-  width: 1.08rem;
-  height: 1.08rem;
-  font-size: 0.76rem;
-  margin-left: 0.40rem;
-}
-
-/* Popover: smaller + always above right panels */
+/* -------------------------
+   Popover / Tooltip
+------------------------- */
 .base-info-popover{
-  position: absolute;
-  z-index: 2000;
+  position:absolute;
+  z-index: 1500;
 
   width: 13.25rem;
   max-width: min(13.25rem, calc(100vw - 20px));
@@ -1094,54 +641,15 @@
   background: rgba(255,255,255,0.98);
   border: 1px solid rgba(15,23,42,0.14);
   border-radius: 0.95rem;
-  padding: 0.62rem 0.72rem;
+  padding: 0.85rem 0.72rem 0.62rem;
 
   box-shadow: 0 18px 40px rgba(2,6,23,0.12);
   backdrop-filter: blur(12px);
 
-  /* MOBILE: open ABOVE the capsule so it doesn't cover the answer */
   bottom: calc(100% + 0.80rem);
   left: 50%;
   transform: translateX(-50%);
 }
-
-/* Popover close “X” */
-.base-info-close{
-  position: absolute;
-  top: 0.45rem;
-  right: 0.45rem;
-
-  width: 1.35rem;
-  height: 1.35rem;
-  border-radius: 999px;
-
-  border: 1px solid rgba(15,23,42,0.14);
-  background: #fff;
-  color: rgba(15,23,42,0.72);
-
-  display: grid;
-  place-items: center;
-
-  font-size: 1rem;
-  line-height: 1;
-  cursor: pointer;
-
-  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
-}
-
-.base-info-close:hover{
-  transform: translateY(-1px);
-  border-color: rgba(15,23,42,0.22);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
-}
-
-.base-info-popover{
-  /* make room for the close button */
-  padding-top: 0.85rem;
-}
-
-
-/* Arrow (mobile: points down to capsule) */
 .base-info-popover::before{
   content:"";
   position:absolute;
@@ -1149,31 +657,50 @@
   height: 11px;
   background: rgba(255,255,255,0.98);
   border: 1px solid rgba(15,23,42,0.14);
-
   left: 50%;
   bottom: -6px;
   transform: translateX(-50%) rotate(45deg);
 }
-
-/* DESKTOP: open to the RIGHT and align nearer the top of the capsule */
 @media (min-width: 640px){
   .base-info-popover{
-    bottom: auto;
+    bottom:auto;
     left: calc(100% + 0.85rem);
-    top: 0.15rem;              /* aligns better with the ? / base word */
-    transform: none;
+    top: 0.15rem;
+    transform:none;
   }
-
   .base-info-popover::before{
     left: -6px;
     top: 0.95rem;
-    bottom: auto;
+    bottom:auto;
     transform: rotate(45deg);
   }
 }
+.base-info-close{
+  position:absolute;
+  top: 0.45rem;
+  right: 0.45rem;
 
+  width: 1.35rem;
+  height: 1.35rem;
+  border-radius:999px;
 
-/* Popover typography: slightly smaller/cleaner */
+  border: 1px solid rgba(15,23,42,0.14);
+  background:#fff;
+  color: rgba(15,23,42,0.72);
+
+  display:grid;
+  place-items:center;
+  font-size:1rem;
+  line-height:1;
+  cursor:pointer;
+
+  transition: transform .08s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.base-info-close:hover{
+  transform: translateY(-1px);
+  border-color: rgba(15,23,42,0.22);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+}
 .base-info-meaning{
   font-weight: 750;
   color: rgba(15,23,42,0.92);
@@ -1182,8 +709,8 @@
 }
 .base-info-meta{
   margin-top: 0.45rem;
-  display: flex;
-  align-items: center;
+  display:flex;
+  align-items:center;
   gap: 0.45rem;
   flex-wrap: wrap;
   color: rgba(71,85,105,0.95);
@@ -1200,10 +727,9 @@
   font-weight: 750;
 }
 
-/* Tooltip used by attachTooltip() */
 .tooltip{
-  position: absolute;
-  z-index: 80;
+  position:absolute;
+  z-index: 1500;
   max-width: min(22rem, calc(100vw - 24px));
   background: rgba(255,255,255,0.98);
   border: 1px solid rgba(15,23,42,0.14);
@@ -1214,412 +740,98 @@
   color: rgba(15,23,42,0.92);
   font-size: 0.9rem;
   line-height: 1.25;
-  white-space: pre-line; /* allow \n line breaks */
+  white-space: pre-line;
 }
 
-/* Ensure left practice panel stacks above right column panels */
-#practiceView > div.panel{
-  position: relative;
-  z-index: 30;
-}
-
-
-/* =========================
-   FINAL polish overrides
-   - HEAR + ? match
-   - Toggle typography fix
-   - Shuffle moved into actions row
-   ========================= */
-
-/* --- HEAR button: solid, crisp, matches theme reds/greens --- */
+/* -------------------------
+   HEAR button (final)
+   - solid red gradient
+   - white text
+   - uppercase + tracking matches toggle
+   - replaces ugly emoji icon with crisp mask SVG
+------------------------- */
 .btn-hear{
   display:inline-flex;
   align-items:center;
-  gap: .42rem;
+  gap: .45rem;
 
   font-family: inherit;
-  font-weight: 750;
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
+  font-size: var(--ui-caps-size);
+  font-weight: var(--ui-caps-weight);
+  letter-spacing: var(--ui-caps-track);
   text-transform: uppercase;
+  line-height: 1;
 
-  padding: .26rem .62rem;
+  padding: 0.40rem 0.85rem;
   border-radius: 999px;
 
-  border: 2px solid var(--cymru-red);   /* ✅ uses your theme red */
-  background: #fff;                     /* ✅ NOT pastel/transparent */
-  color: var(--emerald-ink);            /* ✅ matches your green ink */
+  color:#fff;
+  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%);
+  border: 1px solid rgba(255,255,255,0.22);
 
-  line-height: 1;
-  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
-  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  box-shadow: 0 2px 0 rgba(153,27,27,0.22);
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+
+  transition: transform .08s ease, box-shadow .12s ease, filter .12s ease;
 }
-
-.btn-hear .icon{
-  font-size: 0.95rem;
-  line-height: 1;
-  transform: translateY(-0.02em);
-}
-
 .btn-hear:hover{
-  background: rgba(4,120,87,0.06);      /* slightly stronger than before */
-  border-color: var(--cymru-red-ink);   /* ✅ stronger red on hover */
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.12);
+  filter: brightness(1.05) saturate(1.06);
+  box-shadow:
+    0 12px 18px rgba(2,6,23,0.12),
+    0 0 0 3px rgba(185,28,28,0.14);
 }
-
 .btn-hear:active{
   transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.10);
+  box-shadow: 0 7px 12px rgba(2,6,23,0.10);
+}
+.btn-hear:focus-visible{
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
 }
 
-/* --- ? buttons: EXACT same red + border weight feel as HEAR --- */
-.base-info-btn,
-.sentence-info-btn{
-  border: 2px solid var(--cymru-red);
-  background: #fff;
-  color: var(--emerald-ink);
-  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
-  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+/* Hide the emoji icon (it always looks wrong on dark buttons) */
+.btn-hear .icon{ display:none !important; }
+
+/* Add a crisp speaker icon via CSS mask */
+.btn-hear::before{
+  content:"";
+  width: 0.95rem;
+  height: 0.95rem;
+  background: rgba(255,255,255,0.95);
+
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M11%205%206%209H3v6h3l5%204V5Zm7.5%207a4.5%204.5%200%200%200-2.5-4.03v8.06A4.5%204.5%200%200%200%2018.5%2012ZM21%2012a7%207%200%200%201-4%206.32v-1.78a5.5%205.5%200%200%200%200-9.08V5.68A7%207%200%200%201%2021%2012Z%27/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M11%205%206%209H3v6h3l5%204V5Zm7.5%207a4.5%204.5%200%200%200-2.5-4.03v8.06A4.5%204.5%200%200%200%2018.5%2012ZM21%2012a7%207%200%200%201-4%206.32v-1.78a5.5%205.5%200%200%200%200-9.08V5.68A7%207%200%200%201%2021%2012Z%27/%3E%3C/svg%3E") center/contain no-repeat;
 }
 
-.base-info-btn:hover,
-.sentence-info-btn:hover{
-  background: rgba(4,120,87,0.06);
-  border-color: var(--cymru-red-ink);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.12);
-}
-
-.base-info-btn:active,
-.sentence-info-btn:active{
-  transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.10);
-}
-
-/* --- Segmented control: fix “ugly toggle font” + make it match page typography --- */
-#practiceCard .seg{
-  padding: 0.18rem;
-  gap: 0.22rem;
-  border-radius: 999px;
-  border: 1px solid rgba(15,23,42,0.12);
-  background: rgba(255,255,255,0.92);
-  box-shadow: 0 8px 18px rgba(2,6,23,0.06);
-}
-
-#practiceCard .seg-btn{
-  padding: 0.44rem 0.90rem;
-  border-radius: 999px;
+/* -------------------------
+   Shuffle cards button (final)
+------------------------- */
+.btn-shuffleNow{
+  display:inline-flex;
+  align-items:center;
+  gap: .5rem;
 
   font-family: inherit;
-  font-size: 0.86rem;     /* closer to your UI text */
-  font-weight: 650;       /* less shouty */
-  letter-spacing: 0;      /* remove “weird badge” vibe */
-  text-transform: none;   /* stop accidental all-caps inheritance */
+  font-size: var(--ui-caps-size);
+  font-weight: var(--ui-caps-weight);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1;
 
-  color: rgba(15,23,42,0.78);
-  background: transparent;
-  border: 1px solid transparent;
-
-  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
-              border-color .12s ease, filter .12s ease, color .12s ease;
-}
-
-#practiceCard .seg-btn:hover{
-  background: rgba(255,255,255,0.98);
-  border-color: rgba(148,163,184,0.34);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.07);
-}
-
-#practiceCard .seg-btn.is-on{
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
-  border-color: rgba(255,255,255,0.16);
-  box-shadow: 0 12px 22px rgba(2,6,23,0.14), inset 0 1px 0 rgba(255,255,255,0.18);
-}
-
-/* --- Actions row layout: main buttons left, Shuffle right with divider --- */
-#practiceCard .practice-actions{
-  justify-content: space-between !important;
-  align-items: center;
-  gap: 0.75rem !important;
-}
-
-#practiceCard .practice-actions-main{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap: 0.65rem;
-}
-
-#practiceCard .practice-actions-aux{
-  display:flex;
-  align-items:center;
-  margin-left:auto;
-}
-
-@media (min-width: 768px){
-  #practiceCard .practice-actions-aux{
-    padding-left: 0.85rem;
-    border-left: 1px solid rgba(15,23,42,0.10);
-  }
-}
-
-/* Shuffle button: secondary action, consistent with page */
-.btn-shuffle{
-  gap: .5rem;
-  border-color: rgba(217,119,6,0.35);
-  background: rgba(255,255,255,0.90);
-  color: var(--emerald-ink);
-}
-
-.btn-shuffle:hover{
-  background: rgba(217,119,6,0.10);
-  border-color: rgba(217,119,6,0.55);
-}
-
-
-
-/* =========================================================
-   PATCH — fixes Toggle typography, HEAR, Shuffle, and ? button
-   Paste at the VERY BOTTOM of your CSS (last wins)
-   ========================================================= */
-
-/* 0) Anchor the base capsule so the ? stays on the capsule (not the whole card) */
-#practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl{
-  position: relative !important;
-}
-
-/* 1) MODE TOGGLE typography + alignment (match your UI, stop shouty caps) */
-#practiceCard .seg{
-  align-items: center !important;
-}
-
-#practiceCard .seg-btn{
-  font-family: inherit !important;
-  font-weight: 600 !important;         /* match the rest of your UI */
-  font-size: 0.9rem !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-
-  line-height: 1 !important;
-  height: 2.05rem !important;          /* consistent vertical rhythm */
-  padding: 0 0.95rem !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Keep your on-state gradient, but ensure it doesn't change typography */
-#practiceCard .seg-btn.is-on{
-  font-weight: 600 !important;
-  text-transform: none !important;
-  letter-spacing: 0 !important;
-}
-
-/* 2) ? button — SOLID WHITE background ALWAYS, and use the SAME RED token */
-.base-info-btn,
-.sentence-info-btn{
-  background: #fff !important;                       /* never see-through */
-  border: 2px solid var(--cymru-red-ink) !important; /* use SAME red ink as title */
-  color: var(--cymru-red-ink) !important;
-}
-
-.base-info-btn:hover,
-.sentence-info-btn:hover{
-  background: #fff !important;                       /* stays solid on hover */
-  border-color: var(--cymru-red-ink) !important;
-  box-shadow:
-    0 12px 18px rgba(2,6,23,0.10),
-    0 0 0 3px rgba(185,28,28,0.10) !important;
-}
-
-/* 3) HEAR button — solid red gradient + white text + SAME typography as toggle */
-.btn-hear{
-  font-family: inherit !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-
-  color: #fff !important;
-  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%) !important;
-  border: 1px solid rgba(255,255,255,0.22) !important;
-
-  padding: 0.38rem 0.72rem !important;
-  border-radius: 999px !important;
-
-  box-shadow: 0 2px 0 rgba(153,27,27,0.22) !important;
-}
-
-.btn-hear:hover{
-  filter: brightness(1.05) saturate(1.06) !important;
-  box-shadow:
-    0 12px 18px rgba(2,6,23,0.12),
-    0 0 0 3px rgba(185,28,28,0.14) !important;
-}
-
-/* 4) Shuffle cards — remove ugly gold border vibe, give a distinctive accent */
-.btn-shuffleNow{
-  font-family: inherit !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-
-  background: #fff !important;
-  color: var(--emerald-ink) !important;
-  border: 1px solid rgba(6,78,59,0.26) !important;
-
-  position: relative;
-  padding-left: 1.15rem !important;
-}
-
-/* subtle “brand” accent bar so it’s distinguishable without gold border */
-.btn-shuffleNow::before{
-  content:"";
-  position:absolute;
-  left: 0.45rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 58%;
+  padding: 0.50rem 0.95rem 0.50rem 1.20rem;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(6,78,59,0.95), rgba(153,27,27,0.95));
-  opacity: 0.32;
+
+  background: #fff;
+  color: var(--emerald-ink);
+  border: 1px solid rgba(6,78,59,0.26);
+
+  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
+  transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+  position: relative;
 }
-
-.btn-shuffleNow:hover{
-  background: rgba(4,120,87,0.06) !important;
-  border-color: rgba(6,78,59,0.34) !important;
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10) !important;
-}
-
-.btn-shuffleNow:hover::before{ opacity: 0.55; }
-
-
-/* =========================================================
-   HARD PATCH (paste LAST in CSS) — wins over earlier rules
-   Fixes: header stacking, toggle typography, HEAR, Shuffle, ? hover
-   ========================================================= */
-
-/* 0) Header must always sit above panels when scrolling */
-#siteHeader{
-  position: sticky;
-  top: 0;
-  z-index: 2000; /* beats everything */
-}
-
-/* You set panels to z-index:30 earlier; keep them below the header */
-#practiceView > div.panel{
-  z-index: 20 !important;
-}
-
-/* 1) Ensure the base capsule is the positioning anchor for the ? */
-#practiceCard .practice-base > div,
-#practiceCard .practice-base .bg-indigo-100{
-  position: relative !important;
-}
-
-/* 2) MODE TOGGLE — correct weight + alignment + consistent height */
-#practiceCard .seg{
-  align-items: center !important;
-  padding: 0.18rem !important;
-}
-
-#practiceCard .seg-btn{
-  font-family: inherit !important;
-  font-weight: 800 !important;         /* matches your “button” feel */
-  font-size: 0.78rem !important;
-  letter-spacing: 0.10em !important;
-  text-transform: uppercase !important;
-
-  height: 2.05rem !important;          /* fixes misalignment */
-  padding: 0 0.95rem !important;
-  line-height: 1 !important;
-
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-#practiceCard .seg-btn.is-on{
-  font-weight: 800 !important;
-}
-
-/* 3) “?” BUTTON — never transparent, use theme reds, consistent border */
-.base-info-btn,
-.sentence-info-btn{
-  background: #fff !important;                      /* ALWAYS solid */
-  border: 2px solid var(--cymru-red-ink) !important;
-  color: var(--cymru-red-ink) !important;
-  opacity: 1 !important;
-}
-
-.base-info-btn:hover,
-.sentence-info-btn:hover{
-  background: #fff !important;                      /* STILL solid */
-  border-color: var(--cymru-red-ink) !important;
-  opacity: 1 !important;
-}
-
-/* Keep the base ? in the capsule corner */
-.base-info-btn{
-  position: absolute !important;
-  top: -0.30rem !important;
-  right: -0.50rem !important;
-}
-
-/* 4) HEAR BUTTON — solid red gradient, white text, uppercase, matches toggle typography */
-.btn-hear{
-  font-family: inherit !important;
-  font-weight: 800 !important;
-  font-size: 0.78rem !important;
-  letter-spacing: 0.10em !important;
-  text-transform: uppercase !important;
-
-  color: #fff !important;
-  background: linear-gradient(180deg, var(--cymru-red) 0%, var(--cymru-red-ink) 100%) !important;
-  border: 1px solid rgba(255,255,255,0.22) !important;
-
-  padding: 0.34rem 0.72rem !important;
-  border-radius: 999px !important;
-
-  box-shadow: 0 2px 0 rgba(153,27,27,0.22) !important;
-}
-
-.btn-hear:hover{
-  filter: brightness(1.05) saturate(1.06) !important;
-  box-shadow:
-    0 12px 18px rgba(2,6,23,0.12),
-    0 0 0 3px rgba(185,28,28,0.14) !important;
-}
-
-.btn-hear .icon{
-  /* emoji looks bad on dark red — keep it smaller and less loud */
-  font-size: 0.85rem !important;
-  line-height: 1 !important;
-  opacity: 0.95 !important;
-}
-
-/* 5) SHUFFLE — remove gold vibe, make it clean + distinct */
-.btn-shuffleNow{
-  font-family: inherit !important;
-  font-weight: 800 !important;
-  font-size: 0.78rem !important;
-  letter-spacing: 0.06em !important;
-  text-transform: uppercase !important;
-
-  background: #fff !important;
-  color: var(--emerald-ink) !important;
-  border: 1px solid rgba(6,78,59,0.26) !important;
-
-  padding: 0.48rem 0.95rem 0.48rem 1.20rem !important;
-  position: relative !important;
-}
-
 .btn-shuffleNow::before{
   content:"";
   position:absolute;
@@ -1632,11 +844,10 @@
   background: linear-gradient(180deg, rgba(6,78,59,0.95), rgba(153,27,27,0.95));
   opacity: 0.35;
 }
-
 .btn-shuffleNow:hover{
-  background: rgba(4,120,87,0.06) !important;
-  border-color: rgba(6,78,59,0.34) !important;
-  box-shadow: 0 10px 18px rgba(2,6,23,0.10) !important;
+  background: rgba(4,120,87,0.06);
+  border-color: rgba(6,78,59,0.34);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
 }
-
 .btn-shuffleNow:hover::before{ opacity: 0.55; }
