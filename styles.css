@@ -871,16 +871,21 @@
 /* =========================
    Segmented control (Random / Smart) — tighter + better typography
    ========================= */
+/* =========================
+   Segmented control (Random / Smart) — cleaner typography
+   ========================= */
 .seg{
   display:inline-flex;
   align-items:center;
-  gap: 0.18rem;
+  gap: 0.20rem;
   padding: 0.18rem;
-  border-radius: 999px;
 
-  border: 1px solid var(--border);
-  background: #fff;
-  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
+  border-radius: 999px;
+  border: 1px solid rgba(15,23,42,0.12);
+  background: rgba(255,255,255,0.92);
+
+  box-shadow: 0 10px 18px rgba(2,6,23,0.06);
+  backdrop-filter: blur(10px);
 }
 
 .seg-btn{
@@ -890,27 +895,39 @@
 
   padding: 0.42rem 0.78rem;
 
-  font: inherit;
-  font-size: .72rem;
+  font-family: inherit;          /* important */
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: .08em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
 
   line-height: 1;
-  color: rgba(15,23,42,0.74);
+  color: rgba(15,23,42,0.72);
   background: transparent;
 
   cursor: pointer;
+  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
+              border-color .12s ease, filter .12s ease, color .12s ease;
   user-select:none;
   -webkit-tap-highlight-color: transparent;
-
-  transition: background .12s ease, border-color .12s ease, color .12s ease, filter .12s ease;
 }
 
 .seg-btn:hover{
-  background: rgba(6,95,70,0.06);
-  border-color: rgba(6,95,70,0.18);
-  color: rgba(15,23,42,0.88);
+  background: rgba(6,78,59,0.06);
+  border-color: rgba(6,78,59,0.16);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 16px rgba(2,6,23,0.07);
+}
+
+.seg-btn.is-on{
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: 0 12px 20px rgba(2,6,23,0.14), inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+.seg-btn.is-on:hover{
+  filter: saturate(1.06) brightness(1.03);
 }
 
 .seg-btn:focus-visible{
@@ -918,27 +935,21 @@
   outline-offset: 2px;
 }
 
-.seg-btn.is-on{
-  color: #fff;
-  background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
-  border-color: rgba(255,255,255,0.18);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 16px rgba(2,6,23,0.12);
-}
-
-.seg-btn.is-on:hover{
-  filter: saturate(1.06) brightness(1.02);
-}
-
 /* Shuffle action: icon-first, label only on md+ */
+/* Shuffle button: clean secondary action (no gold) */
 .btn-shuffleNow{
-  padding: 0.46rem 0.75rem;
+  padding: 0.50rem 0.90rem;
   gap: 0.45rem;
+  font-weight: 650;
+  color: var(--emerald-ink);
+
+  border-color: rgba(6,78,59,0.22);
+  background: rgba(255,255,255,0.90);
 }
-.btn-shuffleNow .btn-icon{ line-height: 1; }
-.btn-shuffleNow .btn-label{ display: none; }
-@media (min-width: 768px){
-  .btn-shuffleNow{ padding: .55rem .95rem; }
-  .btn-shuffleNow .btn-label{ display: inline; }
+
+.btn-shuffleNow:hover{
+  background: rgba(4,120,87,0.08);
+  border-color: rgba(6,78,59,0.30);
 }
 
 /* Practice: one composed “answer moment” block */
