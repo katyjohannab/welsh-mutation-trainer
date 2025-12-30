@@ -1141,6 +1141,7 @@ function placeBasePopover(pop, capsuleEl){
 
     const mkSegBtn = (label, value) => {
       const b = document.createElement('button');
+      b.title = (value === 'shuffle') ? (t.shuffleModeDesc || '') : (t.smartModeDesc || '');
       b.type = 'button';
       const on = state.practiceMode === value;
 
@@ -1163,13 +1164,15 @@ function placeBasePopover(pop, capsuleEl){
 
     const btnShuffleNow = document.createElement('button');
     btnShuffleNow.type = 'button';
+    btnShuffleNow.title = t.shuffleNowDesc || '';
     // Use utility button styling (amber tinted) so it stands apart from primary/secondary buttons
     btnShuffleNow.className = 'btn btn-utility btn-shuffleNow';
     btnShuffleNow.innerHTML = `<span class="btn-icon" aria-hidden="true">🔀</span><span class="btn-label">${esc(t.shuffleNow)}</span>`;
     btnShuffleNow.onclick = () => { rebuildDeck(); render(); };
 
-    headerRight.append(seg, btnShuffleNow);
+    headerRight.append(seg);
     header.append(headerLeft, headerRight);
+
     // Active filters summary as chips
     const summary = document.createElement('div');
     summary.className = 'flex flex-wrap items-center gap-2 mb-4';
@@ -1328,7 +1331,8 @@ function placeBasePopover(pop, capsuleEl){
     
       render();
     });
- actions.append(btnCheck, btnHint, btnReveal, btnSkip);
+    actions.append(btnCheck, btnHint, btnReveal, btnSkip, btnShuffleNow);
+
 
 // Hint (no mt-* here; let the layout wrapper control spacing)
 const hint = document.createElement('div');
