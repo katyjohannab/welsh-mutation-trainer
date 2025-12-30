@@ -1220,61 +1220,12 @@ async function playPollySentence(sentence) {
     
     capsule.appendChild(baseSpan);
     chips.appendChild(capsule);
+
+    // ✅ add the ? to the big base word (only if Translate exists)
+    mountBaseTranslationUI(capsule, card);
+
     
-    // Adds the ? only if card.Translate has content
-  function mountBaseTranslationUI(capsuleEl, card){
-  const tr = (card?.Translate || '').toString().trim();
-  if (!capsuleEl || !tr) return; // no Translate => no ?
-
-  capsuleEl.classList.add('base-capsule');
-
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'base-info-btn';
-  btn.textContent = '?';
-  btn.setAttribute('aria-label', (state.lang === 'cy') ? 'Dangos ystyr' : 'Show translation');
-  btn.setAttribute('title', (state.lang === 'cy') ? 'Ystyr' : 'Meaning');
-  btn.setAttribute('aria-expanded', 'false');
-
-  let pop = null;
-
-  const close = () => {
-    if (pop){
-      pop.remove();
-      pop = null;
-    }
-    btn.setAttribute('aria-expanded', 'false');
-    document.removeEventListener('keydown', onEsc);
-  };
-
-  const onEsc = (ev) => { if (ev.key === 'Escape') close(); };
-
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (pop){ close(); return; }
-
-    const wc = (card?.WordCategory || '').toString().trim();
-    pop = document.createElement('div');
-    pop.className = 'base-info-popover animate-pop';
-    pop.addEventListener('click', (ev) => ev.stopPropagation());
-
-    pop.innerHTML = `
-      <div class="base-info-meaning">${esc(tr)}</div>
-      ${wc ? `<div class="base-info-meta"><span class="base-info-tag">${esc(wc)}</span></div>` : ``}
-    `;
-
-    capsuleEl.appendChild(pop);
-    btn.setAttribute('aria-expanded', 'true');
-
-    // close on outside click (next tick so this click doesn't instantly close it)
-    setTimeout(() => document.addEventListener('click', close, { once: true }), 0);
-    document.addEventListener('keydown', onEsc);
-  });
-
-  capsuleEl.appendChild(btn);
-}
+   
 
     
     // --- Instruction ---
