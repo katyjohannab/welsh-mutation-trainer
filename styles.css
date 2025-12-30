@@ -249,80 +249,101 @@
     }
 
     /* Custom style for the audio playback button.   */
-/* HEAR button — compact “chip-action”, crisp red/green, subtle gold */
-   .btn-hear{
-     display: inline-flex;
-     align-items: center;
-     gap: 0.38rem;
-   
-     padding: 0.22rem 0.58rem;
-     border-radius: 999px;
-   
-     background: #fff; /* solid, not translucent */
-     border: 1.5px solid var(--cymru-red-ink);
-     color: var(--emerald-ink);
-   
-     font-family: inherit;
-     font-weight: 600;
-     font-size: 0.80rem;
-     line-height: 1;
-     letter-spacing: 0.06em;
-     text-transform: uppercase;
-   
-     box-shadow: 0 1px 2px rgba(2,6,23,0.06);
-     transition: background .12s ease, border-color .12s ease, box-shadow .12s ease;
-     cursor: pointer;
-     user-select: none;
-     -webkit-tap-highlight-color: transparent;
-   }
-   
-   .btn-hear .icon{
-     font-size: 0.95rem;
-     line-height: 1;
-   }
-   
-   .btn-hear:hover{
-     background: #fff; /* keep crisp */
-     border-color: var(--cymru-red); /* slightly brighter red */
-     box-shadow:
-       0 2px 6px rgba(2,6,23,0.08),
-       inset 0 0 0 1px rgba(217,119,6,0.22); /* subtle gold highlight */
-   }
-   
-   .btn-hear:active{
-     box-shadow: 0 1px 2px rgba(2,6,23,0.06);
-   }
-   
-   .btn-hear:focus-visible{
-     outline: 3px solid var(--focus);
-     outline-offset: 2px;
-   }
+/* =========================
+   HEAR (audio) button — graphic, solid, matches Cymru red
+   ========================= */
+.btn-hear{
+  display:inline-flex;
+  align-items:center;
+  gap: .38rem;
+
+  font: inherit;
+  font-weight: 750;
+  font-size: .72rem;
+  letter-spacing: .10em;
+  text-transform: uppercase;
+
+  padding: .22rem .56rem;
+  border-radius: 999px;
+
+  /* MATCH your theme reds exactly */
+  border: 2px solid var(--cymru-red);
+  background: #fff;                 /* solid, not pastel/translucent */
+  color: var(--emerald-ink);
+
+  line-height: 1;
+  box-shadow: 0 1px 0 rgba(2,6,23,0.08);
+
+  transition:
+    transform .08s ease,
+    box-shadow .12s ease,
+    background .12s ease,
+    border-color .12s ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-hear .icon{
+  font-size: .95rem;
+  line-height: 1;
+}
+
+.btn-hear:hover{
+  /* noticeable but not goofy */
+  background: rgba(185,28,28,0.06);
+  border-color: var(--cymru-red-ink);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+}
+
+.btn-hear:active{
+  transform: translateY(0px);
+  box-shadow: 0 6px 12px rgba(2,6,23,0.08);
+}
+
+.btn-hear:focus-visible{
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
 
 
 
     /* Utility buttons (e.g. Shuffle cards). These echo the gold accent like the Hear button but take standard padding */
-    .btn-utility {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      padding: .55rem .95rem;
-      border-radius: 999px;
-      border: 1px solid rgba(217,119,6,0.32);
-      background: rgba(217,119,6,0.10);
-      color: var(--emerald-ink);
-      font-weight: 600;
-      line-height: 1;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      transition: transform .06s ease, background .12s ease, box-shadow .12s ease;
-      cursor: pointer;
-      user-select: none;
-    }
-    .btn-utility:hover {
-      background: rgba(217,119,6,0.20);
-      transform: translateY(-1px);
-      box-shadow: 0 10px 22px rgba(2,6,23,0.08);
-    }
+   /* Secondary utility (Shuffle) — solid white, subtle gold accent */
+.btn-utility{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+
+  background: #fff;
+  border: 1px solid rgba(217,119,6,0.32);
+  color: var(--emerald-ink);
+
+  font-weight: 600;
+  line-height: 1;
+
+  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
+  transition: transform .06s ease, background .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+
+.btn-utility:hover{
+  background: rgba(217,119,6,0.10);
+  border-color: rgba(217,119,6,0.48);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
+}
+
+/* Put Shuffle on the right of the actions row */
+#practiceCard .practice-actions{
+  align-items: center;
+}
+#practiceCard .practice-actions .btn-shuffleNow{
+  margin-left: auto;
+}
+
 
     /* Container styling for revealed feedback. 
        correctness message, completed sentence, answer details and the
@@ -851,59 +872,65 @@
 /* =========================
    Segmented control (Random / Smart)
    ========================= */
+/* =========================
+   Segmented control (Random / Smart) — tighter + better typography
+   ========================= */
 .seg{
   display:inline-flex;
   align-items:center;
-  gap: 0.25rem;
-  padding: 0.22rem;
+  gap: 0.18rem;
+  padding: 0.18rem;
   border-radius: 999px;
+
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.86);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.70), 0 10px 22px rgba(2,6,23,0.06);
-  backdrop-filter: blur(10px);
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(2,6,23,0.06);
 }
+
 .seg-btn{
   appearance: none;
   border: 1px solid transparent;
   border-radius: 999px;
-  padding: 0.44rem 0.85rem;
-  font-size: 12px;
-  font-weight: 750;
-  letter-spacing: 0.02em;
+
+  padding: 0.42rem 0.78rem;
+
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+
   line-height: 1;
-  color: rgba(15,23,42,0.84);
+  color: rgba(15,23,42,0.74);
   background: transparent;
+
   cursor: pointer;
-  transition: transform .06s ease, box-shadow .12s ease, background .12s ease,
-              border-color .12s ease, filter .12s ease, color .12s ease;
   user-select:none;
   -webkit-tap-highlight-color: transparent;
+
+  transition: background .12s ease, border-color .12s ease, color .12s ease, filter .12s ease;
 }
+
 .seg-btn:hover{
-  background: rgba(255,255,255,0.92);
-  border-color: rgba(148,163,184,0.34);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(2,6,23,0.07);
+  background: rgba(6,95,70,0.06);
+  border-color: rgba(6,95,70,0.18);
+  color: rgba(15,23,42,0.88);
 }
-.seg-btn:active{
-  transform: translateY(0px);
-  box-shadow: 0 6px 12px rgba(2,6,23,0.05);
-}
+
 .seg-btn:focus-visible{
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
+
 .seg-btn.is-on{
   color: #fff;
   background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-mid) 45%, var(--primary-to) 100%);
-  background-size: 220% 220%;
-  background-position: 0% 50%;
-  border-color: rgba(255,255,255,0.16);
-  box-shadow: 0 12px 22px rgba(2,6,23,0.14), inset 0 1px 0 rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.18);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 8px 16px rgba(2,6,23,0.12);
 }
+
 .seg-btn.is-on:hover{
   filter: saturate(1.06) brightness(1.02);
-  background-position: 100% 50%;
 }
 
 /* Shuffle action: icon-first, label only on md+ */
@@ -970,36 +997,59 @@
 .base-capsule{ position: relative; }
 
 /* “Graphic” ? buttons: white fill, red border, green text */
+/* =========================
+   “?” buttons — match HEAR exactly
+   ========================= */
 .base-info-btn,
 .sentence-info-btn{
   display: inline-grid;
   place-items: center;
 
-  width: 1.18rem;
-  height: 1.18rem;
-
   border-radius: 999px;
-  border: 2px solid rgba(185,28,28,0.70);          /* Cymru red */
-  background: rgba(255,255,255,0.98);              /* solid/graphic */
-  color: rgba(6,78,59,0.98);                       /* emerald ink */
+  border: 2px solid var(--cymru-red);
+  background: #fff;
+  color: var(--emerald-ink);
 
+  font: inherit;
   font-weight: 900;
-  font-size: 0.80rem;
   line-height: 1;
 
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  box-shadow: 0 2px 0 rgba(6,78,59,0.10);
-  transition: transform .08s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+  box-shadow: 0 1px 0 rgba(2,6,23,0.08);
+  transition:
+    transform .08s ease,
+    box-shadow .12s ease,
+    background .12s ease,
+    border-color .12s ease;
+}
+
+/* Slightly larger so the 2px border doesn’t look heavier than HEAR */
+.base-info-btn{
+  width: 1.22rem;
+  height: 1.22rem;
+  font-size: 0.82rem;
+
+  position: absolute;
+  top: -0.30rem;
+  right: -0.50rem;
+}
+
+.sentence-info-btn{
+  width: 1.08rem;
+  height: 1.08rem;
+  font-size: 0.76rem;
+  margin-left: 0.40rem;
 }
 
 .base-info-btn:hover,
 .sentence-info-btn:hover{
- background: rgba(255,255,255,1);
-  border-color: rgba(185,28,28,0.92);
-  box-shadow: 0 12px 18px rgba(2,6,23,0.10);
+  background: rgba(185,28,28,0.06);
+  border-color: var(--cymru-red-ink);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(2,6,23,0.10);
 }
 
 .base-info-btn:active,
@@ -1013,6 +1063,7 @@
   outline: 3px solid var(--focus);
   outline-offset: 2px;
 }
+
 
 /* NUDGE: move the base “?” slightly OUTSIDE the capsule so it never clips letters */
 .base-info-btn{
