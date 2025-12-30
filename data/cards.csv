@@ -1096,6 +1096,57 @@ c001097,None,Bod+yn,yn,prynu,verb-noun,Mae'r cwmni yn, offer newydd.,prynu,NONE,
 c001098,None,Bod+yn,yn,torri,verb-noun,Roedd e'n,'r pren.,torri,NONE,Here yn links bod to a verb-noun and it does not cause mutation so keep torri.
 c001099,None,Bod+yn,yn,codi,verb-noun,Mae hi'n, bob bore.,codi,NONE,Here yn links bod to a verb-noun and it does not cause mutation so keep codi.
 c001100,None,Bod+yn,yn,dysgu,verb-noun,Byddan nhw'n, Cymraeg.,dysgu,NONE,Here yn links bod to a verb-noun and it does not cause mutation so keep dysgu.
+c001101,"Soft,Contact",Bod+yn,yn,cyfartal,adj,Mae'r ddau ateb yn,.,gyfartal,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cyfartal→gyfartal).
+c001102,"Soft,Contact",Bod+yn,yn,cylchol,adj,Mae'r broses yn,.,gylchol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cylchol→gylchol).
+c001103,"Soft,Contact",Bod+yn,yn,cymharol,adj,Mae'r pris yn,o'i gymharu â'r llynedd.,gymharol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cymharol→gymharol).
+c001104,"Soft,Contact",Bod+yn,yn,cymhleth,adj,Mae'r sefyllfa yn,i'w hesbonio.,gymhleth,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cymhleth→gymhleth).
+c001105,"Soft,Contact",Bod+yn,yn,cyhoeddus,adj,Mae'r cyfarfod yn,.,gyhoeddus,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cyhoeddus→gyhoeddus).
+c001106,"Soft,Contact",Bod+yn,yn,cydnabyddedig,adj,Mae'r awdur yn,.,gydnabyddedig,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cydnabyddedig→gydnabyddedig).
+c001107,"Soft,Contact",Bod+yn,yn,cyfyng,adj,Mae'r gyllideb yn,eleni.,gyfyng,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cyfyng→gyfyng).
+c001108,"Soft,Contact",Bod+yn,yn,cynhwysfawr,adj,Mae'r adroddiad yn,.,gynhwysfawr,SM,After bod the linking word yn comes before an adjective and causes soft mutation so c becomes g (cynhwysfawr→gynhwysfawr).
+c001109,"Soft,Contact",Bod+yn,yn,tactegol,adj,Mae'r penderfyniad yn,.,dactegol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (tactegol→dactegol).
+c001110,"Soft,Contact",Bod+yn,yn,tal,adj,Mae'r goeden yn,.,dal,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (tal→dal).
+c001111,"Soft,Contact",Bod+yn,yn,tebygol,adj,Mae hi'n,o lwyddo.,debygol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (tebygol→debygol).
+c001112,"Soft,Contact",Bod+yn,yn,technegol,adj,Mae'r testun yn,.,dechnegol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (technegol→dechnegol).
+c001113,"Soft,Contact",Bod+yn,yn,traddodiadol,adj,Mae'r dathliad yn,.,draddodiadol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (traddodiadol→draddodiadol).
+c001114,"Soft,Contact",Bod+yn,yn,trefnus,adj,Mae'r swyddfa yn,ar y cyfan.,drefnus,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (trefnus→drefnus).
+c001115,"Soft,Contact",Bod+yn,yn,tymhorol,adj,Mae'r gwaith yn,.,dymhorol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so t becomes d (tymhorol→dymhorol).
+c001116,"Soft,Contact",Bod+yn,yn,parhaus,adj,Mae'r sgwrs yn,.,barhaus,SM,After bod the linking word yn comes before an adjective and causes soft mutation so p becomes b (parhaus→barhaus).
+c001117,"Soft,Contact",Bod+yn,yn,peryglus,adj,Mae'r llwybr yn,pan mae'n rhewi.,beryglus,SM,After bod the linking word yn comes before an adjective and causes soft mutation so p becomes b (peryglus→beryglus).
+c001118,"Soft,Contact",Bod+yn,yn,priodol,adj,Nid yw'r ymateb yn,.,briodol,SM,After bod the linking word yn comes before an adjective and causes soft mutation so p becomes b (priodol→briodol).
+c001119,None,Bod+yn,yn,syth,adj,Mae'r llinell yn,.,syth,NONE,After bod the linking word yn comes before an adjective but initial s does not change in soft mutation so the form stays syth.
+c001120,None,Bod+yn,yn,sylweddol,adj,Mae'r gwahaniaeth yn,.,sylweddol,NONE,After bod the linking word yn comes before an adjective but initial s does not change in soft mutation so the form stays sylweddol.
+c001121,None,Bod+yn,yn,hŷn,adj,Mae'r adeilad yn,na'r safle newydd.,hŷn,NONE,After bod the linking word yn comes before an adjective but initial h does not change in soft mutation so the form stays hŷn.
+c001122,None,Bod+yn,yn,amgen,adj,Mae'r dewis yn,.,amgen,NONE,After bod the linking word yn comes before an adjective but words starting with a vowel do not change so the form stays amgen.
+c001123,None,Bod+yn,yn,llachar,adj,Mae'r haul yn,heddiw.,llachar,NONE,After bod the linking word yn does not soft-mutate words beginning with ll so the form stays llachar.
+c001124,None,Bod+yn,yn,rhannol,adj,Mae'r ateb yn,.,rhannol,NONE,After bod the linking word yn does not soft-mutate words beginning with rh so the form stays rhannol.
+c001125,None,Bod+yn,yn,rhywiol,adj,Mae'r cynnwys yn,.,rhywiol,NONE,After bod the linking word yn does not soft-mutate words beginning with rh so the form stays rhywiol.
+c001126,"Soft,Contact",Bod+yn,yn,bachgen,noun-masc,Mae Iwan yn,.,fachgen,SM,After bod the linking word yn comes before a noun and causes soft mutation so b becomes f (bachgen→fachgen).
+c001127,"Soft,Contact",Bod+yn,yn,merch,noun-fem,Mae Sioned yn,.,ferch,SM,After bod the linking word yn comes before a noun and causes soft mutation so m becomes f (merch→ferch).
+c001128,"Soft,Contact",Bod+yn,yn,pont,noun-fem,Mae hynny'n,dros yr afon.,bont,SM,After bod the linking word yn comes before a noun and causes soft mutation so p becomes b (pont→bont).
+c001129,"Soft,Contact",Bod+yn,yn,prifysgol,noun-fem,Mae'r sefydliad yn,.,brifysgol,SM,After bod the linking word yn comes before a noun and causes soft mutation so p becomes b (prifysgol→brifysgol).
+c001130,"Soft,Contact",Bod+yn,yn,tîm,noun-masc,Mae'r clwb yn,.,dîm,SM,After bod the linking word yn comes before a noun and causes soft mutation so t becomes d (tîm→dîm).
+c001131,"Soft,Contact",Bod+yn,yn,cynllun,noun-masc,Mae hyn yn,.,gynllun,SM,After bod the linking word yn comes before a noun and causes soft mutation so c becomes g (cynllun→gynllun).
+c001132,"Soft,Contact",Bod+yn,yn,cwmni,noun-masc,Mae'r busnes yn,.,gwmni,SM,After bod the linking word yn comes before a noun and causes soft mutation so c becomes g (cwmni→gwmni).
+c001133,"Soft,Contact",Bod+yn,yn,digwyddiad,noun-masc,Mae'r parti yn,arbennig.,ddigwyddiad,SM,After bod the linking word yn comes before a noun and causes soft mutation so d becomes dd (digwyddiad→ddigwyddiad).
+c001134,"Soft,Contact",Bod+yn,yn,dewis,noun-masc,Mae hynny'n,doeth.,ddewis,SM,After bod the linking word yn comes before a noun and causes soft mutation so d becomes dd (dewis→ddewis).
+c001135,"Soft,Contact",Bod+yn,yn,gwasg,noun-fem,Mae'r papur yn,leol.,wasg,SM,After bod the linking word yn comes before a noun and causes soft mutation so g drops (gwasg→wasg).
+c001136,"Soft,Contact",Bod+yn,yn,gwaith,noun-masc,Mae hyn yn,anodd.,waith,SM,After bod the linking word yn comes before a noun and causes soft mutation so g drops (gwaith→waith).
+c001137,"Soft,Contact",Bod+yn,yn,mudiad,noun-masc,Mae'r grŵp yn,cenedlaethol.,fudiad,SM,After bod the linking word yn comes before a noun and causes soft mutation so m becomes f (mudiad→fudiad).
+c001138,"Soft,Contact",Bod+yn,yn,problem,noun-fem,Mae hynny'n,.,broblem,SM,After bod the linking word yn comes before a noun and causes soft mutation so p becomes b (problem→broblem).
+c001139,None,Bod+yn,yn,llwybr,noun-masc,Mae'r ffordd yn,hir.,llwybr,NONE,After bod the linking word yn does not soft-mutate words beginning with ll so the form stays llwybr.
+c001140,None,Bod+yn,yn,rheswm,noun-masc,Mae hynny'n,da.,rheswm,NONE,After bod the linking word yn does not soft-mutate words beginning with rh so the form stays rheswm.
+c001141,None,Bod+yn,yn,ysgol,noun-fem,Mae'r adeilad yn,.,ysgol,NONE,After bod the linking word yn comes before a noun but words starting with a vowel do not change so the form stays ysgol.
+c001142,None,Bod+yn,yn,siop,noun-fem,Mae'r lle hwn yn,.,siop,NONE,After bod the linking word yn comes before a noun but initial s does not change in soft mutation so the form stays siop.
+c001143,None,Bod+yn,yn,arian,noun-masc,Mae hynny'n,i ni.,arian,NONE,After bod the linking word yn comes before a noun but words starting with a vowel do not change so the form stays arian.
+c001144,None,Bod+yn,yn,siarad,verb-noun,Mae hi'n,bob dydd.,siarad,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep siarad.
+c001145,None,Bod+yn,yn,chwarae,verb-noun,Mae'r plant yn,yn y parc.,chwarae,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep chwarae.
+c001146,None,Bod+yn,yn,ysgrifennu,verb-noun,Mae e'n,llythyr.,ysgrifennu,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep ysgrifennu.
+c001147,None,Bod+yn,yn,astudio,verb-noun,Dw i'n,gartref.,astudio,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep astudio.
+c001148,None,Bod+yn,yn,helpu,verb-noun,Mae'r nyrs yn,pawb.,helpu,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep helpu.
+c001149,None,Bod+yn,yn,gwrando,verb-noun,Rydyn ni'n,ar y radio.,gwrando,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep gwrando.
+c001150,None,Bod+yn,yn,cerdded,verb-noun,Mae'r ci yn,yn araf.,cerdded,NONE,With bod a complement that begins with a verb-noun uses yn but the verb-noun does not mutate so keep cerdded.
+
 
 
 
