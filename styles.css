@@ -455,11 +455,6 @@
       padding-bottom: .9rem !important;
       box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
     }
-    #practiceCard .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
-      line-height: 1 !important;
-      display: block !important;
-      transform: translateY(0px);
-    }
 
     /* Sentence → actions: give the controls a clear "breath", a subtle red divider,
        and ensure controls align to the left */
@@ -557,10 +552,14 @@
       padding: .95rem 1.25rem !important;
       box-shadow: 0 8px 18px rgba(2,6,23,0.08) !important;
     }
-    #practiceCard .practice-base .bg-indigo-100.ring-1.ring-indigo-300.rounded-2xl span{
-      line-height: 1 !important;
-      display:block;
-    }
+
+   /* Only affect the big base word, not popover internals */
+   #practiceCard .base-word-text{
+     line-height: 1 !important;
+     display: block !important;
+     transform: translateY(0px);
+   }
+
 
     /* Sentence line: keep it left aligned, but with a bit more air under the base word */
     #practiceCard .practice-sentence{
@@ -1064,5 +1063,18 @@
   white-space: pre-line; /* allow \n line breaks */
 }
 
+/* Tone down gold: make Hear + Shuffle read as green-neutral actions */
+.btn-hear,
+.btn-utility{
+  background: rgba(4,120,87,0.08) !important;
+  border-color: rgba(4,120,87,0.22) !important;
+  color: var(--emerald-ink) !important;
+}
+
+.btn-hear:hover,
+.btn-utility:hover{
+  background: rgba(4,120,87,0.14) !important;
+  border-color: rgba(4,120,87,0.30) !important;
+}
 
 
