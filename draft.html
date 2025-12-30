@@ -401,10 +401,7 @@
     freezeIdx: null,
     freezePos: null
   };
-  // Persist whether the user has dismissed the practice modes help box.  This prevents it
-  // from appearing again until localStorage is cleared.
-  const HELP_DISMISSED_KEY = 'wm_help_dismissed_v1';
-  state.helpDismissed = loadLS(HELP_DISMISSED_KEY, false);
+
   // Track the UI language (default to English); persisted via localStorage
   state.lang = loadLS('wm_lang', 'en');
 
@@ -1234,24 +1231,7 @@ async function playPollySentence(sentence) {
     instruction.innerHTML = esc(t.instruction);
 
 
-    // Help box: show explanation in current language only, unless dismissed.  Use a collapsible
-    // details element so users can expand/collapse.  Include a small dismiss button to
-    // permanently hide this panel.  Once dismissed it will not render again (until localStorage is cleared).
-    let helpBox = null;
-    if (!state.helpDismissed) {
-      helpBox = document.createElement('details');
-      helpBox.className = 'practice-help panel p-3 rounded-2xl mb-4 text-sm text-slate-700';
-      const desc = (state.lang === 'cy') ? t.howItWorksCY : t.howItWorksEN;
-      helpBox.innerHTML = `
-        <summary class="cursor-pointer font-semibold text-slate-800">${esc(t.howItWorksTitle)}</summary>
-        <div class="mt-3 space-y-3">
-          <p>${esc(desc)}</p>
-          <div class="flex justify-end">
-            <button type="button" id="dismissHelp" class="btn btn-ghost px-2 py-1 text-xs">${state.lang === 'cy' ? 'Cau' : 'Close'}</button>
-          </div>
-        </div>
-      `;
-    }
+
 
     const row = document.createElement('div');
     row.className = 'practice-sentence';
@@ -1399,24 +1379,13 @@ if (state.revealed) {
 
     // Assemble card sections.  Conditionally include helpBox if it exists (not dismissed).
     const parts = [header, summary, instruction];
-    if (helpBox) parts.push(helpBox);
     // Compose sentence, actions, hint and feedback into a single block for consistent spacing
     const answerBlock = document.createElement('div');
     answerBlock.className = 'practice-answerBlock';
     answerBlock.append(row, actions, hint, feedback);
     parts.push(chips, answerBlock);
     wrap.append(...parts);
-    // If the helpBox is rendered, attach a click handler to dismiss it permanently
-    if (helpBox) {
-      const dismissBtn = helpBox.querySelector('#dismissHelp');
-      if (dismissBtn) {
-        dismissBtn.onclick = () => {
-          state.helpDismissed = true;
-          saveLS(HELP_DISMISSED_KEY, true);
-          render();
-        };
-      }
-    }
+
     host.appendChild(wrap);
     const ab = $('#answerBox');
     ab.value = state.guess; ab.focus();
