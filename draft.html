@@ -370,8 +370,10 @@
       After: getVal(r, ["After","PromptAfter","Right","SentenceAfter"]),
       Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
       Outcome: o,
-      Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"])
+      Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"]),
+      Translate: getVal(r, ["Translate","Translation","Gloss","Meaning"]),
     };
+
   }
 
   // ---------- App State ----------
@@ -730,7 +732,7 @@ async function initData(){
       if (sheet){ rows = await loadCsvUrl(sheet); }
       else { rows = await loadAllDefault(); }
     }catch(e){ console.warn('Data load failed; no demo fallback configured.', e); rows = await loadAllDefault(); }
-    const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+    const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Translate","Before","After","Answer","Outcome","Why"];
     const cleaned = rows.map(r => {
       const m = coerceRow(r); const o = {};
       for (const k of expected) o[k] = (m?.[k] ?? '').toString().trim();
@@ -961,6 +963,70 @@ async function playPollySentence(sentence) {
   await audio.play();
 }
 
+    // -------? popover helper function ------
+    function mountBaseTranslationUI(capsuleEl, card){
+  const tr = (card?.Translate || '').toString().trim();
+  if (!capsuleEl || !tr) return; // show nothing if Translate is blank
+
+  capsuleEl.classList.add('base-capsule', 'base-capsule--hasInfo');
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'base-info-btn';
+  btn.textContent = '?';
+  btn.setAttribute('aria-label', (state.lang === 'cy') ? 'Dangos ystyr' : 'Show translation');
+  btn.setAttribute('title', (state.lang === 'cy') ? 'Ystyr' : 'Meaning');
+  btn.setAttribute('aria-expanded', 'false');
+
+  let pop = null;
+  let escHandler = null;
+
+  const close = () => {
+    if (pop){
+      pop.remove();
+      pop = null;
+    }
+    btn.setAttribute('aria-expanded', 'false');
+    if (escHandler){
+      document.removeEventListener('keydown', escHandler);
+      escHandler = null;
+    }
+  };
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (pop){ close(); return; }
+
+    pop = document.createElement('div');
+    pop.className = 'base-info-popover animate-pop';
+    pop.addEventListener('click', (ev) => ev.stopPropagation());
+
+    const wc = (card?.WordCategory || '').toString().trim();
+    const catLabel = (state.lang === 'cy') ? 'Categori' : 'Category';
+
+    pop.innerHTML = `
+      <div class="base-info-meaning">${esc(tr)}</div>
+      ${wc ? `<div class="base-info-meta"><span class="base-info-label">${esc(catLabel)}:</span> <span class="base-info-tag">${esc(wc)}</span></div>` : ``}
+    `;
+
+    capsuleEl.appendChild(pop);
+    btn.setAttribute('aria-expanded', 'true');
+
+    // Close on outside click
+    setTimeout(() => {
+      document.addEventListener('click', close, { once: true });
+    }, 0);
+
+    // Close on Escape
+    escHandler = (ev) => { if (ev.key === 'Escape') close(); };
+    document.addEventListener('keydown', escHandler);
+  });
+
+  capsuleEl.appendChild(btn);
+}
+
 
 
   // ---------- Render ----------
@@ -1141,9 +1207,25 @@ async function playPollySentence(sentence) {
       // When there are no active filters, hide the summary row to save vertical space
       summary.classList.add('hidden');
     }
-    const chips = document.createElement('div'); chips.className = 'practice-base text-2xl md:text-3xl font-medium';
-    chips.innerHTML = `<div class="inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm"><span class="text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight">${esc(card.Base||'—')}</span></div>`;
-    const instruction = document.createElement('div'); instruction.className='practice-instruction text-lg md:text-xl text-slate-700 mb-6';
+      const chips = document.createElement('div');
+      chips.className = 'practice-base text-2xl md:text-3xl font-medium';
+      
+      const capsule = document.createElement('div');
+      capsule.className = 'inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm';
+      
+      const baseSpan = document.createElement('span');
+      baseSpan.className = 'text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight';
+      baseSpan.textContent = (card.Base || '—');
+      
+      capsule.appendChild(baseSpan);
+      chips.appendChild(capsule);
+      
+      // Adds the ? only if card.Translate has content
+      mountBaseTranslationUI(capsule, card);
+      
+
+
+    
     // Use translated instruction text
     instruction.innerHTML = esc(t.instruction);
 
