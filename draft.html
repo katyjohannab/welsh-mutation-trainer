@@ -1107,7 +1107,7 @@ function renderPractice() {
       ab2.classList.add("opacity-70", "cursor-not-allowed");
     }
     render();
-    setTimeout(() => $("#inlineNext")?.focus(), 0);
+    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
   };
 
   const btnCheck = btn(t.check, "btn-primary shadow", onCheck);
@@ -1258,7 +1258,7 @@ function renderPractice() {
   const ab = $("#answerBox");
   if (ab) {
     ab.value = state.guess;
-    ab.focus();
+    ab.focus({ preventScroll: true });
     ab.addEventListener("keydown", (e) => {
       if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); onCheck(); }
     });
@@ -1349,20 +1349,43 @@ function render() {
   renderStatsPanels();
 }
 
-function nextCard(offset = 1) {
-  if (state.practiceMode === "smart") {
-    if (!state.filtered.length) return;
-    state.freezeIdx = null;
-    state.freezePos = null;
-    state.smartIdx = pickNextSmartIdx();
-    state.smartCount = (state.smartCount || 0) + 1;
+  function scrollPracticeToTop() {
+  const el = document.querySelector("#practiceCard");
+  if (!el) return;
+  el.scrollIntoView({ block: "start", behavior: "instant" });
+}
+
+  function nextCard(offset = 1) {
+  // Always clear “freeze” state when moving on
+  const goToNextAndReset = () => {
     state.guess = "";
     state.revealed = false;
     state.lastResult = null;
+  };
+
+  if (state.practiceMode === "smart") {
+    if (!state.filtered.length) return;
+
+    state.freezeIdx = null;
+    state.freezePos = null;
+
+    state.smartIdx = pickNextSmartIdx();
+    state.smartCount = (state.smartCount || 0) + 1;
+
+    goToNextAndReset();
+
     render();
+
+    // After render, bring the top of the card into view and focus answer box without scrolling
+    requestAnimationFrame(() => {
+      $("#practiceCard")?.scrollIntoView({ block: "start", behavior: "instant" });
+      $("#answerBox")?.focus({ preventScroll: true });
+    });
+
     return;
   }
 
+  // Shuffle mode
   if (!state.deck.length) return;
 
   // In shuffle mode, if wrong: push same card a few steps later
@@ -1381,12 +1404,19 @@ function nextCard(offset = 1) {
 
   state.freezeIdx = null;
   state.freezePos = null;
+
   state.p = (state.p + offset + state.deck.length) % state.deck.length;
-  state.guess = "";
-  state.revealed = false;
-  state.lastResult = null;
+
+  goToNextAndReset();
+
   render();
+
+  requestAnimationFrame(() => {
+    $("#practiceCard")?.scrollIntoView({ block: "start", behavior: "instant" });
+    $("#answerBox")?.focus({ preventScroll: true });
+  });
 }
+
 
 /* ========= Event wiring ========= */
 function wireUi() {
