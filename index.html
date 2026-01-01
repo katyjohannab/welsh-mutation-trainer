@@ -1107,7 +1107,7 @@ function renderPractice() {
       ab2.classList.add("opacity-70", "cursor-not-allowed");
     }
     render();
-    setTimeout(() => $("#inlineNext")?.focus(), 0);
+    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
   };
 
   const btnCheck = btn(t.check, "btn-primary shadow", onCheck);
