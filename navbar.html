@@ -1,84 +1,26 @@
-<header id="siteHeader" class="sticky top-0 z-50">
-  <div class="wm-nav-surface">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-      <!-- Brand -->
-      <a href="./home.html" class="flex items-center gap-2 min-w-0">
-        <img
-          src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png"
-          alt=""
-          aria-hidden="true"
-          class="h-8 w-8 shrink-0"
-        />
-        <div class="min-w-0 leading-none">
-          <div class="bbh-bogle-bold text-xl md:text-2xl tracking-tight whitespace-nowrap">
-            <span style="color: var(--emerald-ink);">HYFFORDWR</span><span style="color:#b91c1c;">CYMRAEG</span>
-          </div>
-        </div>
-      </a>
+<header id="siteHeader" class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
 
-      <!-- Nav -->
-      <nav class="ml-auto flex items-center justify-end gap-2 flex-wrap">
-        <a class="nav-pill" data-nav="home" href="./home.html">
-          <span data-lang="en">Home</span>
-          <span data-lang="cy" lang="cy" hidden>Cartref</span>
-        </a>
+    <a href="./home.html" class="brand-lockup grow min-w-0 flex items-center gap-3 no-underline">
+      <img class="brand-dragon" alt="" aria-hidden="true" src="./images/dragon.png" />
+      <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
+        <span class="title-hy">Hyffordwr</span><span class="title-trei">Cymraeg</span>
+      </h1>
+    </a>
 
-        <a class="nav-pill" data-nav="learn" href="./learn.html">
-          <span data-lang="en">Learn</span>
-          <span data-lang="cy" lang="cy" hidden>Dysgu</span>
-        </a>
+    <nav class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3" aria-label="Primary">
+      <a class="btn btn-ghost navlink" data-nav="home" href="./home.html" data-i18n="nav_home">Home</a>
+      <a class="btn btn-ghost navlink" data-nav="learn" href="./learn.html" data-i18n="nav_learn">Learn</a>
+      <a class="btn btn-ghost navlink" data-nav="vocab" href="./vocab.html" data-i18n="nav_vocab">Vocab trainer</a>
+      <a class="btn btn-ghost navlink" data-nav="mutation" href="./index.html" data-i18n="nav_mutation">Mutation trainer</a>
 
-        <a class="nav-pill" data-nav="vocab" href="./vocab.html">
-          <span data-lang="en">Vocab trainer</span>
-          <span data-lang="cy" lang="cy" hidden>Ymarfer geirfa</span>
-        </a>
+      <button id="btnLangToggle" class="btn btn-ghost" type="button">
+        <span class="sr-only">Toggle language</span>
+        <span aria-hidden="true">🌐</span>
+        <span class="ml-1 font-semibold" data-i18n="lang_next">CY</span>
+      </button>
+    </nav>
 
-        <a class="nav-pill" data-nav="mutations" href="./index.html">
-          <span data-lang="en">Mutation trainer</span>
-          <span data-lang="cy" lang="cy" hidden>Hyfforddwr treigladau</span>
-        </a>
-
-        <button id="btnLangToggle" type="button" class="btn btn-ghost px-3 py-2">
-          <!-- Filled by page JS -->
-        </button>
-      </nav>
-    </div>
   </div>
-
-  <style>
-    .wm-nav-surface{
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(15,23,42,0.12);
-    }
-    #siteHeader.is-scrolled .wm-nav-surface{
-      box-shadow: 0 10px 30px rgba(2,6,23,0.08);
-    }
-    .nav-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:.4rem;
-      padding:.48rem .9rem;
-      border-radius:999px;
-      border:1px solid rgba(15,23,42,0.10);
-      background: rgba(255,255,255,0.75);
-      font-size:.875rem;
-      line-height:1;
-      white-space:nowrap;
-    }
-    .nav-pill:hover,
-    .nav-pill:focus-visible{
-      border-color: rgba(15,23,42,0.18);
-      box-shadow: 0 8px 20px rgba(2,6,23,0.06);
-      outline:none;
-    }
-    /* Active page highlight */
-    body[data-current="home"]      .nav-pill[data-nav="home"],
-    body[data-current="learn"]     .nav-pill[data-nav="learn"],
-    body[data-current="vocab"]     .nav-pill[data-nav="vocab"],
-    body[data-current="mutations"] .nav-pill[data-nav="mutations"]{
-      border-color: rgba(4,120,87,0.35);
-      background: rgba(4,120,87,0.07);
-    }
-  </style>
 </header>
+
