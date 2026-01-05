@@ -1,0 +1,27 @@
+{
+  "lessons": [
+    {
+      "id": "hyffordwr-treiglad",
+      "title": { "en": "🧱 Hyffordwr Treiglad", "cy": "🧱 Mutations Trainer" },
+      "desc": { "en": "An interactive tool to help you practice mutations in lots of different contexts", "cy": "Offeryn i'ch helpu chi ymarfer defnyddio treigladau mewn llawer o gyd-destunau gwahanol" },
+      "deck": "./index.html"
+    },
+    {
+      "id": "learn,
+      "title": { "en": "🌊Hyffordwr Geirfa", "cy": "🌊 Grammar Trainer" },
+      "desc": {
+        "en": "Aimed at Dysgu Cymraeg learners, this tool helps you learn course vocabulary",
+        "cy": "Anelu at ddysgwyr Dysgu Cymraeg, mae'r offeryn hwn yn eich helpu chi ddysgu geirfa'r cwrs allweddol"
+      },
+      "deck": "./vocab.html"
+    },
+    {
+      "id": "learn",
+      "title": { "en": "👃 Learn", "cy": "👃 Learn" },
+      "desc": {
+        "en": "A series of mini-lessons about grammar",
+        "cy": "Cyfres o wersi bach am ramadeg Cymraeg"
+      },
+      "deck": "./learn.html"
+    }
+  
