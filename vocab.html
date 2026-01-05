@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark" />
   <title>Dysgu Cymraeg Flashcards</title>
 
-  <!-- Uses the same shared stylesheet as the rest of your site -->
+ 
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="vocabstyles.css"/>
 </head>
@@ -1145,4 +1145,82 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
     nextBtn.addEventListener('click', continueOrNext);
 
     hearBtn.addEventListener('click', hearCurrent);
-    hearBtn2.addEventLis
+        hearBtn2.addEventListener('click', hearCurrent);
+    hearBtn3.addEventListener('click', hearCurrent);
+
+    checkBtn.addEventListener('click', checkTyped);
+    revealBtn.addEventListener('click', () => finishAttempt(false, true));
+
+    choice1.addEventListener('click', () => checkChoice(choice1.dataset.value || ''));
+    choice2.addEventListener('click', () => checkChoice(choice2.dataset.value || ''));
+
+    buildCheckBtn.addEventListener('click', checkBuild);
+    buildClearBtn.addEventListener('click', clearBuild);
+
+    // Keyboard support (accessible, no forced scrolling)
+    document.addEventListener('keydown', (e) => {
+      const key = e.key;
+
+      // Always allow "H" to play audio (when available)
+      if (key === 'h' || key === 'H'){
+        e.preventDefault();
+        hearCurrent();
+        return;
+      }
+
+      if (!session || !current) return;
+
+      // Enter: submit or continue depending on stage/state
+      if (key === 'Enter'){
+        e.preventDefault();
+
+        if (current.stage === 'TYPE' && !awaitingContinue){
+          checkTyped();
+          return;
+        }
+
+        if (current.stage === 'BUILD' && !awaitingContinue){
+          checkBuild();
+          return;
+        }
+
+        continueOrNext();
+        return;
+      }
+
+      // Choice stage: 1 / 2 picks
+      if (current.stage === 'CHOICE' && !awaitingContinue){
+        if (key === '1'){ e.preventDefault(); choice1.click(); return; }
+        if (key === '2'){ e.preventDefault(); choice2.click(); return; }
+      }
+
+      // Build stage: Backspace removes last selected token
+      if (current.stage === 'BUILD' && !awaitingContinue){
+        if (key === 'Backspace'){
+          if (buildSelected.length){
+            e.preventDefault();
+            buildSelected.pop();
+            renderBuildLine();
+          }
+        }
+      }
+    });
+
+
+    /* =========================
+       Init
+       ========================= */
+
+    (async () => {
+      allCards = await loadCards();
+      filtered = allCards.slice();
+
+      renderSelectors();
+      renderChips();
+      updateStatus();
+      applyI18n();
+    })();
+
+  </script>
+</body>
+</html>
