@@ -1,0 +1,72 @@
+<!-- navbar.html -->
+<header id="siteHeader" class="sticky top-0 z-10">
+  <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+    <div class="brand-lockup grow min-w-0">
+      <img class="brand-dragon" alt="" aria-hidden="true"
+        src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+      <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
+        <span class="title-hy">Hyffordwr</span><span class="title-trei">Cymraeg</span>
+      </h1>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
+      <nav class="flex flex-wrap items-center gap-2" aria-label="Primary">
+        <!-- data-nav keys are what we use to auto-highlight -->
+        <a class="btn btn-ghost" data-nav="home" href="./home.html" title="Home">Home</a>
+        <a class="btn btn-ghost" data-nav="learn" href="./learn.html" title="Learn">Learn</a>
+        <a class="btn btn-ghost" data-nav="vocab" href="./vocab.html" title="Vocab Trainer">Vocab trainer</a>
+        <a class="btn btn-ghost" data-nav="mutations" href="./index.html" title="Mutation Trainer">Mutation trainer</a>
+      </nav>
+
+      <div class="nav-extras" aria-hidden="true">
+        <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
+      </div>
+
+      <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
+    </div>
+  </div>
+
+  <div class="cymru-red-bar" aria-hidden="true"></div>
+
+  <script>
+    // --- Active nav highlighting ---
+    (function () {
+      // Prefer explicit page key: <body data-current="learn">
+      const current = (document.body && document.body.dataset && document.body.dataset.current) || "";
+
+      const links = Array.from(document.querySelectorAll('#siteHeader [data-nav]'));
+      if (!links.length) return;
+
+      function setActive(key) {
+        links.forEach(a => {
+          const isActive = a.getAttribute('data-nav') === key;
+          a.classList.toggle('btn-primary', isActive);
+          a.classList.toggle('btn-ghost', !isActive);
+          if (isActive) a.setAttribute('aria-current', 'page');
+          else a.removeAttribute('aria-current');
+        });
+      }
+
+      if (current) {
+        setActive(current);
+        return;
+      }
+
+      // Fallback: infer from URL if data-current not set
+      const path = (location.pathname || "").toLowerCase();
+      if (path.endsWith('/index.html') || path.endsWith('/')) setActive('mutations');
+      else if (path.endsWith('/learn.html')) setActive('learn');
+      else if (path.endsWith('/vocab.html')) setActive('vocab');
+      else if (path.endsWith('/home.html')) setActive('home');
+    })();
+
+    // --- Optional: sticky shadow on scroll (same behaviour you already add) ---
+    (function () {
+      const h = document.getElementById('siteHeader');
+      if (!h) return;
+      const set = () => h.classList.toggle('is-scrolled', window.scrollY > 8);
+      window.addEventListener('scroll', set, { passive: true });
+      set();
+    })();
+  </script>
+</header>
