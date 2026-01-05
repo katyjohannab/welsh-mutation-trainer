@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dysgu Cymraeg Flashcards</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2e;
+      --card:#0f2038;
+      --text:#e8eefb;
+      --muted:#a7b5d6;
+      --accent:#6ee7b7;
+      --accent2:#60a5fa;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --good:#34d399;
+      --border:rgba(255,255,255,.10);
+      --shadow: 0 14px 38px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 12px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(96,165,250,.18), transparent 60%),
+        radial-gradient(800px 520px at 85% 20%, rgba(110,231,183,.14), transparent 60%),
+        radial-gradient(700px 520px at 30% 90%, rgba(251,191,36,.10), transparent 60%),
+        var(--bg);
+    }
+
+    header{
+      position: sticky;
+      top:0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,18,32,.92), rgba(11,18,32,.55));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 16px;
+      max-width:1100px;
+      margin: 0 auto;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 0;
+    }
+
+    .logo{
+      width:36px;height:36px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(110,231,183,.9), rgba(110,231,183,.15) 55%, transparent 70%),
+        radial-gradient(circle at 70% 65%, rgba(96,165,250,.9), rgba(96,165,250,.10) 55%, transparent 70%),
+        rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 10px 28px rgba(0,0,0,.35);
+      flex:0 0 auto;
+    }
+
+    .title{display:flex;flex-direction:column;min-width:0;line-height:1.1}
+    .title h1{font-size:14px;letter-spacing:.3px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:740}
+    .title p{margin:0;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,.20);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-weight: 650;
+      font-size: 13px;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .06s ease, background .18s ease, border-color .18s ease;
+      user-select:none;
+    }
+    .btn:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18) }
+    .btn:active{ transform: translateY(1px) }
+    .btn.primary{ border-color: rgba(110,231,183,.35); background: linear-gradient(180deg, rgba(110,231,183,.22), rgba(110,231,183,.10)) }
+    .btn.primary:hover{ background: linear-gradient(180deg, rgba(110,231,183,.28), rgba(110,231,183,.12)) }
+    .btn.ghost{ background: transparent }
+    .btn.warn{ border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.12) }
+    .btn.bad{ border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.12) }
+
+    .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 40px}
+
+    .grid{display:grid;grid-template-columns: 360px 1fr;gap:14px;margin-top:16px;align-items:start}
+    @media (max-width: 980px){ .grid{ grid-template-columns:1fr } }
+
+    .panel{
+      background: rgba(15,26,46,.62);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .panel .hd{padding:14px 14px 10px;border-bottom:1px solid rgba(255,255,255,.08);background: linear-gradient(to bottom, rgba(255,255,255,.06), transparent)}
+    .panel .hd h2{margin:0;font-size:14px;letter-spacing:.2px}
+    .panel .hd p{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.35}
+    .panel .bd{padding:14px}
+
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+
+    label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:140px;flex:1 1 140px}
+
+    select, input[type="text"]{
+      appearance:none;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      padding: 10px 10px;
+      font-size: 13px;
+      outline:none;
+    }
+
+    select:focus, input[type="text"]:focus{border-color: rgba(96,165,250,.55); box-shadow: 0 0 0 3px rgba(96,165,250,.18)}
+
+    .divider{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
+
+    .tiny{font-size:12px;color:var(--muted);line-height:1.4}
+    .kbd{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background: rgba(0,0,0,.16);color: var(--text)}
+
+    .chipRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{padding:6px 10px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.05);border-radius:999px}
+
+    .stage{min-height:520px;display:flex;flex-direction:column;gap:12px}
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .card .card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border-bottom:1px solid rgba(255,255,255,.08);background: linear-gradient(180deg, rgba(96,165,250,.12), transparent 60%)}
+    .meta{display:flex;flex-direction:column;min-width:0}
+    .meta .mode{font-size:12px;color:var(--muted);margin:0}
+    .meta .deck{margin:3px 0 0;font-size:13px;font-weight:720;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+    .badge{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background: rgba(0,0,0,.15);white-space:nowrap}
+
+    .card .card-bd{padding:16px 16px 10px}
+
+    .prompt{font-size:16px;line-height:1.35;margin:0 0 10px}
+    .prompt .big{font-size:22px;font-weight:780;letter-spacing:.2px}
+
+    .metaLine{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .metaPill{padding:6px 10px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);background: rgba(0,0,0,.14);border-radius:999px}
+
+    .sentence{margin:10px 0 0;padding:12px;border-radius:14px;background: rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.10)}
+    .sentence .cy{font-size:16px;line-height:1.35;margin:0}
+    .sentence .en{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+
+    .hint{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.35}
+
+    .answerRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .answerRow input[type="text"]{flex:1 1 220px;min-width:220px;background: rgba(0,0,0,.16)}
+
+    .feedback{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background: rgba(0,0,0,.14);margin-top:12px}
+    .feedback.good{border-color: rgba(52,211,153,.35); background: rgba(52,211,153,.10)}
+    .feedback.bad{border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.10)}
+    .feedback .line1{margin:0;font-weight:740}
+    .feedback .line2{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+
+    .card .card-ft{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.08);background: linear-gradient(to top, rgba(255,255,255,.05), transparent);flex-wrap:wrap}
+
+    .progress{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex:1 1 auto;min-width:220px}
+    .bar{height:8px;border-radius:999px;background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);width:100%;overflow:hidden}
+    .bar > div{height:100%;width:0%;background: linear-gradient(90deg, rgba(96,165,250,.85), rgba(110,231,183,.85))}
+
+    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:0 0 auto}
+
+    .bankWrap{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+    .bankTitle{font-size:12px;color:var(--muted);margin:0}
+    .bank{display:flex;flex-wrap:wrap;gap:8px}
+    .token{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-weight: 650;
+      font-size: 13px;
+      cursor:pointer;
+    }
+    .token:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18) }
+
+    .buildLine{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+    .buildSlot{padding:8px 10px;border-radius:999px;border:1px dashed rgba(255,255,255,.18);color:var(--muted);font-size:13px}
+
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+    @media (max-width: 520px){
+      .prompt{font-size:15px}
+      .prompt .big{font-size:20px}
+      .card .card-bd{padding:14px}
+      .card .card-hd{padding:12px}
+      .card .card-ft{padding:12px}
+      label{min-width:100%}
+      .answerRow input[type="text"]{min-width:0;flex:1 1 100%}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="title">
+          <h1 data-i18n="appTitle">Dysgu Cymraeg Flashcards</h1>
+          <p data-i18n="appSubtitle">Memrise-style session flow, CSV-powered, no backend</p>
+        </div>
+      </div>
+      <div class="controls">
+        <span class="pill" id="statusPill" aria-live="polite">–</span>
+        <button class="btn ghost" id="langToggle" type="button" aria-pressed="false">CYM</button>
+        <button class="btn ghost" id="helpBtn" type="button">?</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <section class="panel" aria-labelledby="setupTitle">
+        <div class="hd">
+          <h2 id="setupTitle" data-i18n="setupTitle">Set up a session</h2>
+          <p data-i18n="setupDesc">Pick a level and unit. Items repeat with increasing interactivity: introduce → recognise → type → build.</p>
+        </div>
+        <div class="bd">
+          <div class="row">
+            <label>
+              <span data-i18n="levelLabel">Level</span>
+              <select id="levelSel" aria-label="Level"></select>
+            </label>
+            <label>
+              <span data-i18n="unitLabel">Unit</span>
+              <select id="unitSel" aria-label="Unit"></select>
+            </label>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <label>
+              <span data-i18n="directionLabel">Prompt direction</span>
+              <select id="directionSel" aria-label="Prompt direction">
+                <option value="EN2CY" data-i18n="dirEN2CY">English → Cymraeg</option>
+                <option value="CY2EN" data-i18n="dirCY2EN">Cymraeg → English</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="sessionSizeLabel">Session size</span>
+              <select id="sizeSel" aria-label="Session size">
+                <option value="10">10</option>
+                <option value="15" selected>15</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row">
+            <button class="btn primary" id="startBtn" type="button" data-i18n="startBtn">Start session</button>
+            <button class="btn" id="shuffleBtn" type="button" data-i18n="shuffleBtn">Shuffle</button>
+            <button class="btn warn" id="resetBtn" type="button" data-i18n="resetBtn">Reset</button>
+          </div>
+
+          <div class="chipRow" id="deckChips" aria-live="polite"></div>
+
+          <div class="divider"></div>
+
+          <p class="tiny" data-i18n="kbdHelp">Keyboard: <span class='kbd'>Enter</span> submits / continues. <span class='kbd'>H</span> plays audio. <span class='kbd'>1</span> / <span class='kbd'>2</span> selects choices. <span class='kbd'>Backspace</span> removes a built token.</p>
+        </div>
+      </section>
+
+      <section class="stage" aria-labelledby="stageTitle">
+        <h2 id="stageTitle" class="sr-only">Practice</h2>
+
+        <div class="card" id="card">
+          <div class="card-hd">
+            <div class="meta">
+              <p class="mode" id="modeLabel">–</p>
+              <p class="deck" id="deckLabel">–</p>
+            </div>
+            <span class="badge" id="badge">–</span>
+          </div>
+
+          <div class="card-bd">
+            <p class="prompt" id="prompt">–</p>
+
+            <div class="metaLine" id="metaLine" hidden></div>
+
+            <div class="sentence" id="sentenceBox" hidden>
+              <p class="cy" id="cySentence">–</p>
+              <p class="en" id="enSentence">–</p>
+            </div>
+
+            <p class="hint" id="hint" hidden>–</p>
+
+            <p class="hint" id="taskHint" hidden>–</p>
+
+            <div class="answerRow" id="typeRow" hidden>
+              <input id="answerInput" type="text" autocomplete="off" spellcheck="false" />
+              <button class="btn" id="checkBtn" type="button" data-i18n="checkBtn">Check</button>
+              <button class="btn ghost" id="revealBtn" type="button" data-i18n="revealBtn">Reveal</button>
+              <button class="btn" id="hearBtn" type="button" data-i18n="hearBtn">Hear</button>
+            </div>
+
+            <div class="answerRow" id="choiceRow" hidden>
+              <button class="btn" id="choice1" type="button"></button>
+              <button class="btn" id="choice2" type="button"></button>
+              <button class="btn" id="hearBtn2" type="button" data-i18n="hearBtn">Hear</button>
+            </div>
+
+            <div class="bankWrap" id="buildRow" hidden>
+              <p class="bankTitle" id="buildTitle">–</p>
+              <div class="buildLine" id="buildLine"></div>
+              <div class="bank" id="tokenBank"></div>
+              <div class="answerRow">
+                <button class="btn" id="buildCheckBtn" type="button" data-i18n="checkBtn">Check</button>
+                <button class="btn ghost" id="buildClearBtn" type="button" data-i18n="clearBtn">Clear</button>
+                <button class="btn" id="hearBtn3" type="button" data-i18n="hearBtn">Hear</button>
+              </div>
+            </div>
+
+            <div class="feedback" id="feedback" hidden>
+              <p class="line1" id="fbLine1">–</p>
+              <p class="line2" id="fbLine2">–</p>
+            </div>
+          </div>
+
+          <div class="card-ft">
+            <div class="progress">
+              <span id="progressText">–</span>
+              <div class="bar" aria-hidden="true"><div id="barFill"></div></div>
+            </div>
+            <div class="actions">
+              <button class="btn" id="nextBtn" type="button" data-i18n="nextBtn">Next</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" id="helpPanel" hidden>
+          <div class="hd">
+            <h2 data-i18n="helpTitle">How this mimics Memrise Community Courses</h2>
+            <p data-i18n="helpDesc">You see the same item again after a short gap, with harder tasks as you go. No login and no saved progress.</p>
+          </div>
+          <div class="bd">
+            <ul class="tiny" style="margin:0; padding-left: 18px;">
+              <li data-i18n="help1">Items are filtered by Dysgu Cymraeg level and unit.</li>
+              <li data-i18n="help2">Stages: introduce (see the item + sentence) → recognise (2 options) → type (type only the item, not the whole sentence) → build (word bank).</li>
+              <li data-i18n="help3">Hear plays the Welsh example sentence using your Polly Lambda URL.</li>
+              <li data-i18n="help4">Spacing is a simple queue: correct answers push the next review further away. Wrong answers come back quickly.</li>
+            </ul>
+            <div class="divider"></div>
+            <p class="tiny" data-i18n="helpCSV">To use a real CSV, replace DUMMY_CSV with your CSV text or a fetch call. Keep the headers stable.</p>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script>
+    'use strict';
+
+    const statusPill = document.getElementById('statusPill');
+    const langToggle = document.getElementById('langToggle');
+    const helpBtn = document.getElementById('helpBtn');
+
+    const levelSel = document.getElementById('levelSel');
+    const unitSel = document.getElementById('unitSel');
+    const directionSel = document.getElementById('directionSel');
+    const sizeSel = document.getElementById('sizeSel');
+
+    const startBtn = document.getElementById('startBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const deckChips = document.getElementById('deckChips');
+
+    const modeLabel = document.getElementById('modeLabel');
+    const deckLabel = document.getElementById('deckLabel');
+    const badge = document.getElementById('badge');
+
+    const prompt = document.getElementById('prompt');
+    const metaLine = document.getElementById('metaLine');
+
+    const sentenceBox = document.getElementById('sentenceBox');
+    const cySentence = document.getElementById('cySentence');
+    const enSentence = document.getElementById('enSentence');
+
+    const hint = document.getElementById('hint');
+    const taskHint = document.getElementById('taskHint');
+
+    const typeRow = document.getElementById('typeRow');
+    const answerInput = document.getElementById('answerInput');
+    const checkBtn = document.getElementById('checkBtn');
+    const revealBtn = document.getElementById('revealBtn');
+    const hearBtn = document.getElementById('hearBtn');
+
+    const choiceRow = document.getElementById('choiceRow');
+    const choice1 = document.getElementById('choice1');
+    const choice2 = document.getElementById('choice2');
+    const hearBtn2 = document.getElementById('hearBtn2');
+
+    const buildRow = document.getElementById('buildRow');
+    const buildTitle = document.getElementById('buildTitle');
+    const buildLine = document.getElementById('buildLine');
+    const tokenBank = document.getElementById('tokenBank');
+    const buildCheckBtn = document.getElementById('buildCheckBtn');
+    const buildClearBtn = document.getElementById('buildClearBtn');
+    const hearBtn3 = document.getElementById('hearBtn3');
+
+    const feedback = document.getElementById('feedback');
+    const fbLine1 = document.getElementById('fbLine1');
+    const fbLine2 = document.getElementById('fbLine2');
+
+    const progressText = document.getElementById('progressText');
+    const barFill = document.getElementById('barFill');
+    const nextBtn = document.getElementById('nextBtn');
+
+    const helpPanel = document.getElementById('helpPanel');
+
+    function escapeHTML(s){
+      const x = String(s == null ? '' : s);
+      return x
+        .split('&').join('&amp;')
+        .split('<').join('&lt;')
+        .split('>').join('&gt;')
+        .split('"').join('&quot;')
+        .split("'").join('&#039;');
+    }
+
+    function textOnly(html){
+      const d = document.createElement('div');
+      d.innerHTML = html;
+      return d.textContent || '';
+    }
+
+    const I18N = {
+      ENG: {
+        appTitle: 'Dysgu Cymraeg Flashcards',
+        appSubtitle: 'Memrise-style session flow, CSV-powered, no backend',
+        setupTitle: 'Set up a session',
+        setupDesc: 'Pick a level and unit. Items repeat with increasing interactivity: introduce → recognise → type → build.',
+        levelLabel: 'Level',
+        unitLabel: 'Unit',
+        directionLabel: 'Prompt direction',
+        dirEN2CY: 'English → Cymraeg',
+        dirCY2EN: 'Cymraeg → English',
+        sessionSizeLabel: 'Session size',
+        startBtn: 'Start session',
+        shuffleBtn: 'Shuffle',
+        resetBtn: 'Reset',
+        checkBtn: 'Check',
+        revealBtn: 'Reveal',
+        clearBtn: 'Clear',
+        hearBtn: 'Hear',
+        nextBtn: 'Next',
+        kbdHelp: "Keyboard: <span class='kbd'>Enter</span> submits / continues. <span class='kbd'>H</span> plays audio. <span class='kbd'>1</span> / <span class='kbd'>2</span> selects choices. <span class='kbd'>Backspace</span> removes a built token.",
+        helpTitle: 'How this mimics Memrise
+      },
+      CYM: {
+        appTitle: 'Cardiau Dysgu Cymraeg',
+        appSubtitle: 'Sesiynau tebyg i Memrise, CSV, dim backend',
+        setupTitle: 'Paratoi sesiwn',
+        setupDesc: 'Dewisa lefel ac uned. Bydd eitemau yn ailadrodd gyda mwy o her: cyflwyno → adnabod → teipio → adeiladu.',
+        levelLabel: 'Lefel',
+        unitLabel: 'Uned',
+        directionLabel: 'Cyfeiriad',
+        dirEN2CY: 'Saesneg → Cymraeg',
+        dirCY2EN: 'Cymraeg → Saesneg',
+        sessionSizeLabel: 'Maint y sesiwn',
+        startBtn: 'Dechrau sesiwn',
+        shuffleBtn: 'Cymysgu',
+        resetBtn: 'Ailosod',
+        checkBtn: 'Gwirio',
+        revealBtn: 'Datgelu',
+        clearBtn: 'Clirio',
+        hearBtn: 'Gwrando',
+        nextBtn: 'Nesaf',
+        kbdHelp: "Bysellfwrdd: <span class='kbd'>Enter</span> i gyflwyno / parhau. <span class='kbd'>H</span> i wrando. <span class='kbd'>1</span> / <span class='kbd'>2</span> i ddewis. <span class='kbd'>Backspace</span> i dynnu tocyn.",
+        helpTitle: 'Sut mae hwn yn efelychu Memrise',
+        helpDesc: 'Fe weli di’r un eitem eto ar ôl bwlch byr, gyda thasgau anoddach dros amser. Dim mewngofnodi a dim cynnydd wedi’i gadw.',
+        help1: 'Hidlo yn ôl lefel ac uned Dysgu Cymraeg.',
+        help2: 'Camau: cyflwyno (gweld yr eitem + brawddeg) → adnabod (2 opsiwn) → teipio (teipio’r eitem yn unig) → adeiladu (banc geiriau).',
+        help3: 'Mae Gwrando yn darllen y frawddeg Gymraeg trwy Polly Lambda.',
+        help4: 'Bylchu syml: atebion cywir yn gwthio’r adolygiad nesaf yn bellach. Atebion anghywir yn dod yn ôl yn gyflym.',
+        helpCSV: 'I ddefnyddio CSV go iawn, disodla DUMMY_CSV gyda dy CSV neu fetch. Cadwa’r penawdau yr un fath.',
+        statusLoaded: n => n + ' o gardiau wedi’u llwytho',
+        statusReady: 'Barod',
+        statusSession: n => 'Sesiwn: ' + n + ' eitem',
+        badgeLevelUnit: (lvl, unit) => lvl + ' · Uned ' + unit,
+        modeIntro: 'Cyflwyno',
+        modeChoice: 'Adnabod',
+        modeType: 'Teipio',
+        modeBuild: 'Adeiladu',
+        promptIntro: (front, back) => 'Eitem newydd: <span class=big>' + escapeHTML(front) + '</span> · ' + escapeHTML(back),
+        promptChoice: front => 'Dewisa’r cyfatebiad cywir i: <span class=big>' + escapeHTML(front) + '</span>',
+        promptType: front => 'Teipia’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
+        promptBuild: front => 'Adeilada’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
+        hintType: 'Teipia’r gair neu’r ymadrodd yn unig. Paid â theipio’r frawddeg gyfan.',
+        hintBuild: 'Clicia docynnau (neu Tab ac Enter) i adeiladu’r ateb. Mae Backspace yn tynnu’r tocyn olaf.',
+        feedbackCorrect: 'Cywir',
+        feedbackTryAgain: 'Ddim cweit',
+        feedbackReveal: a => 'Ateb: ' + a,
+        progressText: (done, introduced, due) => done + ' wedi’u gwirio · ' + introduced + ' wedi’u cyflwyno · ' + due + ' yn ddyledus',
+        emptyDeck: 'Does dim cardiau’n cyd-fynd â’r hidlwyr hyn.'
+      }
+    };
+
+    let UI_LANG = 'ENG';
+
+    function t(key){
+      const v = I18N[UI_LANG][key];
+      const args = [];
+      for (let i = 1; i < arguments.length; i++) args.push(arguments[i]);
+      if (typeof v === 'function') return v.apply(null, args);
+      return v == null ? '' : v;
+    }
+
+    function applyI18n(){
+      document.documentElement.lang = UI_LANG === 'CYM' ? 'cy' : 'en';
+      const nodes = document.querySelectorAll('[data-i18n]');
+      for (const el of nodes){
+        const k = el.getAttribute('data-i18n');
+        el.innerHTML = t(k);
+      }
+      for (const opt of document.querySelectorAll('option[data-i18n]')){
+        opt.textContent = textOnly(t(opt.getAttribute('data-i18n')));
+      }
+      langToggle.setAttribute('aria-pressed', UI_LANG === 'CYM' ? 'true' : 'false');
+      langToggle.textContent = UI_LANG === 'CYM' ? 'ENG' : 'CYM';
+      renderSelectors();
+      renderChips();
+      updateStatus();
+      render();
+    }
+
+    const DUMMY_CSV = `Level,Unit,HeadwordCY,HeadwordEN,POS,Gender,PluralCY,Stem,SentenceCY,SentenceEN,WhyENG,WhyCYM
+Uwch 1,1,Aberhonddu,Brecon,noun,ben.,,,Dw i wedi mynd i Aberhonddu dros y penwythnos.,I went to Brecon over the weekend.,Place-name practice. Gender label included because course lists mark it.,Ymarfer enw lle. Mae’r label rhyw yn rhan o’r geirfa.
+Uwch 1,1,aberthu,to sacrifice,verb-noun,,,aberth-,Mae rhai pobl yn aberthu llawer er mwyn helpu eraill.,Some people sacrifice a lot in order to help others.,Verb-noun in a natural sentence. Stem shown for learners who use it.,Berfenw mewn brawddeg naturiol. Dangosir y bôn i ddysgwyr.
+Uwch 1,1,abl,able,ans.,,,,Mae hi’n abl i ddatrys problemau anodd.,She is able to solve difficult problems.,Adjective used after bod + yn in a natural pattern.,Ansoddair ar ôl bod + yn mewn patrwm naturiol.
+Uwch 1,2,achlysur,an occasion,noun,gwr.,achlysuron,,Roedd e’n achlysur arbennig i’n teulu ni.,It was a special occasion for our family.,Noun with gender and plural shown, mirroring course lists.,Enw gyda rhyw a lluosog, yn unol â’r rhestrau.
+Uwch 1,2,adfail,a ruin,noun,gwr.,adfeilion,,Mae’r castell yn adfail erbyn hyn.,The castle is a ruin now.,Noun in context. Useful collocation: yn adfail.,Enw mewn cyd-destun. Cyfuniad defnyddiol: yn adfail.
+Uwch 1,2,adfer,to restore, to rehabilitate,verb-noun,,,adfer-,Mae’r cyngor yn bwriadu adfer y parc lleol.,The council plans to restore the local park.,Verb-noun in a common public-life context.,Berfenw mewn cyd-destun bywyd cyhoeddus.
+Uwch 1,3,adlewyrchu,to reflect,verb-noun,,,adlewyrch-,Mae’r canlyniadau’n adlewyrchu’r hyn welson ni yn ymarferol.,The results reflect what we saw in practice.,Common verb-noun in research and policy contexts.,Berfenw cyffredin mewn cyd-destunau ymchwil a pholisi.
+Mynediad,1,a dweud y gwir,to be honest,idiom,,,,A dweud y gwir, dw i ddim yn siŵr.,To be honest, I’m not sure.,Set phrase as listed in Mynediad.,Ymadrodd sefydlog fel yn Mynediad.
+Mynediad,1,Abertawe,Swansea,place-name,,,,Dw i’n byw ger Abertawe.,I live near Swansea.,Simple place-name sentence for beginners.,Brawddeg enw lle syml.
+Mynediad,1,achos,because,subordinator,,,,Dw i’n aros adre achos mae hi’n bwrw glaw.,I’m staying home because it’s raining.,Very common spoken achos as a subordinator.,achos llafar cyffredin fel is-gysylltair.
+Sylfaen,2,acen,an accent,noun,ben.,acenion,,Mae ganddi acen Gymreig glir.,She has a clear Welsh accent.,Noun plus adjective in a natural descriptive sentence.,Enw ac ansoddair mewn brawddeg ddisgrifiadol.
+Sylfaen,2,aderyn,a bird,noun,gwr.,adar,,Mae aderyn yn canu yn yr ardd bob bore.,A bird sings in the garden every morning.,Singular and plural pair shown as in course list.,Pâr unigol a lluosog fel yn y rhestr.
+Sylfaen,2,achub,to save, to rescue,verb-noun,,,achub-,Mae’r criw’n ceisio achub y ci o’r dŵr.,The crew are trying to rescue the dog from the water.,Common verb-noun in a clear context.,Berfenw cyffredin mewn cyd-destun clir.
+Sylfaen,2,adloniant,entertainment,noun,gwr.,adloniannau,,Mae’r sioe’n cynnig adloniant i’r teulu cyfan.,The show offers entertainment for the whole family.,Noun in context with a common verb: cynnig.,Enw mewn cyd-destun gyda berf gyffredin: cynnig.
+Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are under the pillow.,Compound preposition used in a natural sentence.,Arddodiad cyfansawdd mewn brawddeg naturiol.
+`;
+
+    function parseCSV(text){
+      const lineBreak = String.fromCharCode(10);
+      const cr = String.fromCharCode(13);
+      const linesRaw = String(text == null ? '' : text).split(lineBreak);
+      const lines = [];
+      for (const ln of linesRaw){
+        const cleaned = ln.split(cr).join('');
+        if (cleaned.trim().length) lines.push(cleaned);
+      }
+      if (!lines.length) return [];
+      const headers = splitCSVLine(lines[0]).map(s => s.trim());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++){
+        const cols = splitCSVLine(lines[i]);
+        const obj = {};
+        for (let j = 0; j < headers.length; j++) obj[headers[j]] = (cols[j] == null ? '' : cols[j]).trim();
+        rows.push(obj);
+      }
+      return rows;
+    }
+
+    function splitCSVLine(line){
+      const out = [];
+      let cur = '';
+      let inQ = false;
+      for (let i = 0; i < line.length; i++){
+        const ch = line[i];
+        if (ch === '"'){
+          const next = line[i + 1];
+          if (inQ && next === '"'){ cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === ',' && !inQ){
+          out.push(cur);
+          cur = '';
+        } else {
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
+    function normaliseCard(r){
+      return {
+        Level: r.Level,
+        Unit: r.Unit,
+        ItemCY: r.HeadwordCY,
+        ItemEN: r.HeadwordEN,
+        POS: r.POS,
+        Gender: r.Gender,
+        PluralCY: r.PluralCY,
+        Stem: r.Stem,
+        SentenceCY: r.SentenceCY,
+        SentenceEN: r.SentenceEN,
+        WhyENG: r.WhyENG,
+        WhyCYM: r.WhyCYM
+      };
+    }
+
+    function normAnswer(s){
+      const x = String(s == null ? '' : s).trim().toLowerCase();
+      const tab = String.fromCharCode(9);
+      const nbsp = String.fromCharCode(160);
+      const parts = x.split(tab).join(' ').split(nbsp).join(' ').split(' ');
+      const keep = [];
+      for (const p of parts){
+        const t = p.trim();
+        if (t) keep.push(t);
+      }
+      return keep.join(' ');
+    }
+
+    function shuffle(arr){
+      for (let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+      }
+    }
+
+    function levelOrderKey(lvl){
+      const order = ['Mynediad','Sylfaen','Canolradd','Uwch 1','Uwch 2','Uwch 3'];
+      const i = order.indexOf(lvl);
+      return i < 0 ? 999 : i;
+    }
+
+    const STAGES = ['INTRO','CHOICE','TYPE','BUILD'];
+
+    let allCards = [];
+    let filtered = [];
+
+    let session = null;
+    let current = null;
+    let awaitingContinue = false;
+    let lastKey = '';
+
+    const POLLY_FUNCTION_URL = 'https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/';
+    const ttsCache = new Map();
+
+    async function playPollySentence(sentence){
+      if (!sentence) return;
+      const cached = ttsCache.get(sentence);
+      if (cached){
+        const audio = new Audio(cached);
+        await audio.play();
+        return;
+      }
+
+      const res = await fetch(POLLY_FUNCTION_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: sentence })
+      });
+
+      if (!res.ok){
+        const msg = await res.text().catch(() => '');
+        throw new Error(msg || 'TTS failed');
+      }
+
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      let url = null;
+
+      if (ct.indexOf('audio') >= 0 || ct.indexOf('octet-stream') >= 0){
+        const buf = await res.arrayBuffer();
+        const blob = new Blob([buf], { type: 'audio/mpeg' });
+        url = URL.createObjectURL(blob);
+      } else {
+        const j = await res.json();
+        if (j.url) url = j.url;
+        else if (j.audioBase64 || j.audioContent){
+          const b64 = j.audioBase64 || j.audioContent;
+          const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+          const blob = new Blob([bytes], { type: 'audio/mpeg' });
+          url = URL.createObjectURL(blob);
+        } else {
+          throw new Error('TTS response missing audio');
+        }
+      }
+
+      ttsCache.set(sentence, url);
+      const audio = new Audio(url);
+      await audio.play();
+    }
+
+    function hearCurrent(){
+      if (!current) return;
+      playPollySentence(current.card.SentenceCY).catch(err => {
+        statusPill.textContent = 'TTS: ' + (err && err.message ? err.message : 'error');
+      });
+    }
+
+    function setStatus(s){
+      statusPill.textContent = s;
+    }
+
+    function renderSelectors(){
+      const levels = Array.from(new Set(allCards.map(c => c.Level))).sort((a,b) => levelOrderKey(a) - levelOrderKey(b));
+      const allLabel = UI_LANG === 'CYM' ? 'Pob un' : 'All';
+      let html = '<option value=ALL>' + escapeHTML(allLabel) + '</option>';
+      for (const l of levels) html += '<option value="' + escapeHTML(l) + '">' + escapeHTML(l) + '</option>';
+      const prevLevel = levelSel.value;
+      levelSel.innerHTML = html;
+      if (prevLevel && prevLevel !== 'ALL') levelSel.value = prevLevel;
+
+      renderUnitOptions();
+    }
+
+    function renderUnitOptions(){
+      const allLabel = UI_LANG === 'CYM' ? 'Pob un' : 'All';
+      const unitWord = UI_LANG === 'CYM' ? 'Uned' : 'Unit';
+      const lvl = levelSel.value;
+      const pool = lvl === 'ALL' ? allCards : allCards.filter(c => c.Level === lvl);
+      const units = Array.from(new Set(pool.map(c => String(c.Unit)))).sort((a,b) => Number(a) - Number(b));
+      let html = '<option value=ALL>' + escapeHTML(allLabel) + '</option>';
+      for (const u of units) html += '<option value="' + escapeHTML(u) + '">' + unitWord + ' ' + escapeHTML(u) + '</option>';
+      const prevUnit = unitSel.value;
+      unitSel.innerHTML = html;
+      if (prevUnit && prevUnit !== 'ALL' && units.indexOf(prevUnit) >= 0) unitSel.value = prevUnit;
+      else unitSel.value = 'ALL';
+    }
+
+    function renderChips(){
+      const chips = [];
+      const lvl = levelSel.value;
+      const unit = unitSel.value;
+      if (lvl !== 'ALL') chips.push(lvl);
+      if (unit !== 'ALL') chips.push((UI_LANG === 'CYM' ? 'Uned ' : 'Unit ') + unit);
+      if (!chips.length) chips.push(UI_LANG === 'CYM' ? 'Pob lefel ac uned' : 'All levels and units');
+      deckChips.innerHTML = chips.map(c => '<span class=chip>' + escapeHTML(c) + '</span>').join('');
+    }
+
+    function applyFilters(){
+      const lvl = levelSel.value;
+      const unit = unitSel.value;
+      filtered = allCards.filter(c => {
+        if (lvl !== 'ALL' && c.Level !== lvl) return false;
+        if (unit !== 'ALL' && String(c.Unit) !== String(unit)) return false;
+        return true;
+      });
+      renderChips();
+      updateStatus();
+      if (session) resetSession(true);
+      render();
+    }
+
+    function updateStatus(){
+      if (session) setStatus(t('statusSession', session.queue.length));
+      else setStatus(t('statusLoaded', filtered.length));
+    }
+
+    function resetSession(silent){
+      session = null;
+      current = null;
+      awaitingContinue = false;
+      lastKey = '';
+      if (!silent) updateStatus();
+    }
+
+    function pickDistractor(card){
+      if (filtered.length <= 1) return card;
+      let d = card;
+      for (let i = 0; i < 30; i++){
+        const x = filtered[Math.floor(Math.random() * filtered.length)];
+        if (x !== card) { d = x; break; }
+      }
+      return d;
+    }
+
+    function sessionSelectCards(){
+      if (!filtered.length) return [];
+      const desired = Math.min(Number(sizeSel.value), filtered.length);
+      const pool = filtered.slice();
+      shuffle(pool);
+      return pool.slice(0, desired);
+    }
+
+    function startSession(){
+      if (!filtered.length){
+        setStatus(t('emptyDeck'));
+        resetSession(true);
+        render();
+        return;
+      }
+
+      const chosen = sessionSelectCards();
+      session = {
+        direction: directionSel.value,
+        queue: chosen.map(c => ({ card: c, stageIndex: 0, dueIn: 0 })),
+        checked: 0,
+        introduced: 0,
+        turn: 0
+      };
+      awaitingContinue = false;
+      nextDue();
+    }
+
+    function stageName(stage){
+      if (stage === 'INTRO') return t('modeIntro');
+      if (stage === 'CHOICE') return t('modeChoice');
+      if (stage === 'TYPE') return t('modeType');
+      return t('modeBuild');
+    }
+
+    function tickQueue(){
+      for (const q of session.queue) q.dueIn = Math.max(0, q.dueIn - 1);
+    }
+
+    function pickDue(){
+      let due = session.queue.filter(q => q.dueIn === 0);
+      if (!due.length){
+        let min = null;
+        for (const q of session.queue){
+          if (min == null || q.dueIn < min) min = q.dueIn;
+        }
+        for (const q of session.queue) q.dueIn = Math.max(0, q.dueIn - (min == null ? 0 : min));
+        due = session.queue.filter(q => q.dueIn === 0);
+      }
+      return due[Math.floor(Math.random() * due.length)];
+    }
+
+    function nextDue(){
+      if (!session) return;
+      tickQueue();
+      const q = pickDue();
+      const stage = STAGES[q.stageIndex] || 'BUILD';
+      current = { q: q, card: q.card, stage: stage };
+      awaitingContinue = false;
+      session.turn++;
+      if (stage === 'INTRO') session.introduced++;
+      render();
+    }
+
+    function pushSpacing(correct){
+      const q = current.q;
+      if (correct){
+        q.stageIndex = Math.min(q.stageIndex + 1, STAGES.length - 1);
+        const base = 1 + q.stageIndex;
+        q.dueIn = base + base;
+        session.checked++;
+      } else {
+        q.stageIndex = Math.max(q.stageIndex - 1, 0);
+        q.dueIn = 0;
+      }
+    }
+
+    function clearUI(){
+      metaLine.hidden = true;
+      sentenceBox.hidden = true;
+      hint.hidden = true;
+      taskHint.hidden = true;
+      typeRow.hidden = true;
+      choiceRow.hidden = true;
+      buildRow.hidden = true;
+      feedback.hidden = true;
+    }
+
+    function showFeedback(ok, msg){
+      feedback.hidden = false;
+      feedback.classList.toggle('good', ok);
+      feedback.classList.toggle('bad', !ok);
+      fbLine1.textContent = ok ? t('feedbackCorrect') : t('feedbackTryAgain');
+      fbLine2.textContent = msg || '';
+    }
+
+    function cardMetaPills(card){
+      const pills = [];
+      if (card.POS) pills.push(card.POS);
+      if (card.Gender) pills.push(card.Gender);
+      if (card.PluralCY) pills.push('ll. ' + card.PluralCY);
+      if (card.Stem) pills.push('bôn: ' + card.Stem);
+      return pills;
+    }
+
+    function frontBack(card){
+      const dir = session ? session.direction : directionSel.value;
+      if (dir === 'EN2CY') return { front: card.ItemEN, back: card.ItemCY };
+      return { front: card.ItemCY, back: card.ItemEN };
+    }
+
+    function expectedAnswer(card){
+      const dir = session.direction;
+      return dir === 'EN2CY' ? card.ItemCY : card.ItemEN;
+    }
+
+    function render(){
+      if (!session || !current){
+        clearUI();
+        modeLabel.textContent = '–';
+        deckLabel.textContent = UI_LANG === 'CYM' ? 'Dewisa hidlwyr ac yna dechrau' : 'Choose filters and start';
+        badge.textContent = '–';
+        prompt.innerHTML = UI_LANG === 'CYM' ? '<span class=big>Dewisa lefel ac uned, yna dechrau sesiwn.</span>' : '<span class=big>Pic
