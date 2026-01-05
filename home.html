@@ -337,30 +337,9 @@
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
     <!-- Header -->
-    <header id="siteHeader" class="sticky top-0 z-10">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
-        <div class="brand-lockup grow min-w-0">
-          <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
-            <span class="title-hy">Hyfforddwr</span><span class="title-trei">Cymraeg</span>
-          </h1>
-        </div>
+    <!-- Shared navbar mounts here -->
+<div id="navbarMount"></div>
 
-        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
-          <div class="flex flex-wrap items-center gap-2">
-            <a id="btnLearn" class="btn btn-primary" href="./learn.html" title="Learn" aria-current="page">Learn</a>
-            <a id="btnPractice" class="btn btn-ghost" href="./index.html" title="Practice">Practice</a>
-          </div><div class="nav-extras" aria-hidden="true">
-  <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
-  <div class="flex flex-wrap items-center gap-2"></div>
-  <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
-</div>
-
-<button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
-        </div>
-      </div>
-      <div class="cymru-red-bar" aria-hidden="true"></div>
-    </header>
 
     <!-- Main -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6">
