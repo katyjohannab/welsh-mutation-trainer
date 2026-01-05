@@ -1114,13 +1114,17 @@
       }
     });
 
-    $('#btnLangToggle').addEventListener('click', () => {
-      lang = (lang === 'en') ? 'cy' : 'en';
-      saveLS('wm_lang', lang);
-      updateLangUI();
-      if (state.view === 'home') renderLessonGrid();
-      else renderDeck();
-    });
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest && e.target.closest('#btnLangToggle');
+  if (!btn) return;
+
+  lang = (lang === 'en') ? 'cy' : 'en';
+  saveLS('wm_lang', lang);
+  updateLangUI();
+  if (state.view === 'home') renderLessonGrid();
+  else renderDeck();
+});
+
 
     document.addEventListener('keydown', (e) => {
       if (state.view !== 'deck') return;
@@ -1187,7 +1191,13 @@
     await loadLearnIndex();
     updateLangUI();
     wireEvents();
-
+const langBtn = $('#btnLangToggle');
+if (langBtn) {
+  const nextLang = (lang === 'en') ? 'CY' : 'EN';
+  langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
+  langBtn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
+  langBtn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
+}
     const qLesson = getParam('lesson');
     const qSlide = parseInt(getParam('slide') || '1', 10);
 
