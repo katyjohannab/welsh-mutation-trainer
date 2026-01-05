@@ -445,6 +445,34 @@
   </div>
 
 <script>
+
+  async function loadNavbar() {
+    const mount = document.getElementById('navbarMount');
+    if (!mount) return;
+
+    const candidates = [
+      './navbar.html',
+      'https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html'
+    ];
+
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const html = await res.text();
+        mount.innerHTML = html;
+        return;
+      } catch (e) {
+        // try next
+      }
+    }
+
+    console.warn('[Navbar] Could not load navbar.html from any candidate.');
+  }
+
+  loadNavbar();
+
+
   // ---------- Small utilities ----------
   const $ = (sel, root=document) => root.querySelector(sel);
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
