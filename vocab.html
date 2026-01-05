@@ -3,25 +3,44 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <title>Dysgu Cymraeg Flashcards</title>
-
- 
+  <title>Welsh Mutation Trainer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 
-<body class="vocab-app">
-  <header class="vocab-header">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="title">
-          <h1 data-i18n="appTitle">Dysgu Cymraeg Flashcards</h1>
-          <p data-i18n="appSubtitle">Memrise-style session flow, CSV-powered, no backend</p>
-        </div>
-      </div>
+<body class="min-h-screen text-slate-900">
+<div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-      <div class="controls">
+    <header id="siteHeader" class="sticky top-0 z-10">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+
+        <div class="brand-lockup grow min-w-0">
+          <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyfforddwr</span><span class="title-trei">Geirfa</span></h1>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
+          <span id="itemCount" class="hidden text-xs text-slate-500"></span>
+          <span id="adminBadge" class="hidden text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Admin</span>
+
+          <!-- Primary nav -->
+          <div class="flex flex-wrap items-center gap-2">
+            <a id="btnLearn" class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
+            <button id="btnPractice" class="btn btn-primary" title="Practice mode">Mutation Trainer</button>
+          </div>
+
+
+
+
+
+          
+ <div class="controls">
         <span class="pill" id="statusPill" aria-live="polite">–</span>
         <button class="btn ghost" id="langToggle" type="button" aria-pressed="false">CYM</button>
         <button class="btn ghost" id="helpBtn" type="button" aria-expanded="false" aria-controls="helpPanel">?</button>
@@ -1223,3 +1242,4 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
   </script>
 </body>
 </html>
+
