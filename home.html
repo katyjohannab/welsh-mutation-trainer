@@ -1,24 +1,26 @@
 <!doctype html>
-<html lang="en" class="page-learn">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="view-transition" content="same-origin" />
-  <title>Hyffordwr Cymraeg| Learn</title>
+  <title>Hyffordwr Cymraeg | Home</title>
 
-  <!-- Tailwind via CDN  -->
+  <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Your shared site styles -->
   <link rel="stylesheet" href="styles.css" />
-  <!-- Fonts  -->
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
   <style>
     html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
     body { -webkit-font-smoothing: antialiased; }
 
-    /* Header font  */
     .bbh-bogle-regular{
       font-family: "BBH Bogle", Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
       font-weight: 400;
@@ -30,1200 +32,159 @@
       letter-spacing: -0.01em;
     }
 
-   
-      <!-- Learn home -->
-      <section id="learnHome" class="space-y-4">
-        <div class="panel rounded-2xl p-5 md:p-6">
-          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
-            <div class="min-w-0">
-              <div id="learnKicker" class="text-xs uppercase tracking-widest text-slate-500">Learn</div>
-              <h2 id="learnTitle" class="mt-1 text-2xl md:text-3xl font-bold tracking-tight" style="color: var(--emerald-ink);">
-                Hyffordwr Cymraeg
-              </h2>
-              <p id="learnSubtitle" class="mt-2 text-slate-700 max-w-3xl leading-relaxed">
-                Welcome to Hyffordwr Cymraeg. This is an app to help support Welsh learners; including a Mutation Trainer, a Grammar trainer and mini lessons on key grammar concepts. Click to choose where you want to go!
-              </p>
-            </div>
+    /* Optional: small “feature card” polish if your styles.css doesn’t already cover it */
+    .feature-card { transition: transform 120ms ease, box-shadow 120ms ease; }
+    .feature-card:focus-within, .feature-card:hover { transform: translateY(-1px); }
+    .feature-meta { color: rgba(15,23,42,0.65); } /* slate-ish */
+  </style>
+</head>
 
-            <div class="flex flex-wrap items-center gap-2">
-              <button id="btnResume" class="btn btn-ghost hidden">Resume</button>
-              <button id="btnOpenLast" class="btn btn-ghost hidden">Open last lesson</button>
-            </div>
+<body data-current="home" class="min-h-screen text-slate-900">
+
+  <!-- Shared navbar mounts here -->
+  <div id="navbarMount"></div>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 md:py-10 space-y-6">
+
+    <!-- HERO ROW (spans full width) -->
+    <section class="panel rounded-2xl p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div class="min-w-0 max-w-3xl">
+          <div class="text-xs uppercase tracking-widest text-slate-500">Croeso • Welcome</div>
+
+          <h2 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight bbh-bogle-bold" style="color: var(--emerald-ink);">
+            Hyffordwr Cymraeg
+          </h2>
+
+          <p class="mt-3 text-slate-700 leading-relaxed">
+            A set of practical tools for Welsh learners: mutation practice, mini lessons, and focused trainers.
+            Pick a path below and jump straight in.
+          </p>
+
+          <div class="mt-5 flex flex-wrap gap-2">
+            <a class="btn btn-primary" href="./index.html">Start mutation trainer</a>
+            <a class="btn btn-ghost" href="./learn.html">Open mini lessons</a>
+            <a class="btn btn-ghost" href="./vocab.html">Open vocab trainer</a>
           </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="lessonGrid" aria-label="Lesson list"></div>
-      </section>
+        <div class="flex flex-wrap gap-2">
+          <span class="tag">Mobile-friendly</span>
+          <span class="tag">Keyboard support</span>
+          <span class="tag">Bilingual UI</span>
+        </div>
+      </div>
+    </section>
 
-   
-    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+    <!-- FEATURE GRID -->
+    <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-label="Site sections">
+
+      <!-- Mutation trainer -->
+      <article class="panel rounded-2xl p-5 feature-card">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="text-xs uppercase tracking-widest text-slate-500">Practice</div>
+            <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">Mutation trainer</h3>
+            <p class="mt-2 text-slate-700 leading-relaxed">
+              Fast drills from CSV. Filters by rule category. Designed to make patterns automatic, not mysterious.
+            </p>
+          </div>
+          <span class="tag">Core</span>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="./index.html">Open</a>
+          <a class="btn btn-ghost" href="./index.html#filters">Filters</a>
+        </div>
+      </article>
+
+      <!-- Learn -->
+      <article class="panel rounded-2xl p-5 feature-card">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="text-xs uppercase tracking-widest text-slate-500">Learn</div>
+            <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">Mini lessons</h3>
+            <p class="mt-2 text-slate-700 leading-relaxed">
+              Short explanations plus interactive checks. Build a mental model, then practise it.
+            </p>
+          </div>
+          <span class="tag">Lessons</span>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="./learn.html">Open</a>
+          <a class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1">Start quick tour</a>
+        </div>
+      </article>
+
+      <!-- Vocab -->
+      <article class="panel rounded-2xl p-5 feature-card">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0">
+            <div class="text-xs uppercase tracking-widest text-slate-500">Vocab</div>
+            <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">Vocab trainer</h3>
+            <p class="mt-2 text-slate-700 leading-relaxed">
+              Drill vocabulary from your CSV with filtering. Built for quick daily reps.
+            </p>
+          </div>
+          <span class="tag">Trainer</span>
+        </div>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a class="btn btn-primary" href="./vocab.html">Open</a>
+        </div>
+      </article>
+
+      <!-- Optional: placeholder for future Grammar -->
+      <article class="panel rounded-2xl p-5 feature-card sm:col-span-2 lg:col-span-1">
+        <div class="text-xs uppercase tracking-widest text-slate-500">Coming soon</div>
+        <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">Grammar trainer</h3>
+        <p class="mt-2 text-slate-700 leading-relaxed">
+          Focused drills on “bod + yn”, relative clauses, and other high-frequency patterns. (Stub for now.)
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          <a class="btn btn-ghost" href="./learn.html">Use lessons for now</a>
+        </div>
+      </article>
+
+    </section>
+
+    <footer class="p-2 text-xs text-slate-500">
       <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Treiglad</span>
+        <span>© Hyffordwr Cymraeg</span>
         <a class="ml-auto btn btn-ghost px-2 py-1" href="#" id="btnTop">Back to top</a>
       </div>
     </footer>
 
-  </div>
+  </main>
 
-<script>
+  <script>
+    async function loadNavbar() {
+      const mount = document.getElementById('navbarMount');
+      if (!mount) return;
 
-  async function loadNavbar() {
-    const mount = document.getElementById('navbarMount');
-    if (!mount) return;
+      const candidates = [
+        './navbar.html',
+        'https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html'
+      ];
 
-    const candidates = [
-      './navbar.html',
-      'https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html'
-    ];
-
-    for (const url of candidates) {
-      try {
-        const res = await fetch(url, { cache: 'no-cache' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const html = await res.text();
-        mount.innerHTML = html;
-        return;
-      } catch (e) {
-        // try next
+      for (const url of candidates) {
+        try {
+          const res = await fetch(url, { cache: 'no-cache' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          mount.innerHTML = await res.text();
+          return;
+        } catch (e) {}
       }
+      console.warn('[Navbar] Could not load navbar.html from any candidate.');
     }
 
-    console.warn('[Navbar] Could not load navbar.html from any candidate.');
-  }
+    loadNavbar();
 
-  loadNavbar();
-
-
-  // ---------- Small utilities ----------
-  const $ = (sel, root=document) => root.querySelector(sel);
-  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
-
-  function saveLS(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
-  function loadLS(k, d){ try{ const r = localStorage.getItem(k); return r? JSON.parse(r): d; }catch(e){ return d; } }
-  function getParam(k){ return new URLSearchParams(location.search).get(k); }
-
-  function setParams(params, {replace=true}={}){
-    const url = new URL(location.href);
-    Object.entries(params).forEach(([k,v]) => {
-      if (v === null || v === undefined || v === '') url.searchParams.delete(k);
-      else url.searchParams.set(k, String(v));
-    });
-    if (replace) history.replaceState({}, '', url.toString());
-    else history.pushState({}, '', url.toString());
-  }
-
-  function clamp(n, lo, hi){ return Math.max(lo, Math.min(hi, n)); }
-
-  // ---------- Language (shared key with your practice page) ----------
-  let lang = loadLS('wm_lang', 'en');
-  const STR = {
-    en: {
-      learnKicker: 'Learn',
-      learnTitle: 'Mini Mutation Lessons',
-      learnSubtitle: 'Pick a lesson, then flick through the cards. Keyboard: ←/→ to move, Esc to go back.',
-      resume: 'Resume',
-      openLast: 'Open last lesson',
-      back: '← Back',
-      restart: 'Restart',
-      resetProgress: 'Reset progress',
-      resetConfirm: 'Reset interactive progress for this lesson? (DONE badges will clear.)',
-      share: 'Share link',
-      note: 'Note',
-      prev: '← Prev',
-      next: 'Next →',
-      tipSwipe: 'Tip: swipe left/right on mobile.',
-      copied: 'Copied link ✅',
-      copyFail: 'Could not copy, but the URL is updated in the address bar.',
-      minutes: 'min',
-      slides: 'slides',
-      loading: 'Loading…',
-
-      // widgets
-      practise: 'PRACTISE',
-      done: 'DONE ✅',
-      correct: 'Correct ✅',
-      notYet: 'Not yet — try again 🙂',
-      check: 'Check',
-      reveal: 'Reveal answer',
-      hide: 'Hide answer',
-      showFront: 'Show front',
-      nextCard: 'Next',
-      open: 'Open'
-    },
-    cy: {
-      learnKicker: 'Dysgu',
-      learnTitle: 'Gwersi treiglad bach',
-      learnSubtitle: 'Dewisa wers, wedyn symud trwy’r cardiau. Bysellfwrdd: ←/→ i symud, Esc i fynd yn ôl.',
-      resume: 'Parhau',
-      openLast: 'Agor y wers ddiwethaf',
-      back: '← Yn ôl',
-      restart: 'Ailgychwyn',
-      resetProgress: 'Ailosod cynnydd',
-      resetConfirm: 'Ailosod cynnydd rhyngweithiol y wers? (Bydd bathodynnau DONE yn clirio.)',
-      share: 'Rhannu dolen',
-      note: 'Nodyn',
-      prev: '← Blaen',
-      next: 'Nesaf →',
-      tipSwipe: 'Awgrym: llusgo chwith/de ar ffôn.',
-      copied: 'Wedi copïo ✅',
-      copyFail: 'Methu copïo, ond mae’r URL yn y bar cyfeiriad.',
-      minutes: 'mun',
-      slides: 'sleidiau',
-      loading: 'Wrthi’n llwytho…',
-
-      // widgets
-      practise: 'YMARFER',
-      done: 'WEDI’I WNEUD ✅',
-      correct: 'Cywir ✅',
-      notYet: 'Dim eto — rho gynnig arall 🙂',
-      check: 'Gwirio',
-      reveal: 'Dangos ateb',
-      hide: 'Cuddio ateb',
-      showFront: 'Dangos cwestiwn',
-      nextCard: 'Nesaf',
-      open: 'Agor'
-    }
-  };
-  const t = (k) => (STR[lang] && STR[lang][k]) ? STR[lang][k] : (STR.en[k] || k);
-
-  function updateLangUI(){
-    $('#learnKicker').textContent = t('learnKicker');
-    $('#learnTitle').textContent = t('learnTitle');
-    $('#learnSubtitle').innerHTML = `${t('learnSubtitle')
-      .replace('←/→', '<span class="kbd">←</span>/<span class="kbd">→</span>')
-      .replace('Esc', '<span class="kbd">Esc</span>')}`;
-
-    $('#btnBack').textContent = t('back');
-    $('#btnRestart').textContent = t('restart');
-    $('#btnResetProgress').textContent = t('resetProgress');
-    $('#btnShare').textContent = t('share');
-    $('#btnPrev').textContent = t('prev');
-    $('#btnNext').textContent = t('next');
-    $('#slideHint').textContent = t('tipSwipe');
-
-    $('#mbPrev').textContent = (lang==='cy' ? 'Blaen' : 'Prev');
-    $('#mbBack').textContent = (lang==='cy' ? 'Yn ôl' : 'Back');
-    $('#mbNext').textContent = (lang==='cy' ? 'Nesaf' : 'Next');
-
-    const nextLang = (lang === 'en') ? 'CY' : 'EN';
-    $('#btnLangToggle').innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
-    $('#btnLangToggle').setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
-    $('#btnLangToggle').title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
-  }
-
-  // ---------- Learn data (external JSON) ----------
-  const LEARN_INDEX_URLS = [
-    './data/learn/home.json',
-    'https://katyjohannab.github.io/welsh-mutation-trainer/data/learn/home.json'
-  ];
-
-  let LESSON_INDEX = [];
-  const DECK_CACHE = new Map();
-
-  let USING_FALLBACK = false;
-  let LOAD_ERROR = null;
-
-  function asLangObj(v){
-    if (!v) return null;
-    if (typeof v === 'string') return { en: v, cy: v };
-    if (typeof v === 'object') return v;
-    return null;
-  }
-
-  function normaliseDeckUrl(deck, lessonId){
-    if (typeof deck !== 'string' || !deck.trim()) return `./data/learn/${lessonId}.json`;
-    const d = deck.trim();
-    if (/^https?:\/\//i.test(d)) return d;
-    if (d.startsWith('/')) return d;
-    if (d.startsWith('./') || d.startsWith('../')) return d;
-    if (!d.includes('/')) return `./data/learn/${d}`;
-    if (d.startsWith('data/')) return `./${d}`;
-    return d;
-  }
-
-  function normaliseLessons(raw){
-    const lessons = Array.isArray(raw) ? raw : [];
-    const out = [];
-
-    for (const item of lessons){
-      if (!item || typeof item !== 'object') continue;
-      const id = String(item.id || '').trim();
-      if (!id) continue;
-
-      const title = asLangObj(item.title) || { en: id, cy: id };
-      const desc  = asLangObj(item.desc)  || { en: '', cy: '' };
-      const level = asLangObj(item.level) || { en: '', cy: '' };
-
-      const minutes = Number(item.minutes ?? item.mins ?? 0);
-      const slideCountRaw = (item.slideCount ?? item.slide_count);
-      const slideCount = (slideCountRaw === undefined || slideCountRaw === null) ? undefined : Number(slideCountRaw);
-
-      let tags = item.tags;
-      if (typeof tags === 'string') tags = tags.split(',').map(s => s.trim()).filter(Boolean);
-      if (!Array.isArray(tags)) tags = [];
-
-      const deck = normaliseDeckUrl(item.deck, id);
-
-      out.push({
-        ...item,
-        id, title, desc, level,
-        minutes: Number.isFinite(minutes) ? minutes : 0,
-        slideCount: (slideCount !== undefined && Number.isFinite(slideCount)) ? slideCount : undefined,
-        tags,
-        deck
-      });
-    }
-
-    return out;
-  }
-
-  // Dummy fallback (keeps the page functional if index/decks missing)
-  const DUMMY_INDEX = [
-    {
-      id: 'whistlestop',
-      level: {en:'Beginner', cy:'Dechreuwr'},
-      minutes: 10,
-      title: { en: 'Whistlestop tour: what mutations are and why they matter', cy: 'Taith chwim: beth yw treigladau a pham maen nhw’n bwysig' },
-      desc:  { en: 'A quick, practical overview. Enough to stop mutations feeling random, and to give you a mental map.', cy: 'Trosolwg cyflym a defnyddiol. Digon i wneud i dreigladau deimlo’n llai ar hap, gyda “map” yn y pen.' },
-      tags: ['FOUNDATIONS','MAP'],
-      slideCount: 2,
-      deck: './data/learn/whistlestop.json'
-    }
-  ];
-
-  const DUMMY_DECKS = {
-    'whistlestop': {
-      id: 'whistlestop',
-      slides: [
-        {
-          title: {en:'Mutations are normal grammar', cy:'Mae treiglad yn ramadeg arferol'},
-          html: {
-            en: `<p><b>Mutation</b> = a change to the <b>first sound/letter</b> of a word.</p><div class='callout'><p>Not decoration. Just Welsh being Welsh.</p></div>`,
-            cy: `<p><b>Treiglad</b> = newid i’r <b>sain/llythyren gyntaf</b>.</p><div class='callout'><p>Ddim addurn. Dim ond Cymraeg.</p></div>`
-          }
-        },
-        {
-          title: {en:'Try a quick interactive check', cy:'Profiad bach rhyngweithiol'},
-          html: { en: `<p>Type the final phrase:</p>`, cy: `<p>Teipia’r ymadrodd terfynol:</p>` },
-          widgets: [
-            {
-              id: "demo-typein",
-              type: "typein",
-              prompt: { en: "Make the final phrase:", cy: "Gwna’r ymadrodd terfynol:" },
-              stem: { en: "i + Caerdydd", cy: "i + Caerdydd" },
-              accept: ["i Gaerdydd"],
-              explain: {
-                en: "<b>i</b> triggers soft mutation: <code>C → G</code>.",
-                cy: "Mae <b>i</b> yn sbarduno TM: <code>C → G</code>."
-              }
-            }
-          ]
-        }
-      ]
-    }
-  };
-
-  async function loadJSON(url){
-    const res = await fetch(url, {cache: 'no-cache'});
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  }
-
-  async function loadLearnIndex(){
-    USING_FALLBACK = false;
-    LOAD_ERROR = null;
-
-    for (const url of LEARN_INDEX_URLS){
-      try{
-        const idx = await loadJSON(url);
-        const lessonsRaw = Array.isArray(idx?.lessons) ? idx.lessons : (Array.isArray(idx) ? idx : null);
-        if (!lessonsRaw) throw new Error('Bad index shape (expected {"lessons": [...]} or [...])');
-
-        const normalised = normaliseLessons(lessonsRaw);
-        if (!normalised.length) throw new Error('Index loaded but no valid lessons found (each lesson must have an "id")');
-
-        LESSON_INDEX = normalised;
-        window.__WM_LEARN_DEBUG = { USING_FALLBACK, LOAD_ERROR, LESSON_INDEX, indexUrl: url };
-        return;
-      }catch(e){
-        LOAD_ERROR = e;
-      }
-    }
-
-    USING_FALLBACK = true;
-    LESSON_INDEX = normaliseLessons(DUMMY_INDEX);
-    console.warn('[Learn] Using fallback lessons.', LOAD_ERROR);
-    window.__WM_LEARN_DEBUG = { USING_FALLBACK, LOAD_ERROR, LESSON_INDEX, indexUrl: null };
-  }
-
-  function lessonById(id){ return LESSON_INDEX.find(l => l.id === id) || null; }
-  function lessonTitle(lesson){ return (lesson?.title?.[lang] || lesson?.title?.en || ''); }
-  function lessonDesc(lesson){ return (lesson?.desc?.[lang] || lesson?.desc?.en || ''); }
-
-  function deckForLesson(lessonId){
-    const deck = DECK_CACHE.get(lessonId);
-    return deck && Array.isArray(deck.slides) ? deck.slides : [];
-  }
-
-  async function ensureDeckLoaded(lessonId){
-    if (DECK_CACHE.has(lessonId)) return;
-
-    const meta = lessonById(lessonId);
-    const deckUrl = normaliseDeckUrl(meta?.deck, lessonId);
-
-    try{
-      if (!deckUrl) throw new Error('Missing deck URL');
-      const deck = await loadJSON(deckUrl);
-      const slides = Array.isArray(deck?.slides) ? deck.slides : null;
-      if (!slides) throw new Error('Bad deck shape');
-      DECK_CACHE.set(lessonId, {id: deck?.id || lessonId, slides});
-    }catch(e){
-      const dummy = DUMMY_DECKS[lessonId];
-      if (dummy && Array.isArray(dummy.slides)) DECK_CACHE.set(lessonId, dummy);
-      else DECK_CACHE.set(lessonId, {id: lessonId, slides: []});
-    }
-  }
-
-  function slideCountMeta(lesson){
-    if (!lesson) return 0;
-    if (typeof lesson.slideCount === 'number') return lesson.slideCount;
-    const cached = deckForLesson(lesson.id);
-    return cached.length;
-  }
-
-  // ---------- State ----------
-  const state = {
-    view: 'home',
-    lessonId: null,
-    slideIdx: 0,
-    touchStartX: null,
-    touchStartY: null,
-  };
-
-  // ---------- Interactive Widgets (SAFE / WHITELISTED) ----------
-  // Everything interactive is controlled here in learn.html.
-  // Lesson JSON can only declare "widgets" data; it cannot run JS.
-
-  const WIDGET_PROGRESS_KEY = 'wm_learn_widget_progress';
-  let WIDGET_PROGRESS = loadLS(WIDGET_PROGRESS_KEY, {});
-
-  function getLangText(v){
-    if (v == null) return '';
-    if (typeof v === 'string') return v;
-    if (typeof v === 'object') return v[lang] || v.en || '';
-    return '';
-  }
-
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, (c) => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[c]));
-  }
-
-  // Allow a small safe HTML subset everywhere *except* where we explicitly want plain text.
-  // This fixes "<code>" showing literally in widgets/notes, while still blocking scripts.
-  function sanitizeHTML(input){
-    const html = String(input ?? '');
-    if (!html) return '';
-
-    const ALLOWED = new Set([
-      'P','B','I','UL','OL','LI','CODE','SPAN','DIV','BR',
-      'TABLE','THEAD','TBODY','TR','TH','TD',
-      'A'
-    ]);
-
-    const ALLOWED_ATTR = {
-      'DIV': new Set(['class']),
-      'SPAN': new Set(['class']),
-      'TABLE': new Set(['class']),
-      'TH': new Set(['colspan','rowspan']),
-      'TD': new Set(['colspan','rowspan']),
-      'A': new Set(['href','target','rel','class']),
-      '*': new Set(['class'])
-    };
-
-    const template = document.createElement('template');
-    template.innerHTML = html;
-
-    const isSafeHref = (href) => {
-      const h = String(href || '').trim();
-      if (!h) return false;
-      if (h.startsWith('#')) return true;
-      if (h.startsWith('/')) return true;
-      if (h.startsWith('./') || h.startsWith('../')) return true;
-      if (/^https?:\/\//i.test(h)) return true;
-      if (/^mailto:/i.test(h)) return true;
-      return false;
-    };
-
-    const unwrap = (el) => {
-      const parent = el.parentNode;
-      if (!parent) return;
-      while (el.firstChild) parent.insertBefore(el.firstChild, el);
-      parent.removeChild(el);
-    };
-
-    const walk = (node) => {
-      const kids = Array.from(node.childNodes);
-      for (const child of kids){
-        if (child.nodeType === Node.ELEMENT_NODE){
-          const tag = child.tagName.toUpperCase();
-
-          // Remove script/style outright
-          if (tag === 'SCRIPT' || tag === 'STYLE'){
-            child.remove();
-            continue;
-          }
-
-          if (!ALLOWED.has(tag)){
-            // unwrap unknown tags (keeps text + allowed descendants)
-            unwrap(child);
-            continue;
-          }
-
-          // Strip attributes (no inline JS, no style)
-          for (const attr of Array.from(child.attributes)){
-            const name = attr.name.toLowerCase();
-
-            if (name.startsWith('on')) { child.removeAttribute(attr.name); continue; }
-            if (name === 'style') { child.removeAttribute(attr.name); continue; }
-
-            const allowedForTag = ALLOWED_ATTR[tag] || ALLOWED_ATTR['*'] || new Set();
-            if (!allowedForTag.has(name)){
-              child.removeAttribute(attr.name);
-              continue;
-            }
-
-            if (tag === 'A' && name === 'href'){
-              if (!isSafeHref(attr.value)) child.removeAttribute('href');
-            }
-            if (tag === 'A' && name === 'target'){
-              const v = String(attr.value || '').trim();
-              if (v !== '_blank' && v !== '_self') child.removeAttribute('target');
-              if (v === '_blank' && !child.getAttribute('rel')) child.setAttribute('rel', 'noopener');
-            }
-          }
-
-          walk(child);
-        } else if (child.nodeType === Node.COMMENT_NODE){
-          child.remove();
-        }
-      }
-    };
-
-    walk(template.content);
-    return template.innerHTML;
-  }
-
-  function normAnswer(s, {caseSensitive=false, trim=true}={}){
-    let out = String(s ?? '');
-    if (trim) out = out.trim();
-    out = out.replace(/[’‘`´]/g, "'");
-    if (!caseSensitive) out = out.toLowerCase();
-    out = out.replace(/\s+/g, ' ');
-    return out;
-  }
-
-  function getWidgetProgress(lessonId, widgetId){
-    return (WIDGET_PROGRESS?.[lessonId]?.[widgetId]) || null;
-  }
-
-  function setWidgetProgress(lessonId, widgetId, patch){
-    if (!WIDGET_PROGRESS[lessonId]) WIDGET_PROGRESS[lessonId] = {};
-    WIDGET_PROGRESS[lessonId][widgetId] = { ...(WIDGET_PROGRESS[lessonId][widgetId] || {}), ...patch };
-    saveLS(WIDGET_PROGRESS_KEY, WIDGET_PROGRESS);
-  }
-
-  function resetLessonProgress(lessonId){
-    if (!lessonId) return;
-    if (WIDGET_PROGRESS && WIDGET_PROGRESS[lessonId]){
-      delete WIDGET_PROGRESS[lessonId];
-      saveLS(WIDGET_PROGRESS_KEY, WIDGET_PROGRESS);
-    }
-  }
-
-  function setBadge(badgeEl, done){
-    if (!badgeEl) return;
-    badgeEl.textContent = done ? t('done') : t('practise');
-    badgeEl.style.borderColor = done ? "rgba(4,120,87,0.28)" : "rgba(217,119,6,0.22)";
-    badgeEl.style.background  = done ? "rgba(4,120,87,0.07)" : "rgba(217,119,6,0.07)";
-  }
-
-  function renderExplain(container, htmlStr){
-    if (!htmlStr) return;
-    const box = document.createElement('div');
-    box.className = "callout mt-4";
-    box.innerHTML = `<div class="text-sm">${sanitizeHTML(htmlStr)}</div>`;
-    container.appendChild(box);
-  }
-
-  function renderWidgetsForSlide(slide){
-    const wrap = $('#slideWidgets');
-    if (!wrap) return;
-    wrap.innerHTML = '';
-
-    const widgets = Array.isArray(slide?.widgets) ? slide.widgets : [];
-    if (!widgets.length) return;
-
-    for (const w of widgets){
-      if (!w || typeof w !== 'object') continue;
-
-      const type = String(w.type || '').trim();
-      const id = String(w.id || '').trim();
-      if (!id) continue; // require explicit IDs so progress is stable
-
-      const card = document.createElement('div');
-      card.className = "panel rounded-2xl p-4 md:p-5";
-      card.style.background = "rgba(255,255,255,0.92)";
-
-      const header = document.createElement('div');
-      header.className = "flex items-start justify-between gap-3";
-
-      const left = document.createElement('div');
-      left.className = "min-w-0";
-
-      const prompt = getLangText(w.prompt);
-      const stem = getLangText(w.stem);
-
-      left.innerHTML = `
-        ${prompt ? `<div class="text-sm font-semibold" style="color: var(--emerald-ink);">${sanitizeHTML(prompt)}</div>` : ''}
-        ${stem ? `<div class="mt-2 text-slate-800"><code>${escapeHtml(stem)}</code></div>` : ''}
-      `;
-
-      const badge = document.createElement('span');
-      badge.className = "tag";
-      const prog = getWidgetProgress(state.lessonId, id);
-      setBadge(badge, !!prog?.done);
-
-      header.appendChild(left);
-      header.appendChild(badge);
-
-      const body = document.createElement('div');
-      body.className = "mt-4";
-
-      if (type === 'mcq') renderWidgetMCQ(body, id, w, badge);
-      else if (type === 'typein') renderWidgetTypeIn(body, id, w, badge);
-      else if (type === 'reveal') renderWidgetReveal(body, id, w, badge);
-      else if (type === 'flashcards') renderWidgetFlashcards(body, id, w, badge);
-      else if (type === 'actions') renderWidgetActions(body, id, w, badge);
-      else body.innerHTML = `<div class="widget-muted">Unknown widget type: <code>${escapeHtml(type)}</code></div>`;
-
-      card.appendChild(header);
-      card.appendChild(body);
-      wrap.appendChild(card);
-    }
-  }
-
-  function renderWidgetMCQ(container, widgetId, w, badge){
-    const options = Array.isArray(w.options) ? w.options : [];
-    const correct = Array.isArray(w.correct) ? new Set(w.correct) : new Set();
-    const explain = getLangText(w.explain);
-
-    const prog = getWidgetProgress(state.lessonId, widgetId);
-    const locked = !!prog?.done;
-
-    const btnWrap = document.createElement('div');
-    btnWrap.className = "grid gap-2";
-
-    const status = document.createElement('div');
-    status.className = "widget-status";
-    status.textContent = '';
-
-    options.forEach((opt, idx) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'btn btn-ghost w-full justify-start px-4 py-3 rounded-xl';
-      b.disabled = locked;
-      const txt = getLangText(opt?.text);
-      b.innerHTML = `<span class="font-semibold">${idx + 1}.</span><span class="ml-2">${escapeHtml(txt)}</span>`;
-
-      b.addEventListener('click', () => {
-        const ok = correct.has(idx);
-
-        if (ok){
-          status.classList.remove('bad');
-          status.classList.add('ok');
-          status.textContent = t('correct');
-
-          setWidgetProgress(state.lessonId, widgetId, { done: true, ts: Date.now(), value: idx });
-          setBadge(badge, true);
-
-          [...btnWrap.querySelectorAll('button')].forEach(x => x.disabled = true);
-        } else {
-          status.classList.remove('ok');
-          status.classList.add('bad');
-          status.textContent = t('notYet');
-        }
-      });
-
-      btnWrap.appendChild(b);
-    });
-
-    container.appendChild(btnWrap);
-    container.appendChild(status);
-    renderExplain(container, explain);
-  }
-
-  function renderWidgetTypeIn(container, widgetId, w, badge){
-    const accept = Array.isArray(w.accept) ? w.accept : [];
-    const explain = getLangText(w.explain);
-    const prompt2 = getLangText(w.prompt2);
-
-    const cfg = {
-      caseSensitive: !!w.caseSensitive,
-      trim: w.trim !== false
-    };
-
-    const prog = getWidgetProgress(state.lessonId, widgetId);
-    const locked = !!prog?.done;
-
-    if (prompt2){
-      const p = document.createElement('div');
-      p.className = "widget-muted";
-      p.innerHTML = sanitizeHTML(prompt2);
-      container.appendChild(p);
-    }
-
-    const row = document.createElement('div');
-    row.className = "mt-3 flex flex-col sm:flex-row gap-2";
-
-    const input = document.createElement('input');
-    input.className = "inp";
-    input.placeholder = (lang === 'cy') ? "Teipia dy ateb…" : "Type your answer…";
-    input.disabled = locked;
-    input.value = (locked && prog?.value) ? String(prog.value) : '';
-
-    // IMPORTANT: stop space/arrow keys inside inputs from advancing slides
-    input.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
-        e.stopPropagation();
-      }
-    });
-
-    const check = document.createElement('button');
-    check.type = 'button';
-    check.className = "btn btn-primary px-5 py-3";
-    check.textContent = t('check');
-    check.disabled = locked;
-
-    const status = document.createElement('div');
-    status.className = "widget-status";
-    status.textContent = '';
-
-    function doCheck(){
-      const user = normAnswer(input.value, cfg);
-      const ok = accept.some(a => normAnswer(a, cfg) === user);
-
-      if (ok){
-        status.classList.remove('bad');
-        status.classList.add('ok');
-        status.textContent = t('correct');
-
-        setWidgetProgress(state.lessonId, widgetId, { done: true, ts: Date.now(), value: input.value });
-        setBadge(badge, true);
-
-        input.disabled = true;
-        check.disabled = true;
-      } else {
-        status.classList.remove('ok');
-        status.classList.add('bad');
-        status.textContent = t('notYet') + (accept.length ? `  (${(lang==='cy'?'Derbyniol: ':'Accepted: ')}${accept.join(' / ')})` : '');
-      }
-    }
-
-    check.addEventListener('click', doCheck);
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !locked) doCheck();
-    });
-
-    row.appendChild(input);
-    row.appendChild(check);
-
-    container.appendChild(row);
-    container.appendChild(status);
-    renderExplain(container, explain);
-  }
-
-  function renderWidgetReveal(container, widgetId, w, badge){
-    const front = getLangText(w.front);
-    const back = getLangText(w.back);
-
-    const prog = getWidgetProgress(state.lessonId, widgetId);
-    const done = !!prog?.done;
-
-    const frontEl = document.createElement('div');
-    frontEl.className = "text-slate-800";
-    frontEl.innerHTML = `<div class="text-sm">${sanitizeHTML(front)}</div>`;
-
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = "btn btn-ghost px-4 py-3 rounded-xl mt-3";
-    btn.textContent = t('reveal');
-
-    const box = document.createElement('div');
-    box.className = "callout mt-4 hidden";
-    box.innerHTML = `<div class="text-sm">${sanitizeHTML(back)}</div>`;
-
-    // Even if previously DONE, start hidden (DONE = “you did it before”, not “always show”)
-    if (done) setBadge(badge, true);
-
-    btn.addEventListener('click', () => {
-      const hidden = box.classList.contains('hidden');
-      box.classList.toggle('hidden');
-
-      if (hidden){
-        btn.textContent = t('hide');
-        setWidgetProgress(state.lessonId, widgetId, { done: true, ts: Date.now() });
-        setBadge(badge, true);
-      } else {
-        btn.textContent = t('reveal');
-      }
-    });
-
-    container.appendChild(frontEl);
-    container.appendChild(btn);
-    container.appendChild(box);
-  }
-
-  function renderWidgetFlashcards(container, widgetId, w, badge){
-    const items = Array.isArray(w.items) ? w.items : [];
-    if (!items.length){
-      container.innerHTML = `<div class="widget-muted">${lang === 'cy' ? 'Dim cardiau.' : 'No cards.'}</div>`;
-      return;
-    }
-
-    let idx = 0;
-    let revealed = false;
-
-    const prog = getWidgetProgress(state.lessonId, widgetId);
-    if (prog?.value && typeof prog.value.index === 'number'){
-      idx = clamp(prog.value.index, 0, items.length - 1);
-      revealed = !!prog.value.revealed;
-    }
-
-    const box = document.createElement('div');
-    box.className = "callout";
-
-    const controls = document.createElement('div');
-    controls.className = "mt-3 flex flex-wrap gap-2 items-center";
-
-    const btnReveal = document.createElement('button');
-    btnReveal.type = 'button';
-    btnReveal.className = "btn btn-primary";
-    btnReveal.textContent = revealed ? t('showFront') : t('reveal');
-
-    const btnNext = document.createElement('button');
-    btnNext.type = 'button';
-    btnNext.className = "btn btn-ghost";
-    btnNext.textContent = t('nextCard');
-
-    const counter = document.createElement('span');
-    counter.className = "tag ml-auto";
-
-    function renderCard(){
-      const it = items[idx];
-      const front = getLangText(it.front);
-      const back = getLangText(it.back);
-
-      counter.textContent = `${idx + 1} / ${items.length}`;
-      box.innerHTML = `<div class="text-sm">${sanitizeHTML(revealed ? back : front)}</div>`;
-      btnReveal.textContent = revealed ? t('showFront') : t('reveal');
-
-      // Save position only; don't auto-mark DONE unless they've actually revealed at least once
-      setWidgetProgress(state.lessonId, widgetId, { value: { index: idx, revealed } });
-    }
-
-    btnReveal.addEventListener('click', () => {
-      revealed = !revealed;
-
-      if (revealed){
-        setWidgetProgress(state.lessonId, widgetId, { done: true, ts: Date.now() });
-        setBadge(badge, true);
-      }
-
-      renderCard();
-    });
-
-    btnNext.addEventListener('click', () => {
-      idx = (idx + 1) % items.length;
-      revealed = false;
-      renderCard();
-    });
-
-    // Badge reflects actual stored DONE
-    setBadge(badge, !!prog?.done);
-
-    controls.appendChild(btnReveal);
-    controls.appendChild(btnNext);
-    controls.appendChild(counter);
-
-    container.appendChild(box);
-    container.appendChild(controls);
-
-    renderCard();
-  }
-
-  function renderWidgetActions(container, widgetId, w, badge){
-    const prompt = getLangText(w.prompt);
-    const buttons = Array.isArray(w.buttons) ? w.buttons : [];
-
-    if (prompt){
-      const p = document.createElement('div');
-      p.className = "widget-muted";
-      p.innerHTML = sanitizeHTML(prompt);
-      container.appendChild(p);
-    }
-
-    const row = document.createElement('div');
-    row.className = "mt-3 flex flex-wrap gap-2";
-
-    buttons.forEach((b) => {
-      const href = String(b?.href || '').trim();
-      if (!href) return;
-
-      const a = document.createElement('a');
-      const kind = (b?.kind === 'primary') ? 'btn-primary' : 'btn-ghost';
-      a.className = `btn ${kind}`;
-      a.href = href;
-      a.target = b?.target === '_blank' ? '_blank' : '_self';
-      a.rel = a.target === '_blank' ? 'noopener' : '';
-      a.textContent = getLangText(b?.label) || t('open');
-
-      a.addEventListener('click', () => {
-        setWidgetProgress(state.lessonId, widgetId, { done: true, ts: Date.now() });
-        setBadge(badge, true);
-      });
-
-      row.appendChild(a);
-    });
-
-    container.appendChild(row);
-  }
-
-  // ---------- Rendering: lesson list ----------
-  function renderLessonGrid(){
-    const grid = $('#lessonGrid');
-    grid.innerHTML = '';
-
-    for (const lesson of LESSON_INDEX){
-      const card = document.createElement('button');
-      card.className = 'lesson-card panel rounded-2xl p-5 text-left w-full';
-      card.type = 'button';
-      card.setAttribute('aria-label', lessonTitle(lesson));
-
-      const level = (lesson.level?.[lang] || lesson.level?.en || '');
-      const mins  = lesson.minutes;
-      const nSlides = slideCountMeta(lesson);
-
-      card.innerHTML = `
-        <div class="flex items-start justify-between gap-3">
-          <div class="min-w-0">
-            <div class="text-xs uppercase tracking-widest text-slate-500">${escapeHtml(level)} · ${mins} ${t('minutes')}</div>
-            <div class="mt-1 text-lg font-bold tracking-tight" style="color: var(--emerald-ink);">${escapeHtml(lessonTitle(lesson))}</div>
-            <div class="mt-2 text-sm text-slate-700 leading-relaxed">${escapeHtml(lessonDesc(lesson))}</div>
-          </div>
-          <div class="tag">${nSlides} ${t('slides')}</div>
-        </div>
-        <div class="mt-4 flex flex-wrap items-center gap-2">
-          ${(lesson.tags || []).map(x => `<span class="tag tag-theme">${escapeHtml(x)}</span>`).join('')}
-        </div>
-      `;
-
-      card.addEventListener('click', () => { openLesson(lesson.id, 0, {push:true}); });
-      grid.appendChild(card);
-    }
-
-    const last = loadLS('wm_learn_last', null);
-    if (last && last.lessonId && lessonById(last.lessonId)){
-      $('#btnOpenLast').classList.remove('hidden');
-      $('#btnOpenLast').textContent = t('openLast');
-      $('#btnOpenLast').onclick = () => openLesson(last.lessonId, last.slideIdx || 0, {push:true});
-
-      $('#btnResume').classList.remove('hidden');
-      $('#btnResume').textContent = t('resume');
-      $('#btnResume').onclick = () => openLesson(last.lessonId, last.slideIdx || 0, {push:true});
-    } else {
-      $('#btnOpenLast').classList.add('hidden');
-      $('#btnResume').classList.add('hidden');
-    }
-  }
-
-  // ---------- Rendering: deck ----------
-  function renderDeck(){
-    const lesson = lessonById(state.lessonId);
-    if (!lesson){
-      showHome({replace:true});
-      return;
-    }
-
-    const slides = deckForLesson(state.lessonId);
-    const n = slides.length;
-    state.slideIdx = clamp(state.slideIdx, 0, Math.max(0, n-1));
-
-    $('#deckTitle').textContent = lessonTitle(lesson);
-    $('#deckSubtitle').textContent = lessonDesc(lesson);
-
-    const level = (lesson.level?.[lang] || lesson.level?.en || '');
-    $('#deckMeta').textContent = `${level} · ${lesson.minutes} ${t('minutes')}`;
-
-    $('#deckProgressChip').textContent = `${Math.min(state.slideIdx + 1, Math.max(n,1))} / ${Math.max(n,1)}`;
-    const pct = n ? ((state.slideIdx + 1) / n) * 100 : 0;
-    $('#deckProgressBar').style.width = pct.toFixed(1) + '%';
-
-    const slide = slides[state.slideIdx];
-    $('#slideTitle').textContent = slide?.title?.[lang] || slide?.title?.en || '';
-    $('#slideNumber').textContent = (lang === 'cy') ? `SLEID ${state.slideIdx + 1}` : `SLIDE ${state.slideIdx + 1}`;
-
-    // Slide body HTML (sanitized)
-    const bodyHtmlRaw = slide?.html?.[lang] || slide?.html?.en || '';
-    $('#slideBody').innerHTML = bodyHtmlRaw ? sanitizeHTML(bodyHtmlRaw) : `<p class="text-slate-600">${t('loading')}</p>`;
-
-    // Widgets for this slide
-    renderWidgetsForSlide(slide);
-
-    // Note: allow safe inline HTML too (fixes literal <code> in notes)
-    const noteRaw = slide?.note?.[lang] || slide?.note?.en || '';
-    if (noteRaw){
-      $('#slideNoteWrap').classList.remove('hidden');
-      $('#slideNote').innerHTML = sanitizeHTML(noteRaw);
-      $('#slideNoteWrap .text-sm.font-semibold').textContent = t('note');
-    } else {
-      $('#slideNoteWrap').classList.add('hidden');
-    }
-
-    $('#btnPrev').disabled = (state.slideIdx === 0);
-    $('#btnPrev').style.opacity = (state.slideIdx === 0) ? '0.55' : '1';
-
-    const isLast = (state.slideIdx === n-1);
-    $('#btnNext').textContent = isLast ? (lang === 'cy' ? 'Gorffen ✓' : 'Finish ✓') : t('next');
-
-    $('#deckMobileBar').classList.remove('hidden');
-
-    saveLS('wm_learn_last', {lessonId: state.lessonId, slideIdx: state.slideIdx, ts: Date.now()});
-    setParams({lesson: state.lessonId, slide: state.slideIdx + 1}, {replace:true});
-  }
-
-  function setLoadingDeckUI(){
-    const lesson = lessonById(state.lessonId);
-    $('#deckTitle').textContent = lesson ? lessonTitle(lesson) : '';
-    $('#deckSubtitle').textContent = lesson ? lessonDesc(lesson) : '';
-    $('#deckMeta').textContent = lesson ? `${lesson.level?.[lang] || lesson.level?.en || ''} · ${lesson.minutes} ${t('minutes')}` : '';
-    $('#deckProgressChip').textContent = '…';
-    $('#deckProgressBar').style.width = '0%';
-    $('#slideTitle').textContent = t('loading');
-    $('#slideNumber').textContent = '';
-    $('#slideBody').innerHTML = `<p class="text-slate-600">${t('loading')}</p>`;
-    $('#slideWidgets').innerHTML = '';
-    $('#slideNoteWrap').classList.add('hidden');
-  }
-
-  // ---------- View switching ----------
-  function showHome({replace=true}={}){
-    state.view = 'home';
-    state.lessonId = null;
-    state.slideIdx = 0;
-
-    $('#learnHome').classList.remove('hidden');
-    $('#deckView').classList.add('hidden');
-    $('#deckMobileBar').classList.add('hidden');
-
-    setParams({lesson:null, slide:null}, {replace});
-    renderLessonGrid();
-  }
-
-  async function openLesson(lessonId, slideIdx=0, {push=false}={}){
-    state.view = 'deck';
-    state.lessonId = lessonId;
-    state.slideIdx = slideIdx;
-
-    $('#learnHome').classList.add('hidden');
-    $('#deckView').classList.remove('hidden');
-    $('#deckMobileBar').classList.remove('hidden');
-
-    if (push){
-      setParams({lesson: lessonId, slide: slideIdx + 1}, {replace:false});
-    }
-
-    setLoadingDeckUI();
-
-    await ensureDeckLoaded(lessonId);
-    renderDeck();
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-
-  function prevSlide(){
-    if (!state.lessonId) return;
-    if (state.slideIdx > 0){
-      state.slideIdx -= 1;
-      renderDeck();
-    }
-  }
-
-  function nextSlide(){
-    if (!state.lessonId) return;
-    const slides = deckForLesson(state.lessonId);
-    if (state.slideIdx < slides.length - 1){
-      state.slideIdx += 1;
-      renderDeck();
-    } else {
-      showHome({replace:false});
-    }
-  }
-
-  // ---------- Keyboard navigation guard ----------
-  function isEditableElement(el){
-    if (!el) return false;
-    if (el.isContentEditable) return true;
-    const tag = (el.tagName || '').toUpperCase();
-    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
-    // also treat anything inside widgets with a textbox role as editable
-    if (el.getAttribute && el.getAttribute('role') === 'textbox') return true;
-    return false;
-  }
-
-  // ---------- Wiring ----------
-  function wireEvents(){
-    $('#btnBack').addEventListener('click', () => showHome({replace:false}));
-    $('#btnPrev').addEventListener('click', prevSlide);
-    $('#btnNext').addEventListener('click', nextSlide);
-
-    $('#mbPrev').addEventListener('click', prevSlide);
-    $('#mbNext').addEventListener('click', nextSlide);
-    $('#mbBack').addEventListener('click', () => showHome({replace:false}));
-
-    $('#btnRestart').addEventListener('click', () => { state.slideIdx = 0; renderDeck(); });
-
-    // NEW: reset widget progress for current lesson
-    $('#btnResetProgress').addEventListener('click', () => {
-      if (!state.lessonId) return;
-      const ok = confirm(t('resetConfirm'));
-      if (!ok) return;
-      resetLessonProgress(state.lessonId);
-      renderDeck();
-    });
-
-    $('#btnShare').addEventListener('click', async () => {
-      try{
-        const url = new URL(location.href);
-        await navigator.clipboard.writeText(url.toString());
-        const old = $('#btnShare').textContent;
-        $('#btnShare').textContent = t('copied');
-        setTimeout(() => { $('#btnShare').textContent = old; }, 1200);
-      }catch(e){
-        alert(t('copyFail'));
-      }
-    });
-
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest && e.target.closest('#btnLangToggle');
-  if (!btn) return;
-
-  lang = (lang === 'en') ? 'cy' : 'en';
-  saveLS('wm_lang', lang);
-  updateLangUI();
-  if (state.view === 'home') renderLessonGrid();
-  else renderDeck();
-});
-
-
-    document.addEventListener('keydown', (e) => {
-      if (state.view !== 'deck') return;
-
-      // CRITICAL FIX: if the user is typing in an input/textarea, do not hijack keys
-      const active = document.activeElement;
-      if (isEditableElement(active)) return;
-
-      // also ignore if modifier keys are used
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-      if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
-
-      // Space to advance (only when not in an input)
-      if (e.key === ' ') { e.preventDefault(); nextSlide(); }
-
-      if (e.key === 'Escape') { e.preventDefault(); showHome({replace:false}); }
-      if (e.key === 'Home') { e.preventDefault(); state.slideIdx = 0; renderDeck(); }
-      if (e.key === 'End') {
-        const slides = deckForLesson(state.lessonId);
-        if (slides.length){ e.preventDefault(); state.slideIdx = slides.length-1; renderDeck(); }
-      }
-    }, {passive:false});
-
-    const slideCard = $('#slideCard');
-    slideCard.addEventListener('touchstart', (e) => {
-      if (state.view !== 'deck') return;
-      const t0 = e.touches && e.touches[0];
-      if (!t0) return;
-      state.touchStartX = t0.clientX;
-      state.touchStartY = t0.clientY;
-    }, {passive:true});
-
-    slideCard.addEventListener('touchend', (e) => {
-      if (state.view !== 'deck') return;
-      const t1 = e.changedTouches && e.changedTouches[0];
-      if (!t1 || state.touchStartX == null) return;
-      const dx = t1.clientX - state.touchStartX;
-      const dy = t1.clientY - state.touchStartY;
-      state.touchStartX = null;
-      state.touchStartY = null;
-
-      if (Math.abs(dy) > Math.abs(dx)) return;
-      if (dx < -40) nextSlide();
-      if (dx > 40) prevSlide();
-    }, {passive:true});
-
-    $('#btnTop').addEventListener('click', (e) => {
+    document.getElementById('btnTop')?.addEventListener('click', (e) => {
       e.preventDefault();
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  </script>
 
-    window.addEventListener('popstate', () => {
-      const qLesson = getParam('lesson');
-      const qSlide = parseInt(getParam('slide') || '1', 10);
-      if (qLesson && lessonById(qLesson)) openLesson(qLesson, clamp((qSlide||1)-1, 0, 999), {push:false});
-      else showHome({replace:true});
-    });
-  }
-
-  // ---------- Boot ----------
-  async function boot(){
-    await loadLearnIndex();
-    updateLangUI();
-    wireEvents();
-const langBtn = $('#btnLangToggle');
-if (langBtn) {
-  const nextLang = (lang === 'en') ? 'CY' : 'EN';
-  langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span>${nextLang}</span>`;
-  langBtn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
-  langBtn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
-}
-    const qLesson = getParam('lesson');
-    const qSlide = parseInt(getParam('slide') || '1', 10);
-
-    if (qLesson && lessonById(qLesson)){
-      await openLesson(qLesson, clamp((qSlide||1)-1, 0, 999), {push:false});
-    } else {
-      showHome({replace:true});
-    }
-  }
-
-  boot();
-</script>
-
-<script>
-  // Sticky header: add a subtle shadow once you scroll (premium feel, helps separation).
-  (() => {
-    const h = document.getElementById('siteHeader');
-    if (!h) return;
-    const set = () => h.classList.toggle('is-scrolled', window.scrollY > 8);
-    window.addEventListener('scroll', set, { passive: true });
-    set();
-  })();
-</script>
 </body>
 </html>
-
-
 
 
