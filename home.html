@@ -56,9 +56,12 @@
             Hyffordwr Cymraeg
           </h2>
 
-          <p class="mt-3 text-slate-700 leading-relaxed">
-            A set of practical tools for Welsh learners: mutation practice, mini lessons, and focused trainers.
-            Pick a path below and jump straight in.
+          <p class="mt-3 text-slate-700 leading-relaxed" data-lang="en">
+           Shwmae! I’m Katy. I’m currently learning Welsh at Uwch level, and I started building little tools to help me practise the bits I found hardest (especially mutations). They’ve genuinely helped my learning, so I’m sharing them here in case they’re useful for you too. Pick something below and have a play.
+          </p>
+          <p class="mt-3 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+            Shwmae! Katy dw i. Dw i’n ddysgwr Cymraeg ar lefel Uwch ar hyn o bryd, a dechreuais greu offerynnau bach i helpu fi ymarfer y pethau oedd yn anodd i mi (yn enwedig treigladau).
+            Maen nhw wedi bod yn ddefnyddiol iawn i mi, felly dw i’n eu rhannu yma rhag ofn eu bod nhw’n helpu ti hefyd. Dewisa rywbeth isod a rho gynnig arni.
           </p>
 
           <div class="mt-5 flex flex-wrap gap-2">
@@ -84,10 +87,14 @@
         <div class="flex items-start justify-between gap-3">
           <div class="min-w-0">
             <div class="text-xs uppercase tracking-widest text-slate-500">Practice</div>
-            <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">Mutation trainer</h3>
-            <p class="mt-2 text-slate-700 leading-relaxed">
-              Fast drills from CSV. Filters by rule category. Designed to make patterns automatic, not mysterious.
-            </p>
+            <h3 class="mt-1 text-xl font-bold tracking-tight" data-lang="en" style="color: var(--emerald-ink);">Mutation trainer</h3>
+             <h3 class="mt-1 text-xl font-bold tracking-tight" data-lang="cy" hidden style="color: var(--emerald-ink);">Hyffordwr Treiglad</h3>
+       <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+        An interactive tool to help you practise mutations in lots of different contexts.
+      </p>
+      <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+        Offeryn rhyngweithiol i dy helpu di i ymarfer treigladau mewn llawer o gyd-destunau gwahanol.
+      </p>
           </div>
           <span class="tag">Core</span>
         </div>
@@ -183,7 +190,32 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
+<script>
+  function getLang(){
+    try { return JSON.parse(localStorage.getItem('wm_lang') || '"en"'); }
+    catch(e){ return 'en'; }
+  }
 
+  function applyLang(){
+    const lang = getLang();
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.hidden = (el.getAttribute('data-lang') !== lang);
+    });
+  }
+
+  // initial
+  applyLang();
+
+  // If your navbar toggle exists, react to it (delegated because navbar loads async)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest && e.target.closest('#btnLangToggle');
+    if (!btn) return;
+    const next = (getLang() === 'en') ? 'cy' : 'en';
+    localStorage.setItem('wm_lang', JSON.stringify(next));
+    applyLang();
+  });
+</script>
+  
 </body>
 </html>
 
