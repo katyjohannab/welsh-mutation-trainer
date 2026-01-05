@@ -162,59 +162,100 @@
 
   </main>
 
-  <script>
-    async function loadNavbar() {
-      const mount = document.getElementById('navbarMount');
-      if (!mount) return;
-
-      const candidates = [
-        './navbar.html',
-        'https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html'
-      ];
-
-      for (const url of candidates) {
-        try {
-          const res = await fetch(url, { cache: 'no-cache' });
-          if (!res.ok) throw new Error('HTTP ' + res.status);
-          mount.innerHTML = await res.text();
-          return;
-        } catch (e) {}
-      }
-      console.warn('[Navbar] Could not load navbar.html from any candidate.');
-    }
-
-    loadNavbar();
-
-    document.getElementById('btnTop')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  </script>
 <script>
-  function getLang(){
-    try { return JSON.parse(localStorage.getItem('wm_lang') || '"en"'); }
-    catch(e){ return 'en'; }
+  // ---------- Navbar loader ----------
+  async function loadNavbar() {
+    const mount = document.getElementById('navbarMount');
+    if (!mount) return false;
+
+    const candidates = [
+      './navbar.html',
+      'https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html'
+    ];
+
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        mount.innerHTML = await res.text();
+        return true;
+      } catch (e) {}
+    }
+    console.warn('[Navbar] Could not load navbar.html from any candidate.');
+    return false;
   }
 
-  function applyLang(){
-    const lang = getLang();
+  // ---------- Language helpers (ROBUST) ----------
+  function wmGetLang(){
+    const raw = localStorage.getItem('wm_lang');
+    if (!raw) return 'en';
+    try {
+      const v = JSON.parse(raw);
+      return (v === 'cy' || v === 'en') ? v : 'en';
+    } catch (e) {
+      return (raw === 'cy' || raw === 'en') ? raw : 'en';
+    }
+  }
+
+  function wmSetLang(next){
+    localStorage.setItem('wm_lang', JSON.stringify(next));
+    document.documentElement.setAttribute('lang', next === 'cy' ? 'cy' : 'en');
+  }
+
+  function wmSyncLangToggleUI(){
+    const btn = document.getElementById('btnLangToggle');
+    if (!btn) return;
+    const lang = wmGetLang();
+    const nextLabel = (lang === 'en') ? 'CY' : 'EN';
+    btn.innerHTML = `<span aria-hidden="true">🔁</span><span class="ml-1">${nextLabel}</span>`;
+    btn.setAttribute('aria-label', (lang === 'en') ? 'Switch language to Cymraeg' : 'Switch language to English');
+    btn.title = (lang === 'en') ? 'Switch to Cymraeg' : 'Switch to English';
+  }
+
+  function wmApplyLang(){
+    const lang = wmGetLang();
+    document.documentElement.setAttribute('lang', lang === 'cy' ? 'cy' : 'en');
+
+    // Show only matching language blocks
     document.querySelectorAll('[data-lang]').forEach(el => {
       el.hidden = (el.getAttribute('data-lang') !== lang);
     });
+
+    wmSyncLangToggleUI();
   }
 
-  // initial
-  applyLang();
+  // ---------- Sticky header shadow ----------
+  function wmInitStickyShadow(){
+    const h = document.getElementById('siteHeader');
+    if (!h) return;
+    const set = () => h.classList.toggle('is-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', set, { passive: true });
+    set();
+  }
 
-  // If your navbar toggle exists, react to it (delegated because navbar loads async)
+  // ---------- Events ----------
   document.addEventListener('click', (e) => {
     const btn = e.target.closest && e.target.closest('#btnLangToggle');
     if (!btn) return;
-    const next = (getLang() === 'en') ? 'cy' : 'en';
-    localStorage.setItem('wm_lang', JSON.stringify(next));
-    applyLang();
+
+    const next = (wmGetLang() === 'en') ? 'cy' : 'en';
+    wmSetLang(next);
+    wmApplyLang();
   });
+
+  document.getElementById('btnTop')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---------- Boot ----------
+  (async () => {
+    await loadNavbar();
+    wmApplyLang();        // crucial: runs AFTER navbar inject so nav labels + toggle update
+    wmInitStickyShadow(); // gives sticky header separation
+  })();
 </script>
+
   
 </body>
 </html>
