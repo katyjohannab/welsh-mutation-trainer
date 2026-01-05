@@ -3,243 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
   <title>Dysgu Cymraeg Flashcards</title>
-  <style>
-    :root{
-      --bg:#0b1220;
-      --panel:#0f1a2e;
-      --card:#0f2038;
-      --text:#e8eefb;
-      --muted:#a7b5d6;
-      --accent:#6ee7b7;
-      --accent2:#60a5fa;
-      --warn:#fbbf24;
-      --bad:#fb7185;
-      --good:#34d399;
-      --border:rgba(255,255,255,.10);
-      --shadow: 0 14px 38px rgba(0,0,0,.35);
-      --radius: 18px;
-      --radius2: 12px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--font);
-      color:var(--text);
-      background:
-        radial-gradient(900px 500px at 15% 10%, rgba(96,165,250,.18), transparent 60%),
-        radial-gradient(800px 520px at 85% 20%, rgba(110,231,183,.14), transparent 60%),
-        radial-gradient(700px 520px at 30% 90%, rgba(251,191,36,.10), transparent 60%),
-        var(--bg);
-    }
-
-    header{
-      position: sticky;
-      top:0;
-      z-index: 10;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(to bottom, rgba(11,18,32,.92), rgba(11,18,32,.55));
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 14px 16px;
-      max-width:1100px;
-      margin: 0 auto;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width: 0;
-    }
-
-    .logo{
-      width:36px;height:36px;
-      border-radius: 14px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(110,231,183,.9), rgba(110,231,183,.15) 55%, transparent 70%),
-        radial-gradient(circle at 70% 65%, rgba(96,165,250,.9), rgba(96,165,250,.10) 55%, transparent 70%),
-        rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 10px 28px rgba(0,0,0,.35);
-      flex:0 0 auto;
-    }
-
-    .title{display:flex;flex-direction:column;min-width:0;line-height:1.1}
-    .title h1{font-size:14px;letter-spacing:.3px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:740}
-    .title p{margin:0;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-    .controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      box-shadow: 0 8px 24px rgba(0,0,0,.20);
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .btn{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 10px 12px;
-      font-weight: 650;
-      font-size: 13px;
-      letter-spacing:.2px;
-      cursor:pointer;
-      transition: transform .06s ease, background .18s ease, border-color .18s ease;
-      user-select:none;
-    }
-    .btn:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18) }
-    .btn:active{ transform: translateY(1px) }
-    .btn.primary{ border-color: rgba(110,231,183,.35); background: linear-gradient(180deg, rgba(110,231,183,.22), rgba(110,231,183,.10)) }
-    .btn.primary:hover{ background: linear-gradient(180deg, rgba(110,231,183,.28), rgba(110,231,183,.12)) }
-    .btn.ghost{ background: transparent }
-    .btn.warn{ border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.12) }
-    .btn.bad{ border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.12) }
-
-    .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 40px}
-
-    .grid{display:grid;grid-template-columns: 360px 1fr;gap:14px;margin-top:16px;align-items:start}
-    @media (max-width: 980px){ .grid{ grid-template-columns:1fr } }
-
-    .panel{
-      background: rgba(15,26,46,.62);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .panel .hd{padding:14px 14px 10px;border-bottom:1px solid rgba(255,255,255,.08);background: linear-gradient(to bottom, rgba(255,255,255,.06), transparent)}
-    .panel .hd h2{margin:0;font-size:14px;letter-spacing:.2px}
-    .panel .hd p{margin:6px 0 0;font-size:12px;color:var(--muted);line-height:1.35}
-    .panel .bd{padding:14px}
-
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
-
-    label{display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--muted);min-width:140px;flex:1 1 140px}
-
-    select, input[type="text"]{
-      appearance:none;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      padding: 10px 10px;
-      font-size: 13px;
-      outline:none;
-    }
-
-    select:focus, input[type="text"]:focus{border-color: rgba(96,165,250,.55); box-shadow: 0 0 0 3px rgba(96,165,250,.18)}
-
-    .divider{height:1px;background:rgba(255,255,255,.08);margin:12px 0}
-
-    .tiny{font-size:12px;color:var(--muted);line-height:1.4}
-    .kbd{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:8px;border:1px solid rgba(255,255,255,.14);background: rgba(0,0,0,.16);color: var(--text)}
-
-    .chipRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .chip{padding:6px 10px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);background: rgba(255,255,255,.05);border-radius:999px}
-
-    .stage{min-height:520px;display:flex;flex-direction:column;gap:12px}
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.10);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-
-    .card .card-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border-bottom:1px solid rgba(255,255,255,.08);background: linear-gradient(180deg, rgba(96,165,250,.12), transparent 60%)}
-    .meta{display:flex;flex-direction:column;min-width:0}
-    .meta .mode{font-size:12px;color:var(--muted);margin:0}
-    .meta .deck{margin:3px 0 0;font-size:13px;font-weight:720;letter-spacing:.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-    .badge{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background: rgba(0,0,0,.15);white-space:nowrap}
-
-    .card .card-bd{padding:16px 16px 10px}
-
-    .prompt{font-size:16px;line-height:1.35;margin:0 0 10px}
-    .prompt .big{font-size:22px;font-weight:780;letter-spacing:.2px}
-
-    .metaLine{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .metaPill{padding:6px 10px;font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,.12);background: rgba(0,0,0,.14);border-radius:999px}
-
-    .sentence{margin:10px 0 0;padding:12px;border-radius:14px;background: rgba(0,0,0,.16);border:1px solid rgba(255,255,255,.10)}
-    .sentence .cy{font-size:16px;line-height:1.35;margin:0}
-    .sentence .en{margin:7px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
-
-    .hint{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.35}
-
-    .answerRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
-    .answerRow input[type="text"]{flex:1 1 220px;min-width:220px;background: rgba(0,0,0,.16)}
-
-    .feedback{padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background: rgba(0,0,0,.14);margin-top:12px}
-    .feedback.good{border-color: rgba(52,211,153,.35); background: rgba(52,211,153,.10)}
-    .feedback.bad{border-color: rgba(251,113,133,.35); background: rgba(251,113,133,.10)}
-    .feedback .line1{margin:0;font-weight:740}
-    .feedback .line2{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
-
-    .card .card-ft{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;border-top:1px solid rgba(255,255,255,.08);background: linear-gradient(to top, rgba(255,255,255,.05), transparent);flex-wrap:wrap}
-
-    .progress{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:12px;flex:1 1 auto;min-width:220px}
-    .bar{height:8px;border-radius:999px;background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);width:100%;overflow:hidden}
-    .bar > div{height:100%;width:0%;background: linear-gradient(90deg, rgba(96,165,250,.85), rgba(110,231,183,.85))}
-
-    .actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:0 0 auto}
-
-    .bankWrap{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-    .bankTitle{font-size:12px;color:var(--muted);margin:0}
-    .bank{display:flex;flex-wrap:wrap;gap:8px}
-    .token{
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      border-radius: 999px;
-      padding: 8px 10px;
-      font-weight: 650;
-      font-size: 13px;
-      cursor:pointer;
-    }
-    .token:hover{ background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18) }
-
-    .buildLine{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-    .buildSlot{padding:8px 10px;border-radius:999px;border:1px dashed rgba(255,255,255,.18);color:var(--muted);font-size:13px}
-
-    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-    @media (max-width: 520px){
-      .prompt{font-size:15px}
-      .prompt .big{font-size:20px}
-      .card .card-bd{padding:14px}
-      .card .card-hd{padding:12px}
-      .card .card-ft{padding:12px}
-      label{min-width:100%}
-      .answerRow input[type="text"]{min-width:0;flex:1 1 100%}
-    }
-  </style>
+  <!-- Uses the same shared stylesheet as the rest of your site -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="vocabstyles.css"/>
 </head>
-<body>
-  <header>
+
+<body class="vocab-app">
+  <header class="vocab-header">
     <div class="topbar">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
@@ -248,10 +21,11 @@
           <p data-i18n="appSubtitle">Memrise-style session flow, CSV-powered, no backend</p>
         </div>
       </div>
+
       <div class="controls">
         <span class="pill" id="statusPill" aria-live="polite">–</span>
         <button class="btn ghost" id="langToggle" type="button" aria-pressed="false">CYM</button>
-        <button class="btn ghost" id="helpBtn" type="button">?</button>
+        <button class="btn ghost" id="helpBtn" type="button" aria-expanded="false" aria-controls="helpPanel">?</button>
       </div>
     </div>
   </header>
@@ -335,7 +109,6 @@
             </div>
 
             <p class="hint" id="hint" hidden>–</p>
-
             <p class="hint" id="taskHint" hidden>–</p>
 
             <div class="answerRow" id="typeRow" hidden>
@@ -392,7 +165,7 @@
               <li data-i18n="help4">Spacing is a simple queue: correct answers push the next review further away. Wrong answers come back quickly.</li>
             </ul>
             <div class="divider"></div>
-            <p class="tiny" data-i18n="helpCSV">To use a real CSV, replace DUMMY_CSV with your CSV text or a fetch call. Keep the headers stable.</p>
+            <p class="tiny" data-i18n="helpCSV">To use a real CSV, set CSV_URL to your file path, or replace DUMMY_CSV with a fetch call. Keep the headers stable.</p>
           </div>
         </div>
 
@@ -402,6 +175,22 @@
 
   <script>
     'use strict';
+
+    /* =========================
+       Configuration
+       ========================= */
+
+    // Put your real CSV here (relative to vocab.html). If it fails to load, DUMMY_CSV is used.
+    const CSV_URL = './data/vocab.csv';
+
+    // Polly Lambda URL (optional). Leave empty to disable TTS.
+    // Example expects POST { text: "..." } and returns either audio bytes OR JSON with { url } or { audioBase64 }.
+    const POLLY_FUNCTION_URL = 'https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/';
+
+
+    /* =========================
+       DOM
+       ========================= */
 
     const statusPill = document.getElementById('statusPill');
     const langToggle = document.getElementById('langToggle');
@@ -461,6 +250,11 @@
 
     const helpPanel = document.getElementById('helpPanel');
 
+
+    /* =========================
+       Helpers
+       ========================= */
+
     function escapeHTML(s){
       const x = String(s == null ? '' : s);
       return x
@@ -475,183 +269,6 @@
       const d = document.createElement('div');
       d.innerHTML = html;
       return d.textContent || '';
-    }
-
-    const I18N = {
-      ENG: {
-        appTitle: 'Dysgu Cymraeg Flashcards',
-        appSubtitle: 'Memrise-style session flow, CSV-powered, no backend',
-        setupTitle: 'Set up a session',
-        setupDesc: 'Pick a level and unit. Items repeat with increasing interactivity: introduce → recognise → type → build.',
-        levelLabel: 'Level',
-        unitLabel: 'Unit',
-        directionLabel: 'Prompt direction',
-        dirEN2CY: 'English → Cymraeg',
-        dirCY2EN: 'Cymraeg → English',
-        sessionSizeLabel: 'Session size',
-        startBtn: 'Start session',
-        shuffleBtn: 'Shuffle',
-        resetBtn: 'Reset',
-        checkBtn: 'Check',
-        revealBtn: 'Reveal',
-        clearBtn: 'Clear',
-        hearBtn: 'Hear',
-        nextBtn: 'Next',
-        kbdHelp: "Keyboard: <span class='kbd'>Enter</span> submits / continues. <span class='kbd'>H</span> plays audio. <span class='kbd'>1</span> / <span class='kbd'>2</span> selects choices. <span class='kbd'>Backspace</span> removes a built token.",
-        helpTitle: 'How this mimics Memrise
-      },
-      CYM: {
-        appTitle: 'Cardiau Dysgu Cymraeg',
-        appSubtitle: 'Sesiynau tebyg i Memrise, CSV, dim backend',
-        setupTitle: 'Paratoi sesiwn',
-        setupDesc: 'Dewisa lefel ac uned. Bydd eitemau yn ailadrodd gyda mwy o her: cyflwyno → adnabod → teipio → adeiladu.',
-        levelLabel: 'Lefel',
-        unitLabel: 'Uned',
-        directionLabel: 'Cyfeiriad',
-        dirEN2CY: 'Saesneg → Cymraeg',
-        dirCY2EN: 'Cymraeg → Saesneg',
-        sessionSizeLabel: 'Maint y sesiwn',
-        startBtn: 'Dechrau sesiwn',
-        shuffleBtn: 'Cymysgu',
-        resetBtn: 'Ailosod',
-        checkBtn: 'Gwirio',
-        revealBtn: 'Datgelu',
-        clearBtn: 'Clirio',
-        hearBtn: 'Gwrando',
-        nextBtn: 'Nesaf',
-        kbdHelp: "Bysellfwrdd: <span class='kbd'>Enter</span> i gyflwyno / parhau. <span class='kbd'>H</span> i wrando. <span class='kbd'>1</span> / <span class='kbd'>2</span> i ddewis. <span class='kbd'>Backspace</span> i dynnu tocyn.",
-        helpTitle: 'Sut mae hwn yn efelychu Memrise',
-        helpDesc: 'Fe weli di’r un eitem eto ar ôl bwlch byr, gyda thasgau anoddach dros amser. Dim mewngofnodi a dim cynnydd wedi’i gadw.',
-        help1: 'Hidlo yn ôl lefel ac uned Dysgu Cymraeg.',
-        help2: 'Camau: cyflwyno (gweld yr eitem + brawddeg) → adnabod (2 opsiwn) → teipio (teipio’r eitem yn unig) → adeiladu (banc geiriau).',
-        help3: 'Mae Gwrando yn darllen y frawddeg Gymraeg trwy Polly Lambda.',
-        help4: 'Bylchu syml: atebion cywir yn gwthio’r adolygiad nesaf yn bellach. Atebion anghywir yn dod yn ôl yn gyflym.',
-        helpCSV: 'I ddefnyddio CSV go iawn, disodla DUMMY_CSV gyda dy CSV neu fetch. Cadwa’r penawdau yr un fath.',
-        statusLoaded: n => n + ' o gardiau wedi’u llwytho',
-        statusReady: 'Barod',
-        statusSession: n => 'Sesiwn: ' + n + ' eitem',
-        badgeLevelUnit: (lvl, unit) => lvl + ' · Uned ' + unit,
-        modeIntro: 'Cyflwyno',
-        modeChoice: 'Adnabod',
-        modeType: 'Teipio',
-        modeBuild: 'Adeiladu',
-        promptIntro: (front, back) => 'Eitem newydd: <span class=big>' + escapeHTML(front) + '</span> · ' + escapeHTML(back),
-        promptChoice: front => 'Dewisa’r cyfatebiad cywir i: <span class=big>' + escapeHTML(front) + '</span>',
-        promptType: front => 'Teipia’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
-        promptBuild: front => 'Adeilada’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
-        hintType: 'Teipia’r gair neu’r ymadrodd yn unig. Paid â theipio’r frawddeg gyfan.',
-        hintBuild: 'Clicia docynnau (neu Tab ac Enter) i adeiladu’r ateb. Mae Backspace yn tynnu’r tocyn olaf.',
-        feedbackCorrect: 'Cywir',
-        feedbackTryAgain: 'Ddim cweit',
-        feedbackReveal: a => 'Ateb: ' + a,
-        progressText: (done, introduced, due) => done + ' wedi’u gwirio · ' + introduced + ' wedi’u cyflwyno · ' + due + ' yn ddyledus',
-        emptyDeck: 'Does dim cardiau’n cyd-fynd â’r hidlwyr hyn.'
-      }
-    };
-
-    let UI_LANG = 'ENG';
-
-    function t(key){
-      const v = I18N[UI_LANG][key];
-      const args = [];
-      for (let i = 1; i < arguments.length; i++) args.push(arguments[i]);
-      if (typeof v === 'function') return v.apply(null, args);
-      return v == null ? '' : v;
-    }
-
-    function applyI18n(){
-      document.documentElement.lang = UI_LANG === 'CYM' ? 'cy' : 'en';
-      const nodes = document.querySelectorAll('[data-i18n]');
-      for (const el of nodes){
-        const k = el.getAttribute('data-i18n');
-        el.innerHTML = t(k);
-      }
-      for (const opt of document.querySelectorAll('option[data-i18n]')){
-        opt.textContent = textOnly(t(opt.getAttribute('data-i18n')));
-      }
-      langToggle.setAttribute('aria-pressed', UI_LANG === 'CYM' ? 'true' : 'false');
-      langToggle.textContent = UI_LANG === 'CYM' ? 'ENG' : 'CYM';
-      renderSelectors();
-      renderChips();
-      updateStatus();
-      render();
-    }
-
-    const DUMMY_CSV = `Level,Unit,HeadwordCY,HeadwordEN,POS,Gender,PluralCY,Stem,SentenceCY,SentenceEN,WhyENG,WhyCYM
-Uwch 1,1,Aberhonddu,Brecon,noun,ben.,,,Dw i wedi mynd i Aberhonddu dros y penwythnos.,I went to Brecon over the weekend.,Place-name practice. Gender label included because course lists mark it.,Ymarfer enw lle. Mae’r label rhyw yn rhan o’r geirfa.
-Uwch 1,1,aberthu,to sacrifice,verb-noun,,,aberth-,Mae rhai pobl yn aberthu llawer er mwyn helpu eraill.,Some people sacrifice a lot in order to help others.,Verb-noun in a natural sentence. Stem shown for learners who use it.,Berfenw mewn brawddeg naturiol. Dangosir y bôn i ddysgwyr.
-Uwch 1,1,abl,able,ans.,,,,Mae hi’n abl i ddatrys problemau anodd.,She is able to solve difficult problems.,Adjective used after bod + yn in a natural pattern.,Ansoddair ar ôl bod + yn mewn patrwm naturiol.
-Uwch 1,2,achlysur,an occasion,noun,gwr.,achlysuron,,Roedd e’n achlysur arbennig i’n teulu ni.,It was a special occasion for our family.,Noun with gender and plural shown, mirroring course lists.,Enw gyda rhyw a lluosog, yn unol â’r rhestrau.
-Uwch 1,2,adfail,a ruin,noun,gwr.,adfeilion,,Mae’r castell yn adfail erbyn hyn.,The castle is a ruin now.,Noun in context. Useful collocation: yn adfail.,Enw mewn cyd-destun. Cyfuniad defnyddiol: yn adfail.
-Uwch 1,2,adfer,to restore, to rehabilitate,verb-noun,,,adfer-,Mae’r cyngor yn bwriadu adfer y parc lleol.,The council plans to restore the local park.,Verb-noun in a common public-life context.,Berfenw mewn cyd-destun bywyd cyhoeddus.
-Uwch 1,3,adlewyrchu,to reflect,verb-noun,,,adlewyrch-,Mae’r canlyniadau’n adlewyrchu’r hyn welson ni yn ymarferol.,The results reflect what we saw in practice.,Common verb-noun in research and policy contexts.,Berfenw cyffredin mewn cyd-destunau ymchwil a pholisi.
-Mynediad,1,a dweud y gwir,to be honest,idiom,,,,A dweud y gwir, dw i ddim yn siŵr.,To be honest, I’m not sure.,Set phrase as listed in Mynediad.,Ymadrodd sefydlog fel yn Mynediad.
-Mynediad,1,Abertawe,Swansea,place-name,,,,Dw i’n byw ger Abertawe.,I live near Swansea.,Simple place-name sentence for beginners.,Brawddeg enw lle syml.
-Mynediad,1,achos,because,subordinator,,,,Dw i’n aros adre achos mae hi’n bwrw glaw.,I’m staying home because it’s raining.,Very common spoken achos as a subordinator.,achos llafar cyffredin fel is-gysylltair.
-Sylfaen,2,acen,an accent,noun,ben.,acenion,,Mae ganddi acen Gymreig glir.,She has a clear Welsh accent.,Noun plus adjective in a natural descriptive sentence.,Enw ac ansoddair mewn brawddeg ddisgrifiadol.
-Sylfaen,2,aderyn,a bird,noun,gwr.,adar,,Mae aderyn yn canu yn yr ardd bob bore.,A bird sings in the garden every morning.,Singular and plural pair shown as in course list.,Pâr unigol a lluosog fel yn y rhestr.
-Sylfaen,2,achub,to save, to rescue,verb-noun,,,achub-,Mae’r criw’n ceisio achub y ci o’r dŵr.,The crew are trying to rescue the dog from the water.,Common verb-noun in a clear context.,Berfenw cyffredin mewn cyd-destun clir.
-Sylfaen,2,adloniant,entertainment,noun,gwr.,adloniannau,,Mae’r sioe’n cynnig adloniant i’r teulu cyfan.,The show offers entertainment for the whole family.,Noun in context with a common verb: cynnig.,Enw mewn cyd-destun gyda berf gyffredin: cynnig.
-Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are under the pillow.,Compound preposition used in a natural sentence.,Arddodiad cyfansawdd mewn brawddeg naturiol.
-`;
-
-    function parseCSV(text){
-      const lineBreak = String.fromCharCode(10);
-      const cr = String.fromCharCode(13);
-      const linesRaw = String(text == null ? '' : text).split(lineBreak);
-      const lines = [];
-      for (const ln of linesRaw){
-        const cleaned = ln.split(cr).join('');
-        if (cleaned.trim().length) lines.push(cleaned);
-      }
-      if (!lines.length) return [];
-      const headers = splitCSVLine(lines[0]).map(s => s.trim());
-      const rows = [];
-      for (let i = 1; i < lines.length; i++){
-        const cols = splitCSVLine(lines[i]);
-        const obj = {};
-        for (let j = 0; j < headers.length; j++) obj[headers[j]] = (cols[j] == null ? '' : cols[j]).trim();
-        rows.push(obj);
-      }
-      return rows;
-    }
-
-    function splitCSVLine(line){
-      const out = [];
-      let cur = '';
-      let inQ = false;
-      for (let i = 0; i < line.length; i++){
-        const ch = line[i];
-        if (ch === '"'){
-          const next = line[i + 1];
-          if (inQ && next === '"'){ cur += '"'; i++; }
-          else inQ = !inQ;
-        } else if (ch === ',' && !inQ){
-          out.push(cur);
-          cur = '';
-        } else {
-          cur += ch;
-        }
-      }
-      out.push(cur);
-      return out;
-    }
-
-    function normaliseCard(r){
-      return {
-        Level: r.Level,
-        Unit: r.Unit,
-        ItemCY: r.HeadwordCY,
-        ItemEN: r.HeadwordEN,
-        POS: r.POS,
-        Gender: r.Gender,
-        PluralCY: r.PluralCY,
-        Stem: r.Stem,
-        SentenceCY: r.SentenceCY,
-        SentenceEN: r.SentenceEN,
-        WhyENG: r.WhyENG,
-        WhyCYM: r.WhyCYM
-      };
     }
 
     function normAnswer(s){
@@ -682,6 +299,262 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       return i < 0 ? 999 : i;
     }
 
+
+    /* =========================
+       I18n
+       ========================= */
+
+    const I18N = {
+      ENG: {
+        appTitle: 'Dysgu Cymraeg Flashcards',
+        appSubtitle: 'Memrise-style session flow, CSV-powered, no backend',
+        setupTitle: 'Set up a session',
+        setupDesc: 'Pick a level and unit. Items repeat with increasing interactivity: introduce → recognise → type → build.',
+        levelLabel: 'Level',
+        unitLabel: 'Unit',
+        directionLabel: 'Prompt direction',
+        dirEN2CY: 'English → Cymraeg',
+        dirCY2EN: 'Cymraeg → English',
+        sessionSizeLabel: 'Session size',
+        startBtn: 'Start session',
+        shuffleBtn: 'Shuffle',
+        resetBtn: 'Reset',
+        checkBtn: 'Check',
+        revealBtn: 'Reveal',
+        clearBtn: 'Clear',
+        hearBtn: 'Hear',
+        nextBtn: 'Next',
+        kbdHelp: "Keyboard: <span class='kbd'>Enter</span> submits / continues. <span class='kbd'>H</span> plays audio. <span class='kbd'>1</span> / <span class='kbd'>2</span> selects choices. <span class='kbd'>Backspace</span> removes a built token.",
+        helpTitle: 'How this mimics Memrise Community Courses',
+        helpDesc: 'You see the same item again after a short gap, with harder tasks as you go. No login and no saved progress.',
+        help1: 'Items are filtered by Dysgu Cymraeg level and unit.',
+        help2: 'Stages: introduce (see the item + sentence) → recognise (2 options) → type (type only the item, not the whole sentence) → build (word bank).',
+        help3: 'Hear plays the Welsh example sentence using your Polly Lambda URL.',
+        help4: 'Spacing is a simple queue: correct answers push the next review further away. Wrong answers come back quickly.',
+        helpCSV: 'To use a real CSV, set CSV_URL to your file path, or replace DUMMY_CSV with a fetch call. Keep the headers stable.',
+
+        statusLoaded: n => n + ' cards loaded',
+        statusReady: 'Ready',
+        statusSession: n => 'Session: ' + n + ' items',
+
+        badgeLevelUnit: (lvl, unit) => lvl + ' · Unit ' + unit,
+
+        modeIntro: 'Introduce',
+        modeChoice: 'Recognise',
+        modeType: 'Type',
+        modeBuild: 'Build',
+
+        promptIntro: (front, back) => 'New item: <span class=big>' + escapeHTML(front) + '</span> · ' + escapeHTML(back),
+        promptChoice: front => 'Pick the correct match for: <span class=big>' + escapeHTML(front) + '</span>',
+        promptType: front => 'Type the answer for: <span class=big>' + escapeHTML(front) + '</span>',
+        promptBuild: front => 'Build the answer for: <span class=big>' + escapeHTML(front) + '</span>',
+
+        hintType: 'Type the word or phrase only. Do not type the whole sentence.',
+        hintBuild: 'Click tokens (or use Tab + Enter) to build the answer. Backspace removes the last token.',
+
+        feedbackCorrect: 'Correct',
+        feedbackTryAgain: 'Not quite',
+        feedbackReveal: a => 'Answer: ' + a,
+
+        progressText: (done, introduced, due) => done + ' checked · ' + introduced + ' introduced · ' + due + ' due',
+        emptyDeck: 'No cards match these filters.',
+        chooseFilters: 'Choose filters, then start a session.'
+      },
+
+      CYM: {
+        appTitle: 'Cardiau Dysgu Cymraeg',
+        appSubtitle: 'Sesiynau tebyg i Memrise, CSV, dim backend',
+        setupTitle: 'Paratoi sesiwn',
+        setupDesc: 'Dewisa lefel ac uned. Bydd eitemau yn ailadrodd gyda mwy o her: cyflwyno → adnabod → teipio → adeiladu.',
+        levelLabel: 'Lefel',
+        unitLabel: 'Uned',
+        directionLabel: 'Cyfeiriad',
+        dirEN2CY: 'Saesneg → Cymraeg',
+        dirCY2EN: 'Cymraeg → Saesneg',
+        sessionSizeLabel: 'Maint y sesiwn',
+        startBtn: 'Dechrau sesiwn',
+        shuffleBtn: 'Cymysgu',
+        resetBtn: 'Ailosod',
+        checkBtn: 'Gwirio',
+        revealBtn: 'Datgelu',
+        clearBtn: 'Clirio',
+        hearBtn: 'Gwrando',
+        nextBtn: 'Nesaf',
+        kbdHelp: "Bysellfwrdd: <span class='kbd'>Enter</span> i gyflwyno / parhau. <span class='kbd'>H</span> i wrando. <span class='kbd'>1</span> / <span class='kbd'>2</span> i ddewis. <span class='kbd'>Backspace</span> i dynnu tocyn.",
+        helpTitle: 'Sut mae hwn yn efelychu Memrise',
+        helpDesc: 'Fe weli di’r un eitem eto ar ôl bwlch byr, gyda thasgau anoddach dros amser. Dim mewngofnodi a dim cynnydd wedi’i gadw.',
+        help1: 'Hidlo yn ôl lefel ac uned Dysgu Cymraeg.',
+        help2: 'Camau: cyflwyno (gweld yr eitem + brawddeg) → adnabod (2 opsiwn) → teipio (teipio’r eitem yn unig) → adeiladu (banc geiriau).',
+        help3: 'Mae Gwrando yn darllen y frawddeg Gymraeg trwy Polly Lambda.',
+        help4: 'Bylchu syml: atebion cywir yn gwthio’r adolygiad nesaf yn bellach. Atebion anghywir yn dod yn ôl yn gyflym.',
+        helpCSV: 'I ddefnyddio CSV go iawn, gosoda CSV_URL i lwybr dy ffeil, neu disodla DUMMY_CSV gyda fetch. Cadwa’r penawdau yr un fath.',
+
+        statusLoaded: n => n + ' o gardiau wedi’u llwytho',
+        statusReady: 'Barod',
+        statusSession: n => 'Sesiwn: ' + n + ' eitem',
+
+        badgeLevelUnit: (lvl, unit) => lvl + ' · Uned ' + unit,
+
+        modeIntro: 'Cyflwyno',
+        modeChoice: 'Adnabod',
+        modeType: 'Teipio',
+        modeBuild: 'Adeiladu',
+
+        promptIntro: (front, back) => 'Eitem newydd: <span class=big>' + escapeHTML(front) + '</span> · ' + escapeHTML(back),
+        promptChoice: front => 'Dewisa’r cyfatebiad cywir i: <span class=big>' + escapeHTML(front) + '</span>',
+        promptType: front => 'Teipia’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
+        promptBuild: front => 'Adeilada’r ateb am: <span class=big>' + escapeHTML(front) + '</span>',
+
+        hintType: 'Teipia’r gair neu’r ymadrodd yn unig. Paid â theipio’r frawddeg gyfan.',
+        hintBuild: 'Clicia docynnau (neu Tab ac Enter) i adeiladu’r ateb. Mae Backspace yn tynnu’r tocyn olaf.',
+
+        feedbackCorrect: 'Cywir',
+        feedbackTryAgain: 'Ddim cweit',
+        feedbackReveal: a => 'Ateb: ' + a,
+
+        progressText: (done, introduced, due) => done + ' wedi’u gwirio · ' + introduced + ' wedi’u cyflwyno · ' + due + ' yn ddyledus',
+        emptyDeck: 'Does dim cardiau’n cyd-fynd â’r hidlwyr hyn.',
+        chooseFilters: 'Dewisa hidlwyr, yna dechrau sesiwn.'
+      }
+    };
+
+    let UI_LANG = 'ENG';
+
+    function t(key){
+      const v = I18N[UI_LANG][key];
+      const args = [];
+      for (let i = 1; i < arguments.length; i++) args.push(arguments[i]);
+      if (typeof v === 'function') return v.apply(null, args);
+      return v == null ? '' : v;
+    }
+
+    function applyI18n(){
+      document.documentElement.lang = UI_LANG === 'CYM' ? 'cy' : 'en';
+
+      const nodes = document.querySelectorAll('[data-i18n]');
+      for (const el of nodes){
+        const k = el.getAttribute('data-i18n');
+        el.innerHTML = t(k);
+      }
+
+      for (const opt of document.querySelectorAll('option[data-i18n]')){
+        opt.textContent = textOnly(t(opt.getAttribute('data-i18n')));
+      }
+
+      langToggle.setAttribute('aria-pressed', UI_LANG === 'CYM' ? 'true' : 'false');
+      langToggle.textContent = UI_LANG === 'CYM' ? 'ENG' : 'CYM';
+
+      answerInput.placeholder = UI_LANG === 'CYM' ? 'Teipia yma…' : 'Type here…';
+
+      renderSelectors();
+      renderChips();
+      updateStatus();
+      render();
+    }
+
+
+    /* =========================
+       CSV
+       ========================= */
+
+    const DUMMY_CSV = `Level,Unit,HeadwordCY,HeadwordEN,POS,Gender,PluralCY,Stem,SentenceCY,SentenceEN,WhyENG,WhyCYM
+Uwch 1,1,Aberhonddu,Brecon,noun,ben.,,,Dw i wedi mynd i Aberhonddu dros y penwythnos.,I went to Brecon over the weekend.,Place-name practice. Gender label included because course lists mark it.,Ymarfer enw lle. Mae’r label rhyw yn rhan o’r geirfa.
+Uwch 1,1,aberthu,to sacrifice,verb-noun,,,aberth-,Mae rhai pobl yn aberthu llawer er mwyn helpu eraill.,Some people sacrifice a lot in order to help others.,Verb-noun in a natural sentence. Stem shown for learners who use it.,Berfenw mewn brawddeg naturiol. Dangosir y bôn i ddysgwyr.
+Uwch 1,1,abl,able,ans.,,,,Mae hi’n abl i ddatrys problemau anodd.,She is able to solve difficult problems.,Adjective used after bod + yn in a natural pattern.,Ansoddair ar ôl bod + yn mewn patrwm naturiol.
+Uwch 1,2,achlysur,an occasion,noun,gwr.,achlysuron,,Roedd e’n achlysur arbennig i’n teulu ni.,It was a special occasion for our family.,Noun with gender and plural shown, mirroring course lists.,Enw gyda rhyw a lluosog, yn unol â’r rhestrau.
+Uwch 1,2,adfail,a ruin,noun,gwr.,adfeilion,,Mae’r castell yn adfail erbyn hyn.,The castle is a ruin now.,Noun in context. Useful collocation: yn adfail.,Enw mewn cyd-destun. Cyfuniad defnyddiol: yn adfail.
+Uwch 1,2,adfer,to restore, to rehabilitate,verb-noun,,,adfer-,Mae’r cyngor yn bwriadu adfer y parc lleol.,The council plans to restore the local park.,Verb-noun in a common public-life context.,Berfenw mewn cyd-destun bywyd cyhoeddus.
+Uwch 1,3,adlewyrchu,to reflect,verb-noun,,,adlewyrch-,Mae’r canlyniadau’n adlewyrchu’r hyn welson ni yn ymarferol.,The results reflect what we saw in practice.,Common verb-noun in research and policy contexts.,Berfenw cyffredin mewn cyd-destunau ymchwil a pholisi.
+Mynediad,1,a dweud y gwir,to be honest,idiom,,,,A dweud y gwir, dw i ddim yn siŵr.,To be honest, I’m not sure.,Set phrase as listed in Mynediad.,Ymadrodd sefydlog fel yn Mynediad.
+Mynediad,1,Abertawe,Swansea,place-name,,,,Dw i’n byw ger Abertawe.,I live near Swansea.,Simple place-name sentence for beginners.,Brawddeg enw lle syml.
+Mynediad,1,achos,because,subordinator,,,,Dw i’n aros adre achos mae hi’n bwrw glaw.,I’m staying home because it’s raining.,Very common spoken achos as a subordinator.,achos llafar cyffredin fel is-gysylltair.
+Sylfaen,2,acen,an accent,noun,ben.,acenion,,Mae ganddi acen Gymreig glir.,She has a clear Welsh accent.,Noun plus adjective in a natural descriptive sentence.,Enw ac ansoddair mewn brawddeg ddisgrifiadol.
+Sylfaen,2,aderyn,a bird,noun,gwr.,adar,,Mae aderyn yn canu yn yr ardd bob bore.,A bird sings in the garden every morning.,Singular and plural pair shown as in course list.,Pâr unigol a lluosog fel yn y rhestr.
+Sylfaen,2,achub,to save, to rescue,verb-noun,,,achub-,Mae’r criw’n ceisio achub y ci o’r dŵr.,The crew are trying to rescue the dog from the water.,Common verb-noun in a clear context.,Berfenw cyffredin mewn cyd-destun clir.
+Sylfaen,2,adloniant,entertainment,noun,gwr.,adloniannau,,Mae’r sioe’n cynnig adloniant i’r teulu cyfan.,The show offers entertainment for the whole family.,Noun in context with a common verb: cynnig.,Enw mewn cyd-destun gyda berf gyffredin: cynnig.
+Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are under the pillow.,Compound preposition used in a natural sentence.,Arddodiad cyfansawdd mewn brawddeg naturiol.
+`;
+
+    function splitCSVLine(line){
+      const out = [];
+      let cur = '';
+      let inQ = false;
+      for (let i = 0; i < line.length; i++){
+        const ch = line[i];
+        if (ch === '"'){
+          const next = line[i + 1];
+          if (inQ && next === '"'){ cur += '"'; i++; }
+          else inQ = !inQ;
+        } else if (ch === ',' && !inQ){
+          out.push(cur);
+          cur = '';
+        } else {
+          cur += ch;
+        }
+      }
+      out.push(cur);
+      return out;
+    }
+
+    function parseCSV(text){
+      const lineBreak = String.fromCharCode(10);
+      const cr = String.fromCharCode(13);
+      const linesRaw = String(text == null ? '' : text).split(lineBreak);
+      const lines = [];
+      for (const ln of linesRaw){
+        const cleaned = ln.split(cr).join('');
+        if (cleaned.trim().length) lines.push(cleaned);
+      }
+      if (!lines.length) return [];
+      const headers = splitCSVLine(lines[0]).map(s => s.trim());
+      const rows = [];
+      for (let i = 1; i < lines.length; i++){
+        const cols = splitCSVLine(lines[i]);
+        const obj = {};
+        for (let j = 0; j < headers.length; j++) obj[headers[j]] = (cols[j] == null ? '' : cols[j]).trim();
+        rows.push(obj);
+      }
+      return rows;
+    }
+
+    function normaliseCard(r){
+      return {
+        Level: r.Level || '',
+        Unit: r.Unit || '',
+        ItemCY: r.HeadwordCY || '',
+        ItemEN: r.HeadwordEN || '',
+        POS: r.POS || '',
+        Gender: r.Gender || '',
+        PluralCY: r.PluralCY || '',
+        Stem: r.Stem || '',
+        SentenceCY: r.SentenceCY || '',
+        SentenceEN: r.SentenceEN || '',
+        WhyENG: r.WhyENG || '',
+        WhyCYM: r.WhyCYM || ''
+      };
+    }
+
+    async function loadCards(){
+      let raw = null;
+      try {
+        const res = await fetch(CSV_URL, { cache: 'no-store' });
+        if (res.ok) raw = await res.text();
+      } catch (e) {
+        raw = null;
+      }
+
+      if (!raw) raw = DUMMY_CSV;
+
+      const rows = parseCSV(raw);
+      const cards = rows.map(normaliseCard).filter(c => c.ItemCY || c.ItemEN);
+      return cards;
+    }
+
+
+    /* =========================
+       Session engine
+       ========================= */
+
     const STAGES = ['INTRO','CHOICE','TYPE','BUILD'];
 
     let allCards = [];
@@ -690,13 +563,18 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
     let session = null;
     let current = null;
     let awaitingContinue = false;
-    let lastKey = '';
 
-    const POLLY_FUNCTION_URL = 'https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/';
+    let buildSelected = [];
+
     const ttsCache = new Map();
 
     async function playPollySentence(sentence){
       if (!sentence) return;
+      if (!POLLY_FUNCTION_URL){
+        setStatus(UI_LANG === 'CYM' ? 'TTS heb ei osod' : 'TTS not configured');
+        return;
+      }
+
       const cached = ttsCache.get(sentence);
       if (cached){
         const audio = new Audio(cached);
@@ -743,7 +621,7 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
     function hearCurrent(){
       if (!current) return;
       playPollySentence(current.card.SentenceCY).catch(err => {
-        statusPill.textContent = 'TTS: ' + (err && err.message ? err.message : 'error');
+        setStatus('TTS: ' + (err && err.message ? err.message : 'error'));
       });
     }
 
@@ -752,10 +630,17 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
     }
 
     function renderSelectors(){
+      if (!allCards.length){
+        levelSel.innerHTML = '<option value="ALL">All</option>';
+        unitSel.innerHTML = '<option value="ALL">All</option>';
+        return;
+      }
+
       const levels = Array.from(new Set(allCards.map(c => c.Level))).sort((a,b) => levelOrderKey(a) - levelOrderKey(b));
       const allLabel = UI_LANG === 'CYM' ? 'Pob un' : 'All';
-      let html = '<option value=ALL>' + escapeHTML(allLabel) + '</option>';
+      let html = '<option value="ALL">' + escapeHTML(allLabel) + '</option>';
       for (const l of levels) html += '<option value="' + escapeHTML(l) + '">' + escapeHTML(l) + '</option>';
+
       const prevLevel = levelSel.value;
       levelSel.innerHTML = html;
       if (prevLevel && prevLevel !== 'ALL') levelSel.value = prevLevel;
@@ -769,8 +654,10 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       const lvl = levelSel.value;
       const pool = lvl === 'ALL' ? allCards : allCards.filter(c => c.Level === lvl);
       const units = Array.from(new Set(pool.map(c => String(c.Unit)))).sort((a,b) => Number(a) - Number(b));
-      let html = '<option value=ALL>' + escapeHTML(allLabel) + '</option>';
+
+      let html = '<option value="ALL">' + escapeHTML(allLabel) + '</option>';
       for (const u of units) html += '<option value="' + escapeHTML(u) + '">' + unitWord + ' ' + escapeHTML(u) + '</option>';
+
       const prevUnit = unitSel.value;
       unitSel.innerHTML = html;
       if (prevUnit && prevUnit !== 'ALL' && units.indexOf(prevUnit) >= 0) unitSel.value = prevUnit;
@@ -784,7 +671,7 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       if (lvl !== 'ALL') chips.push(lvl);
       if (unit !== 'ALL') chips.push((UI_LANG === 'CYM' ? 'Uned ' : 'Unit ') + unit);
       if (!chips.length) chips.push(UI_LANG === 'CYM' ? 'Pob lefel ac uned' : 'All levels and units');
-      deckChips.innerHTML = chips.map(c => '<span class=chip>' + escapeHTML(c) + '</span>').join('');
+      deckChips.innerHTML = chips.map(c => '<span class="chip">' + escapeHTML(c) + '</span>').join('');
     }
 
     function applyFilters(){
@@ -795,33 +682,26 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
         if (unit !== 'ALL' && String(c.Unit) !== String(unit)) return false;
         return true;
       });
+
       renderChips();
       updateStatus();
+
       if (session) resetSession(true);
       render();
     }
 
     function updateStatus(){
       if (session) setStatus(t('statusSession', session.queue.length));
-      else setStatus(t('statusLoaded', filtered.length));
+      else if (filtered.length) setStatus(t('statusLoaded', filtered.length));
+      else setStatus(t('statusReady'));
     }
 
     function resetSession(silent){
       session = null;
       current = null;
       awaitingContinue = false;
-      lastKey = '';
+      buildSelected = [];
       if (!silent) updateStatus();
-    }
-
-    function pickDistractor(card){
-      if (filtered.length <= 1) return card;
-      let d = card;
-      for (let i = 0; i < 30; i++){
-        const x = filtered[Math.floor(Math.random() * filtered.length)];
-        if (x !== card) { d = x; break; }
-      }
-      return d;
     }
 
     function sessionSelectCards(){
@@ -848,6 +728,7 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
         introduced: 0,
         turn: 0
       };
+
       awaitingContinue = false;
       nextDue();
     }
@@ -881,10 +762,14 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       tickQueue();
       const q = pickDue();
       const stage = STAGES[q.stageIndex] || 'BUILD';
+
       current = { q: q, card: q.card, stage: stage };
       awaitingContinue = false;
+      buildSelected = [];
+
       session.turn++;
       if (stage === 'INTRO') session.introduced++;
+
       render();
     }
 
@@ -901,14 +786,48 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       }
     }
 
+    function advanceFromIntro(){
+      // Intro is ungated. Move the card forward, but do not count as checked.
+      current.q.stageIndex = Math.min(current.q.stageIndex + 1, STAGES.length - 1);
+      current.q.dueIn = 1;
+    }
+
+    function pickDistractor(card){
+      if (filtered.length <= 1) return card;
+      let d = card;
+      for (let i = 0; i < 30; i++){
+        const x = filtered[Math.floor(Math.random() * filtered.length)];
+        if (x !== card){ d = x; break; }
+      }
+      return d;
+    }
+
+    function frontBack(card){
+      const dir = session ? session.direction : directionSel.value;
+      if (dir === 'EN2CY') return { front: card.ItemEN, back: card.ItemCY };
+      return { front: card.ItemCY, back: card.ItemEN };
+    }
+
+    function expectedAnswer(card){
+      const dir = session.direction;
+      return dir === 'EN2CY' ? card.ItemCY : card.ItemEN;
+    }
+
+
+    /* =========================
+       UI rendering
+       ========================= */
+
     function clearUI(){
       metaLine.hidden = true;
       sentenceBox.hidden = true;
       hint.hidden = true;
       taskHint.hidden = true;
+
       typeRow.hidden = true;
       choiceRow.hidden = true;
       buildRow.hidden = true;
+
       feedback.hidden = true;
     }
 
@@ -929,21 +848,301 @@ Canolradd,3,o dan,under,prep,,,,Mae’r allweddi o dan y gobennydd.,The keys are
       return pills;
     }
 
-    function frontBack(card){
-      const dir = session ? session.direction : directionSel.value;
-      if (dir === 'EN2CY') return { front: card.ItemEN, back: card.ItemCY };
-      return { front: card.ItemCY, back: card.ItemEN };
-    }
+    function setProgress(){
+      if (!session){
+        progressText.textContent = '–';
+        barFill.style.width = '0%';
+        return;
+      }
 
-    function expectedAnswer(card){
-      const dir = session.direction;
-      return dir === 'EN2CY' ? card.ItemCY : card.ItemEN;
+      const due = session.queue.filter(q => q.dueIn === 0).length;
+      progressText.textContent = t('progressText', session.checked, session.introduced, due);
+
+      const pct = session.queue.length ? Math.min(100, Math.round((session.checked / session.queue.length) * 100)) : 0;
+      barFill.style.width = pct + '%';
     }
 
     function render(){
+      clearUI();
+
       if (!session || !current){
-        clearUI();
         modeLabel.textContent = '–';
-        deckLabel.textContent = UI_LANG === 'CYM' ? 'Dewisa hidlwyr ac yna dechrau' : 'Choose filters and start';
+        deckLabel.textContent = t('chooseFilters');
         badge.textContent = '–';
-        prompt.innerHTML = UI_LANG === 'CYM' ? '<span class=big>Dewisa lefel ac uned, yna dechrau sesiwn.</span>' : '<span class=big>Pic
+
+        prompt.innerHTML = '<span class="big">' + escapeHTML(t('chooseFilters')) + '</span>';
+
+        nextBtn.disabled = true;
+        setProgress();
+        return;
+      }
+
+      nextBtn.disabled = false;
+
+      const card = current.card;
+      const stage = current.stage;
+      const fb = frontBack(card);
+      const ans = expectedAnswer(card);
+      const ansShown = ans || '';
+
+      modeLabel.textContent = stageName(stage);
+      deckLabel.textContent = card.Level ? card.Level : '–';
+
+      const lvl = levelSel.value === 'ALL' ? card.Level : levelSel.value;
+      const unit = unitSel.value === 'ALL' ? card.Unit : unitSel.value;
+      badge.textContent = (lvl && unit) ? t('badgeLevelUnit', lvl, unit) : '–';
+
+      setProgress();
+
+      // Meta pills (always useful on intro; optional otherwise)
+      const pills = cardMetaPills(card);
+      if (pills.length && stage === 'INTRO'){
+        metaLine.hidden = false;
+        metaLine.innerHTML = pills.map(p => '<span class="metaPill">' + escapeHTML(p) + '</span>').join('');
+      }
+
+      if (stage === 'INTRO'){
+        prompt.innerHTML = t('promptIntro', fb.front, fb.back);
+
+        sentenceBox.hidden = false;
+        cySentence.textContent = card.SentenceCY || '–';
+        enSentence.textContent = card.SentenceEN || '–';
+
+        const why = UI_LANG === 'CYM' ? card.WhyCYM : card.WhyENG;
+        if (why){
+          hint.hidden = false;
+          hint.textContent = why;
+        }
+
+        taskHint.hidden = false;
+        taskHint.textContent = UI_LANG === 'CYM' ? 'Pwysa Enter i barhau.' : 'Press Enter to continue.';
+
+        // Optional: allow audio here too
+        typeRow.hidden = false;
+        answerInput.value = '';
+        answerInput.hidden = true;
+        checkBtn.hidden = true;
+        revealBtn.hidden = true;
+        hearBtn.hidden = false;
+
+        return;
+      }
+
+      if (stage === 'CHOICE'){
+        prompt.innerHTML = t('promptChoice', fb.front);
+
+        choiceRow.hidden = false;
+
+        const d = pickDistractor(card);
+        const dAns = expectedAnswer(d);
+
+        const opts = [ansShown, dAns];
+        shuffle(opts);
+
+        choice1.textContent = opts[0] || '–';
+        choice2.textContent = opts[1] || '–';
+
+        choice1.dataset.value = opts[0] || '';
+        choice2.dataset.value = opts[1] || '';
+
+        taskHint.hidden = false;
+        taskHint.textContent = UI_LANG === 'CYM' ? 'Pwysa 1 neu 2 i ddewis.' : 'Press 1 or 2 to choose.';
+
+        return;
+      }
+
+      if (stage === 'TYPE'){
+        prompt.innerHTML = t('promptType', fb.front);
+
+        typeRow.hidden = false;
+        answerInput.hidden = false;
+        checkBtn.hidden = false;
+        revealBtn.hidden = false;
+        hearBtn.hidden = false;
+
+        answerInput.value = '';
+        answerInput.focus({ preventScroll: true });
+
+        taskHint.hidden = false;
+        taskHint.textContent = t('hintType');
+
+        return;
+      }
+
+      // BUILD
+      prompt.innerHTML = t('promptBuild', fb.front);
+
+      buildRow.hidden = false;
+      buildTitle.textContent = UI_LANG === 'CYM' ? 'Adeilada’r ateb gan ddefnyddio’r docynnau:' : 'Build the answer using the tokens:';
+
+      taskHint.hidden = false;
+      taskHint.textContent = t('hintBuild');
+
+      const baseTokens = ansShown.split(' ').filter(Boolean);
+      const d = pickDistractor(card);
+      const dAns = expectedAnswer(d);
+      const extra = String(dAns || '').split(' ').filter(Boolean);
+
+      const bank = baseTokens.concat(extra).filter(Boolean);
+      shuffle(bank);
+
+      renderBuildLine();
+
+      tokenBank.innerHTML = '';
+      for (const w of bank){
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'token';
+        b.textContent = w;
+        b.addEventListener('click', () => {
+          buildSelected.push(w);
+          renderBuildLine();
+        });
+        tokenBank.appendChild(b);
+      }
+    }
+
+    function renderBuildLine(){
+      buildLine.innerHTML = '';
+
+      if (!buildSelected.length){
+        const s = document.createElement('span');
+        s.className = 'buildSlot';
+        s.textContent = UI_LANG === 'CYM' ? 'Dim eto' : 'Nothing yet';
+        buildLine.appendChild(s);
+        return;
+      }
+
+      for (const w of buildSelected){
+        const chip = document.createElement('span');
+        chip.className = 'token';
+        chip.textContent = w;
+        chip.setAttribute('aria-hidden', 'true');
+        buildLine.appendChild(chip);
+      }
+    }
+
+
+    /* =========================
+       Actions
+       ========================= */
+
+    function continueOrNext(){
+      if (!session || !current) return;
+
+      if (current.stage === 'INTRO'){
+        advanceFromIntro();
+        nextDue();
+        return;
+      }
+
+      if (awaitingContinue){
+        awaitingContinue = false;
+        nextDue();
+        return;
+      }
+
+      // If user presses Next without answering, treat as reveal/incorrect
+      const ans = expectedAnswer(current.card);
+      pushSpacing(false);
+      showFeedback(false, t('feedbackReveal', ans));
+      awaitingContinue = true;
+    }
+
+    function finishAttempt(correct, revealed){
+      const ans = expectedAnswer(current.card);
+
+      if (revealed){
+        pushSpacing(false);
+        showFeedback(false, t('feedbackReveal', ans));
+        awaitingContinue = true;
+        return;
+      }
+
+      pushSpacing(correct);
+      showFeedback(correct, correct ? '' : t('feedbackReveal', ans));
+      awaitingContinue = true;
+    }
+
+    function checkTyped(){
+      if (!session || !current) return;
+      const ans = expectedAnswer(current.card);
+      const ok = normAnswer(answerInput.value) === normAnswer(ans);
+      finishAttempt(ok, false);
+    }
+
+    function checkChoice(value){
+      if (!session || !current) return;
+      const ans = expectedAnswer(current.card);
+      const ok = normAnswer(value) === normAnswer(ans);
+      finishAttempt(ok, false);
+    }
+
+    function checkBuild(){
+      if (!session || !current) return;
+      const ans = expectedAnswer(current.card);
+      const built = buildSelected.join(' ');
+      const ok = normAnswer(built) === normAnswer(ans);
+      finishAttempt(ok, false);
+    }
+
+    function clearBuild(){
+      buildSelected = [];
+      renderBuildLine();
+    }
+
+
+    /* =========================
+       Events
+       ========================= */
+
+    langToggle.addEventListener('click', () => {
+      UI_LANG = UI_LANG === 'ENG' ? 'CYM' : 'ENG';
+      applyI18n();
+    });
+
+    helpBtn.addEventListener('click', () => {
+      const open = !helpPanel.hidden;
+      helpPanel.hidden = open;
+      helpBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+
+    levelSel.addEventListener('change', () => {
+      renderUnitOptions();
+      applyFilters();
+    });
+
+    unitSel.addEventListener('change', applyFilters);
+
+    directionSel.addEventListener('change', () => {
+      if (session) resetSession(false);
+      render();
+    });
+
+    sizeSel.addEventListener('change', () => {
+      if (session) resetSession(false);
+      render();
+    });
+
+    startBtn.addEventListener('click', () => {
+      startSession();
+      updateStatus();
+    });
+
+    shuffleBtn.addEventListener('click', () => {
+      if (!filtered.length) return;
+      shuffle(filtered);
+      setStatus(UI_LANG === 'CYM' ? 'Wedi cymysgu' : 'Shuffled');
+      if (session) resetSession(true);
+      render();
+    });
+
+    resetBtn.addEventListener('click', () => {
+      resetSession(false);
+      render();
+    });
+
+    nextBtn.addEventListener('click', continueOrNext);
+
+    hearBtn.addEventListener('click', hearCurrent);
+    hearBtn2.addEventLis
