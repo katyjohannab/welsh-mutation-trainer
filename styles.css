@@ -724,3 +724,11 @@ body{
 
 .decoration-indigo-400{ text-decoration-color: rgba(4,120,87,0.55) !important; }
 
+
+.navlink[aria-current="page"]{
+  border-color: rgba(5,150,105,0.35);
+  background: rgba(5,150,105,0.08);
+  color: var(--emerald-ink);
+}
+
+
