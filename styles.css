@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
   
-</head>
+
 
 /* ---------- Base / fonts ---------- */
 html{
@@ -38,6 +38,18 @@ body{
   font-weight:400;
   font-style:normal;
   font-variation-settings:"wdth" 100;
+}
+
+/*----NavBar------*/
+.site-header{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* shadow when scrolled */
+.site-header.is-scrolled{
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.10);
 }
 
 /* ---------- Theme tokens ---------- */
