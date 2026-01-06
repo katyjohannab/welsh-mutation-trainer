@@ -1,93 +1,129 @@
-/* navbar.js - inject navbar.html + wire language toggle + optional active-state */
+(async function () {
+  const mount = document.getElementById("navbarMount");
+  if (!mount) return;
 
-(function () {
-  const NAV_CANDIDATES = [
+  // ----- Load navbar.html -----
+  const candidates = [
     "./navbar.html",
-    "https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html"
+    "https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html",
   ];
 
-  const $ = (sel, root = document) => root.querySelector(sel);
-
-  function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-  function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
-
-  function getLang() {
-    const v = loadLS("wm_lang", "en");
-    return (v === "cy" || v === "en") ? v : "en";
+  let html = null;
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { cache: "no-cache" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      html = await res.text();
+      break;
+    } catch (e) {}
   }
 
-  function setLang(next) {
-    saveLS("wm_lang", next);
+  if (!html) {
+    console.warn("[Navbar] Could not load navbar.html");
+    return;
+  }
+
+  mount.innerHTML = html;
+
+  // ----- LocalStorage language: robust (handles JSON or raw) -----
+  function wmGetLang() {
+    const raw = localStorage.getItem("wm_lang");
+    if (!raw) return "en";
+    try {
+      const v = JSON.parse(raw);
+      return (v === "cy" || v === "en") ? v : "en";
+    } catch {
+      return (raw === "cy" || raw === "en") ? raw : "en";
+    }
+  }
+
+  function wmSetLang(next) {
+    localStorage.setItem("wm_lang", JSON.stringify(next));
     document.documentElement.setAttribute("lang", next === "cy" ? "cy" : "en");
   }
 
-  function applyLangToPage() {
-    const lang = getLang();
+  function wmApplyLangToPage() {
+    const lang = wmGetLang();
     document.documentElement.setAttribute("lang", lang === "cy" ? "cy" : "en");
-
-    // Page-level bilingual blocks (your home.html etc.)
-    document.querySelectorAll("[data-lang]").forEach(el => {
+    document.querySelectorAll("[data-lang]").forEach((el) => {
       el.hidden = (el.getAttribute("data-lang") !== lang);
     });
-
-    // Toggle button UI MUST match index.html style
-    const langBtn = $("#btnLangToggle");
-    if (langBtn) {
-      const nextLabel = (lang === "en") ? "CY" : "EN";
-      langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLabel}</span>`;
-      langBtn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
-      langBtn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
-    }
-
-    // If a page provides a hook to update labels, call it.
-    // Example: window.onLangChange = (lang) => { ... }
-    if (typeof window.onLangChange === "function") {
-      try { window.onLangChange(lang); } catch (e) {}
-    }
   }
 
-  function wireToggle() {
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest && e.target.closest("#btnLangToggle");
-      if (!btn) return;
-      const next = (getLang() === "en") ? "cy" : "en";
-      setLang(next);
-      applyLangToPage();
+  function wmSyncLangToggleUI() {
+    const btn = document.getElementById("btnLangToggle");
+    if (!btn) return;
+    const lang = wmGetLang();
+    const next = (lang === "en") ? "CY" : "EN";
+    btn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${next}</span>`;
+    btn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
+    btn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
+  }
+
+  function wmBindLangToggle() {
+    const btn = document.getElementById("btnLangToggle");
+    if (!btn) return;
+    if (btn.dataset.wmBound === "1") return;
+    btn.dataset.wmBound = "1";
+
+    btn.addEventListener("click", () => {
+      const next = (wmGetLang() === "en") ? "cy" : "en";
+      wmSetLang(next);
+      wmApplyLangToPage();
+      wmSyncLangToggleUI();
     });
   }
 
-  function highlightCurrent() {
-    // Optional: set a subtle “current page” cue using data-current on <body>
-    // e.g. <body data-current="home"> or "learn" / "practice" / "vocab"
-    const cur = document.body?.getAttribute("data-current") || "";
-    const map = {
-      home: null,
-      learn: "#btnLearn",
-      practice: "#btnPractice",
-      vocab: "#btnStats"
-    };
-    const sel = map[cur];
-    if (!sel) return;
-    const el = $(sel);
-    if (!el) return;
+  // ----- Active nav highlighting (based on body[data-current]) -----
+  function wmApplyActiveNav() {
+    const current = document.body?.dataset?.current || "";
+    const items = Array.from(document.querySelectorAll("[data-nav]"));
 
-    // Don’t fight your CSS. Just add a tiny class you can style if you want.
-    el.classList.add("is-current");
-  }
+    items.forEach((el) => {
+      el.classList.remove("btn-primary");
+      el.classList.add("btn-ghost");
+      el.removeAttribute("aria-current");
+    });
 
-  async function fetchFirstOk(urls) {
-    for (const url of urls) {
-      try {
-        const res = await fetch(url, { cache: "no-cache" });
-        if (!res.ok) throw new Error(String(res.status));
-        return await res.text();
-      } catch (e) {}
+    if (!current) return;
+
+    const active = document.querySelector(`[data-nav="${CSS.escape(current)}"]`);
+    if (active) {
+      active.classList.remove("btn-ghost");
+      active.classList.add("btn-primary");
+      active.setAttribute("aria-current", "page");
     }
-    return null;
   }
 
-  async function mountNavbar() {
-    const mount = $("#navbarMount");
-    if (!mount) return false;
+  // ----- Dropdown niceties: close on outside click / Escape -----
+  function wmInitDropdownClose() {
+    document.addEventListener("click", (e) => {
+      document.querySelectorAll("details.nav-dd[open]").forEach((d) => {
+        if (!d.contains(e.target)) d.removeAttribute("open");
+      });
+    });
 
-    const html = await fetchF
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape") return;
+      document.querySelectorAll("details.nav-dd[open]").forEach((d) => d.removeAttribute("open"));
+    });
+  }
+
+  // ----- Optional sticky shadow (matches your earlier pattern) -----
+  function wmInitStickyShadow() {
+    const h = document.getElementById("siteHeader");
+    if (!h) return;
+    const set = () => h.classList.toggle("is-scrolled", window.scrollY > 8);
+    window.addEventListener("scroll", set, { passive: true });
+    set();
+  }
+
+  // ----- Boot -----
+  wmApplyLangToPage();
+  wmSyncLangToggleUI();
+  wmBindLangToggle();
+  wmApplyActiveNav();
+  wmInitDropdownClose();
+  wmInitStickyShadow();
+})();
+
