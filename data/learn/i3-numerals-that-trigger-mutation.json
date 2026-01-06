@@ -589,12 +589,12 @@
           "type": "actions",
           "prompt": { "en": "Go practise (pick one):", "cy": "Mynd i ymarfer (dewis un):" },
           "buttons": [
-            { "label": { "en": "Practice mode", "cy": "Modd ymarfer" }, "href": "./index.html", "kind": "primary" },
-            { "label": { "en": "Soft mutation refresher", "cy": "Atgoffa TM" }, "href": "./learn.html", "kind": "ghost" },
-            { "label": { "en": "Aspirate mutation refresher", "cy": "Atgoffa TL" }, "href": "./learn.html", "kind": "ghost" }
+            { "label": { "en": "Practice numerals here, "cy": "Ymarfer rhifau yma" }, "href": "./index.html?preset=numerals", "kind": "primary" },
           ]
         }
       ]
     }
   ]
 }
+
+
