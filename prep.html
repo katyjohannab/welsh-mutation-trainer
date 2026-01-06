@@ -3,392 +3,305 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Which preposition? / Pa arddodiad?</title>
+  <title>Preposition trainer • Hyffordwr Treiglad</title>
+
+  <!-- Tailwind is required because navbar.html uses Tailwind utility classes -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Your shared site styles -->
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Page-specific styles ONLY (scoped to .prepApp) -->
   <style>
-    :root {
-      --bg: #0b1220;
-      --card: rgba(255,255,255,0.06);
-      --card2: rgba(255,255,255,0.10);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --muted2: rgba(255,255,255,0.55);
-      --accent: #7dd3fc;
-      --good: #34d399;
-      --bad: #fb7185;
-      --warn: #fbbf24;
-      --border: rgba(255,255,255,0.12);
-      --shadow: 0 10px 30px rgba(0,0,0,0.45);
-      --radius: 18px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      background: radial-gradient(1200px 800px at 20% -10%, rgba(125,211,252,0.18), transparent 60%),
-                  radial-gradient(900px 650px at 90% 0%, rgba(52,211,153,0.12), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      padding: 18px;
-    }
-    .wrap {
-      max-width: 980px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .title {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .title h1 {
-      font-size: 18px;
-      margin: 0;
-      letter-spacing: 0.2px;
-    }
-    .title p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--muted);
-    }
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .btn {
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 14px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 13px;
-      transition: transform 0.06s ease, background 0.15s ease, border-color 0.15s ease;
-      user-select: none;
-    }
-    .btn:hover { border-color: rgba(255,255,255,0.22); }
-    .btn:active { transform: translateY(1px); }
-    .btn.primary {
-      border-color: rgba(125,211,252,0.35);
-      background: linear-gradient(180deg, rgba(125,211,252,0.18), rgba(255,255,255,0.04));
-    }
-    .btn.good {
-      border-color: rgba(52,211,153,0.35);
-      background: linear-gradient(180deg, rgba(52,211,153,0.18), rgba(255,255,255,0.04));
-    }
-    .btn.bad {
-      border-color: rgba(251,113,133,0.40);
-      background: linear-gradient(180deg, rgba(251,113,133,0.18), rgba(255,255,255,0.04));
-    }
-    .btn.ghost {
-      background: transparent;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.05);
-      font-size: 12px;
-      color: var(--muted);
-      white-space: nowrap;
+    .prepApp .page-title{
+      letter-spacing: -0.02em;
+      line-height: 1.05;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 14px;
-    }
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 14px 16px;
-    }
-
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-    @media (max-width: 520px) {
-      .filters { grid-template-columns: 1fr; }
-    }
-    label {
-      display: block;
-      font-size: 12px;
+    .prepApp label{
+      display:block;
+      font-size: 0.78rem;
+      font-weight: 650;
       color: var(--muted);
-      margin-bottom: 6px;
+      margin-bottom: 0.35rem;
     }
-    select {
+
+    .prepApp select{
       width: 100%;
-      padding: 10px 12px;
-      border-radius: 14px;
+      padding: 0.62rem 0.75rem;
+      border-radius: 1rem;
       border: 1px solid var(--border);
-      background: rgba(10, 16, 30, 0.55);
-      color: var(--text);
+      background: rgba(255,255,255,0.88);
+      color: rgba(15,23,42,0.92);
+      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
       outline: none;
     }
+    .prepApp select:focus-visible{
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
 
-    .question {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .prepApp .sentenceBox{
+      padding: 1rem;
+      border-radius: 1.1rem;
+      border: 1px dashed rgba(15,23,42,0.16);
+      background: rgba(255,255,255,0.55);
+      font-size: clamp(1.05rem, 2.2vw, 1.28rem);
+      line-height: 1.55;
     }
-    .qmeta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .qmeta .left {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .sentence {
-      padding: 14px 14px;
-      border: 1px dashed rgba(255,255,255,0.18);
-      border-radius: 16px;
-      background: rgba(255,255,255,0.04);
-      font-size: 18px;
-      line-height: 1.35;
-    }
-    .gap {
+
+    .prepApp .gap{
       display: inline-flex;
-      min-width: 92px;
-      padding: 2px 8px;
-      margin: 0 2px;
-      border-radius: 10px;
-      border: 1px solid rgba(125,211,252,0.35);
-      background: rgba(125,211,252,0.10);
-      color: var(--text);
-      font-weight: 800;
+      align-items: center;
       justify-content: center;
+      min-width: 4.25rem;
+      padding: 0.10rem 0.55rem;
+      margin: 0 0.2rem;
+      border-radius: 0.85rem;
+      border: 1px solid rgba(217,119,6,0.45);
+      background: rgba(217,119,6,0.12);
+      color: var(--emerald-ink);
+      font-weight: 850;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
-    .choices {
+    .prepApp .choiceGrid{
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      gap: 0.65rem;
     }
-    @media (max-width: 680px) {
-      .choices { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 640px){
+      .prepApp .choiceGrid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
-    .hint {
-      font-size: 13px;
+    .prepApp .choiceBtn{
+      width: 100%;
+      justify-content: center;
+    }
+    .prepApp .choiceBtn.is-good{
+      background: rgba(4,120,87,0.10);
+      border-color: rgba(4,120,87,0.32);
+      color: var(--emerald-ink);
+      box-shadow: none;
+    }
+    .prepApp .choiceBtn.is-bad{
+      background: rgba(185,28,28,0.06);
+      border-color: rgba(185,28,28,0.26);
+      color: var(--cymru-red-ink);
+      box-shadow: none;
+    }
+    .prepApp .choiceBtn:disabled{
+      opacity: 0.92;
+      cursor: not-allowed;
+    }
+
+    .prepApp .hintBox{
+      border-left: 4px solid rgba(217,119,6,0.55);
+      padding-left: 0.75rem;
       color: var(--muted);
-      border-left: 3px solid rgba(251,191,36,0.55);
-      padding-left: 10px;
-      margin: 0;
-      display: none;
+      font-size: 0.95rem;
+      line-height: 1.45;
     }
 
-    .feedback {
-      padding: 12px 12px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      display: none;
-    }
-    .feedback .headline {
-      font-weight: 900;
-      margin-bottom: 6px;
+    .prepApp .fb-head{
+      font-weight: 850;
+      letter-spacing: -0.01em;
       display: flex;
+      gap: 0.5rem;
       align-items: center;
-      gap: 8px;
     }
-    .feedback.good .headline { color: var(--good); }
-    .feedback.bad .headline { color: var(--bad); }
-    .feedback p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
-    .feedback .rule { color: var(--muted2); }
-
-    .rightcol {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .prepApp .fb-good{ border-color: rgba(4,120,87,0.22); }
+    .prepApp .fb-bad{
+      background: rgba(185,28,28,0.035);
+      border-color: rgba(185,28,28,0.20);
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-    }
-    .stat {
-      background: rgba(255,255,255,0.04);
+    .prepApp .statCard{
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 12px 12px;
+      background: rgba(255,255,255,0.70);
+      border-radius: 1rem;
+      padding: 0.85rem 0.85rem;
+      box-shadow: 0 1px 0 rgba(2,6,23,0.02);
     }
-    .stat .k { font-size: 12px; color: var(--muted); }
-    .stat .v { font-size: 22px; font-weight: 900; margin-top: 2px; }
-
-    .small {
-      font-size: 12px;
-      color: var(--muted2);
-      line-height: 1.35;
-    }
-
-    .divider {
-      height: 1px;
-      background: rgba(255,255,255,0.10);
-      margin: 10px 0;
-    }
-
-    .kbd {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 12px;
-      padding: 2px 6px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(0,0,0,0.18);
+    .prepApp .statK{
+      font-size: 0.78rem;
+      font-weight: 650;
       color: var(--muted);
-      white-space: nowrap;
+    }
+    .prepApp .statV{
+      margin-top: 0.15rem;
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: rgba(15,23,42,0.92);
+    }
+
+    /* Keep right column usable on large screens (keyboard + trackpad scrolling) */
+    @media (min-width: 1024px){
+      .prepApp .sideSticky{
+        position: sticky;
+        top: 6.25rem; /* below sticky site header */
+      }
+      .prepApp .sideSticky .scrollBox{
+        max-height: calc(100vh - 8.25rem);
+        overflow: auto;
+        overscroll-behavior: contain;
+      }
+      .prepApp .sideSticky .scrollBox::-webkit-scrollbar{ width: 10px; }
+      .prepApp .sideSticky .scrollBox::-webkit-scrollbar-thumb{
+        background: rgba(15,23,42,0.12);
+        border-radius: 999px;
+        border: 3px solid rgba(255,255,255,0.70);
+      }
     }
   </style>
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="title">
-        <h1 id="appTitle">Which preposition? / Pa arddodiad?</h1>
-        <p id="appSubtitle">Prototype • Step 1: pick the preposition • Step 2 (optional): pick the pronoun form</p>
-      </div>
-      <div class="controls">
-        <span class="pill" id="modePill">Mode: <strong id="modeLabel">Prep</strong></span>
-        <button class="btn ghost" id="toggleLang" title="Toggle language">
-          EN ↔ CY
-        </button>
-        <button class="btn primary" id="newQuestion">New question</button>
-      </div>
+
+<body data-current="practice">
+  <!-- Shared navbar mount -->
+  <div id="navbarMount"></div>
+
+  <main class="prepApp max-w-6xl mx-auto px-4 py-8">
+    <header class="mb-6">
+      <h2 class="bbh-bogle-regular page-title text-3xl md:text-4xl lg:text-5xl">
+        <span class="title-hy">Preposition</span><span class="title-trei">Trainer</span>
+      </h2>
+      <p class="subtle mt-2 max-w-3xl" id="appSubtitle">
+        Pick the correct preposition. If a pronoun form is required, you’ll do a second step.
+      </p>
     </header>
 
-    <div class="grid">
-      <section class="card">
-        <div class="filters">
-          <div>
-            <label id="lblLevel" for="fLevel">Level</label>
-            <select id="fLevel"></select>
-          </div>
-          <div>
-            <label id="lblMode" for="fMode">Mode</label>
-            <select id="fMode"></select>
-          </div>
-          <div>
-            <label id="lblTopic" for="fTopic">Topic</label>
-            <select id="fTopic"></select>
-          </div>
-          <div>
-            <label id="lblContrast" for="fContrast">Contrast set</label>
-            <select id="fContrast"></select>
-          </div>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="question">
-          <div class="qmeta">
-            <div class="left">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-start">
+      <!-- Main practice panel -->
+      <section class="panel rounded-2xl p-5 lg:col-span-2">
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
               <span class="pill" id="pillLevel">Level: —</span>
               <span class="pill" id="pillTopic">Topic: —</span>
               <span class="pill" id="pillContrast">Set: —</span>
             </div>
-            <div class="left">
-              <button class="btn" id="btnHint">Hint</button>
-              <button class="btn" id="btnReveal">Reveal</button>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button class="btn btn-ghost" id="btnHint" type="button">Hint</button>
+              <button class="btn btn-ghost" id="btnReveal" type="button">Reveal</button>
+              <button class="btn btn-primary" id="newQuestion" type="button">New question</button>
             </div>
           </div>
 
-          <div class="sentence" id="sentence"></div>
-          <p class="hint" id="hint"></p>
-
-          <div>
-            <div class="pill" id="stepPill">Step 1 of 2</div>
+          <div class="flex items-center justify-between gap-3 flex-wrap">
+            <span class="pill" id="stepPill">Step —</span>
+            <span class="pill">Mode: <strong id="modeLabel">—</strong></span>
           </div>
 
-          <div class="choices" id="choices"></div>
+          <div class="sentenceBox" id="sentence" aria-live="polite"></div>
 
-          <div class="feedback" id="feedback">
-            <div class="headline" id="fbHeadline">—</div>
-            <div id="fbBody"></div>
+          <p class="hintBox" id="hint" hidden></p>
+
+          <div class="choiceGrid" id="choices" aria-label="Choices"></div>
+
+          <div class="feedback-box" id="feedback" hidden role="status" aria-live="polite">
+            <div class="fb-head" id="fbHeadline">—</div>
+            <div id="fbBody" class="mt-2"></div>
           </div>
         </div>
       </section>
 
-      <aside class="rightcol">
-        <section class="card">
-          <div class="stats">
-            <div class="stat">
-              <div class="k" id="kScore">Score</div>
-              <div class="v" id="vScore">0</div>
-            </div>
-            <div class="stat">
-              <div class="k" id="kStreak">Streak</div>
-              <div class="v" id="vStreak">0</div>
-            </div>
-            <div class="stat">
-              <div class="k" id="kDone">Done</div>
-              <div class="v" id="vDone">0</div>
-            </div>
-          </div>
+      <!-- Right column -->
+      <aside class="sideSticky">
+        <div class="scrollBox flex flex-col gap-5">
+          <section class="panel rounded-2xl p-5">
+            <h3 class="font-semibold" id="filtersTitle">Filters</h3>
 
-          <div class="divider"></div>
-          <div class="small" id="helpText">
-            <div><span class="kbd">Hint</span> shows a nudge (doesn’t affect score).</div>
-            <div><span class="kbd">Reveal</span> shows the answer and explanation.</div>
-            <div style="margin-top:8px;">Tip: use filters to drill one contrast set (e.g. <span class="kbd">at vs i</span>).</div>
-          </div>
-        </section>
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              <div>
+                <label id="lblLevel" for="fLevel">Level</label>
+                <select id="fLevel"></select>
+              </div>
 
-        <section class="card">
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-            <strong id="bankTitle">Test data</strong>
-            <button class="btn" id="reset">Reset</button>
-          </div>
-          <p class="small" id="bankInfo">
-            This is a minimal test bank (a handful of contexts) — you’ll grow it into a big CSV later.
-          </p>
-          <div class="divider"></div>
-          <div class="small" id="debug"></div>
-        </section>
+              <div>
+                <label id="lblMode" for="fMode">Mode</label>
+                <select id="fMode"></select>
+              </div>
+
+              <div>
+                <label id="lblTopic" for="fTopic">Topic</label>
+                <select id="fTopic"></select>
+              </div>
+
+              <div>
+                <label id="lblContrast" for="fContrast">Contrast set</label>
+                <select id="fContrast"></select>
+              </div>
+            </div>
+
+            <div class="mt-4 flex items-center justify-between gap-3">
+              <button class="btn btn-ghost" id="reset" type="button">Reset</button>
+              <span class="subtle text-xs">Keys: <span class="kbd">1</span>–<span class="kbd">4</span></span>
+            </div>
+
+            <div class="mt-4 subtle text-sm" id="helpText">
+              <div><span class="kbd">Hint</span> shows a nudge (doesn’t affect score).</div>
+              <div><span class="kbd">Reveal</span> shows the answer and explanation.</div>
+              <div class="mt-2">Tip: drill one contrast set (e.g. <span class="kbd">AT vs I</span>).</div>
+            </div>
+          </section>
+
+          <section class="panel rounded-2xl p-5">
+            <h3 class="font-semibold mb-4">Session</h3>
+
+            <div class="grid grid-cols-3 gap-3">
+              <div class="statCard">
+                <div class="statK" id="kScore">Score</div>
+                <div class="statV" id="vScore">0</div>
+              </div>
+              <div class="statCard">
+                <div class="statK" id="kStreak">Streak</div>
+                <div class="statV" id="vStreak">0</div>
+              </div>
+              <div class="statCard">
+                <div class="statK" id="kDone">Done</div>
+                <div class="statV" id="vDone">0</div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="subtle text-xs mono" id="debug"></div>
+            </div>
+          </section>
+        </div>
       </aside>
     </div>
-  </div>
+  </main>
+
+  <!-- Shared navbar loader -->
+  <script src="./navbar.js"></script>
 
   <script>
     /*********************
-     * Test data (what your CSV will become)
-     *
-     * We’re using BEFORE + AFTER fields for the gap.
-     * Each item is a context sentence (you’ll have many items per preposition).
+     * Global language sync (matches navbar.js storage format)
      *********************/
+    function wmGetLang() {
+      const raw = localStorage.getItem("wm_lang");
+      if (!raw) return "en";
+      try {
+        const v = JSON.parse(raw);
+        return (v === "cy" || v === "en") ? v : "en";
+      } catch {
+        return (raw === "cy" || raw === "en") ? raw : "en";
+      }
+    }
 
+    function wmSetLang(next) {
+      const v = (next === "cy") ? "cy" : "en";
+      localStorage.setItem("wm_lang", JSON.stringify(v));
+      document.documentElement.setAttribute("lang", v);
+    }
+
+    /*********************
+     * Test data (what your CSV will become)
+     *********************/
     const ITEMS = [
       {
         item_id: "Q0001",
@@ -411,9 +324,7 @@
         rule: {
           en: "<strong>at</strong> is common for ‘to (a person)’; <strong>i</strong> is common for ‘to/into (a place)’.",
           cy: "Mae <strong>at</strong> yn gyffredin am ‘at berson’; mae <strong>i</strong> yn gyffredin am ‘i / i mewn i le’."
-        },
-        register: "neutral",
-        dialect: "Both"
+        }
       },
       {
         item_id: "Q0002",
@@ -433,12 +344,7 @@
           en: "Here the destination is a place you go/send <em>into</em> — <strong>i</strong>.",
           cy: "Yma lle yw’r gyrchfan (mynd/danfon <em>i mewn</em>) — <strong>i</strong>."
         },
-        rule: {
-          en: "Place/destination → often <strong>i</strong>.",
-          cy: "Lle/cyrchfan → yn aml <strong>i</strong>."
-        },
-        register: "neutral",
-        dialect: "Both"
+        rule: { en: "Place/destination → often <strong>i</strong>.", cy: "Lle/cyrchfan → yn aml <strong>i</strong>." }
       },
       {
         item_id: "Q0003",
@@ -454,16 +360,8 @@
         pronoun_key: "",
         answer_form: { en: "", cy: "" },
         hint: { en: "You’re going to a person/appointment.", cy: "Rwyt ti’n mynd at berson/apwyntiad." },
-        why: {
-          en: "With professions/people as the target, <strong>at</strong> is very common.",
-          cy: "Gyda pherson (neu broffesiwn) fel targed, mae <strong>at</strong> yn gyffredin iawn."
-        },
-        rule: {
-          en: "To a person → often <strong>at</strong>.",
-          cy: "At berson → yn aml <strong>at</strong>."
-        },
-        register: "neutral",
-        dialect: "S"
+        why: { en: "With professions/people as the target, <strong>at</strong> is very common.", cy: "Gyda pherson (neu broffesiwn) fel targed, mae <strong>at</strong> yn gyffredin iawn." },
+        rule: { en: "To a person → often <strong>at</strong>.", cy: "At berson → yn aml <strong>at</strong>." }
       },
       {
         item_id: "Q0101",
@@ -479,16 +377,8 @@
         pronoun_key: "",
         answer_form: { en: "", cy: "" },
         hint: { en: "Time, not location.", cy: "Amser, nid lle." },
-        why: {
-          en: "<strong>cyn</strong> is ‘before’ in time.",
-          cy: "<strong>cyn</strong> = ‘cyn’ o ran amser."
-        },
-        rule: {
-          en: "Time ‘before’ → <strong>cyn</strong>. Place ‘in front of’ → <strong>o flaen</strong>.",
-          cy: "‘Cyn’ (amser) → <strong>cyn</strong>. ‘O flaen’ (lle) → <strong>o flaen</strong>."
-        },
-        register: "neutral",
-        dialect: "Both"
+        why: { en: "<strong>cyn</strong> is ‘before’ in time.", cy: "<strong>cyn</strong> = ‘cyn’ o ran amser." },
+        rule: { en: "Time ‘before’ → <strong>cyn</strong>. Place ‘in front of’ → <strong>o flaen</strong>.", cy: "‘Cyn’ (amser) → <strong>cyn</strong>. ‘O flaen’ (lle) → <strong>o flaen</strong>." }
       },
       {
         item_id: "Q0102",
@@ -504,16 +394,8 @@
         pronoun_key: "",
         answer_form: { en: "", cy: "" },
         hint: { en: "Position in space.", cy: "Safle/lleoliad." },
-        why: {
-          en: "<strong>o flaen</strong> is ‘in front of’ (place).",
-          cy: "<strong>o flaen</strong> = ‘o flaen’ (lleoliad)."
-        },
-        rule: {
-          en: "Place ‘in front of’ → <strong>o flaen</strong>.",
-          cy: "‘O flaen’ (lle) → <strong>o flaen</strong>."
-        },
-        register: "neutral",
-        dialect: "Both"
+        why: { en: "<strong>o flaen</strong> is ‘in front of’ (place).", cy: "<strong>o flaen</strong> = ‘o flaen’ (lleoliad)." },
+        rule: { en: "Place ‘in front of’ → <strong>o flaen</strong>.", cy: "‘O flaen’ (lle) → <strong>o flaen</strong>." }
       },
       {
         item_id: "Q0201",
@@ -529,16 +411,8 @@
         pronoun_key: "1S",
         answer_form: { en: "to me", cy: "â fi" },
         hint: { en: "This one stays ‘prep + pronoun’.", cy: "Mae hwn yn aros fel ‘arddodiad + rhagenw’." },
-        why: {
-          en: "After <strong>â</strong>, you simply use the pronoun: <strong>â fi</strong>.",
-          cy: "Ar ôl <strong>â</strong>, defnyddia’r rhagenw: <strong>â fi</strong>."
-        },
-        rule: {
-          en: "Some prepositions don’t inflect: prep + pronoun (e.g. â fi, gyda fi).",
-          cy: "Dydy rhai arddodiaid ddim yn cyflyru: arddodiad + rhagenw (e.e. â fi, gyda fi)."
-        },
-        register: "neutral",
-        dialect: "Both"
+        why: { en: "After <strong>â</strong>, you simply use the pronoun: <strong>â fi</strong>.", cy: "Ar ôl <strong>â</strong>, defnyddia’r rhagenw: <strong>â fi</strong>." },
+        rule: { en: "Some prepositions don’t inflect: prep + pronoun (e.g. â fi, gyda fi).", cy: "Dydy rhai arddodiaid ddim yn cyflyru: arddodiad + rhagenw (e.e. â fi, gyda fi)." }
       },
       {
         item_id: "Q0202",
@@ -554,16 +428,8 @@
         pronoun_key: "1S",
         answer_form: { en: "with me", cy: "gyda fi" },
         hint: { en: "This pattern uses ‘with’, not ‘on’.", cy: "Mae’r patrwm yma’n defnyddio ‘gyda’, nid ‘ar’." },
-        why: {
-          en: "This expression uses <strong>gyda</strong> + pronoun: <strong>gyda fi</strong>.",
-          cy: "Mae’r ymadrodd yma’n defnyddio <strong>gyda</strong> + rhagenw: <strong>gyda fi</strong>."
-        },
-        rule: {
-          en: "Don’t translate word-for-word — learn the pattern: ‘angry with’ → gyda.",
-          cy: "Paid â chyfieithu gair am air — dysga’r patrwm: ‘dig gyda’ → gyda."
-        },
-        register: "neutral",
-        dialect: "Both"
+        why: { en: "This expression uses <strong>gyda</strong> + pronoun: <strong>gyda fi</strong>.", cy: "Mae’r ymadrodd yma’n defnyddio <strong>gyda</strong> + rhagenw: <strong>gyda fi</strong>." },
+        rule: { en: "Don’t translate word-for-word — learn the pattern: ‘angry with’ → gyda.", cy: "Paid â chyfieithu gair am air — dysga’r patrwm: ‘dig gyda’ → gyda." }
       },
       {
         item_id: "Q0301",
@@ -579,23 +445,11 @@
         pronoun_key: "1S",
         answer_form: { en: "on me", cy: "arna i" },
         hint: { en: "This one inflects (it changes).", cy: "Mae hwn yn cyflyru (mae’n newid)." },
-        why: {
-          en: "<strong>ar</strong> is an inflected preposition with pronouns: <strong>arna i</strong> (not *ar fi*).",
-          cy: "Mae <strong>ar</strong> yn arddodiad cyfunol gyda rhagenwau: <strong>arna i</strong> (nid *ar fi*)."
-        },
-        rule: {
-          en: "Some prepositions inflect with pronouns: arna i, arnat ti, arno fe, arni hi…",
-          cy: "Mae rhai arddodiaid yn cyflyru gyda rhagenwau: arna i, arnat ti, arno fe, arni hi…"
-        },
-        register: "neutral",
-        dialect: "Both"
+        why: { en: "<strong>ar</strong> is an inflected preposition with pronouns: <strong>arna i</strong> (not *ar fi*).", cy: "Mae <strong>ar</strong> yn arddodiad cyfunol gyda rhagenwau: <strong>arna i</strong> (nid *ar fi*)." },
+        rule: { en: "Some prepositions inflect with pronouns: arna i, arnat ti, arno fe, arni hi…", cy: "Mae rhai arddodiaid yn cyflyru gyda rhagenwau: arna i, arnat ti, arno fe, arni hi…" }
       }
     ];
 
-    /*********************
-     * Choice sets (distractors)
-     * You can tune these later.
-     *********************/
     const CHOICE_SETS = {
       AT_vs_I: ["at", "i", "o", "gyda"],
       CYN_vs_O_FLAEN: ["cyn", "o flaen", "ar ôl", "wrth"],
@@ -604,9 +458,6 @@
       INFLECTED_AR: ["ar", "gyda", "â", "at"]
     };
 
-    /*********************
-     * Pronoun labels (for Step 2 UI)
-     *********************/
     const PRONOUNS = {
       "1S": { en: "me", cy: "fi / i" },
       "2S": { en: "you (sing.)", cy: "ti" },
@@ -617,77 +468,16 @@
       "3PL": { en: "them", cy: "nhw" }
     };
 
-    // Minimal pronoun-form bank for Step 2 distractors
-    // (Kept tiny for the prototype; you can expand later.)
     const PREP_FORMS = {
-      "ar": {
-        type: "inflected",
-        forms_cy: {
-          "1S": "arna i",
-          "2S": "arnat ti",
-          "3SM": "arno fe",
-          "3SF": "arni hi",
-          "1PL": "arnon ni",
-          "2PL": "arnoch chi",
-          "3PL": "arnyn nhw"
-        }
-      },
-      "at": {
-        type: "inflected",
-        forms_cy: {
-          "1S": "ata i",
-          "2S": "atat ti",
-          "3SM": "ato fe",
-          "3SF": "ati hi",
-          "1PL": "aton ni",
-          "2PL": "atoch chi",
-          "3PL": "atyn nhw"
-        }
-      },
-      "i": {
-        type: "mixed",
-        // Many learners also use i + pronoun; we still give some inflected-ish options as distractors.
-        forms_cy: {
-          "1S": "imi / i mi",
-          "2S": "iti / i ti",
-          "3SM": "iddo fe",
-          "3SF": "iddi hi",
-          "1PL": "inni / i ni",
-          "2PL": "ichwi / i chi",
-          "3PL": "iddyn nhw"
-        }
-      },
-      "gyda": {
-        type: "noninflecting",
-        forms_cy: {
-          "1S": "gyda fi",
-          "2S": "gyda ti",
-          "3SM": "gyda fe",
-          "3SF": "gyda hi",
-          "1PL": "gyda ni",
-          "2PL": "gyda chi",
-          "3PL": "gyda nhw"
-        }
-      },
-      "â": {
-        type: "noninflecting",
-        forms_cy: {
-          "1S": "â fi",
-          "2S": "â ti",
-          "3SM": "ag e",
-          "3SF": "â hi",
-          "1PL": "â ni",
-          "2PL": "â chi",
-          "3PL": "â nhw"
-        }
-      }
+      "ar": { forms_cy: { "1S":"arna i","2S":"arnat ti","3SM":"arno fe","3SF":"arni hi","1PL":"arnon ni","2PL":"arnoch chi","3PL":"arnyn nhw" } },
+      "at": { forms_cy: { "1S":"ata i","2S":"atat ti","3SM":"ato fe","3SF":"ati hi","1PL":"aton ni","2PL":"atoch chi","3PL":"atyn nhw" } },
+      "i":  { forms_cy: { "1S":"imi / i mi","2S":"iti / i ti","3SM":"iddo fe","3SF":"iddi hi","1PL":"inni / i ni","2PL":"ichwi / i chi","3PL":"iddyn nhw" } },
+      "gyda":{ forms_cy: { "1S":"gyda fi","2S":"gyda ti","3SM":"gyda fe","3SF":"gyda hi","1PL":"gyda ni","2PL":"gyda chi","3PL":"gyda nhw" } },
+      "â":  { forms_cy: { "1S":"â fi","2S":"â ti","3SM":"ag e","3SF":"â hi","1PL":"â ni","2PL":"â chi","3PL":"â nhw" } }
     };
 
-    /*********************
-     * App state
-     *********************/
     const state = {
-      lang: (localStorage.getItem("wpt_lang") || "en"), // en | cy
+      lang: wmGetLang(),          // en | cy
       score: 0,
       streak: 0,
       done: 0,
@@ -695,32 +485,33 @@
       current: null,
       step: 1,
       step1Chosen: null,
-      locked: false
+      locked: false,
+      activeChoices: []
     };
 
-    /*********************
-     * DOM helpers
-     *********************/
     const $ = (id) => document.getElementById(id);
 
     const els = {
-      toggleLang: $("toggleLang"),
-      newQuestion: $("newQuestion"),
+      appSubtitle: $("appSubtitle"),
       sentence: $("sentence"),
       choices: $("choices"),
       feedback: $("feedback"),
       fbHeadline: $("fbHeadline"),
       fbBody: $("fbBody"),
       hint: $("hint"),
+
       btnHint: $("btnHint"),
       btnReveal: $("btnReveal"),
+      newQuestion: $("newQuestion"),
+      reset: $("reset"),
+
       stepPill: $("stepPill"),
       modeLabel: $("modeLabel"),
-      modePill: $("modePill"),
+
       vScore: $("vScore"),
       vStreak: $("vStreak"),
       vDone: $("vDone"),
-      reset: $("reset"),
+
       debug: $("debug"),
 
       // filters
@@ -741,22 +532,22 @@
       lblContrast: $("lblContrast"),
 
       // copy
-      appSubtitle: $("appSubtitle"),
       helpText: $("helpText"),
-      bankTitle: $("bankTitle"),
-      bankInfo: $("bankInfo"),
       kScore: $("kScore"),
       kStreak: $("kStreak"),
-      kDone: $("kDone")
+      kDone: $("kDone"),
+      filtersTitle: $("filtersTitle")
     };
 
-    function t(en, cy) {
-      return state.lang === "cy" ? cy : en;
-    }
+    function t(en, cy){ return state.lang === "cy" ? cy : en; }
 
-    function setLanguage(lang) {
-      state.lang = lang;
-      localStorage.setItem("wpt_lang", lang);
+    function setLanguage(lang, { writeGlobal = false } = {}) {
+      const next = (lang === "cy") ? "cy" : "en";
+      state.lang = next;
+      document.documentElement.setAttribute("lang", next);
+
+      if (writeGlobal) wmSetLang(next);
+
       renderStaticText();
       renderFilters();
       if (state.current) renderQuestion();
@@ -764,9 +555,11 @@
 
     function renderStaticText() {
       els.appSubtitle.textContent = t(
-        "Prototype • Step 1: pick the preposition • Step 2 (optional): pick the pronoun form",
-        "Prototeip • Cam 1: dewis yr arddodiad • Cam 2 (dewisol): dewis y ffurf gyda rhagenw"
+        "Pick the correct preposition. If a pronoun form is required, you’ll do a second step.",
+        "Dewis yr arddodiad cywir. Os oes angen ffurf gyda rhagenw, bydd ail gam."
       );
+
+      els.filtersTitle.textContent = t("Filters", "Hidlwyr");
       els.lblLevel.textContent = t("Level", "Lefel");
       els.lblMode.textContent = t("Mode", "Modd");
       els.lblTopic.textContent = t("Topic", "Pwnc");
@@ -780,45 +573,43 @@
       els.btnReveal.textContent = t("Reveal", "Dangos");
       els.newQuestion.textContent = t("New question", "Cwestiwn newydd");
       els.reset.textContent = t("Reset", "Ailosod");
-      els.bankTitle.textContent = t("Test data", "Data prawf");
-      els.bankInfo.textContent = t(
-        "This is a minimal test bank (a handful of contexts) — you’ll grow it into a big CSV later.",
-        "Banc prawf bach yw hwn (llond llaw o gyd-destunau) — byddi di’n ei dyfu’n CSV mawr yn nes ymlaen."
-      );
+
       els.helpText.innerHTML = t(
-        "<div><span class='kbd'>Hint</span> shows a nudge (doesn’t affect score).</div><div><span class='kbd'>Reveal</span> shows the answer and explanation.</div><div style='margin-top:8px;'>Tip: use filters to drill one contrast set (e.g. <span class='kbd'>at vs i</span>).</div>",
-        "<div><span class='kbd'>Awgrym</span> yn dangos cliw (dim effaith ar y sgôr).</div><div><span class='kbd'>Dangos</span> yn dangos yr ateb a’r esboniad.</div><div style='margin-top:8px;'>Awgrym: defnyddia hidlwyr i ymarfer un set cyferbyniad (e.e. <span class='kbd'>at vs i</span>).</div>"
+        "<div><span class='kbd'>Hint</span> shows a nudge (doesn’t affect score).</div><div><span class='kbd'>Reveal</span> shows the answer and explanation.</div><div class='mt-2'>Tip: drill one contrast set (e.g. <span class='kbd'>AT vs I</span>).</div>",
+        "<div><span class='kbd'>Awgrym</span> yn dangos cliw (dim effaith ar y sgôr).</div><div><span class='kbd'>Dangos</span> yn dangos yr ateb a’r esboniad.</div><div class='mt-2'>Awgrym: ymarfer un set cyferbyniad (e.e. <span class='kbd'>AT vs I</span>).</div>"
       );
     }
 
-    function uniq(arr) {
-      return Array.from(new Set(arr)).filter(v => v !== undefined && v !== null);
+    function uniq(arr){ return Array.from(new Set(arr)).filter(v => v !== undefined && v !== null); }
+
+    function getTopicLabel(topicEn){
+      const it = ITEMS.find(x => x.topic?.en === topicEn);
+      if (!it) return topicEn;
+      return state.lang === "cy" ? it.topic.cy : it.topic.en;
     }
 
-    function renderFilters() {
-      const levels = uniq(ITEMS.map(i => i.level)).sort((a,b)=>a-b);
-      const modes = uniq(ITEMS.map(i => i.mode));
-      const topics = uniq(ITEMS.map(i => state.lang === "cy" ? i.topic.cy : i.topic.en)).sort((a,b)=>a.localeCompare(b));
-      const contrasts = uniq(ITEMS.map(i => i.contrast_group)).sort((a,b)=>a.localeCompare(b));
-
-      fillSelect(els.fLevel, [t("All", "Pob un"), ...levels.map(String)], "All");
-      fillSelect(els.fMode, [t("All", "Pob un"), ...modes], "All");
-      fillSelect(els.fTopic, [t("All", "Pob un"), ...topics], "All");
-      fillSelect(els.fContrast, [t("All", "Pob un"), ...contrasts], "All");
-    }
-
-    function fillSelect(sel, options, allLabelEn) {
+    function fillSelect(sel, options) {
       const current = sel.value;
       sel.innerHTML = "";
       for (const opt of options) {
         const o = document.createElement("option");
-        o.value = opt;
-        o.textContent = opt;
+        o.value = opt.value;
+        o.textContent = opt.label;
         sel.appendChild(o);
       }
-      // try preserve
-      if (options.includes(current)) sel.value = current;
-      else sel.value = options[0];
+      sel.value = options.some(o => o.value === current) ? current : options[0]?.value;
+    }
+
+    function renderFilters() {
+      const levels = uniq(ITEMS.map(i => i.level)).sort((a,b)=>a-b);
+      const modes = uniq(ITEMS.map(i => i.mode)).sort((a,b)=>a.localeCompare(b));
+      const topics = uniq(ITEMS.map(i => i.topic.en)).sort((a,b)=>a.localeCompare(b));
+      const contrasts = uniq(ITEMS.map(i => i.contrast_group)).sort((a,b)=>a.localeCompare(b));
+
+      fillSelect(els.fLevel, [{ value:"ALL", label:t("All","Pob un") }, ...levels.map(n => ({ value:String(n), label:String(n) }))]);
+      fillSelect(els.fMode,  [{ value:"ALL", label:t("All","Pob un") }, ...modes.map(m => ({ value:m, label:m }))]);
+      fillSelect(els.fTopic, [{ value:"ALL", label:t("All","Pob un") }, ...topics.map(k => ({ value:k, label:getTopicLabel(k) }))]);
+      fillSelect(els.fContrast,[{ value:"ALL", label:t("All","Pob un") }, ...contrasts.map(c => ({ value:c, label:prettyContrast(c) }))]);
     }
 
     function getFilteredItems() {
@@ -828,11 +619,10 @@
       const contrast = els.fContrast.value;
 
       return ITEMS.filter(i => {
-        if (lvl !== t("All","Pob un") && String(i.level) !== lvl) return false;
-        if (mode !== t("All","Pob un") && i.mode !== mode) return false;
-        const topicLabel = state.lang === "cy" ? i.topic.cy : i.topic.en;
-        if (topic !== t("All","Pob un") && topicLabel !== topic) return false;
-        if (contrast !== t("All","Pob un") && i.contrast_group !== contrast) return false;
+        if (lvl !== "ALL" && String(i.level) !== lvl) return false;
+        if (mode !== "ALL" && i.mode !== mode) return false;
+        if (topic !== "ALL" && i.topic.en !== topic) return false;
+        if (contrast !== "ALL" && i.contrast_group !== contrast) return false;
         return true;
       });
     }
@@ -841,7 +631,6 @@
       const pool = getFilteredItems();
       if (pool.length === 0) return null;
 
-      // avoid repeats until pool exhausted
       const unused = pool.filter(i => !state.used.has(i.item_id));
       const list = unused.length ? unused : pool;
       if (!unused.length) state.used.clear();
@@ -859,8 +648,8 @@
       state.step1Chosen = null;
       state.locked = false;
 
-      els.feedback.style.display = "none";
-      els.hint.style.display = "none";
+      els.feedback.hidden = true;
+      els.hint.hidden = true;
 
       const before = state.lang === "cy" ? item.before.cy : item.before.en;
       const after = state.lang === "cy" ? item.after.cy : item.after.en;
@@ -871,8 +660,6 @@
       els.pillContrast.textContent = t("Set", "Set") + ": " + prettyContrast(item.contrast_group);
 
       els.modeLabel.textContent = item.mode;
-      els.modePill.innerHTML = `${t("Mode", "Modd")}: <strong id="modeLabel">${item.mode}</strong>`;
-
       els.hint.innerHTML = state.lang === "cy" ? item.hint.cy : item.hint.en;
 
       els.stepPill.textContent = item.needs_step2 ? t("Step 1 of 2", "Cam 1 o 2") : t("Step 1 of 1", "Cam 1 o 1");
@@ -882,27 +669,20 @@
     }
 
     function renderStep1Choices(item) {
-      const set = CHOICE_SETS[item.contrast_group] || [item.answer_prep, "i", "at", "ar"]; // fallback
+      const set = CHOICE_SETS[item.contrast_group] || [item.answer_prep, "i", "at", "ar"];
       const choices = uniq(set);
       shuffleInPlace(choices);
+      state.activeChoices = choices.slice();
 
       els.choices.innerHTML = "";
       for (const ch of choices) {
         const b = document.createElement("button");
-        b.className = "btn";
+        b.className = "btn btn-ghost choiceBtn";
+        b.type = "button";
         b.textContent = ch;
-        b.onclick = () => onPickPrep(ch);
+        b.addEventListener("click", () => onPickPrep(ch));
         els.choices.appendChild(b);
       }
-
-      // keyboard shortcuts 1-4
-      window.onkeydown = (e) => {
-        if (state.locked) return;
-        const n = parseInt(e.key, 10);
-        if (n >= 1 && n <= Math.min(4, choices.length)) {
-          onPickPrep(choices[n-1]);
-        }
-      };
     }
 
     function onPickPrep(choice) {
@@ -912,37 +692,33 @@
 
       const correct = normalize(choice) === normalize(item.answer_prep);
 
-      // show chosen in the sentence
-      const gap = document.getElementById("gap");
-      gap.textContent = choice;
+      document.getElementById("gap").textContent = choice;
 
-      // lock Step 1
       state.locked = true;
       markChoiceButtons(item.answer_prep);
 
       if (!correct) {
         state.done += 1;
         state.streak = 0;
-        showFeedback(false, item, {
+        showFeedback(false, {
           headline: t("Not quite", "Dim yn hollol"),
-          body: `${t("Correct preposition:", "Arddodiad cywir:")} <strong>${item.answer_prep}</strong>.`
+          body: `${t("Correct preposition:", "Arddodiad cywir:")} <strong>${escapeHtml(item.answer_prep)}</strong>.`
         });
         updateStats();
         return;
       }
 
-      // Step 1 correct
       if (item.needs_step2) {
-        // move to Step 2
         state.step = 2;
         state.locked = false;
         els.stepPill.textContent = t("Step 2 of 2", "Cam 2 o 2");
         renderStep2Choices(item);
-        showFeedback(true, item, {
+
+        showFeedback(true, {
           headline: t("Good — now the pronoun form", "Da — nawr y ffurf rhagenw"),
           body: t(
-            `You picked <strong>${item.answer_prep}</strong>. Now choose the correct form for <strong>${PRONOUNS[item.pronoun_key].en}</strong>.`,
-            `Dewisaist ti <strong>${item.answer_prep}</strong>. Nawr dewis y ffurf gywir ar gyfer <strong>${PRONOUNS[item.pronoun_key].cy}</strong>.`
+            `You picked <strong>${escapeHtml(item.answer_prep)}</strong>. Now choose the correct form for <strong>${escapeHtml(PRONOUNS[item.pronoun_key].en)}</strong>.`,
+            `Dewisaist ti <strong>${escapeHtml(item.answer_prep)}</strong>. Nawr dewis y ffurf gywir ar gyfer <strong>${escapeHtml(PRONOUNS[item.pronoun_key].cy)}</strong>.`
           )
         }, { briefOnly: true });
       } else {
@@ -957,17 +733,13 @@
     function renderStep2Choices(item) {
       const prep = item.answer_prep;
       const pronKey = item.pronoun_key;
-
       const correctCY = item.answer_form.cy;
 
-      // Build distractors
       const options = new Set([correctCY]);
 
-      // 1) Wrong: base prep + an independent pronoun (for inflected/mixed preps)
       const wrongIndependent = buildIndependentForm(prep, pronKey);
-      if (wrongIndependent && wrongIndependent !== correctCY) options.add(wrongIndependent);
+      if (wrongIndependent && normalize(wrongIndependent) !== normalize(correctCY)) options.add(wrongIndependent);
 
-      // 2) Wrong: same prep but different pronoun
       const bank = PREP_FORMS[prep]?.forms_cy || {};
       const otherKeys = Object.keys(bank).filter(k => k !== pronKey);
       if (otherKeys.length) {
@@ -975,7 +747,6 @@
         options.add(bank[k]);
       }
 
-      // 3) Wrong: another prep's correct form for same pronoun
       const otherPreps = Object.keys(PREP_FORMS).filter(p => p !== prep);
       if (otherPreps.length) {
         const p = otherPreps[Math.floor(Math.random() * otherPreps.length)];
@@ -983,7 +754,6 @@
         if (form) options.add(form);
       }
 
-      // Ensure 4 options if possible
       while (options.size < 4) {
         const p = Object.keys(PREP_FORMS)[Math.floor(Math.random() * Object.keys(PREP_FORMS).length)];
         const keys = Object.keys(PREP_FORMS[p].forms_cy);
@@ -993,23 +763,17 @@
 
       const list = Array.from(options).slice(0, 4);
       shuffleInPlace(list);
+      state.activeChoices = list.slice();
 
       els.choices.innerHTML = "";
       for (const ch of list) {
         const b = document.createElement("button");
-        b.className = "btn";
+        b.className = "btn btn-ghost choiceBtn";
+        b.type = "button";
         b.textContent = ch;
-        b.onclick = () => onPickForm(ch);
+        b.addEventListener("click", () => onPickForm(ch));
         els.choices.appendChild(b);
       }
-
-      window.onkeydown = (e) => {
-        if (state.locked) return;
-        const n = parseInt(e.key, 10);
-        if (n >= 1 && n <= Math.min(4, list.length)) {
-          onPickForm(list[n-1]);
-        }
-      };
     }
 
     function onPickForm(choiceCY) {
@@ -1017,11 +781,7 @@
       const item = state.current;
       state.locked = true;
 
-      // Replace the sentence gap with Step 1 prep (already) and show a small note
-      // (We keep the sentence display as-is; Step 2 is about form selection.)
-
       const correct = normalize(choiceCY) === normalize(item.answer_form.cy);
-
       markChoiceButtons(item.answer_form.cy, { step2: true });
 
       state.done += 1;
@@ -1040,78 +800,59 @@
       const why = state.lang === "cy" ? item.why.cy : item.why.en;
       const rule = state.lang === "cy" ? item.rule.cy : item.rule.en;
 
-      let answerLine = "";
-      if (item.needs_step2) {
-        answerLine = t(
-          `Answer: <strong>${item.answer_prep}</strong> → <strong>${item.answer_form.cy}</strong>.`,
-          `Ateb: <strong>${item.answer_prep}</strong> → <strong>${item.answer_form.cy}</strong>.`
-        );
-      } else {
-        answerLine = t(
-          `Answer: <strong>${item.answer_prep}</strong>.`,
-          `Ateb: <strong>${item.answer_prep}</strong>.`
-        );
-      }
+      const answerLine = item.needs_step2
+        ? t(
+            `Answer: <strong>${escapeHtml(item.answer_prep)}</strong> → <strong>${escapeHtml(item.answer_form.cy)}</strong>.`,
+            `Ateb: <strong>${escapeHtml(item.answer_prep)}</strong> → <strong>${escapeHtml(item.answer_form.cy)}</strong>.`
+          )
+        : t(
+            `Answer: <strong>${escapeHtml(item.answer_prep)}</strong>.`,
+            `Ateb: <strong>${escapeHtml(item.answer_prep)}</strong>.`
+          );
 
-      const chosenForm = extra.chosenForm ? `<div class="small" style="margin-top:8px;">${t("You chose:", "Dewisaist ti:")} <strong>${escapeHtml(extra.chosenForm)}</strong></div>` : "";
+      const chosenForm = extra.chosenForm
+        ? `<div class="subtle text-sm mt-2">${t("You chose:", "Dewisaist ti:")} <strong>${escapeHtml(extra.chosenForm)}</strong></div>`
+        : "";
 
-      showFeedback(correct, item, {
+      showFeedback(correct, {
         headline: correct ? t("Correct", "Cywir") : t("Incorrect", "Anghywir"),
-        body: `${answerLine}${chosenForm}<div style="margin-top:10px;">${why}</div><div class="rule" style="margin-top:8px;">${rule}</div>`
+        body: `${answerLine}${chosenForm}<div class="mt-3">${why}</div><div class="subtle mt-2">${rule}</div>`
       });
-
-      // If Step 2: also show the selected form somewhere in the sentence area as a tiny caption
-      if (item.needs_step2) {
-        els.sentence.insertAdjacentHTML(
-          "beforeend",
-          `<div class="small" style="margin-top:10px; color: var(--muted);">${t("Step 2 chosen form:", "Cam 2 – ffurf a ddewiswyd:")} <strong>${escapeHtml(extra.chosenForm || item.answer_form.cy)}</strong></div>`
-        );
-      }
     }
 
-    function showFeedback(correct, item, { headline, body }, opts = {}) {
-      els.feedback.className = "feedback " + (correct ? "good" : "bad");
-      els.feedback.style.display = "block";
+    function showFeedback(correct, { headline, body }, opts = {}) {
+      els.feedback.hidden = false;
+      els.feedback.classList.toggle("fb-good", !!correct);
+      els.feedback.classList.toggle("fb-bad", !correct);
+
       els.fbHeadline.textContent = headline;
-      if (opts.briefOnly) {
-        els.fbBody.innerHTML = body;
-      } else {
-        els.fbBody.innerHTML = body;
-      }
+      els.fbBody.innerHTML = body;
     }
 
     function markChoiceButtons(correctValue, opts = {}) {
       const buttons = Array.from(els.choices.querySelectorAll("button"));
       for (const b of buttons) {
         const val = b.textContent;
+        b.classList.remove("is-good", "is-bad");
+
         if (!opts.step2) {
-          if (normalize(val) === normalize(correctValue)) b.classList.add("good");
-          else if (state.step1Chosen && normalize(val) === normalize(state.step1Chosen) && normalize(val) !== normalize(correctValue)) b.classList.add("bad");
-          b.disabled = true;
+          if (normalize(val) === normalize(correctValue)) b.classList.add("is-good");
+          else if (state.step1Chosen && normalize(val) === normalize(state.step1Chosen) && normalize(val) !== normalize(correctValue)) b.classList.add("is-bad");
         } else {
-          // step2: correctValue is the correct CY form
-          if (normalize(val) === normalize(correctValue)) b.classList.add("good");
-          else if (normalize(val) === normalize(state.step1Chosen)) { /* ignore */ }
-          b.disabled = true;
+          if (normalize(val) === normalize(correctValue)) b.classList.add("is-good");
+          else if (normalize(val) === normalize(state.activeChoices.find(x => normalize(x) !== normalize(correctValue)) || "")) {
+            /* no-op */
+          }
         }
+        b.disabled = true;
       }
     }
 
     function buildIndependentForm(prep, pronKey) {
-      // For prototype only. In reality you might store a proper independent-pronoun table.
-      const indep = {
-        "1S": "fi",
-        "2S": "ti",
-        "3SM": "fe",
-        "3SF": "hi",
-        "1PL": "ni",
-        "2PL": "chi",
-        "3PL": "nhw"
-      };
-      const p = prep;
+      const indep = { "1S":"fi","2S":"ti","3SM":"fe","3SF":"hi","1PL":"ni","2PL":"chi","3PL":"nhw" };
       const pro = indep[pronKey];
       if (!pro) return null;
-      return `${p} ${pro}`;
+      return `${prep} ${pro}`;
     }
 
     function updateStats() {
@@ -1121,17 +862,13 @@
     }
 
     function prettyContrast(code) {
-      // nicer display
-      return code.replaceAll("_", " ").replaceAll("vs", "vs");
+      return String(code).replaceAll("_", " ").replaceAll("vs", "vs");
     }
 
     function renderDebug(item) {
-      const lines = [
-        `${t("Current item", "Eitem gyfredol")}: <strong>${item.item_id}</strong>`,
-        `${t("Pattern", "Patrwm")}: ${escapeHtml(state.lang === "cy" ? item.pattern.cy : item.pattern.en)}`,
-        `${t("Answer", "Ateb")}: <strong>${escapeHtml(item.answer_prep)}</strong>${item.needs_step2 ? ` → <strong>${escapeHtml(item.answer_form.cy)}</strong>` : ""}`
-      ];
-      els.debug.innerHTML = lines.map(l => `<div class="small">${l}</div>`).join("");
+      const pattern = state.lang === "cy" ? item.pattern.cy : item.pattern.en;
+      const ans = item.needs_step2 ? `${item.answer_prep} → ${item.answer_form.cy}` : item.answer_prep;
+      els.debug.innerHTML = `${t("Item","Eitem")}: <strong>${escapeHtml(item.item_id)}</strong> • ${t("Pattern","Patrwm")}: ${escapeHtml(pattern)} • ${t("Answer","Ateb")}: <strong>${escapeHtml(ans)}</strong>`;
     }
 
     function escapeHtml(str) {
@@ -1159,33 +896,30 @@
       const item = state.current;
       if (!item) return;
 
-      // fill the gap with the correct prep
-      const gap = document.getElementById("gap");
-      gap.textContent = item.answer_prep;
+      document.getElementById("gap").textContent = item.answer_prep;
 
-      // If step2 is required, show the full answer and explanation
       state.locked = true;
       state.done += 1;
       state.streak = 0;
 
-      showFullExplanation(false, item, { chosenForm: item.needs_step2 ? "(revealed)" : undefined });
+      showFullExplanation(false, item, { chosenForm: item.needs_step2 ? t("(revealed)", "(wedi dangos)") : undefined });
       updateStats();
 
-      // Disable choice buttons
       Array.from(els.choices.querySelectorAll("button")).forEach(b => b.disabled = true);
     }
 
     function showHint() {
       if (!state.current) return;
-      els.hint.style.display = "block";
+      els.hint.hidden = false;
     }
 
     function newQuestion() {
       const item = pickNextItem();
       if (!item) {
-        els.sentence.innerHTML = `<div class="small">${t("No items match your filters.", "Does dim eitemau’n cyfateb i’r hidlwyr.")}</div>`;
+        els.sentence.innerHTML = `<span class="subtle">${t("No items match your filters.", "Does dim eitemau’n cyfateb i’r hidlwyr.")}</span>`;
         els.choices.innerHTML = "";
-        els.feedback.style.display = "none";
+        els.feedback.hidden = true;
+        els.hint.hidden = true;
         return;
       }
       state.current = item;
@@ -1201,14 +935,67 @@
       newQuestion();
     }
 
+    /*********************
+     * Keyboard shortcuts (won’t clobber navbar handlers)
+     *********************/
+    window.addEventListener("keydown", (e) => {
+      if (state.locked) return;
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
+
+      const ae = document.activeElement;
+      if (ae && ae.closest && ae.closest("#siteHeader")) return;
+      if (ae && ["INPUT","SELECT","TEXTAREA"].includes(ae.tagName)) return;
+
+      const n = parseInt(e.key, 10);
+      if (!Number.isFinite(n)) return;
+
+      const idx = n - 1;
+      if (idx < 0 || idx >= Math.min(4, state.activeChoices.length)) return;
+
+      const choice = state.activeChoices[idx];
+      if (state.step === 1) onPickPrep(choice);
+      else onPickForm(choice);
+    });
+
+    /*********************
+     * Navbar language toggle hook (same-tab)
+     *********************/
+    function bindNavbarLangButton() {
+      const btn = document.getElementById("btnLangToggle");
+      if (!btn) return;
+      if (btn.dataset.prepBound === "1") return;
+      btn.dataset.prepBound = "1";
+
+      btn.addEventListener("click", () => {
+        // navbar.js updates wm_lang; pick it up after it runs
+        setTimeout(() => {
+          const next = wmGetLang();
+          if (next !== state.lang) setLanguage(next, { writeGlobal: false });
+        }, 0);
+      });
+    }
+
+    function watchNavbarMount() {
+      const mount = document.getElementById("navbarMount");
+      if (!mount) return;
+      const obs = new MutationObserver(() => bindNavbarLangButton());
+      obs.observe(mount, { childList: true, subtree: true });
+      bindNavbarLangButton();
+    }
+
+    // Cross-tab sync
+    window.addEventListener("storage", (e) => {
+      if (e.key !== "wm_lang") return;
+      const next = wmGetLang();
+      if (next !== state.lang) setLanguage(next, { writeGlobal: false });
+    });
+
     // Events
-    els.toggleLang.addEventListener("click", () => setLanguage(state.lang === "en" ? "cy" : "en"));
     els.newQuestion.addEventListener("click", newQuestion);
     els.btnHint.addEventListener("click", showHint);
     els.btnReveal.addEventListener("click", revealAnswer);
     els.reset.addEventListener("click", resetAll);
 
-    // Filters reroll question
     [els.fLevel, els.fMode, els.fTopic, els.fContrast].forEach(sel => {
       sel.addEventListener("change", () => {
         state.used.clear();
@@ -1217,9 +1004,10 @@
     });
 
     // Init
-    renderStaticText();
+    setLanguage(wmGetLang(), { writeGlobal: false });
     renderFilters();
     updateStats();
+    watchNavbarMount();
     newQuestion();
   </script>
 </body>
