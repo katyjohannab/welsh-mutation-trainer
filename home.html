@@ -6,16 +6,11 @@
   <meta name="view-transition" content="same-origin" />
   <title>Hyffordwr Cymraeg | Home</title>
 
-  <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Shared site styles -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Fonts (match index.html) -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
-
     html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
     body { -webkit-font-smoothing: antialiased; }
 
@@ -33,7 +28,7 @@
 <body data-current="home" class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- Navbar is injected from navbar.html by navbar.js -->
+    <!-- Shared navbar mounts here -->
     <div id="navbarMount"></div>
 
     <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4 space-y-6">
@@ -56,7 +51,6 @@
               Shwmae! I’m Katy. I’m currently learning Welsh at Uwch level, and I started building little tools to help me practise the bits I found hardest (especially mutations).
               They’ve genuinely helped my learning, so I’m sharing them here in case they’re useful for you too. Pick something below and have a play.
             </p>
-
             <p class="mt-3 text-slate-700 leading-relaxed" data-lang="cy" hidden>
               Shwmae! Katy dw i. Dw i’n ddysgwr Cymraeg ar lefel Uwch ar hyn o bryd, a dechreuais greu offerynnau bach i helpu fi ymarfer y pethau oedd yn anodd i mi (yn enwedig treigladau).
               Maen nhw wedi bod yn ddefnyddiol iawn i mi, felly dw i’n eu rhannu yma rhag ofn eu bod nhw’n helpu ti hefyd. Dewisa rywbeth isod a rho gynnig arni.
@@ -98,7 +92,6 @@
       <!-- FEATURE GRID -->
       <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-label="Site sections">
 
-        <!-- Mutation trainer -->
         <article class="panel rounded-2xl p-5 feature-card">
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
@@ -120,16 +113,11 @@
             <span class="tag">Core</span>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./index.html">
-              <span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span>
-            </a>
-            <a class="btn btn-ghost" href="./index.html#filters">
-              <span data-lang="en">Filters</span><span data-lang="cy" hidden>Hidiau</span>
-            </a>
+            <a class="btn btn-primary" href="./index.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
+            <a class="btn btn-ghost" href="./index.html#filters"><span data-lang="en">Filters</span><span data-lang="cy" hidden>Hidiau</span></a>
           </div>
         </article>
 
-        <!-- Lessons -->
         <article class="panel rounded-2xl p-5 feature-card">
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
@@ -151,16 +139,11 @@
             <span class="tag">Lessons</span>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./learn.html">
-              <span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span>
-            </a>
-            <a class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1">
-              <span data-lang="en">Quick tour</span><span data-lang="cy" hidden>Taith gyflym</span>
-            </a>
+            <a class="btn btn-primary" href="./learn.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
+            <a class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1"><span data-lang="en">Quick tour</span><span data-lang="cy" hidden>Taith gyflym</span></a>
           </div>
         </article>
 
-        <!-- Vocab -->
         <article class="panel rounded-2xl p-5 feature-card">
           <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
@@ -182,127 +165,121 @@
             <span class="tag">Trainer</span>
           </div>
           <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./vocab.html">
-              <span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span>
-            </a>
-          </div>
-        </article>
-
-        <!-- Coming soon -->
-        <article class="panel rounded-2xl p-5 feature-card sm:col-span-2 lg:col-span-1">
-          <div class="text-xs uppercase tracking-widest text-slate-500">
-            <span data-lang="en">Coming soon</span>
-            <span data-lang="cy" hidden>Yn dod yn fuan</span>
-          </div>
-          <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">
-            <span data-lang="en">Grammar trainer</span>
-            <span data-lang="cy" hidden>Ymarfer gramadeg</span>
-          </h3>
-          <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-            Focused drills on “bod + yn”, relative clauses, and other high-frequency patterns.
-          </p>
-          <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-            Ymarferion ffocws ar “bod + yn”, cymalau perthynol, a phatrymau cyffredin eraill.
-          </p>
-          <div class="mt-4">
-            <a class="btn btn-ghost" href="./learn.html">
-              <span data-lang="en">Use lessons for now</span>
-              <span data-lang="cy" hidden>Defnyddio’r gwersi am y tro</span>
-            </a>
+            <a class="btn btn-primary" href="./vocab.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
           </div>
         </article>
 
       </section>
 
+      <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+        <div class="flex flex-wrap gap-4 items-center">
+          <span>© Hyffordwr Cymraeg</span>
+          <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">
+            <span data-lang="en">Back to top</span>
+            <span data-lang="cy" hidden>Yn ôl i’r brig</span>
+          </button>
+        </div>
+      </footer>
+
     </main>
-
-    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
-      <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Cymraeg</span>
-        <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">
-          <span data-lang="en">Back to top</span>
-          <span data-lang="cy" hidden>Yn ôl i’r brig</span>
-        </button>
-      </div>
-    </footer>
-
   </div>
 
-  <!-- Shared navbar loader -->
-  <script src="./navbar.js"></script>
-
   <script>
-    function wmGetLang(){
-      const raw = localStorage.getItem("wm_lang");
-      if (!raw) return "en";
-      try {
-        const v = JSON.parse(raw);
-        return (v === "cy" || v === "en") ? v : "en";
-      } catch (e) {
-        return (raw === "cy" || raw === "en") ? raw : "en";
-      }
-    }
+    /* ========= Utilities ========= */
+    const $ = (sel, root = document) => root.querySelector(sel);
+    function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
 
-    function wmApplyLangToPage(){
-      const lang = wmGetLang();
+    /* ========= Language ========= */
+    const state = { lang: loadLS("wm_lang", "en") };
+
+    function applyLangBlocks() {
+      const lang = state.lang || "en";
       document.documentElement.setAttribute("lang", lang === "cy" ? "cy" : "en");
       document.querySelectorAll("[data-lang]").forEach(el => {
         el.hidden = (el.getAttribute("data-lang") !== lang);
       });
     }
 
-    async function wmFallbackInjectNavbar(){
-      const mount = document.getElementById("navbarMount");
-      if (!mount) return false;
+    function syncLangToggleUI() {
+      const btn = $("#btnLangToggle");
+      if (!btn) return;
+      const lang = state.lang || "en";
+      const next = (lang === "en") ? "CY" : "EN";
+      btn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${next}</span>`;
+      btn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
+      btn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
+    }
 
-      const candidates = [
-        "./navbar.html",
-        "https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html"
-      ];
+    function syncNavLabels() {
+      const lang = state.lang || "en";
+      const set = (id, en, cy) => {
+        const el = $(id);
+        if (!el) return;
+        el.textContent = (lang === "cy") ? cy : en;
+      };
+      set("#btnLearn", "Learn", "Dysgu");
+      set("#btnPractice", "Practice", "Ymarfer");
+      set("#btnStats", "Vocab", "Geirfa");
+      set("#btnFilters", "Filters", "Hidiau");
+      set("#btnBrowse", "Preps", "Ardd.");
+      set("#btnHelp", "Tour", "Taith");
+    }
 
+    function wireLangToggleOnce() {
+      const btn = $("#btnLangToggle");
+      if (!btn) return;
+      if (btn.dataset.wmBound === "1") return;
+      btn.dataset.wmBound = "1";
+
+      btn.addEventListener("click", () => {
+        state.lang = (state.lang === "en") ? "cy" : "en";
+        saveLS("wm_lang", state.lang);
+        applyLangBlocks();
+        syncNavLabels();
+        syncLangToggleUI();
+      });
+    }
+
+    /* ========= Sticky shadow helper (optional) ========= */
+    function initStickyShadow() {
+      const h = $("#siteHeader");
+      if (!h) return;
+      const set = () => h.classList.toggle("is-scrolled", window.scrollY > 8);
+      window.addEventListener("scroll", set, { passive: true });
+      set();
+    }
+
+    /* ========= Navbar mount ========= */
+    async function mountNavbar() {
+      const mount = $("#navbarMount");
+      if (!mount) return;
+
+      // If navbar.js already injected it, don’t double-load.
+      if (mount.querySelector("#siteHeader")) return;
+
+      const candidates = ["./navbar.html", "https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html"];
       for (const url of candidates) {
         try {
           const res = await fetch(url, { cache: "no-cache" });
           if (!res.ok) throw new Error("HTTP " + res.status);
           mount.innerHTML = await res.text();
-          return true;
+          break;
         } catch (e) {}
       }
-      console.warn("[Home] Could not load navbar.html from candidates.");
-      return false;
     }
 
-    // Back to top
-    document.getElementById("btnTop")?.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
+    /* ========= Boot ========= */
     (async function boot(){
-      // 1) Prefer your navbar.js implementation
-      if (typeof window.loadNavbar === "function") {
-        await window.loadNavbar();
-      } else if (typeof window.initNavbar === "function") {
-        await window.initNavbar();
-      } else {
-        // 2) Safety net so the navbar never “vanishes”
-        await wmFallbackInjectNavbar();
-      }
+      await mountNavbar();          // IMPORTANT: must happen before we query #btnLangToggle
+      applyLangBlocks();            // toggles page content
+      syncNavLabels();              // updates nav text (optional)
+      syncLangToggleUI();           // renders 🔁 CY/EN into the button
+      wireLangToggleOnce();         // binds click once
+      initStickyShadow();           // optional shadow on scroll
 
-      // Apply language once navbar is mounted (also sets page lang attr)
-      wmApplyLangToPage();
+      $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     })();
-
-    // When navbar toggle changes wm_lang, re-apply bilingual blocks on home (don’t double-toggle)
-    document.addEventListener("click", (e) => {
-      const btn = e.target.closest?.("#btnLangToggle");
-      if (!btn) return;
-      setTimeout(wmApplyLangToPage, 0);
-    });
-
-    // Keep in sync across tabs
-    window.addEventListener("storage", (e) => {
-      if (e.key === "wm_lang") wmApplyLangToPage();
-    });
   </script>
 </body>
 </html>
