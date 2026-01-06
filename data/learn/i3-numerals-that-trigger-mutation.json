@@ -589,7 +589,7 @@
           "type": "actions",
           "prompt": { "en": "Go practise (pick one):", "cy": "Mynd i ymarfer (dewis un):" },
           "buttons": [
-            { "label": { "en": "Practice numerals here, "cy": "Ymarfer rhifau yma" }, "href": "./index.html?preset=numerals", "kind": "primary" },
+            { "label": { "en": "Practice numerals here", "cy": "Ymarfer rhifau yma" }, "href": "./index.html?preset=numerals", "kind": "primary" },
           ]
         }
       ]
