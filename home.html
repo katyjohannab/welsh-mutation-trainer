@@ -4,20 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="view-transition" content="same-origin" />
-  <title>Hyffordwr Cymraeg | Home</title>
+  <title>Hyffordwr Treiglad | Home</title>
 
+  <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Shared site styles (same as index.html) -->
   <link rel="stylesheet" href="styles.css" />
 
+  <!-- Shared navbar loader (your new setup) -->
+  <script src="./navbar.js" defer></script>
+
+  <!-- Fonts (match index.html) -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
-    html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+
+    html {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
     body { -webkit-font-smoothing: antialiased; }
 
-    .feature-card { transition: transform 120ms ease, box-shadow 120ms ease; }
-    .feature-card:focus-within, .feature-card:hover { transform: translateY(-1px); }
+    /* Slight hover lift for nav-cards, but keep it subtle */
+    .home-card { transition: transform 120ms ease, box-shadow 120ms ease; }
+    .home-card:hover, .home-card:focus-within { transform: translateY(-1px); }
 
-    .home-hero-title { color: var(--emerald-ink); }
+    /* Make cards feel like the main "hero" */
+    .home-card .home-title { color: var(--emerald-ink); }
+
+    /* Section headers: understated but clear */
+    .section-kicker {
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
   </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,152 +46,208 @@
 <body data-current="home" class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- Shared navbar mounts here -->
+    <!-- Shared navbar mounts here (navbar.js should target this) -->
     <div id="navbarMount"></div>
 
-    <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4 space-y-6">
+    <main class="grow max-w-6xl mx-auto p-4 pb-16 md:pb-8 space-y-8">
 
-      <!-- HERO -->
-      <section class="panel rounded-2xl p-6 md:p-8">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div class="min-w-0 max-w-3xl">
-            <div class="text-xs uppercase tracking-widest text-slate-500">
-              <span data-lang="en">Croeso • Welcome</span>
-              <span data-lang="cy" hidden>Croeso • Welcome</span>
+      <!-- Minimal intro (low visual weight by design) -->
+      <section class="max-w-3xl">
+        <p class="text-slate-700 leading-relaxed" data-lang="en">
+          A small set of tools and lessons I built while learning Welsh (Uwch), mostly to practise mutations and other high-frequency patterns.
+          Pick a section below.
+        </p>
+        <p class="text-slate-700 leading-relaxed" data-lang="cy" hidden>
+          Casgliad bach o offer a gwersi wnes i wrth ddysgu Cymraeg (Uwch), yn bennaf i ymarfer treigladau a phatrymau cyffredin eraill.
+          Dewisa adran isod.
+        </p>
+      </section>
+
+      <!-- LEARN -->
+      <section aria-labelledby="learnHeading" class="space-y-4">
+        <div class="flex items-end justify-between gap-3">
+          <div class="min-w-0">
+            <div class="section-kicker text-xs text-slate-500">
+              <span data-lang="en">Learn</span>
+              <span data-lang="cy" hidden>Dysgu</span>
             </div>
-
-            <h2 class="mt-2 text-3xl md:text-4xl font-bold tracking-tight bbh-bogle-regular home-hero-title">
-              <span data-lang="en">Hyffordwr Cymraeg</span>
-              <span data-lang="cy" hidden>Hyffordwr Cymraeg</span>
+            <h2 id="learnHeading" class="mt-1 text-2xl md:text-3xl font-semibold tracking-tight">
+              <span data-lang="en">Lessons and explanations</span>
+              <span data-lang="cy" hidden>Gwersi ac esboniadau</span>
             </h2>
+          </div>
+        </div>
 
-            <p class="mt-3 text-slate-700 leading-relaxed" data-lang="en">
-              Shwmae! I’m Katy. I’m currently learning Welsh at Uwch level, and I started building little tools to help me practise the bits I found hardest (especially mutations).
-              They’ve genuinely helped my learning, so I’m sharing them here in case they’re useful for you too. Pick something below and have a play.
-            </p>
-            <p class="mt-3 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-              Shwmae! Katy dw i. Dw i’n ddysgwr Cymraeg ar lefel Uwch ar hyn o bryd, a dechreuais greu offerynnau bach i helpu fi ymarfer y pethau oedd yn anodd i mi (yn enwedig treigladau).
-              Maen nhw wedi bod yn ddefnyddiol iawn i mi, felly dw i’n eu rhannu yma rhag ofn eu bod nhw’n helpu ti hefyd. Dewisa rywbeth isod a rho gynnig arni.
-            </p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+          <!-- Treiglad lessons -->
+          <article class="panel rounded-2xl p-6 home-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="home-title text-xl md:text-2xl font-bold tracking-tight">
+                  <span data-lang="en">Treiglad lessons</span>
+                  <span data-lang="cy" hidden>Gwersi treigladau</span>
+                </h3>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+                  Short, practical notes that match the kinds of patterns the trainers test.
+                </p>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+                  Nodiadau byr, ymarferol sy’n cyd-fynd â’r patrymau mae’r hyfforddwyr yn eu profi.
+                </p>
+              </div>
+              <span class="tag">Learn</span>
+            </div>
 
             <div class="mt-5 flex flex-wrap gap-2">
-              <a class="btn btn-primary" href="./index.html">
-                <span data-lang="en">Start mutation trainer</span>
-                <span data-lang="cy" hidden>Dechrau’r hyfforddwr treigladau</span>
+              <a class="btn btn-primary" href="./learn.html">
+                <span data-lang="en">Open lessons</span>
+                <span data-lang="cy" hidden>Agor y gwersi</span>
               </a>
-              <a class="btn btn-ghost" href="./learn.html">
-                <span data-lang="en">Open mini lessons</span>
-                <span data-lang="cy" hidden>Agor y gwersi bach</span>
-              </a>
-              <a class="btn btn-ghost" href="./vocab.html">
-                <span data-lang="en">Open vocab trainer</span>
-                <span data-lang="cy" hidden>Agor yr ymarfer geirfa</span>
+              <a class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1">
+                <span data-lang="en">Quick tour</span>
+                <span data-lang="cy" hidden>Taith gyflym</span>
               </a>
             </div>
-          </div>
+          </article>
 
-          <div class="flex flex-wrap gap-2">
-            <span class="tag">
-              <span data-lang="en">Mobile-friendly</span>
-              <span data-lang="cy" hidden>Addas ar gyfer ffôn</span>
-            </span>
-            <span class="tag">
-              <span data-lang="en">Keyboard support</span>
-              <span data-lang="cy" hidden>Cefnogaeth bysellfwrdd</span>
-            </span>
-            <span class="tag">
-              <span data-lang="en">Bilingual UI</span>
-              <span data-lang="cy" hidden>Rhyngwyneb dwyieithog</span>
-            </span>
-          </div>
+          <!-- Placeholder card to keep the grid structure as you expand -->
+          <article class="panel rounded-2xl p-6 home-card">
+            <div class="section-kicker text-xs text-slate-500">
+              <span data-lang="en">Coming soon</span>
+              <span data-lang="cy" hidden>Yn dod yn fuan</span>
+            </div>
+            <h3 class="home-title mt-1 text-xl md:text-2xl font-bold tracking-tight">
+              <span data-lang="en">Grammar notes</span>
+              <span data-lang="cy" hidden>Nodiadau gramadeg</span>
+            </h3>
+            <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+              More bite-size explanations (bod + yn, relatives, common triggers).
+            </p>
+            <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+              Mwy o esboniadau bach (bod + yn, perthynol, sbardunau cyffredin).
+            </p>
+          </article>
+
         </div>
       </section>
 
-      <!-- FEATURE GRID -->
-      <section class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-label="Site sections">
-
-        <article class="panel rounded-2xl p-5 feature-card">
-          <div class="flex items-start justify-between gap-3">
-            <div class="min-w-0">
-              <div class="text-xs uppercase tracking-widest text-slate-500">
-                <span data-lang="en">Practice</span>
-                <span data-lang="cy" hidden>Ymarfer</span>
-              </div>
-              <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">
-                <span data-lang="en">Mutation trainer</span>
-                <span data-lang="cy" hidden>Hyffordwr treigladau</span>
-              </h3>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-                An interactive tool to help you practise mutations in lots of different contexts.
-              </p>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-                Offeryn rhyngweithiol i dy helpu di i ymarfer treigladau mewn llawer o gyd-destunau gwahanol.
-              </p>
+      <!-- PRACTICE -->
+      <section aria-labelledby="practiceHeading" class="space-y-4">
+        <div class="flex items-end justify-between gap-3">
+          <div class="min-w-0">
+            <div class="section-kicker text-xs text-slate-500">
+              <span data-lang="en">Practice</span>
+              <span data-lang="cy" hidden>Ymarfer</span>
             </div>
-            <span class="tag">Core</span>
+            <h2 id="practiceHeading" class="mt-1 text-2xl md:text-3xl font-semibold tracking-tight">
+              <span data-lang="en">Trainers</span>
+              <span data-lang="cy" hidden>Hyfforddwyr</span>
+            </h2>
           </div>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./index.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
-            <a class="btn btn-ghost" href="./index.html#filters"><span data-lang="en">Filters</span><span data-lang="cy" hidden>Hidiau</span></a>
-          </div>
-        </article>
+        </div>
 
-        <article class="panel rounded-2xl p-5 feature-card">
-          <div class="flex items-start justify-between gap-3">
-            <div class="min-w-0">
-              <div class="text-xs uppercase tracking-widest text-slate-500">
-                <span data-lang="en">Learn</span>
-                <span data-lang="cy" hidden>Dysgu</span>
-              </div>
-              <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">
-                <span data-lang="en">Mini lessons</span>
-                <span data-lang="cy" hidden>Gwersi bach</span>
-              </h3>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-                A series of mini-lessons about grammar.
-              </p>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-                Cyfres o wersi bach am ramadeg Cymraeg.
-              </p>
-            </div>
-            <span class="tag">Lessons</span>
-          </div>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./learn.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
-            <a class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1"><span data-lang="en">Quick tour</span><span data-lang="cy" hidden>Taith gyflym</span></a>
-          </div>
-        </article>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
-        <article class="panel rounded-2xl p-5 feature-card">
-          <div class="flex items-start justify-between gap-3">
-            <div class="min-w-0">
-              <div class="text-xs uppercase tracking-widest text-slate-500">
-                <span data-lang="en">Vocab</span>
-                <span data-lang="cy" hidden>Geirfa</span>
+          <!-- Mutation trainer -->
+          <article class="panel rounded-2xl p-6 home-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="home-title text-xl md:text-2xl font-bold tracking-tight">
+                  <span data-lang="en">Mutation trainer</span>
+                  <span data-lang="cy" hidden>Hyffordwr treigladau</span>
+                </h3>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+                  Mixed drills across lots of contexts, with smart review and “why” explanations.
+                </p>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+                  Ymarfer cymysg mewn llawer o gyd-destunau, gydag adolygu clyfar ac esboniadau “pam”.
+                </p>
               </div>
-              <h3 class="mt-1 text-xl font-bold tracking-tight" style="color: var(--emerald-ink);">
-                <span data-lang="en">Vocab trainer</span>
-                <span data-lang="cy" hidden>Ymarfer geirfa</span>
-              </h3>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-                Aimed at Dysgu Cymraeg learners, this tool helps you learn key course vocabulary.
-              </p>
-              <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-                Wedi’i anelu at ddysgwyr Dysgu Cymraeg, mae’r offeryn hwn yn dy helpu di i ddysgu geirfa allweddol y cwrs.
-              </p>
+              <span class="tag">Core</span>
             </div>
-            <span class="tag">Trainer</span>
-          </div>
-          <div class="mt-4 flex flex-wrap gap-2">
-            <a class="btn btn-primary" href="./vocab.html"><span data-lang="en">Open</span><span data-lang="cy" hidden>Agor</span></a>
-          </div>
-        </article>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <a class="btn btn-primary" href="./index.html">
+                <span data-lang="en">Open</span>
+                <span data-lang="cy" hidden>Agor</span>
+              </a>
+              <a class="btn btn-ghost" href="./index.html#filters">
+                <span data-lang="en">Filters</span>
+                <span data-lang="cy" hidden>Hidiau</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Preposition trainer (preset) -->
+          <article class="panel rounded-2xl p-6 home-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="home-title text-xl md:text-2xl font-bold tracking-tight">
+                  <span data-lang="en">Preposition trainer</span>
+                  <span data-lang="cy" hidden>Hyffordwr arddodiaid</span>
+                </h3>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+                  A focused deck for common mutation triggers after prepositions.
+                </p>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+                  Dec ffocws ar sbardunau treiglad cyffredin ar ôl arddodiaid.
+                </p>
+              </div>
+              <span class="tag">Focus</span>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <a class="btn btn-primary" href="./index.html?preset=prepositions">
+                <span data-lang="en">Open</span>
+                <span data-lang="cy" hidden>Agor</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Grammar trainer -->
+          <article class="panel rounded-2xl p-6 home-card">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="home-title text-xl md:text-2xl font-bold tracking-tight">
+                  <span data-lang="en">Grammar trainer</span>
+                  <span data-lang="cy" hidden>Hyffordwr gramadeg</span>
+                </h3>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
+                  Targeted drills for high-frequency patterns (bod + yn, relatives, etc.).
+                </p>
+                <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
+                  Ymarferion targedig ar batrymau cyffredin (bod + yn, perthynol, ac ati).
+                </p>
+              </div>
+              <span class="tag">
+                <span data-lang="en">Soon</span>
+                <span data-lang="cy" hidden>Cyn bo hir</span>
+              </span>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              <a class="btn btn-ghost" href="./learn.html">
+                <span data-lang="en">Use lessons for now</span>
+                <span data-lang="cy" hidden>Defnyddio’r gwersi am y tro</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- Optional: Vocab sits logically as practice too, but keep it out if you want practice = grammar only -->
+        <div class="pt-2">
+          <a class="btn btn-ghost" href="./vocab.html">
+            <span data-lang="en">Go to vocab trainer</span>
+            <span data-lang="cy" hidden>Mynd i’r ymarfer geirfa</span>
+          </a>
+        </div>
 
       </section>
 
-      <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+      <footer class="pt-6 text-xs text-slate-500">
         <div class="flex flex-wrap gap-4 items-center">
-          <span>© Hyffordwr Cymraeg</span>
+          <span>© Hyffordwr Treiglad</span>
           <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">
             <span data-lang="en">Back to top</span>
             <span data-lang="cy" hidden>Yn ôl i’r brig</span>
@@ -190,7 +264,7 @@
     function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
     function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
 
-    /* ========= Language ========= */
+    /* ========= Language blocks (page content only) ========= */
     const state = { lang: loadLS("wm_lang", "en") };
 
     function applyLangBlocks() {
@@ -201,9 +275,14 @@
       });
     }
 
+    /* ========= Language toggle button (only if navbar.js did not already do it) ========= */
     function syncLangToggleUI() {
       const btn = $("#btnLangToggle");
       if (!btn) return;
+
+      // If navbar.js already rendered something meaningful, leave it alone.
+      if (btn.innerText && btn.innerText.trim().length) return;
+
       const lang = state.lang || "en";
       const next = (lang === "en") ? "CY" : "EN";
       btn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${next}</span>`;
@@ -211,22 +290,7 @@
       btn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
     }
 
-    function syncNavLabels() {
-      const lang = state.lang || "en";
-      const set = (id, en, cy) => {
-        const el = $(id);
-        if (!el) return;
-        el.textContent = (lang === "cy") ? cy : en;
-      };
-      set("#btnLearn", "Learn", "Dysgu");
-      set("#btnPractice", "Practice", "Ymarfer");
-      set("#btnStats", "Vocab", "Geirfa");
-      set("#btnFilters", "Filters", "Hidiau");
-      set("#btnBrowse", "Preps", "Ardd.");
-      set("#btnHelp", "Tour", "Taith");
-    }
-
-    function wireLangToggleOnce() {
+    function bindLangToggleOnce() {
       const btn = $("#btnLangToggle");
       if (!btn) return;
       if (btn.dataset.wmBound === "1") return;
@@ -236,53 +300,28 @@
         state.lang = (state.lang === "en") ? "cy" : "en";
         saveLS("wm_lang", state.lang);
         applyLangBlocks();
-        syncNavLabels();
-        syncLangToggleUI();
       });
     }
 
-    /* ========= Sticky shadow helper (optional) ========= */
-    function initStickyShadow() {
-      const h = $("#siteHeader");
-      if (!h) return;
-      const set = () => h.classList.toggle("is-scrolled", window.scrollY > 8);
-      window.addEventListener("scroll", set, { passive: true });
-      set();
-    }
-
-    /* ========= Navbar mount ========= */
-    async function mountNavbar() {
-      const mount = $("#navbarMount");
-      if (!mount) return;
-
-      // If navbar.js already injected it, don’t double-load.
-      if (mount.querySelector("#siteHeader")) return;
-
-      const candidates = ["./navbar.html", "https://katyjohannab.github.io/welsh-mutation-trainer/navbar.html"];
-      for (const url of candidates) {
-        try {
-          const res = await fetch(url, { cache: "no-cache" });
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          mount.innerHTML = await res.text();
-          break;
-        } catch (e) {}
-      }
+    /* Wait until navbar has been injected (works whether you mount via navbar.js or any other method) */
+    function waitForEl(selector, cb, tries = 120) {
+      const el = $(selector);
+      if (el) return cb(el);
+      if (tries <= 0) return;
+      requestAnimationFrame(() => waitForEl(selector, cb, tries - 1));
     }
 
     /* ========= Boot ========= */
-    (async function boot(){
-      await mountNavbar();          // IMPORTANT: must happen before we query #btnLangToggle
-      applyLangBlocks();            // toggles page content
-      syncNavLabels();              // updates nav text (optional)
-      syncLangToggleUI();           // renders 🔁 CY/EN into the button
-      wireLangToggleOnce();         // binds click once
-      initStickyShadow();           // optional shadow on scroll
+    (function boot(){
+      applyLangBlocks();
+
+      waitForEl("#btnLangToggle", () => {
+        syncLangToggleUI();
+        bindLangToggleOnce();
+      });
 
       $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
     })();
   </script>
 </body>
 </html>
-
-
-
