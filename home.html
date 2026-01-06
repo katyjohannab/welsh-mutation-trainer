@@ -15,72 +15,23 @@
   <!-- Fonts (match index.html) -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
+    html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    body { -webkit-font-smoothing: antialiased; }
+    .feature-card { transition: transform 120ms ease, box-shadow 120ms ease; }
+    .feature-card:focus-within, .feature-card:hover { transform: translateY(-1px); }
+    .home-hero-title { color: var(--emerald-ink); }
   </style>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-  <style>
-    /* Match index typography smoothing */
-    html { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    body { -webkit-font-smoothing: antialiased; }
-
-    /* A tiny bit of “feature card” hover polish */
-    .feature-card { transition: transform 120ms ease, box-shadow 120ms ease; }
-    .feature-card:focus-within, .feature-card:hover { transform: translateY(-1px); }
-
-    /* Keep home content feeling like the rest of the site */
-    .home-hero-title { color: var(--emerald-ink); }
-  </style>
 </head>
 
-<body class="min-h-screen text-slate-900">
+<body data-current="home" class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- HEADER: copied structure + IDs + classes from index.html -->
-    <header id="siteHeader" class="sticky top-0 z-10">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
-
-        <div class="brand-lockup grow min-w-0">
-          <img class="brand-dragon" alt="" aria-hidden="true"
-               src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
-            <span class="title-hy">Hyffordwr</span><span class="title-trei">Cymraeg</span>
-          </h1>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
-          <span id="itemCount" class="hidden text-xs text-slate-500"></span>
-          <span id="adminBadge" class="hidden text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Admin</span>
-
-          <!-- Primary nav (same button family as index.html) -->
-          <div class="flex flex-wrap items-center gap-2">
-            <a id="btnLearn" class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
-            <!-- On Home, Practice takes you to the trainer -->
-            <a id="btnPractice" class="btn btn-primary" href="./index.html" title="Practice mode">Practice</a>
-          </div>
-
-          <!-- Secondary actions row (present but minimal on Home to preserve header rhythm) -->
-          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
-
-          <div class="flex flex-wrap items-center gap-2">
-            <!-- Keep the same IDs so your existing CSS styling fits.
-                 We repurpose these as simple links on Home. -->
-            <a id="btnStats" class="btn btn-ghost" href="./vocab.html" title="Vocab trainer">Vocab</a>
-            <a id="btnFilters" class="btn btn-ghost" href="./index.html#filters" title="Filters">Filters</a>
-            <a id="btnBrowse" class="btn btn-ghost" href="./index.html?preset=prepositions" title="Prepositions">Preps</a>
-            <a id="btnHelp" class="btn btn-ghost" href="./learn.html?lesson=whistlestop&slide=1" title="Quick tour">Tour</a>
-          </div>
-
-          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
-
-          <!-- EXACT same toggle element as index.html -->
-          <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
-        </div>
-
-      </div>
-      <div class="cymru-red-bar" aria-hidden="true"></div>
-    </header>
+    <!-- Shared navbar injects here (navbar.js loads navbar.html) -->
+    <div id="navbarMount"></div>
 
     <!-- MAIN -->
     <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4 space-y-6">
@@ -89,7 +40,7 @@
       <section class="panel rounded-2xl p-6 md:p-8">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div class="min-w-0 max-w-3xl">
-            <div class="text-xs uppercase tracking-widest text-slate-500" data-i18n="hero_kicker">
+            <div class="text-xs uppercase tracking-widest text-slate-500">
               <span data-lang="en">Croeso • Welcome</span>
               <span data-lang="cy" hidden>Croeso • Welcome</span>
             </div>
@@ -103,6 +54,7 @@
               Shwmae! I’m Katy. I’m currently learning Welsh at Uwch level, and I started building little tools to help me practise the bits I found hardest (especially mutations).
               They’ve genuinely helped my learning, so I’m sharing them here in case they’re useful for you too. Pick something below and have a play.
             </p>
+
             <p class="mt-3 text-slate-700 leading-relaxed" data-lang="cy" hidden>
               Shwmae! Katy dw i. Dw i’n ddysgwr Cymraeg ar lefel Uwch ar hyn o bryd, a dechreuais greu offerynnau bach i helpu fi ymarfer y pethau oedd yn anodd i mi (yn enwedig treigladau).
               Maen nhw wedi bod yn ddefnyddiol iawn i mi, felly dw i’n eu rhannu yma rhag ofn eu bod nhw’n helpu ti hefyd. Dewisa rywbeth isod a rho gynnig arni.
@@ -160,7 +112,7 @@
                 An interactive tool to help you practise mutations in lots of different contexts.
               </p>
               <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-                Offeryn rhyngweithiol i dy helpu di i ymarfer treigladau mewn llawer o gyd-destunau gwahanol.
+                Offeryn i’ch helpu chi ymarfer defnyddio treigladau mewn llawer o gyd-destunau gwahanol.
               </p>
             </div>
             <span class="tag">Core</span>
@@ -219,10 +171,10 @@
                 <span data-lang="cy" hidden>Ymarfer geirfa</span>
               </h3>
               <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-                Aimed at Dysgu Cymraeg learners, this tool helps you learn key course vocabulary.
+                Aimed at Dysgu Cymraeg learners, this tool helps you learn course vocabulary.
               </p>
               <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-                Wedi’i anelu at ddysgwyr Dysgu Cymraeg, mae’r offeryn hwn yn dy helpu di i ddysgu geirfa allweddol y cwrs.
+                Anelu at ddysgwyr Dysgu Cymraeg, mae’r offeryn hwn yn eich helpu chi ddysgu geirfa’r cwrs allweddol.
               </p>
             </div>
             <span class="tag">Trainer</span>
@@ -234,7 +186,7 @@
           </div>
         </article>
 
-        <!-- Optional “coming soon” card (kept minimal) -->
+        <!-- Coming soon -->
         <article class="panel rounded-2xl p-5 feature-card sm:col-span-2 lg:col-span-1">
           <div class="text-xs uppercase tracking-widest text-slate-500">
             <span data-lang="en">Coming soon</span>
@@ -245,10 +197,10 @@
             <span data-lang="cy" hidden>Ymarfer gramadeg</span>
           </h3>
           <p class="mt-2 text-slate-700 leading-relaxed" data-lang="en">
-            Focused drills on “bod + yn”, relative clauses, and other high-frequency patterns.
+            Aimed at Dysgu Cymraeg learners, this tool helps you learn course vocabulary.
           </p>
           <p class="mt-2 text-slate-700 leading-relaxed" data-lang="cy" hidden>
-            Ymarferion ffocws ar “bod + yn”, cymalau perthynol, a phatrymau cyffredin eraill.
+            Wedi’i anelu at ddysgwyr Dysgu Cymraeg, mae’r offeryn hwn yn eich helpu chi ddysgu geirfa’r cwrs allweddol.
           </p>
           <div class="mt-4">
             <a class="btn btn-ghost" href="./learn.html">
@@ -260,90 +212,67 @@
 
       </section>
 
-      <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
-        <div class="flex flex-wrap gap-4 items-center">
-          <span>© Hyffordwr Cymraeg</span>
-          <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">
-            <span data-lang="en">Back to top</span>
-            <span data-lang="cy" hidden>Yn ôl i’r brig</span>
-          </button>
-        </div>
-      </footer>
     </main>
+
+    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
+      <div class="flex flex-wrap gap-4 items-center">
+        <span>© Hyffordwr Cymraeg</span>
+        <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">
+          <span data-lang="en">Back to top</span>
+          <span data-lang="cy" hidden>Yn ôl i’r brig</span>
+        </button>
+      </div>
+    </footer>
+
   </div>
 
-<script>
-/* ========= Utilities (match index patterns) ========= */
-const $ = (sel, root = document) => root.querySelector(sel);
-function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
-function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
+  <!-- Your shared navbar loader + toggle wiring -->
+  <script src="./navbar.js"></script>
 
-/* ========= Language (MATCH index toggle style) ========= */
-const state = {
-  lang: loadLS("wm_lang", "en"),
-};
+  <!-- Home-only: show/hide bilingual blocks when the navbar toggle is clicked -->
+  <script>
+    function wmGetLang(){
+      const raw = localStorage.getItem("wm_lang");
+      if (!raw) return "en";
+      try {
+        const v = JSON.parse(raw);
+        return (v === "cy" || v === "en") ? v : "en";
+      } catch (e) {
+        return (raw === "cy" || raw === "en") ? raw : "en";
+      }
+    }
 
-function applyHomeLanguage() {
-  const lang = state.lang || "en";
-  document.documentElement.setAttribute("lang", lang === "cy" ? "cy" : "en");
+    function wmApplyLangToPage(){
+      const lang = wmGetLang();
+      document.documentElement.setAttribute("lang", lang === "cy" ? "cy" : "en");
+      document.querySelectorAll("[data-lang]").forEach(el => {
+        el.hidden = (el.getAttribute("data-lang") !== lang);
+      });
+    }
 
-  // Toggle all bilingual blocks on this page
-  document.querySelectorAll("[data-lang]").forEach(el => {
-    el.hidden = (el.getAttribute("data-lang") !== lang);
-  });
+    // Back to top
+    document.getElementById("btnTop")?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 
-  // Update header button labels to match language (optional but tidy)
-  const navLearn = $("#btnLearn");
-  const navPractice = $("#btnPractice");
-  const navStats = $("#btnStats");
-  const navFilters = $("#btnFilters");
-  const navBrowse = $("#btnBrowse");
-  const navHelp = $("#btnHelp");
+    // Initial apply (works even before navbar loads)
+    wmApplyLangToPage();
 
-  if (lang === "cy") {
-    if (navLearn) navLearn.textContent = "Dysgu";
-    if (navPractice) navPractice.textContent = "Ymarfer";
-    if (navStats) navStats.textContent = "Geirfa";
-    if (navFilters) navFilters.textContent = "Hidiau";
-    if (navBrowse) navBrowse.textContent = "Ardd.";
-    if (navHelp) navHelp.textContent = "Taith";
-  } else {
-    if (navLearn) navLearn.textContent = "Learn";
-    if (navPractice) navPractice.textContent = "Practice";
-    if (navStats) navStats.textContent = "Vocab";
-    if (navFilters) navFilters.textContent = "Filters";
-    if (navBrowse) navBrowse.textContent = "Preps";
-    if (navHelp) navHelp.textContent = "Tour";
-  }
+    // When the navbar toggle is clicked, navbar.js will change wm_lang.
+    // We re-apply AFTER that change without toggling anything ourselves.
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest?.("#btnLangToggle");
+      if (!btn) return;
+      setTimeout(wmApplyLangToPage, 0);
+    });
 
-  // CRITICAL: This matches your index.html behaviour: it sets innerHTML
-  // with a 🔁 icon + <span class="langtag">CY/EN</span>.
-  const langBtn = $("#btnLangToggle");
-  if (langBtn) {
-    const nextLang = (lang === "en") ? "CY" : "EN";
-    langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
-    langBtn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
-    langBtn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
-  }
-}
-
-/* ========= Events ========= */
-$("#btnLangToggle")?.addEventListener("click", () => {
-  state.lang = (state.lang === "en") ? "cy" : "en";
-  saveLS("wm_lang", state.lang);
-  applyHomeLanguage();
-});
-
-$("#btnTop")?.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* ========= Boot ========= */
-(function boot(){
-  applyHomeLanguage();
-})();
-</script>
+    // If another tab changes language, keep in sync
+    window.addEventListener("storage", (e) => {
+      if (e.key === "wm_lang") wmApplyLangToPage();
+    });
+  </script>
 
 </body>
 </html>
+
 
