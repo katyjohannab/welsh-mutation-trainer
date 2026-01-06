@@ -1,442 +1,531 @@
-/* global Papa */
-(() => {
-  "use strict";
+/* =========================
+   Welsh Preposition Trainer
+   =========================
 
-  /* =========================
-     Language (match navbar.js)
-     ========================= */
-  function wmGetLang() {
-    const raw = localStorage.getItem("wm_lang");
-    if (!raw) return "en";
-    try {
-      const v = JSON.parse(raw);
-      return (v === "cy" || v === "en") ? v : "en";
-    } catch {
-      return (raw === "cy" || raw === "en") ? raw : "en";
+CSV (flexible headers; these are the ones this script looks for):
+- English            (full English target sentence shown in the ? popover)
+- Before             (Welsh text before the gap)
+- After              (Welsh text after the gap)
+- AnswerPrep         (base preposition for step 1)
+- AnswerForm         (optional: full form for pronoun cases, e.g. "arna i")
+- PronounKey         (optional: 1S, 2S, 3SM, 3SF, 1PL, 2PL, 3PL)
+- Level              (optional number)
+- Topic              (optional string)
+- Mode               (optional: "prep" or "prep+pronoun")
+- Why / WhyCym       (optional explanation)
+- Hint / HintCym     (optional hint)
+
+URL params:
+- ?sheet=<CSV_URL>   load this CSV instead of default
+- ?admin=1           show admin CSV loaders in Filters panel
+*/
+
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+function getParam(k) { return new URLSearchParams(location.search).get(k); }
+function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} }
+function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (_) { return d; } }
+
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/’/g, "'")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+}
+function esc(s) {
+  return (s == null ? "" : String(s)).replace(/[&<>"]/g, ch => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
+  }[ch]));
+}
+
+function getVal(row, names) {
+  const keys = Object.keys(row || {});
+  for (const key of keys) {
+    const k = key.trim().toLowerCase();
+    if (names.some(n => k === n.trim().toLowerCase())) {
+      return (row[key] ?? "").toString().trim();
     }
   }
+  return "";
+}
 
-  /* =========================
-     Utilities
-     ========================= */
-  const $ = (id) => document.getElementById(id);
+function coerceRow(row) {
+  const r = row || {};
+  const levelRaw = getVal(r, ["Level","Lefel","lvl"]);
+  const level = levelRaw ? Number(levelRaw) : null;
 
-  function esc(s) {
-    return (s == null ? "" : String(s)).replace(/[&<>"]/g, (ch) => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
-    }[ch]));
-  }
+  const before = getVal(r, ["Before","WelshBefore","CymBefore","CYBefore","SentenceBefore"]);
+  const after  = getVal(r, ["After","WelshAfter","CymAfter","CYAfter","SentenceAfter"]);
 
-  function normalize(s) {
-    return (s || "")
-      .toString()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .replace(/’/g, "'")
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, " ");
-  }
+  const answerPrep = getVal(r, ["AnswerPrep","Prep","Preposition","Answer","Expected","TargetPrep"]);
+  const answerForm = getVal(r, ["AnswerForm","Form","TargetForm","PronounForm","ExpectedForm"]);
 
-  function uniq(arr) {
-    return Array.from(new Set(arr.filter(v => v !== undefined && v !== null && String(v).trim() !== "")));
-  }
+  const pronKey = getVal(r, ["PronounKey","PronKey","Pronoun","PersonKey"]);
+  const mode = getVal(r, ["Mode","Modd"]) || (answerForm ? "prep+pronoun" : "prep");
 
-  function shuffleInPlace(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  function getParam(k) {
-    return new URLSearchParams(location.search).get(k);
-  }
-
-  async function loadCsvUrl(u) {
-    return new Promise((resolve, reject) => {
-      Papa.parse(u, {
-        download: true,
-        header: true,
-        skipEmptyLines: true,
-        complete: (res) => resolve(res.data || []),
-        error: reject
-      });
-    });
-  }
-
-  function getVal(row, names) {
-    const r = row || {};
-    const keys = Object.keys(r);
-    for (const k of keys) {
-      if (names.some(n => k.trim().toLowerCase() === n.trim().toLowerCase())) {
-        return (r[k] ?? "").toString().trim();
-      }
-    }
-    return "";
-  }
-
-  /* =========================
-     Data model
-     =========================
-     Each item:
-     {
-       item_id, level, mode, topic_en, topic_cy,
-       contrast_group,
-       en_sentence,
-       cy_before, cy_after,
-       answer_prep,
-       needs_step2, pronoun_key,
-       answer_form_cy, answer_form_en,
-       hint_en, hint_cy, why_en, why_cy, rule_en, rule_cy,
-       choices_step1 (optional "a|b|c|d")
-     }
-  ========================= */
-
-  function coercePrepRow(row) {
-    const level = Number(getVal(row, ["level", "Level"])) || 1;
-    const needs2 = normalize(getVal(row, ["needs_step2", "NeedsStep2", "step2", "Needs Step 2"])) === "1"
-      || normalize(getVal(row, ["needs_step2", "NeedsStep2", "step2", "Needs Step 2"])) === "true";
-
-    const item = {
-      item_id: getVal(row, ["item_id", "ItemId", "ID", "Id"]) || "",
-      level,
-      mode: getVal(row, ["mode", "Mode"]) || (needs2 ? "prep+pronoun" : "prep"),
-      topic_en: getVal(row, ["topic_en", "TopicEN", "topic", "Topic"]) || "",
-      topic_cy: getVal(row, ["topic_cy", "TopicCY"]) || "",
-      contrast_group: getVal(row, ["contrast_group", "ContrastGroup", "contrast", "Contrast"]) || "",
-
-      en_sentence: getVal(row, ["en_sentence", "English", "EN", "MeaningEN", "Meaning"]) || "",
-
-      cy_before: getVal(row, ["cy_before", "WelshBefore", "CY_BEFORE", "BeforeCY", "Before"]) || "",
-      cy_after: getVal(row, ["cy_after", "WelshAfter", "CY_AFTER", "AfterCY", "After"]) || "",
-
-      answer_prep: getVal(row, ["answer_prep", "AnswerPrep", "prep", "Preposition", "Answer"]) || "",
-
-      needs_step2: needs2,
-      pronoun_key: getVal(row, ["pronoun_key", "PronounKey", "Pronoun"]) || "",
-      answer_form_cy: getVal(row, ["answer_form_cy", "AnswerFormCY", "FormCY", "AnswerForm"]) || "",
-      answer_form_en: getVal(row, ["answer_form_en", "AnswerFormEN", "FormEN"]) || "",
-
-      hint_en: getVal(row, ["hint_en", "HintEN", "Hint"]) || "",
-      hint_cy: getVal(row, ["hint_cy", "HintCY"]) || "",
-      why_en: getVal(row, ["why_en", "WhyEN", "Why"]) || "",
-      why_cy: getVal(row, ["why_cy", "WhyCY"]) || "",
-      rule_en: getVal(row, ["rule_en", "RuleEN", "Rule"]) || "",
-      rule_cy: getVal(row, ["rule_cy", "RuleCY"]) || "",
-
-      choices_step1: getVal(row, ["choices_step1", "ChoicesStep1", "Choices", "Options"]) || ""
-    };
-
-    return item;
-  }
-
-  /* =========================
-     Built-in fallback sample data
-     (Used if CSV cannot be loaded)
-     ========================= */
-  const SAMPLE_ITEMS = [
-    {
-      item_id: "Q0001",
-      level: 1,
-      mode: "prep",
-      topic_en: "Letters",
-      topic_cy: "Llythyrau",
-      contrast_group: "AT_vs_I",
-      en_sentence: "Send a letter to Sioned.",
-      cy_before: "Danfon lythyr ",
-      cy_after: " Sioned.",
-      answer_prep: "at",
-      needs_step2: false,
-      pronoun_key: "",
-      answer_form_cy: "",
-      answer_form_en: "",
-      hint_en: "Person, not a place.",
-      hint_cy: "Person, nid lle.",
-      why_en: "In this pattern, Welsh often uses <strong>at</strong> with a person (like ‘to someone’).",
-      why_cy: "Yn y patrwm yma, mae’r Gymraeg yn aml yn defnyddio <strong>at</strong> gyda pherson (fel ‘at rywun’).",
-      rule_en: "<strong>at</strong> is common for ‘to (a person)’; <strong>i</strong> is common for ‘to/into (a place)’.",
-      rule_cy: "Mae <strong>at</strong> yn gyffredin am ‘at berson’; mae <strong>i</strong> yn gyffredin am ‘i / i mewn i le’.",
-      choices_step1: ""
-    },
-    {
-      item_id: "Q0002",
-      level: 1,
-      mode: "prep",
-      topic_en: "Travel",
-      topic_cy: "Teithio",
-      contrast_group: "AT_vs_I",
-      en_sentence: "Send a letter to London.",
-      cy_before: "Danfon lythyr ",
-      cy_after: " Lundain.",
-      answer_prep: "i",
-      needs_step2: false,
-      pronoun_key: "",
-      answer_form_cy: "",
-      answer_form_en: "",
-      hint_en: "Destination is a place.",
-      hint_cy: "Cyrchfan = lle.",
-      why_en: "Here the destination is a place you go/send <em>into</em> — <strong>i</strong>.",
-      why_cy: "Yma lle yw’r gyrchfan (mynd/danfon <em>i mewn</em>) — <strong>i</strong>.",
-      rule_en: "Place/destination → often <strong>i</strong>.",
-      rule_cy: "Lle/cyrchfan → yn aml <strong>i</strong>.",
-      choices_step1: ""
-    },
-    {
-      item_id: "Q0201",
-      level: 2,
-      mode: "prep+pronoun",
-      topic_en: "Chat",
-      topic_cy: "Sgwrsio",
-      contrast_group: "A_vs_GYDA",
-      en_sentence: "She’s talking to me.",
-      cy_before: "Mae hi’n siarad ",
-      cy_after: ".",
-      answer_prep: "â",
-      needs_step2: true,
-      pronoun_key: "1S",
-      answer_form_cy: "â fi",
-      answer_form_en: "to me",
-      hint_en: "This one stays ‘prep + pronoun’.",
-      hint_cy: "Mae hwn yn aros fel ‘arddodiad + rhagenw’.",
-      why_en: "After <strong>â</strong>, you simply use the pronoun: <strong>â fi</strong>.",
-      why_cy: "Ar ôl <strong>â</strong>, defnyddia’r rhagenw: <strong>â fi</strong>.",
-      rule_en: "Some prepositions don’t inflect: prep + pronoun (e.g. â fi, gyda fi).",
-      rule_cy: "Dydy rhai arddodiaid ddim yn cyflyru: arddodiad + rhagenw (e.e. â fi, gyda fi).",
-      choices_step1: ""
-    },
-    {
-      item_id: "Q0301",
-      level: 3,
-      mode: "prep+pronoun",
-      topic_en: "Ownership",
-      topic_cy: "Perchnogaeth",
-      contrast_group: "INFLECTED_AR",
-      en_sentence: "It’s on me.",
-      cy_before: "Mae e ",
-      cy_after: ".",
-      answer_prep: "ar",
-      needs_step2: true,
-      pronoun_key: "1S",
-      answer_form_cy: "arna i",
-      answer_form_en: "on me",
-      hint_en: "This one inflects (it changes).",
-      hint_cy: "Mae hwn yn cyflyru (mae’n newid).",
-      why_en: "<strong>ar</strong> is an inflected preposition with pronouns: <strong>arna i</strong> (not <em>ar fi</em>).",
-      why_cy: "Mae <strong>ar</strong> yn arddodiad cyfunol gyda rhagenwau: <strong>arna i</strong> (nid <em>ar fi</em>).",
-      rule_en: "Some prepositions inflect with pronouns: arna i, arnat ti, arno fe, arni hi…",
-      rule_cy: "Mae rhai arddodiaid yn cyflyru gyda rhagenwau: arna i, arnat ti, arno fe, arni hi…",
-      choices_step1: ""
-    }
-  ];
-
-  /* =========================
-     Choice sets (Step 1)
-     ========================= */
-  const CHOICE_SETS = {
-    AT_vs_I: ["at", "i", "o", "gyda"],
-    CYN_vs_O_FLAEN: ["cyn", "o flaen", "ar ôl", "wrth"],
-    A_vs_GYDA: ["â", "gyda", "at", "i"],
-    GYDA_vs_AR: ["gyda", "ar", "â", "at"],
-    INFLECTED_AR: ["ar", "gyda", "â", "at"]
+  return {
+    Id: getVal(r, ["Id","ID","CardId","CardID"]) || "",
+    English: getVal(r, ["English","EN","Translate","Translation","Meaning","SentenceEN"]),
+    Before: before,
+    After: after,
+    AnswerPrep: answerPrep,
+    AnswerForm: answerForm,
+    PronounKey: pronKey,
+    Level: Number.isFinite(level) ? level : null,
+    Topic: getVal(r, ["Topic","Pwnc","Theme"]),
+    Mode: mode,
+    Why: getVal(r, ["Why","Explanation","Notes"]),
+    WhyCym: getVal(r, ["WhyCym","Why-Cym","Why Cym","Esboniad"]),
+    Hint: getVal(r, ["Hint","Clue"]),
+    HintCym: getVal(r, ["HintCym","Hint-Cym","Awgrym"]),
   };
+}
 
-  /* =========================
-     Pronouns + forms (Step 2 distractors)
-     ========================= */
-  const PRONOUNS = {
-    "1S": { en: "me", cy: "fi / i" },
-    "2S": { en: "you (sing.)", cy: "ti" },
-    "3SM": { en: "him", cy: "fe/fo" },
-    "3SF": { en: "her", cy: "hi" },
-    "1PL": { en: "us", cy: "ni" },
-    "2PL": { en: "you (pl.)", cy: "chi" },
-    "3PL": { en: "them", cy: "nhw" }
-  };
+function buildWelshSentence(before, insert, after) {
+  const b = (before || "").trimEnd();
+  const i = (insert || "").trim();
+  const a = (after || "").trimStart();
+  let s = [b, i, a].filter(Boolean).join(" ");
+  s = s.replace(/\s+/g, " ").trim();
+  s = s.replace(/\s+([,.;:!?])/g, "$1");
+  return s;
+}
 
-  const PREP_FORMS = {
-    "ar": {
-      forms_cy: {
-        "1S": "arna i", "2S": "arnat ti", "3SM": "arno fe", "3SF": "arni hi",
-        "1PL": "arnon ni", "2PL": "arnoch chi", "3PL": "arnyn nhw"
-      }
-    },
-    "at": {
-      forms_cy: {
-        "1S": "ata i", "2S": "atat ti", "3SM": "ato fe", "3SF": "ati hi",
-        "1PL": "aton ni", "2PL": "atoch chi", "3PL": "atyn nhw"
-      }
-    },
-    "i": {
-      forms_cy: {
-        "1S": "imi / i mi", "2S": "iti / i ti", "3SM": "iddo fe", "3SF": "iddi hi",
-        "1PL": "inni / i ni", "2PL": "ichwi / i chi", "3PL": "iddyn nhw"
-      }
-    },
-    "gyda": {
-      forms_cy: {
-        "1S": "gyda fi", "2S": "gyda ti", "3SM": "gyda fe", "3SF": "gyda hi",
-        "1PL": "gyda ni", "2PL": "gyda chi", "3PL": "gyda nhw"
-      }
-    },
-    "â": {
-      forms_cy: {
-        "1S": "â fi", "2S": "â ti", "3SM": "ag e", "3SF": "â hi",
-        "1PL": "â ni", "2PL": "â chi", "3PL": "â nhw"
-      }
-    }
-  };
+/* ========= TTS (Polly via Lambda URL) ========= */
+const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
+const ttsCache = new Map();
 
-  function buildIndependentForm(prep, pronKey) {
-    const indep = {
-      "1S": "fi", "2S": "ti", "3SM": "fe", "3SF": "hi", "1PL": "ni", "2PL": "chi", "3PL": "nhw"
-    };
-    const pro = indep[pronKey];
-    if (!pro) return null;
-    return `${prep} ${pro}`;
+async function playPollySentence(sentence) {
+  if (!sentence) throw new Error("No sentence to speak.");
+  if (!POLLY_FUNCTION_URL) throw new Error("POLLY_FUNCTION_URL isn't set.");
+
+  const cachedUrl = ttsCache.get(sentence);
+  if (cachedUrl) {
+    const audio = new Audio(cachedUrl);
+    await audio.play();
+    return;
   }
 
-  /* =========================
-     State + elements
-     ========================= */
-  const state = {
-    lang: wmGetLang(),
-    rows: [],
-    used: new Set(),
-    current: null,
-    step: 1,              // 1 or 2
-    step1Chosen: null,
-    locked: false,
-    score: 0,
-    streak: 0,
-    done: 0,
-    lastChoices: []
-  };
-
-  const els = {
-    // main
-    metaRow: $("metaRow"),
-    enMeaningLabel: $("enMeaningLabel"),
-    enMeaningText: $("enMeaningText"),
-    cyLabel: $("cyLabel"),
-    cyBefore: $("cyBefore"),
-    cyAfter: $("cyAfter"),
-    gapCapsule: $("gapCapsule"),
-    stepChip: $("stepChip"),
-    stepPrompt: $("stepPrompt"),
-    hintBox: $("hintBox"),
-    choices: $("choices"),
-    feedbackWrap: $("feedbackWrap"),
-
-    // buttons
-    btnHint: $("btnHint"),
-    btnReveal: $("btnReveal"),
-    btnNew: $("btnNew"),
-
-    // filters
-    fLevel: $("fLevel"),
-    fMode: $("fMode"),
-    fContrast: $("fContrast"),
-    fTopic: $("fTopic"),
-    btnClearFilters: $("btnClearFilters"),
-    dataBadge: $("dataBadge"),
-
-    // session
-    kScore: $("kScore"),
-    kStreak: $("kStreak"),
-    kDone: $("kDone"),
-    vScore: $("vScore"),
-    vStreak: $("vStreak"),
-    vDone: $("vDone"),
-    helpText: $("helpText"),
-    sessionTitle: $("sessionTitle"),
-    filtersTitle: $("filtersTitle"),
-
-    // footer
-    btnTop: $("btnTop"),
-
-    // admin
-    adminPanel: $("adminPanel"),
-    dataUrl: $("dataUrl"),
-    btnLoadUrl: $("btnLoadUrl"),
-    fileCsv: $("fileCsv")
-  };
-
-  function t(en, cy) {
-    return state.lang === "cy" ? cy : en;
-  }
-
-  /* =========================
-     “Red ?” popover (exact classes as index.html)
-     Shows full English sentence.
-     ========================= */
-  function mountSentenceTranslationUI(anchorEl, item) {
-    if (!anchorEl) return;
-
-    // Remove previous (if any)
-    anchorEl.querySelectorAll(".base-info-btn, .base-info-popover").forEach(n => n.remove());
-
-    const meaning = (item?.en_sentence || "").trim();
-    if (!meaning) return;
-
-    anchorEl.style.position = "relative";
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "base-info-btn";
-    btn.textContent = "?";
-    btn.setAttribute("aria-label", t("English meaning", "Ystyr Saesneg"));
-    btn.setAttribute("title", t("English meaning", "Ystyr Saesneg"));
-
-    const pop = document.createElement("div");
-    pop.className = "base-info-popover hidden animate-pop";
-    pop.setAttribute("role", "dialog");
-
-    const close = document.createElement("button");
-    close.type = "button";
-    close.className = "base-info-close";
-    close.setAttribute("aria-label", t("Close", "Cau"));
-    close.textContent = "×";
-
-    pop.innerHTML = `
-      <div class="base-info-meaning">${esc(meaning)}</div>
-    `;
-    pop.appendChild(close);
-
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const isHidden = pop.classList.contains("hidden");
-      document.querySelectorAll(".base-info-popover").forEach(p => p.classList.add("hidden"));
-      if (isHidden) pop.classList.remove("hidden");
-      else pop.classList.add("hidden");
-    });
-
-    close.addEventListener("click", (e) => {
-      e.stopPropagation();
-      pop.classList.add("hidden");
-    });
-
-    pop.addEventListener("click", (e) => e.stopPropagation());
-
-    anchorEl.appendChild(btn);
-    anchorEl.appendChild(pop);
-  }
-
-  // Global close (single listeners; avoids leaks)
-  document.addEventListener("click", () => {
-    document.querySelectorAll(".base-info-popover").forEach(p => p.classList.add("hidden"));
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      document.querySelectorAll(".base-info-popover").forEach(p => p.classList.add("hidden"));
-    }
+  const res = await fetch(POLLY_FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: sentence })
   });
 
-  /* =========================
-     Filters
-     ========================= */
-  function fillSelect(sel, options) {
-    const cur = sel.value;
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(msg || `TTS failed (${res.status})`);
+  }
+
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+  let url = null;
+
+  if (ct.includes("audio") || ct.includes("octet-stream")) {
+    const buf = await res.arrayBuffer();
+    const blob = new Blob([buf], { type: "audio/mpeg" });
+    url = URL.createObjectURL(blob);
+  } else {
+    const j = await res.json();
+    if (j.url) url = j.url;
+    else if (j.audioBase64 || j.audioContent) {
+      const b64 = j.audioBase64 || j.audioContent;
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const blob = new Blob([bytes], { type: "audio/mpeg" });
+      url = URL.createObjectURL(blob);
+    } else {
+      throw new Error("TTS response wasn't audio and didn't include url/audioBase64/audioContent.");
+    }
+  }
+
+  ttsCache.set(sentence, url);
+  const audio = new Audio(url);
+  await audio.play();
+}
+
+/* ========= “?” popover (same classes/behaviour as mutation trainer) ========= */
+function mountSentenceTranslationUI(anchorEl, englishSentence, uiLang) {
+  if (!anchorEl) return;
+  const meaning = (englishSentence || "").trim();
+  if (!meaning) return;
+
+  anchorEl.style.position = "relative";
+
+  // remove any previous UI mounted on re-render
+  anchorEl.querySelectorAll(":scope > .base-info-btn, :scope > .base-info-popover").forEach(n => n.remove());
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "base-info-btn";
+  btn.textContent = "?";
+  btn.setAttribute("aria-label", uiLang === "cy" ? "Ystyr (Saesneg)" : "Meaning (English)");
+  btn.setAttribute("title", uiLang === "cy" ? "Ystyr (Saesneg)" : "Meaning (English)");
+
+  const pop = document.createElement("div");
+  pop.className = "base-info-popover hidden animate-pop";
+  pop.setAttribute("role", "dialog");
+
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "base-info-close";
+  close.setAttribute("aria-label", "Close");
+  close.textContent = "×";
+
+  pop.innerHTML = `
+    <div class="base-info-meaning">${esc(meaning)}</div>
+  `;
+  pop.appendChild(close);
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isHidden = pop.classList.contains("hidden");
+    $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+    if (isHidden) pop.classList.remove("hidden");
+    else pop.classList.add("hidden");
+  });
+
+  close.addEventListener("click", (e) => {
+    e.stopPropagation();
+    pop.classList.add("hidden");
+  });
+
+  pop.addEventListener("click", (e) => e.stopPropagation());
+
+  anchorEl.appendChild(btn);
+  anchorEl.appendChild(pop);
+}
+
+// Global close (single listener; no render leaks)
+document.addEventListener("click", () => {
+  $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+});
+
+/* ========= Labels (UI language only) ========= */
+const LABEL = {
+  en: {
+    filters: "Filters",
+    level: "Level",
+    topic: "Topic",
+    mode: "Mode",
+    clear: "Clear",
+    session: "Session",
+    score: "Score",
+    streak: "Streak",
+    done: "Done",
+    resetStats: "Reset stats",
+    instruction: "Pick the Welsh preposition that matches the English meaning.",
+    easy: "Easy",
+    hard: "Hard",
+    hint: "Hint",
+    reveal: "Reveal",
+    newQ: "New question",
+    check: "Check",
+    next: "Next",
+    typePlaceholder: "Type the missing preposition…",
+    step1: "Step 1 of 2: choose the preposition.",
+    step2: "Step 2 of 2: choose the correct pronoun form.",
+    correct: "Correct!",
+    wrong: "Not quite",
+    youTyped: "You typed",
+    answer: "Answer",
+    hear: "Hear",
+    englishHidden: "Use ? to view the English sentence.",
+    noItems: "No items match your filters."
+  },
+  cy: {
+    filters: "Hidlwyr",
+    level: "Lefel",
+    topic: "Pwnc",
+    mode: "Modd",
+    clear: "Clirio",
+    session: "Sesiwn",
+    score: "Sgôr",
+    streak: "Rhediad",
+    done: "Wedi gwneud",
+    resetStats: "Ailosod ystadegau",
+    instruction: "Dewiswch yr arddodiad Cymraeg sy’n cyfateb i’r ystyr Saesneg.",
+    easy: "Hawdd",
+    hard: "Anodd",
+    hint: "Awgrym",
+    reveal: "Dangos",
+    newQ: "Cwestiwn newydd",
+    check: "Gwirio",
+    next: "Nesaf",
+    typePlaceholder: "Teipiwch y darn coll…",
+    step1: "Cam 1 o 2: dewiswch yr arddodiad.",
+    step2: "Cam 2 o 2: dewiswch y ffurf gyda rhagenw.",
+    correct: "Cywir!",
+    wrong: "Dim yn hollol gywir",
+    youTyped: "Teipioch chi",
+    answer: "Ateb",
+    hear: "Gwrando",
+    englishHidden: "Defnyddiwch ? i weld y frawddeg Saesneg.",
+    noItems: "Does dim eitemau’n cyfateb i’ch hidlwyr."
+  }
+};
+
+function t(key) {
+  return (LABEL[state.uiLang] && LABEL[state.uiLang][key]) || (LABEL.en[key] || key);
+}
+
+/* ========= App state ========= */
+const STATS_KEY = "prep_stats_v1";
+const UILANG_KEY = "prep_ui_lang_v1";
+const DIFF_KEY = "prep_difficulty_v1";
+
+const state = {
+  rows: [],
+  filtered: [],
+  used: new Set(),
+
+  current: null,
+  phase: "idle",          // idle | step1 | step2 | done
+  revealed: false,
+  lastResult: null,       // correct | wrong | revealed
+
+  uiLang: loadLS(UILANG_KEY, "en"),
+  difficulty: loadLS(DIFF_KEY, "easy"), // easy | hard
+
+  filters: loadLS("prep_filters_v1", { level: "All", topic: "All", mode: "All" }),
+
+  stats: loadLS(STATS_KEY, { score: 0, streak: 0, done: 0 }),
+  admin: getParam("admin") === "1",
+};
+
+/* ========= CSV loading ========= */
+async function loadCsvUrl(u) {
+  return new Promise((resolve, reject) => {
+    Papa.parse(u, {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: (res) => resolve(res.data),
+      error: reject
+    });
+  });
+}
+
+async function tryFetchJson(url) {
+  const r = await fetch(url, { cache: "no-store" });
+  if (!r.ok) throw new Error("Failed: " + url);
+  return r.json();
+}
+
+async function loadDefaultData() {
+  // Prefer an index.json list if you want to merge multiple CSVs later
+  // 1) data/prep/index.json  (array of csv paths)
+  // 2) data/prep.csv
+  const sheet = getParam("sheet");
+  if (sheet) return loadCsvUrl(sheet);
+
+  try {
+    const list = await tryFetchJson("data/prep/index.json");
+    if (Array.isArray(list) && list.length) {
+      const root = new URL(".", location.href).toString();
+      let merged = [];
+      for (const p of list) {
+        const url = /^https?:\/\//i.test(p) ? p : new URL(String(p).replace(/^\/+/, ""), root).toString();
+        try {
+          const d = await loadCsvUrl(url);
+          merged = merged.concat(d);
+        } catch (e) {
+          console.warn("Failed to load CSV:", url, e);
+        }
+      }
+      return merged;
+    }
+  } catch (_) {
+    // ignore; fallback below
+  }
+
+  return loadCsvUrl("data/prep.csv");
+}
+
+/* ========= Filtering / picking ========= */
+function uniq(arr) {
+  return Array.from(new Set(arr.filter(Boolean)));
+}
+
+function applyFilters() {
+  const f = state.filters || { level: "All", topic: "All", mode: "All" };
+  const level = f.level || "All";
+  const topic = f.topic || "All";
+  const mode  = f.mode  || "All";
+
+  let list = state.rows.slice();
+
+  if (level !== "All") {
+    const n = Number(level);
+    list = list.filter(r => (r.Level ?? null) === n);
+  }
+  if (topic !== "All") {
+    list = list.filter(r => (r.Topic || "") === topic);
+  }
+  if (mode !== "All") {
+    list = list.filter(r => (r.Mode || "") === mode);
+  }
+
+  // Require basics
+  list = list.filter(r => (r.Before || "").trim() && (r.After || "").trim() && (r.AnswerPrep || "").trim());
+
+  state.filtered = list;
+  $("#sampleCount").textContent = `Sample: ${state.filtered.length}`;
+}
+
+function pickNext() {
+  const pool = state.filtered;
+  if (!pool.length) return null;
+
+  const usable = pool.filter(r => !state.used.has(r.Id || JSON.stringify(r)));
+  const list = usable.length ? usable : pool;
+  if (!usable.length) state.used.clear();
+
+  const item = list[Math.floor(Math.random() * list.length)];
+  state.used.add(item.Id || JSON.stringify(item));
+  return item;
+}
+
+/* ========= Choice generation ========= */
+function getAllPreps() {
+  // Build distractors from your dataset (keeps it “on brand” with your content)
+  const preps = uniq(state.rows.map(r => (r.AnswerPrep || "").trim()).filter(Boolean));
+  // small safety fallback
+  const fallback = ["i","at","ar","o","am","gan","gyda","â","heb","wrth","dros","dan","yn","yng"];
+  const merged = uniq([...preps, ...fallback]);
+  return merged;
+}
+
+function randSample(arr, n, excludeSet = new Set()) {
+  const pool = arr.filter(x => !excludeSet.has(normalize(x)));
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n);
+}
+
+function buildStep1Choices(item) {
+  const correct = (item.AnswerPrep || "").trim();
+  const all = getAllPreps();
+  const ex = new Set([normalize(correct)]);
+  const distractors = randSample(all, 3, ex);
+  const choices = [correct, ...distractors].filter(Boolean);
+  // shuffle
+  for (let i = choices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [choices[i], choices[j]] = [choices[j], choices[i]];
+  }
+  return choices.slice(0, 4);
+}
+
+const INDEP_PRON = {
+  "1S": "fi",
+  "2S": "ti",
+  "3SM": "fe",
+  "3SF": "hi",
+  "1PL": "ni",
+  "2PL": "chi",
+  "3PL": "nhw"
+};
+
+function buildStep2Choices(item) {
+  const correct = (item.AnswerForm || "").trim();
+  const choices = new Set([correct]);
+
+  // a common “wrong” form: base prep + independent pronoun
+  const pk = (item.PronounKey || "").trim();
+  const wrong = pk && INDEP_PRON[pk] ? `${(item.AnswerPrep || "").trim()} ${INDEP_PRON[pk]}` : "";
+  if (wrong && normalize(wrong) !== normalize(correct)) choices.add(wrong);
+
+  // pull other forms from dataset with same pronoun key (good distractors if you have enough rows)
+  const samePron = state.rows
+    .filter(r => (r.PronounKey || "").trim() === pk && (r.AnswerForm || "").trim())
+    .map(r => (r.AnswerForm || "").trim())
+    .filter(f => normalize(f) !== normalize(correct));
+
+  for (const s of randSample(uniq(samePron), 3, new Set(Array.from(choices).map(normalize)))) {
+    choices.add(s);
+  }
+
+  // if still short, pad with any other AnswerForm
+  if (choices.size < 4) {
+    const anyForms = uniq(state.rows.map(r => (r.AnswerForm || "").trim()).filter(Boolean));
+    for (const s of randSample(anyForms, 6, new Set(Array.from(choices).map(normalize)))) {
+      choices.add(s);
+      if (choices.size >= 4) break;
+    }
+  }
+
+  const out = Array.from(choices).slice(0, 4);
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+/* ========= Rendering ========= */
+function btn(text, extraClass, onClick) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = `btn ${extraClass || ""}`.trim();
+  b.textContent = text;
+  b.onclick = onClick;
+  return b;
+}
+
+function renderLangToggle() {
+  const langBtn = $("#btnLangToggle");
+  if (!langBtn) return;
+  const nextLang = (state.uiLang === "en") ? "CY" : "EN";
+  langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
+  langBtn.title = (state.uiLang === "en") ? "Switch to Cymraeg" : "Switch to English";
+  langBtn.setAttribute("aria-label", (state.uiLang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
+}
+
+function renderStaticText() {
+  $("#filtersTitle").textContent = t("filters");
+  $("#lblLevel").textContent = t("level");
+  $("#lblTopic").textContent = t("topic");
+  $("#lblMode").textContent  = t("mode");
+  $("#btnClearFilters").textContent = t("clear");
+  $("#sessionTitle").textContent = t("session");
+  $("#kScore").textContent = t("score");
+  $("#kStreak").textContent = t("streak");
+  $("#kDone").textContent = t("done");
+  $("#btnResetStats").textContent = t("resetStats");
+  $("#pageSub").textContent = t("instruction");
+  $("#helpText").textContent = state.difficulty === "hard" ? t("englishHidden") : "Easy = choose. Hard = type. Use ? for the English sentence.";
+
+  $("#mbHint").textContent = t("hint");
+  $("#mbHear").textContent = t("hear");
+  // mbCheckNext label will be set dynamically (Check/Next)
+  renderLangToggle();
+}
+
+function renderStats() {
+  $("#vScore").textContent = String(state.stats.score || 0);
+  $("#vStreak").textContent = String(state.stats.streak || 0);
+  $("#vDone").textContent = String(state.stats.done || 0);
+}
+
+function renderFiltersUI() {
+  const levels = uniq(state.rows.map(r => r.Level).filter(v => Number.isFinite(v))).sort((a,b)=>a-b);
+  const topics = uniq(state.rows.map(r => (r.Topic || "").trim()).filter(Boolean)).sort((a,b)=>a.localeCompare(b));
+  const modes  = uniq(state.rows.map(r => (r.Mode || "").trim()).filter(Boolean)).sort((a,b)=>a.localeCompare(b));
+
+  const fLevel = $("#fLevel");
+  const fTopic = $("#fTopic");
+  const fMode  = $("#fMode");
+
+  const fill = (sel, options, selected) => {
     sel.innerHTML = "";
     for (const opt of options) {
       const o = document.createElement("option");
@@ -444,646 +533,493 @@
       o.textContent = opt;
       sel.appendChild(o);
     }
-    sel.value = options.includes(cur) ? cur : options[0];
+    sel.value = options.includes(selected) ? selected : options[0];
+  };
+
+  fill(fLevel, ["All", ...levels.map(String)], state.filters.level || "All");
+  fill(fTopic, ["All", ...topics], state.filters.topic || "All");
+  fill(fMode,  ["All", ...modes],  state.filters.mode  || "All");
+
+  $("#sampleCount").textContent = `Sample: ${state.filtered.length}`;
+}
+
+function renderTrainer() {
+  const host = $("#trainerHost");
+  if (!host) return;
+  host.innerHTML = "";
+
+  const item = state.current;
+  if (!item) {
+    host.innerHTML = `<div class="text-slate-700">${esc(t("noItems"))}</div>`;
+    return;
   }
 
-  function renderFilters() {
-    const all = t("All", "Pob un");
+  const needsStep2 = state.difficulty === "easy" && !!(item.AnswerForm || "").trim();
 
-    const levels = uniq(state.rows.map(r => String(r.level))).sort((a, b) => Number(a) - Number(b));
-    const modes = uniq(state.rows.map(r => r.mode)).sort((a, b) => a.localeCompare(b));
-    const contrasts = uniq(state.rows.map(r => r.contrast_group)).sort((a, b) => a.localeCompare(b));
-    const topics = uniq(state.rows.map(r => (state.lang === "cy" ? (r.topic_cy || r.topic_en) : (r.topic_en || r.topic_cy))))
-      .sort((a, b) => a.localeCompare(b));
+  const correctInsert = (item.AnswerForm || item.AnswerPrep || "").trim();
 
-    fillSelect(els.fLevel, [all, ...levels]);
-    fillSelect(els.fMode, [all, ...modes]);
-    fillSelect(els.fContrast, [all, ...contrasts]);
-    fillSelect(els.fTopic, [all, ...topics]);
-  }
+  // Header row: progress + difficulty toggle + new question
+  const top = document.createElement("div");
+  top.className = "flex flex-wrap items-center justify-between gap-2 mb-4";
 
-  function getFilteredItems() {
-    const all = t("All", "Pob un");
-    const lvl = els.fLevel.value;
-    const mode = els.fMode.value;
-    const contrast = els.fContrast.value;
-    const topic = els.fTopic.value;
+  const left = document.createElement("div");
+  left.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
 
-    return state.rows.filter(r => {
-      if (lvl !== all && String(r.level) !== lvl) return false;
-      if (mode !== all && r.mode !== mode) return false;
-      if (contrast !== all && r.contrast_group !== contrast) return false;
+  const lvl = (Number.isFinite(item.Level) ? item.Level : null);
+  if (lvl != null) left.appendChild(chip(`${t("level")}: ${lvl}`));
+  if ((item.Topic || "").trim()) left.appendChild(chip(`${t("topic")}: ${item.Topic}`));
+  left.appendChild(chip(`${t("mode")}: ${item.Mode || (item.AnswerForm ? "prep+pronoun" : "prep")}`));
 
-      const topicLabel = (state.lang === "cy" ? (r.topic_cy || r.topic_en) : (r.topic_en || r.topic_cy)) || "";
-      if (topic !== all && topicLabel !== topic) return false;
+  const right = document.createElement("div");
+  right.className = "flex items-center gap-2";
 
-      return true;
-    });
-  }
+  // difficulty segmented control (uses same .seg / .seg-btn as your mutation trainer)
+  const seg = document.createElement("div");
+  seg.className = "seg";
 
-  function pickNextItem() {
-    const pool = getFilteredItems();
-    if (!pool.length) return null;
-
-    const unused = pool.filter(i => !state.used.has(i.item_id));
-    const list = unused.length ? unused : pool;
-    if (!unused.length) state.used.clear();
-
-    const item = list[Math.floor(Math.random() * list.length)];
-    if (item.item_id) state.used.add(item.item_id);
-    return item;
-  }
-
-  /* =========================
-     UI text (bilingual)
-     ========================= */
-  function applyLanguageStatic() {
-    els.enMeaningLabel.textContent = t("Meaning to express (English)", "Ystyr i’w fynegi (Saesneg)");
-    els.cyLabel.textContent = t("Cymraeg", "Cymraeg");
-
-    els.btnHint.textContent = t("Hint", "Awgrym");
-    els.btnReveal.textContent = t("Reveal", "Dangos");
-    els.btnNew.textContent = t("New question", "Cwestiwn newydd");
-
-    $("pageSubtitle").textContent = t(
-      "Choose the correct Welsh preposition to match the English meaning. If a pronoun form is needed, you’ll get a second step.",
-      "Dewis yr arddodiad Cymraeg cywir i weddu i’r ystyr Saesneg. Os oes angen ffurf gyda rhagenw, bydd ail gam."
-    );
-
-    els.filtersTitle.textContent = t("Filters", "Hidlwyr");
-    els.sessionTitle.textContent = t("Session", "Sesiwn");
-
-    $("lblLevel").textContent = t("Level", "Lefel");
-    $("lblMode").textContent = t("Mode", "Modd");
-    $("lblContrast").textContent = t("Contrast set", "Set cyferbyniad");
-    $("lblTopic").textContent = t("Topic", "Pwnc");
-
-    els.kScore.textContent = t("Score", "Sgôr");
-    els.kStreak.textContent = t("Streak", "Rhediad");
-    els.kDone.textContent = t("Done", "Wedi gwneud");
-
-    els.helpText.innerHTML = t(
-      `Use filters to drill a contrast set (e.g. <span class="kbd">AT vs I</span>). Hint doesn’t affect score.`,
-      `Defnyddia hidlwyr i ymarfer set cyferbyniad (e.e. <span class="kbd">AT vs I</span>). Dydy Awgrym ddim yn newid y sgôr.`
-    );
-
-    els.btnClearFilters.textContent = t("Clear", "Clirio");
-    $("btnResetStats").textContent = t("Reset stats", "Ailosod ystadegau");
-    els.btnTop.textContent = t("Back to top", "Yn ôl i’r brig");
-  }
-
-  /* =========================
-     Rendering
-     ========================= */
-  function renderMeta(item) {
-    els.metaRow.innerHTML = "";
-
-    const addChip = (text) => {
-      const s = document.createElement("span");
-      s.className = "chip";
-      s.textContent = text;
-      els.metaRow.appendChild(s);
-    };
-
-    if (!item) return;
-
-    addChip(`${t("Level", "Lefel")}: ${item.level}`);
-
-    const topicLabel = state.lang === "cy" ? (item.topic_cy || item.topic_en) : (item.topic_en || item.topic_cy);
-    if (topicLabel) addChip(`${t("Topic", "Pwnc")}: ${topicLabel}`);
-
-    if (item.contrast_group) addChip(`${t("Set", "Set")}: ${item.contrast_group.replaceAll("_", " ")}`);
-
-    if (item.mode) addChip(`${t("Mode", "Modd")}: ${item.mode}`);
-  }
-
-  function setGapText(txt) {
-    els.gapCapsule.textContent = txt;
-    // re-mount the ? after setting text (so it sits on top-right correctly)
-    mountSentenceTranslationUI(els.gapCapsule, state.current);
-  }
-
-  function renderQuestion() {
-    const item = state.current;
-    if (!item) return;
-
-    state.step = 1;
-    state.step1Chosen = null;
-    state.locked = false;
-    state.lastChoices = [];
-
-    els.feedbackWrap.classList.add("hidden");
-    els.feedbackWrap.innerHTML = "";
-
-    els.hintBox.classList.add("hidden");
-    els.hintBox.textContent = "";
-
-    renderMeta(item);
-
-    // English meaning
-    els.enMeaningText.textContent = item.en_sentence || t("(No English provided)", "(Dim Saesneg wedi’i ddarparu)");
-
-    // Welsh line
-    els.cyBefore.textContent = item.cy_before || "";
-    els.cyAfter.textContent = item.cy_after || "";
-    setGapText("__");
-
-    // Step prompt (explicit)
-    els.stepChip.textContent = item.needs_step2
-      ? t("Step 1 of 2", "Cam 1 o 2")
-      : t("Step 1 of 1", "Cam 1 o 1");
-
-    els.stepPrompt.textContent = t(
-      "Choose the correct preposition.",
-      "Dewis yr arddodiad cywir."
-    );
-
-    // Hint content (ready, but hidden)
-    const hint = state.lang === "cy" ? item.hint_cy : item.hint_en;
-    if (hint) els.hintBox.innerHTML = esc(hint);
-
-    renderStep1Choices(item);
-  }
-
-  function choiceButton(label, idx) {
+  const mkSegBtn = (label, value) => {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "btn btn-ghost w-full justify-center py-3";
-    b.innerHTML = `<span class="sr-only">${idx + 1}</span>${esc(label)}`;
-    b.dataset.choice = label;
+    const on = state.difficulty === value;
+    b.className = `seg-btn ${on ? "is-on" : ""}`;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.textContent = label.toUpperCase();
+    b.onclick = () => {
+      if (state.difficulty === value) return;
+      state.difficulty = value;
+      saveLS(DIFF_KEY, state.difficulty);
+      // reset question flow cleanly
+      startNewQuestion(true);
+    };
     return b;
-  }
+  };
 
-  function disableChoiceButtons() {
-    els.choices.querySelectorAll("button").forEach(btn => {
-      btn.disabled = true;
-      btn.classList.add("opacity-70", "cursor-not-allowed");
+  seg.append(
+    mkSegBtn(t("easy"), "easy"),
+    mkSegBtn(t("hard"), "hard")
+  );
+
+  const newQ = btn(t("newQ"), "btn-primary shadow", () => startNewQuestion(true));
+  right.append(seg, newQ);
+
+  top.append(left, right);
+
+  // English target sentence (clean: sentence only, no extra label)
+  const enCard = document.createElement("div");
+  enCard.className = "rounded-2xl border bg-emerald-50/80 px-5 py-4 mb-4";
+  enCard.innerHTML = `<div class="text-slate-900 text-xl md:text-2xl font-semibold">${esc(item.English || "")}</div>`;
+
+  // Welsh sentence with gap capsule (anchor ? here)
+  const cyWrap = document.createElement("div");
+  cyWrap.className = "rounded-2xl border border-slate-200 bg-white/70 px-5 py-5";
+
+  const cyLine = document.createElement("div");
+  cyLine.className = "text-xl md:text-2xl text-slate-800 flex flex-wrap items-baseline gap-2";
+
+  const before = document.createElement("span");
+  before.textContent = (item.Before || "");
+
+  const gap = document.createElement("span");
+  gap.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-4 py-1.5 shadow-sm font-semibold text-indigo-900";
+  gap.textContent = state.revealed ? correctInsert : "___";
+
+  const after = document.createElement("span");
+  after.textContent = (item.After || "");
+
+  // Mount the “?” popover here (full English sentence)
+  mountSentenceTranslationUI(gap, item.English, state.uiLang);
+
+  cyLine.append(before, gap, after);
+  cyWrap.appendChild(cyLine);
+
+  // step / instruction line
+  const stepLine = document.createElement("div");
+  stepLine.className = "mt-3 flex items-center gap-2 text-sm text-slate-600";
+
+  if (state.difficulty === "easy" && needsStep2) {
+    stepLine.innerHTML = `<span class="pill">${esc(state.phase === "step2" ? t("step2") : t("step1"))}</span>`;
+  } else {
+    stepLine.innerHTML = `<span class="pill">${esc(t("instruction"))}</span>`;
+  }
+  cyWrap.appendChild(stepLine);
+
+  // Answer interaction area
+  const inter = document.createElement("div");
+  inter.className = "mt-5";
+
+  // Hint text
+  const hint = document.createElement("div");
+  hint.id = "hintBox";
+  hint.className = "hidden mt-3 text-sm text-slate-600";
+  const hintText = (state.uiLang === "cy" ? (item.HintCym || item.Hint) : item.Hint) || "";
+  hint.innerHTML = hintText ? esc(hintText) : `Starts with: <b>${esc(correctInsert.slice(0, 1) || "?")}</b>`;
+
+  // Feedback box
+  const fb = document.createElement("div");
+  fb.id = "feedbackBox";
+  fb.className = "hidden mt-5 rounded-2xl border px-5 py-4 bg-white/70";
+  fb.setAttribute("aria-live", "polite");
+
+  // Actions
+  const actions = document.createElement("div");
+  actions.className = "mt-4 flex flex-wrap gap-2 justify-between items-center";
+
+  const leftActions = document.createElement("div");
+  leftActions.className = "flex flex-wrap gap-2";
+
+  const rightActions = document.createElement("div");
+  rightActions.className = "flex flex-wrap gap-2";
+
+  const btnHint = btn(t("hint"), "btn-ghost", () => hint.classList.toggle("hidden"));
+  const btnReveal = btn(t("reveal"), "btn-ghost", () => revealNow());
+
+  leftActions.append(btnHint, btnReveal);
+
+  // Hear button (always available, but speaks the correct sentence)
+  const btnHear = document.createElement("button");
+  btnHear.type = "button";
+  btnHear.className = "btn-hear";
+  btnHear.innerHTML = `<span class="icon" aria-hidden="true">▶︎</span><span>${esc(t("hear"))}</span>`;
+  btnHear.onclick = async () => {
+    try {
+      const sentence = buildWelshSentence(item.Before, correctInsert, item.After);
+      await playPollySentence(sentence);
+    } catch (e) {
+      alert("Couldn't play audio: " + (e?.message || e));
+    }
+  };
+
+  // “Next” button
+  const btnNext = btn(t("next"), "btn-primary shadow", () => startNewQuestion(true));
+  btnNext.id = "btnNext";
+  btnNext.disabled = !state.revealed && !(state.phase === "done");
+  btnNext.classList.toggle("opacity-60", btnNext.disabled);
+
+  rightActions.append(btnHear, btnNext);
+  actions.append(leftActions, rightActions);
+
+  // Difficulty-specific UI
+  if (state.difficulty === "hard") {
+    const row = document.createElement("div");
+    row.className = "flex flex-wrap items-center gap-2";
+
+    const input = document.createElement("input");
+    input.id = "typeBox";
+    input.className = "border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-xl md:text-2xl leading-tight shadow-sm w-full md:w-80";
+    input.placeholder = t("typePlaceholder");
+    input.autocomplete = "off";
+
+    const btnCheck = btn(t("check"), "btn-primary shadow", () => checkTyped(input.value));
+    btnCheck.id = "btnCheck";
+
+    row.append(input, btnCheck);
+    inter.append(row);
+
+    // keyboard
+    setTimeout(() => input.focus(), 0);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); btnCheck.click(); }
     });
-  }
 
-  function markCorrectWrongButtons(correctValue, chosenValue) {
-    els.choices.querySelectorAll("button").forEach(btn => {
-      const val = btn.dataset.choice || btn.textContent;
-      if (normalize(val) === normalize(correctValue)) {
-        btn.classList.remove("btn-ghost");
-        btn.classList.add("btn-primary");
-      } else if (chosenValue && normalize(val) === normalize(chosenValue) && normalize(val) !== normalize(correctValue)) {
-        // wrong choice styling (page-specific via Tailwind utilities; no shared CSS)
-        btn.classList.add("border", "border-rose-300", "bg-rose-50", "text-rose-900");
-      }
+    $("#mbCheckNext").textContent = t("check");
+  } else {
+    // EASY mode choices
+    const choices = document.createElement("div");
+    choices.id = "choices";
+    choices.className = "grid grid-cols-2 md:grid-cols-4 gap-2";
+
+    const opts = (state.phase === "step2") ? buildStep2Choices(item) : buildStep1Choices(item);
+
+    opts.forEach((opt, idx) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "btn btn-ghost";
+      b.textContent = opt;
+      b.onclick = () => pickChoice(opt);
+      choices.appendChild(b);
+
+      // keyboard 1-4
+      b.dataset.key = String(idx + 1);
     });
+
+    inter.appendChild(choices);
+    $("#mbCheckNext").textContent = t("next"); // easy is “tap to answer”; next only matters after result
   }
 
-  function renderStep1Choices(item) {
-    let choices = [];
+  inter.append(hint, fb, actions);
 
-    // Allow CSV override: "a|b|c|d"
-    if (item.choices_step1 && item.choices_step1.includes("|")) {
-      choices = item.choices_step1.split("|").map(s => s.trim()).filter(Boolean);
-    } else if (item.contrast_group && CHOICE_SETS[item.contrast_group]) {
-      choices = [...CHOICE_SETS[item.contrast_group]];
+  // assemble
+  host.append(top, enCard, cyWrap, inter);
+
+  // mobile buttons wiring
+  $("#mbHint").onclick = () => btnHint.click();
+  $("#mbHear").onclick = () => btnHear.click();
+  $("#mbCheckNext").onclick = () => {
+    if (state.difficulty === "hard") {
+      if (!state.revealed) $("#btnCheck")?.click();
+      else startNewQuestion(true);
     } else {
-      // fallback
-      choices = uniq([item.answer_prep, "i", "at", "ar", "o", "gyda"]).slice(0, 4);
+      if (state.revealed || state.phase === "done") startNewQuestion(true);
     }
+  };
 
-    choices = uniq(choices);
-    shuffleInPlace(choices);
-    state.lastChoices = choices;
-
-    els.choices.innerHTML = "";
-    choices.slice(0, 4).forEach((ch, i) => {
-      const b = choiceButton(ch, i);
-      b.addEventListener("click", () => onPickPrep(ch));
-      els.choices.appendChild(b);
-    });
+  function setNextEnabled(on) {
+    btnNext.disabled = !on;
+    btnNext.classList.toggle("opacity-60", !on);
   }
 
-  function renderStep2Choices(item) {
-    const prep = item.answer_prep;
-    const pronKey = item.pronoun_key;
-    const correct = (item.answer_form_cy || "").trim();
+  function showFeedback(ok, detailsHtml) {
+    fb.classList.remove("hidden");
+    fb.classList.toggle("border-emerald-200", ok);
+    fb.classList.toggle("border-rose-200", !ok);
+    fb.classList.toggle("bg-emerald-50/60", ok);
+    fb.classList.toggle("bg-rose-50/60", !ok);
 
-    const options = new Set();
-    if (correct) options.add(correct);
-
-    // Distractor: prep + independent pronoun
-    const wrongIndep = buildIndependentForm(prep, pronKey);
-    if (wrongIndep && normalize(wrongIndep) !== normalize(correct)) options.add(wrongIndep);
-
-    // Distractor: same prep, different pronoun
-    const bank = PREP_FORMS[prep]?.forms_cy || {};
-    const otherKeys = Object.keys(bank).filter(k => k !== pronKey);
-    if (otherKeys.length) {
-      const k = otherKeys[Math.floor(Math.random() * otherKeys.length)];
-      options.add(bank[k]);
-    }
-
-    // Distractor: other prep, same pronoun
-    const otherPreps = Object.keys(PREP_FORMS).filter(p => p !== prep);
-    if (otherPreps.length) {
-      const p = otherPreps[Math.floor(Math.random() * otherPreps.length)];
-      const form = PREP_FORMS[p]?.forms_cy?.[pronKey];
-      if (form) options.add(form);
-    }
-
-    // Pad to 4
-    while (options.size < 4) {
-      const p = Object.keys(PREP_FORMS)[Math.floor(Math.random() * Object.keys(PREP_FORMS).length)];
-      const keys = Object.keys(PREP_FORMS[p].forms_cy);
-      const k = keys[Math.floor(Math.random() * keys.length)];
-      options.add(PREP_FORMS[p].forms_cy[k]);
-    }
-
-    const list = Array.from(options).slice(0, 4);
-    shuffleInPlace(list);
-    state.lastChoices = list;
-
-    els.choices.innerHTML = "";
-    list.forEach((ch, i) => {
-      const b = choiceButton(ch, i);
-      b.addEventListener("click", () => onPickForm(ch));
-      els.choices.appendChild(b);
-    });
-  }
-
-  function showFeedback({ ok, headline, bodyHtml }) {
-    els.feedbackWrap.classList.remove("hidden");
-
-    const box = document.createElement("div");
-    box.className = "feedback-box";
-
-    // Accent border per correctness (Tailwind utilities; no shared CSS)
-    box.classList.add("border");
-    if (ok === true) box.classList.add("border-emerald-200", "bg-emerald-50/40");
-    if (ok === false) box.classList.add("border-rose-200", "bg-rose-50/40");
-
-    box.innerHTML = `
-      <div class="text-xl md:text-2xl font-semibold ${ok ? "text-emerald-900" : "text-rose-900"}">
-        ${esc(headline)}
+    fb.innerHTML = `
+      <div class="text-2xl font-semibold ${ok ? "text-emerald-900" : "text-rose-900"}">
+        ${ok ? "✅ " + esc(t("correct")) : "❌ " + esc(t("wrong"))}
       </div>
-      <div class="mt-2 text-slate-800">${bodyHtml || ""}</div>
+      <div class="mt-2 text-slate-700">${detailsHtml}</div>
     `;
-
-    els.feedbackWrap.innerHTML = "";
-    els.feedbackWrap.appendChild(box);
   }
 
-  function showFullExplanation(ok, item, extra = {}) {
-    const why = state.lang === "cy" ? item.why_cy : item.why_en;
-    const rule = state.lang === "cy" ? item.rule_cy : item.rule_en;
+  function revealNow() {
+    if (state.revealed) return;
+    state.revealed = true;
+    state.lastResult = "revealed";
+    state.stats.done += 1;
+    state.stats.streak = 0;
+    saveLS(STATS_KEY, state.stats);
+    renderStats();
 
-    const answerLine = item.needs_step2
-      ? t(
-          `Answer: <strong>${esc(item.answer_prep)}</strong> → <strong>${esc(item.answer_form_cy)}</strong>.`,
-          `Ateb: <strong>${esc(item.answer_prep)}</strong> → <strong>${esc(item.answer_form_cy)}</strong>.`
-        )
-      : t(
-          `Answer: <strong>${esc(item.answer_prep)}</strong>.`,
-          `Ateb: <strong>${esc(item.answer_prep)}</strong>.`
-        );
+    // Force show correct gap
+    gap.textContent = correctInsert;
 
-    const chosenLine = extra.chosen
-      ? `<div class="mt-2 text-slate-700">${esc(t("You chose:", "Dewisaist ti:"))} <strong>${esc(extra.chosen)}</strong></div>`
+    const whyText = (state.uiLang === "cy" ? (item.WhyCym || item.Why) : item.Why) || "";
+    const fullWelsh = buildWelshSentence(item.Before, correctInsert, item.After);
+
+    showFeedback(false, `
+      <div><b>${esc(t("answer"))}:</b> <span class="font-semibold">${esc(correctInsert)}</span></div>
+      <div class="mt-2"><b>Cymraeg:</b> ${esc(fullWelsh)}</div>
+      ${whyText ? `<div class="mt-2">${esc(whyText)}</div>` : ""}
+    `);
+
+    setNextEnabled(true);
+    renderTrainer(); // re-render to update gap + buttons state
+  }
+
+  function finishCard(ok, userValue) {
+    state.revealed = true;
+    state.lastResult = ok ? "correct" : "wrong";
+    state.stats.done += 1;
+
+    if (ok) {
+      state.stats.score += 1;
+      state.stats.streak += 1;
+    } else {
+      state.stats.streak = 0;
+    }
+
+    saveLS(STATS_KEY, state.stats);
+    renderStats();
+
+    gap.textContent = correctInsert;
+
+    const whyText = (state.uiLang === "cy" ? (item.WhyCym || item.Why) : item.Why) || "";
+    const fullWelsh = buildWelshSentence(item.Before, correctInsert, item.After);
+
+    const typedLine = (!ok && userValue != null)
+      ? `<div class="mt-1">${esc(t("youTyped"))}: <b>${esc(userValue || "(blank)")}</b></div>`
       : "";
 
-    const meaningLine = `<div class="mt-3 text-slate-700">
-      <span class="text-xs uppercase tracking-wide text-slate-500">${esc(t("Meaning", "Ystyr"))}</span><br>
-      <span class="font-semibold">${esc(item.en_sentence || "")}</span>
-    </div>`;
+    showFeedback(ok, `
+      <div><b>${esc(t("answer"))}:</b> <span class="font-semibold">${esc(correctInsert)}</span></div>
+      ${typedLine}
+      <div class="mt-2"><b>Cymraeg:</b> ${esc(fullWelsh)}</div>
+      ${whyText ? `<div class="mt-2">${esc(whyText)}</div>` : ""}
+    `);
 
-    const whyBlock = why ? `<div class="mt-3 text-slate-700">${why}</div>` : "";
-    const ruleBlock = rule ? `<div class="mt-2 text-slate-600">${rule}</div>` : "";
-
-    showFeedback({
-      ok,
-      headline: ok ? t("Correct", "Cywir") : t("Incorrect", "Anghywir"),
-      bodyHtml: `
-        <div>${answerLine}</div>
-        ${chosenLine}
-        ${meaningLine}
-        ${whyBlock}
-        ${ruleBlock}
-      `
-    });
+    setNextEnabled(true);
+    renderTrainer(); // update UI states
   }
 
-  function updateStats(ok, counted = true) {
-    if (!counted) return;
-    state.done += 1;
-    if (ok) {
-      state.score += 1;
-      state.streak += 1;
+  function pickChoice(choice) {
+    if (state.revealed) return;
+
+    if (state.phase === "step2") {
+      const ok = normalize(choice) === normalize(item.AnswerForm);
+      state.phase = "done";
+      finishCard(ok, choice);
+      return;
+    }
+
+    // step1
+    const ok = normalize(choice) === normalize(item.AnswerPrep);
+    if (!ok) {
+      state.phase = "done";
+      finishCard(false, choice);
+      return;
+    }
+
+    // correct step1
+    if (needsStep2) {
+      state.phase = "step2";
+      // small positive feedback + advance to step2 without counting a “done”
+      showFeedback(true, `<div>${esc(item.AnswerPrep)} ✓</div><div class="mt-1 text-slate-600">${esc(t("step2"))}</div>`);
+      // re-render into step2 choices
+      renderTrainer();
     } else {
-      state.streak = 0;
-    }
-    els.vScore.textContent = String(state.score);
-    els.vStreak.textContent = String(state.streak);
-    els.vDone.textContent = String(state.done);
-  }
-
-  function onPickPrep(choice) {
-    if (state.locked) return;
-    const item = state.current;
-
-    state.step1Chosen = choice;
-    setGapText(choice); // shows what they picked (even if step2 will replace later)
-
-    const correct = normalize(choice) === normalize(item.answer_prep);
-    state.locked = true;
-
-    markCorrectWrongButtons(item.answer_prep, choice);
-    disableChoiceButtons();
-
-    if (!correct) {
-      updateStats(false, true);
-      showFullExplanation(false, item, { chosen: choice });
-      return;
-    }
-
-    // Step 1 correct
-    if (item.needs_step2) {
-      state.step = 2;
-      state.locked = false;
-
-      els.stepChip.textContent = t("Step 2 of 2", "Cam 2 o 2");
-
-      const pron = PRONOUNS[item.pronoun_key];
-      const pronLabel = pron ? (state.lang === "cy" ? pron.cy : pron.en) : "";
-
-      const target = item.answer_form_en
-        ? `${item.answer_form_en}`
-        : (pronLabel ? t(`for ${pronLabel}`, `ar gyfer ${pronLabel}`) : "");
-
-      els.stepPrompt.textContent = t(
-        `Now choose the full Welsh form ${target ? `(${target})` : ""} — it will replace what’s in the blank.`,
-        `Nawr dewis y ffurf Gymraeg lawn ${target ? `(${target})` : ""} — bydd yn disodli’r hyn sydd yn y bwlch.`
-      );
-
-      renderStep2Choices(item);
-
-      showFeedback({
-        ok: true,
-        headline: t("Good — now choose the form", "Da — nawr dewis y ffurf"),
-        bodyHtml: `
-          <div class="text-slate-700">
-            ${t("Preposition chosen:", "Arddodiad a ddewiswyd:")} <strong>${esc(item.answer_prep)}</strong>
-          </div>
-        `
-      });
-
-      return;
-    }
-
-    // No step2: finished
-    updateStats(true, true);
-    showFullExplanation(true, item);
-  }
-
-  function onPickForm(choice) {
-    if (state.locked) return;
-    const item = state.current;
-
-    state.locked = true;
-    setGapText(choice); // replace the blank with the chosen form
-
-    const correct = normalize(choice) === normalize(item.answer_form_cy);
-    markCorrectWrongButtons(item.answer_form_cy, choice);
-    disableChoiceButtons();
-
-    updateStats(correct, true);
-    showFullExplanation(correct, item, { chosen: choice });
-  }
-
-  function showHint() {
-    const item = state.current;
-    if (!item) return;
-    const hint = state.lang === "cy" ? item.hint_cy : item.hint_en;
-    if (!hint) return;
-    els.hintBox.classList.toggle("hidden");
-    if (!els.hintBox.classList.contains("hidden")) {
-      els.hintBox.innerHTML = esc(hint);
+      state.phase = "done";
+      finishCard(true, choice);
     }
   }
 
-  function reveal() {
-    const item = state.current;
-    if (!item) return;
-
-    // Reveal the final target for this card (if step2 exists, reveal the full form)
-    const finalAnswer = item.needs_step2 ? (item.answer_form_cy || item.answer_prep) : item.answer_prep;
-
-    setGapText(finalAnswer);
-
-    // Lock + mark
-    state.locked = true;
-    const correctValue = finalAnswer;
-    markCorrectWrongButtons(correctValue, null);
-    disableChoiceButtons();
-
-    updateStats(false, true);
-    showFullExplanation(false, item, { chosen: t("(revealed)", "(wedi dangos)") });
+  function checkTyped(val) {
+    if (state.revealed) return;
+    const guess = (val || "").trim();
+    const ok = normalize(guess) === normalize(correctInsert);
+    state.phase = "done";
+    finishCard(ok, guess);
   }
+}
 
-  function newQuestion() {
-    const item = pickNextItem();
-    if (!item) {
-      els.enMeaningText.textContent = t("No items match your filters.", "Does dim eitemau’n cyfateb i’r hidlwyr.");
-      els.cyBefore.textContent = "";
-      els.cyAfter.textContent = "";
-      setGapText("__");
-      els.choices.innerHTML = "";
-      els.feedbackWrap.classList.add("hidden");
-      els.feedbackWrap.innerHTML = "";
-      return;
-    }
-    state.current = item;
-    renderQuestion();
+function chip(text) {
+  const c = document.createElement("span");
+  c.className = "chip";
+  c.innerHTML = `<span>${esc(text)}</span>`;
+  c.style.cursor = "default";
+  return c;
+}
+
+/* ========= Flow ========= */
+function startNewQuestion(resetUsed = false) {
+  if (resetUsed) {
+    // not clearing used by default; but if filters change we do
   }
+  const item = pickNext();
+  state.current = item;
+  state.revealed = false;
+  state.lastResult = null;
+  state.phase = (state.difficulty === "easy" && item && (item.AnswerForm || "").trim()) ? "step1" : "step1";
+  renderTrainer();
+}
 
-  function clearFilters() {
-    const all = t("All", "Pob un");
-    els.fLevel.value = all;
-    els.fMode.value = all;
-    els.fContrast.value = all;
-    els.fTopic.value = all;
+/* ========= Wiring ========= */
+function wireUi() {
+  $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  $("#btnFilters")?.addEventListener("click", () => $("#filtersPanel")?.classList.toggle("hidden"));
+
+  $("#btnLangToggle")?.addEventListener("click", () => {
+    state.uiLang = (state.uiLang === "en") ? "cy" : "en";
+    saveLS(UILANG_KEY, state.uiLang);
+    renderStaticText();
+    renderTrainer();
+  });
+
+  $("#btnResetStats")?.addEventListener("click", () => {
+    state.stats = { score: 0, streak: 0, done: 0 };
+    saveLS(STATS_KEY, state.stats);
+    renderStats();
+  });
+
+  $("#btnClearFilters")?.addEventListener("click", () => {
+    state.filters = { level: "All", topic: "All", mode: "All" };
+    saveLS("prep_filters_v1", state.filters);
+    renderFiltersUI();
+    applyFilters();
     state.used.clear();
-    newQuestion();
-  }
+    startNewQuestion(true);
+  });
 
-  function resetStats() {
-    state.score = 0;
-    state.streak = 0;
-    state.done = 0;
-    els.vScore.textContent = "0";
-    els.vStreak.textContent = "0";
-    els.vDone.textContent = "0";
-    state.used.clear();
-    newQuestion();
-  }
-
-  /* =========================
-     Keyboard shortcuts
-     ========================= */
-  function bindKeyboard() {
-    document.addEventListener("keydown", (e) => {
-      // Don’t interfere with typing in inputs/selects
-      const tag = (e.target && e.target.tagName) || "";
-      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag.toUpperCase())) return;
-
-      const k = e.key.toLowerCase();
-
-      if (k === "h") { e.preventDefault(); els.btnHint.click(); return; }
-      if (k === "r") { e.preventDefault(); els.btnReveal.click(); return; }
-      if (k === "n") { e.preventDefault(); els.btnNew.click(); return; }
-
-      const num = parseInt(e.key, 10);
-      if (num >= 1 && num <= 4) {
-        const arr = state.lastChoices || [];
-        const choice = arr[num - 1];
-        if (!choice) return;
-        if (state.step === 1) onPickPrep(choice);
-        else onPickForm(choice);
-      }
+  // Filters change
+  ["#fLevel", "#fTopic", "#fMode"].forEach(id => {
+    $(id)?.addEventListener("change", () => {
+      state.filters.level = $("#fLevel").value;
+      state.filters.topic = $("#fTopic").value;
+      state.filters.mode  = $("#fMode").value;
+      saveLS("prep_filters_v1", state.filters);
+      applyFilters();
+      state.used.clear();
+      startNewQuestion(true);
     });
-  }
+  });
 
-  /* =========================
-     Data loading (CSV)
-     ========================= */
-  async function initDataFromCsvOrFallback() {
-    const sheet = getParam("sheet") || getParam("csv");
-    const defaultLocal = "./data/prep.csv";
-    const url = sheet || defaultLocal;
+  // Keyboard shortcuts (avoid when typing)
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    if (["INPUT", "TEXTAREA"].includes(tag.toUpperCase())) return;
 
-    try {
-      const rows = await loadCsvUrl(url);
-      const items = rows.map(coercePrepRow)
-        .filter(it =>
-          (it.en_sentence || it.cy_before || it.cy_after) &&
-          it.answer_prep
-        );
+    if (e.key.toLowerCase() === "h") $("#mbHint")?.click();
+    if (e.key.toLowerCase() === "r") $("#trainerHost")?.querySelector("button.btn.btn-ghost")?.click(); // first ghost is hint; reveal is second (not perfect, but ok)
+    if (e.key.toLowerCase() === "n") startNewQuestion(true);
 
-      if (!items.length) throw new Error("Parsed 0 usable rows.");
-
-      state.rows = items;
-      els.dataBadge.textContent = `${items.length} items`;
-      return;
-    } catch (e) {
-      console.warn("[prep] CSV load failed, using sample data:", e);
-      state.rows = SAMPLE_ITEMS;
-      els.dataBadge.textContent = `Sample (${SAMPLE_ITEMS.length})`;
+    // Easy mode: 1-4 selects choice
+    if (state.difficulty === "easy" && state.current && !state.revealed) {
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 4) {
+        const btn = $("#trainerHost")?.querySelector(`#choices button:nth-child(${n})`);
+        btn?.click();
+      }
     }
-  }
 
-  /* =========================
-     Admin tools (optional)
-     ========================= */
-  function initAdminTools() {
-    const admin = getParam("admin") === "1";
-    if (!admin) return;
+    // Enter: in hard mode, acts as Check or Next
+    if (e.key === "Enter") {
+      e.preventDefault();
+      $("#mbCheckNext")?.click();
+    }
+  });
 
-    els.adminPanel.classList.remove("hidden");
-    if (els.dataUrl) els.dataUrl.value = getParam("sheet") || getParam("csv") || "";
+  // Admin tools
+  if (state.admin) {
+    $("#adminPanel")?.classList.remove("hidden");
+    const dataUrl = $("#dataUrl");
+    if (dataUrl) dataUrl.value = getParam("sheet") || "";
 
-    els.btnLoadUrl?.addEventListener("click", async () => {
-      const u = (els.dataUrl?.value || "").trim();
+    $("#btnLoadUrl")?.addEventListener("click", async () => {
+      const u = ($("#dataUrl")?.value || "").trim();
       if (!u) return;
-      try {
-        const rows = await loadCsvUrl(u);
-        const items = rows.map(coercePrepRow).filter(it => it.answer_prep && (it.en_sentence || it.cy_before));
-        if (!items.length) return alert("Loaded, but 0 usable rows found.");
-        state.rows = items;
-        state.used.clear();
-        els.dataBadge.textContent = `${items.length} items`;
-        renderFilters();
-        newQuestion();
-      } catch (err) {
-        alert("CSV load failed: " + (err?.message || err));
-      }
+      const d = await loadCsvUrl(u);
+      state.rows = d.map(coerceRow);
+      applyFilters();
+      renderFiltersUI();
+      startNewQuestion(true);
     });
 
-    els.fileCsv?.addEventListener("change", (e) => {
+    $("#fileCsv")?.addEventListener("change", (e) => {
       const f = e.target.files?.[0];
       if (!f) return;
-
       Papa.parse(f, {
         header: true,
         skipEmptyLines: true,
         complete: (res) => {
-          const items = (res.data || []).map(coercePrepRow).filter(it => it.answer_prep && (it.en_sentence || it.cy_before));
-          if (!items.length) return alert("Loaded, but 0 usable rows found.");
-          state.rows = items;
-          state.used.clear();
-          els.dataBadge.textContent = `${items.length} items`;
-          renderFilters();
-          newQuestion();
+          state.rows = res.data.map(coerceRow);
+          applyFilters();
+          renderFiltersUI();
+          startNewQuestion(true);
         }
       });
     });
   }
+}
 
-  /* =========================
-     Language syncing (with navbar toggle)
-     ========================= */
-  function syncLangIfChanged() {
-    const next = wmGetLang();
-    if (next === state.lang) return;
-    state.lang = next;
-    applyLanguageStatic();
-    renderFilters();
-    // keep same current item, just re-render
-    if (state.current) renderQuestion();
+/* ========= Boot ========= */
+(async function boot() {
+  wireUi();
+  renderStaticText();
+  renderStats();
+
+  try {
+    const raw = await loadDefaultData();
+    state.rows = (raw || []).map(coerceRow);
+  } catch (e) {
+    console.warn("Prep CSV load failed:", e);
+    state.rows = [];
   }
 
-  function bindLangSync() {
-    // Clicking the navbar toggle happens in-page; storage event doesn't fire in same tab.
-    document.addEventListener("click", (e) => {
-      if (e.target.closest("#btnLangToggle")) {
-        setTimeout(syncLangIfChanged, 0);
-      }
-    });
-
-    // Storage is still useful across tabs
-    window.addEventListener("storage", (e) => {
-      if (e.key === "wm_lang") syncLangIfChanged();
-    });
-  }
-
-  /* =========================
-     Wire events
-     ========================= */
-  function wireUi() {
-    els.btnHint.addEventListener("click", showHint);
-    els.btnReveal.addEventListener("click", reveal);
-    els.btnNew.addEventListener("click", () => { state.used.clear(); newQuestion(); });
-
-    [els.fLevel, els.fMode, els.fContrast, els.fTopic].forEach(sel => {
-      sel.addEventListener("change", () => {
-        state.used.clear();
-        newQuestion();
-      });
-    });
-
-    els.btnClearFilters.addEventListener("click", clearFilters);
-    $("btnResetStats").addEventListener("click", resetStats);
-
-    els.btnTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-  }
-
-  /* =========================
-     Boot
-     ========================= */
-  (async function boot() {
-    bindLangSync();
-    applyLanguageStatic();
-    wireUi();
-    bindKeyboard();
-    initAdminTools();
-
-    await initDataFromCsvOrFallback();
-    renderFilters();
-    newQuestion();
-  })();
+  applyFilters();
+  renderFiltersUI();
+  renderStaticText();
+  startNewQuestion(true);
 })();
+
 
