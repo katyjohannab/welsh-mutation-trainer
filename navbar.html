@@ -2,13 +2,11 @@
   <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
 
     <div class="brand-lockup grow min-w-0">
-      <a href="./home.html" class="inline-flex items-center gap-2 no-underline">
-        <img class="brand-dragon" alt="" aria-hidden="true"
-             src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-        <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
-          <span class="title-hy">Hyffordwr</span><span class="title-trei">Treiglad</span>
-        </h1>
-      </a>
+      <img class="brand-dragon" alt="" aria-hidden="true"
+           src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
+      <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
+        <span class="title-hy">Hyffordwr</span><span class="title-trei">Treiglad</span>
+      </h1>
     </div>
 
     <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
@@ -18,15 +16,13 @@
       <!-- Primary nav -->
       <div class="flex flex-wrap items-center gap-2">
         <a id="btnLearn" class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
-        <!-- NOTE: on non-index pages this is just a link -->
         <a id="btnPractice" class="btn btn-primary" href="./index.html" title="Practice mode">Practice</a>
       </div>
 
-      <!-- Secondary actions -->
       <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
 
+      <!-- Secondary -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Make these links site-wide; index.html can override behaviour in its own JS -->
         <a id="btnStats" class="btn btn-ghost" href="./vocab.html" title="Vocab trainer">Vocab</a>
         <a id="btnFilters" class="btn btn-ghost" href="./index.html#filters" title="Filters">Filters</a>
         <a id="btnBrowse" class="btn btn-ghost" href="./index.html?preset=prepositions" title="Prepositions">Preps</a>
@@ -35,11 +31,11 @@
 
       <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
 
-      <!-- toggle element -->
+      <!-- Language toggle (starts empty; JS fills it like index.html does) -->
       <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
     </div>
 
   </div>
+
   <div class="cymru-red-bar" aria-hidden="true"></div>
 </header>
-
