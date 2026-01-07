@@ -8,208 +8,216 @@
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- styles (defines .btn, .panel, .pill, .base-info-* etc.) -->
+  <!-- Your site CSS (buttons/panels/etc.) -->
   <link rel="stylesheet" href="styles.css" />
-
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
+  </style>
   <!-- PapaParse for CSV loading -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js" defer></script>
 
-  <!-- Prep trainer logic -->
+  <!-- Shared navbar loader (must fetch navbar.html) -->
+  <script src="navbar.js" defer></script>
+
+  <!-- Page logic -->
   <script src="prep.js" defer></script>
+
+  <style>
+    
+    .prep-choice {
+      border: 1px solid rgb(226 232 240);
+      background: white;
+      border-radius: 9999px;
+      padding: 0.85rem 1rem;
+      font-weight: 600;
+      color: rgb(15 23 42);
+      transition: transform .05s ease, background .15s ease, border-color .15s ease;
+    }
+    .prep-choice:hover { background: rgb(248 250 252); border-color: rgb(203 213 225); }
+    .prep-choice:active { transform: translateY(1px); }
+    .prep-choice.is-on {
+      background: rgb(16 185 129 / 0.15);
+      border-color: rgb(16 185 129 / 0.35);
+      color: rgb(6 95 70);
+    }
+    .prep-gap {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      min-width: 5.5rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 1rem;
+      border: 1px solid rgb(148 163 184);
+      background: rgb(255 251 235);
+      font-weight: 800;
+      position: relative; /* anchor the red ? button */
+      line-height: 1.2;
+    }
+    .prep-helpkeys kbd {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgb(226 232 240);
+      background: rgb(248 250 252);
+      color: rgb(71 85 105);
+    }
+  </style>
 </head>
 
 <body class="min-h-screen text-slate-900">
-  <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
+  <!-- Navbar mount (navbar.js should populate this from navbar.html) -->
+  <div id="navbar"></div>
 
-    <!-- Header (kept consistent with your mutation trainer vibe) -->
-    <header id="siteHeader" class="sticky top-0 z-10">
-      <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
-
-        <div class="brand-lockup grow min-w-0">
-          <img class="brand-dragon" alt="" aria-hidden="true"
-               src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
-            <span class="title-hy">Hyfforddwr</span><span class="title-trei">Cymraeg</span>
-          </h1>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
-          <a class="btn btn-ghost" href="./index.html">Mutations</a>
-          <a class="btn btn-primary" href="./prep.html">Prepositions</a>
-
-          <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
-
-          <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
-        </div>
-      </div>
-      <div class="cymru-red-bar" aria-hidden="true"></div>
-    </header>
-
-    <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6 w-full">
-      <!-- Page title -->
-      <section class="mt-2 mb-4">
-        <h2 class="bbh-bogle-regular text-4xl md:text-5xl tracking-tight">
-          <span class="text-emerald-900">PREPOSITION</span><span class="text-rose-800">TRAINER</span>
-        </h2>
-        <p id="subtitle" class="mt-2 text-slate-600">
-          Choose the correct Welsh preposition to match the English sentence.
-        </p>
-      </section>
-
-      <div class="grid md:grid-cols-3 gap-4 items-start">
-        <!-- Left: trainer -->
-        <section class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
-          <!-- Top controls -->
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
-            <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-              <span class="pill" id="pillPos">Card — / —</span>
-              <span class="pill" id="pillTopic">Topic: —</span>
-              <span class="pill" id="pillLevel">Level: —</span>
-              <span class="pill" id="pillMode">Mode: —</span>
-            </div>
-
-            <div class="flex flex-wrap items-center gap-2">
-              <div class="seg" id="difficultySeg">
-                <button id="btnEasy" type="button" class="seg-btn is-on" aria-pressed="true">EASY</button>
-                <button id="btnHard" type="button" class="seg-btn" aria-pressed="false">HARD</button>
-              </div>
-              <button id="btnHear" class="btn btn-ghost" type="button" title="Hear Welsh sentence">Hear</button>
-              <button id="btnHint" class="btn btn-ghost" type="button" title="Hint (H)">Hint</button>
-              <button id="btnReveal" class="btn btn-ghost" type="button" title="Reveal (R)">Reveal</button>
-              <button id="btnNew" class="btn btn-primary shadow" type="button" title="New (N)">New</button>
-            </div>
-          </div>
-
-          <!-- English prompt (compact, no label) -->
-          <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 md:p-5">
-            <div id="enPrompt" class="text-xl md:text-2xl font-semibold text-slate-900">
-              Loading…
-            </div>
-          </div>
-
-          <!-- Welsh sentence -->
-          <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-5 md:p-6">
-            <div class="text-xs uppercase tracking-wide text-slate-500 mb-2">Cymraeg</div>
-
-            <div id="cySentence" class="text-xl md:text-2xl text-slate-800 leading-relaxed">
-              <!-- injected -->
-            </div>
-
-            <div id="stepRow" class="mt-3 flex items-center gap-2 text-sm text-slate-600">
-              <span class="pill" id="stepPill">Step 1 of 1</span>
-              <span id="stepHelp">Choose the correct preposition.</span>
-            </div>
-
-            <div id="hintBox" class="mt-3 hidden text-sm text-slate-600"></div>
-          </div>
-
-          <!-- Answer area -->
-          <div class="mt-4">
-            <!-- Easy choices -->
-            <div id="choices" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
-
-            <!-- Hard typing -->
-            <div id="hardRow" class="hidden mt-3 flex flex-wrap gap-2 items-center">
-              <input id="hardInput"
-                     class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-xl md:text-2xl leading-tight shadow-sm w-56"
-                     placeholder="Type the preposition"
-                     aria-label="Type the preposition" />
-              <button id="btnCheckHard" class="btn btn-primary shadow" type="button">Check</button>
-            </div>
-          </div>
-
-          <!-- Feedback -->
-          <div id="feedback" class="mt-4 hidden">
-            <div class="panel rounded-2xl p-5 border border-slate-200 bg-slate-50">
-              <div id="fbHeadline" class="text-2xl font-semibold"></div>
-              <div id="fbBody" class="mt-2 text-slate-700 leading-relaxed"></div>
-
-              <div class="mt-4 flex justify-end">
-                <button id="btnNext" class="btn btn-primary shadow" type="button" title="Next (Enter)">Next</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Load error -->
-          <div id="loadError" class="mt-4 hidden">
-            <div class="panel rounded-2xl p-4 border border-rose-200 bg-rose-50 text-rose-900"></div>
-          </div>
-        </section>
-
-        <!-- Right: filters + session -->
-        <aside class="md:col-span-1 flex flex-col gap-4">
-          <div class="panel rounded-2xl p-4">
-            <div class="text-sm font-medium mb-2">Filters</div>
-
-            <div class="grid gap-3 text-sm">
-              <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500" for="fLevel">Level</label>
-                <select id="fLevel" class="mt-1 w-full border rounded-xl px-3 py-2"></select>
-              </div>
-
-              <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500" for="fTopic">Topic</label>
-                <select id="fTopic" class="mt-1 w-full border rounded-xl px-3 py-2"></select>
-              </div>
-
-              <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500" for="fType">Type</label>
-                <select id="fType" class="mt-1 w-full border rounded-xl px-3 py-2"></select>
-              </div>
-
-              <div class="flex gap-2">
-                <button id="btnClearFilters" class="btn btn-ghost px-3 py-2" type="button">Clear</button>
-              </div>
-
-              <div class="text-xs text-slate-500">
-                Source: <code>data/prep.csv</code>
-              </div>
-            </div>
-          </div>
-
-          <div class="panel rounded-2xl p-4">
-            <div class="text-sm font-medium mb-2">Session</div>
-            <div class="grid grid-cols-3 gap-2">
-              <div class="rounded-2xl border bg-white p-3">
-                <div class="text-xs text-slate-500">Score</div>
-                <div id="vScore" class="text-2xl font-semibold">0</div>
-              </div>
-              <div class="rounded-2xl border bg-white p-3">
-                <div class="text-xs text-slate-500">Streak</div>
-                <div id="vStreak" class="text-2xl font-semibold">0</div>
-              </div>
-              <div class="rounded-2xl border bg-white p-3">
-                <div class="text-xs text-slate-500">Done</div>
-                <div id="vDone" class="text-2xl font-semibold">0</div>
-              </div>
-            </div>
-
-            <div class="mt-3 flex gap-2">
-              <button id="btnResetStats" class="btn btn-ghost px-3 py-2" type="button">Reset stats</button>
-            </div>
-
-            <div class="mt-3 text-xs text-slate-500">
-              Keys: <b>1–4</b> choose · <b>H</b> hint · <b>R</b> reveal · <b>N</b> new · <b>Enter</b> next
-            </div>
-          </div>
-        </aside>
-      </div>
-    </main>
-
-    <!-- Mobile action bar (optional, matches your pattern) -->
-    <div class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
-      <div class="max-w-6xl mx-auto flex gap-2">
-        <button id="mbHint" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
-        <button id="mbReveal" class="flex-1 btn btn-ghost px-3 py-2">Reveal</button>
-        <button id="mbNew" class="flex-1 btn btn-primary px-3 py-2">New</button>
-      </div>
+  <main class="max-w-6xl mx-auto p-4 pb-24 md:pb-6">
+    <div class="mt-4 md:mt-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+        <span class="text-emerald-900">PREPOSITION</span><span class="text-rose-700">TRAINER</span>
+      </h1>
+      <p id="prepIntro" class="mt-2 text-slate-600 max-w-3xl">
+        Choose the Welsh preposition that matches the English sentence. Switch to <b>Hard</b> to type instead of picking.
+      </p>
     </div>
 
-    <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
-      <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Cymraeg</span>
+    <section class="mt-6 grid md:grid-cols-3 gap-4 items-start">
+      <!-- Left: question card -->
+      <div class="md:col-span-2 panel rounded-2xl p-5 md:p-6">
+        <!-- Top row: progress + actions -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div class="text-sm text-slate-600">
+            <span id="prepProgress">Card 0 / 0</span>
+            <span class="mx-2 text-slate-300">•</span>
+            <span id="prepMeta">—</span>
+          </div>
+
+          <div class="flex items-center gap-2 flex-wrap">
+            <!-- Difficulty toggle uses your existing seg styles if present -->
+            <div class="seg" aria-label="Difficulty">
+              <button id="btnEasy" type="button" class="seg-btn is-on" aria-pressed="true">EASY</button>
+              <button id="btnHard" type="button" class="seg-btn" aria-pressed="false">HARD</button>
+            </div>
+
+            <button id="btnHint" class="btn btn-ghost" type="button" title="Hint (H)">Hint</button>
+            <button id="btnHear" class="btn btn-ghost" type="button" title="Hear (J)">Hear</button>
+            <button id="btnReveal" class="btn btn-ghost" type="button" title="Reveal (R)">Reveal</button>
+            <button id="btnNext" class="btn btn-primary shadow" type="button" title="Next (Enter)">Next</button>
+          </div>
+        </div>
+
+        <!-- Load error -->
+        <div id="loadError" class="hidden mb-4 rounded-xl border border-rose-200 bg-rose-50 p-4 text-rose-900">
+          <div class="font-semibold">Couldn’t load data.</div>
+          <div id="loadErrorMsg" class="text-sm mt-1"></div>
+        </div>
+
+        <!-- English target sentence (clean, no label) -->
+        <div class="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 md:p-5">
+          <div id="enSentence" class="text-xl md:text-2xl font-semibold text-slate-900">
+            —
+          </div>
+        </div>
+
+        <!-- Welsh sentence -->
+        <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 md:p-5">
+          <div class="text-xs uppercase tracking-wide text-slate-500 mb-2">Cymraeg</div>
+
+          <div class="text-2xl md:text-3xl leading-snug flex flex-wrap items-baseline gap-x-2 gap-y-2">
+            <span id="cyBefore" class="text-slate-700"></span>
+            <span id="cyGap" class="prep-gap">____</span>
+            <span id="cyAfter" class="text-slate-700"></span>
+          </div>
+
+          <div id="hintBox" class="hidden mt-3 text-sm text-slate-600">
+            <span class="font-semibold">Hint:</span>
+            <span id="hintText"></span>
+          </div>
+
+          <!-- Hard mode input -->
+          <div id="hardInputRow" class="hidden mt-4 flex flex-wrap items-center gap-2">
+            <input id="hardInput"
+                   class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-xl md:text-2xl leading-tight shadow-sm w-56"
+                   placeholder="Type the answer…"
+                   aria-label="Type the answer" />
+            <button id="btnCheck" class="btn btn-primary shadow" type="button">Check</button>
+          </div>
+
+          <!-- Easy mode choices -->
+          <div id="choicesRow" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+
+          <!-- Feedback -->
+          <div id="feedbackBox" class="hidden mt-5 rounded-2xl border p-4 md:p-5">
+            <div id="fbHeadline" class="text-xl md:text-2xl font-bold"></div>
+            <div id="fbBody" class="mt-2 text-slate-700 leading-relaxed"></div>
+          </div>
+
+          <div class="prep-helpkeys mt-4 text-xs text-slate-500">
+            Keys:
+            <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd>
+            <span class="mx-1">•</span>
+            <kbd>H</kbd> Hint
+            <span class="mx-1">•</span>
+            <kbd>R</kbd> Reveal
+            <span class="mx-1">•</span>
+            <kbd>Enter</kbd> Next / Check (Hard)
+          </div>
+        </div>
       </div>
-    </footer>
-  </div>
+
+      <!-- Right: filters + session -->
+      <aside class="md:col-span-1 flex flex-col gap-4">
+        <div class="panel rounded-2xl p-4">
+          <div class="text-sm font-medium mb-3">Filters</div>
+
+          <label class="block text-xs uppercase tracking-wide text-slate-500 mb-1" for="fLevel">Level</label>
+          <select id="fLevel" class="w-full border rounded-xl px-3 py-2 bg-white">
+            <option>All</option>
+          </select>
+
+          <label class="mt-3 block text-xs uppercase tracking-wide text-slate-500 mb-1" for="fTopic">Topic</label>
+          <select id="fTopic" class="w-full border rounded-xl px-3 py-2 bg-white">
+            <option>All</option>
+          </select>
+
+          <label class="mt-3 block text-xs uppercase tracking-wide text-slate-500 mb-1" for="fFocus">Focus (answer)</label>
+          <select id="fFocus" class="w-full border rounded-xl px-3 py-2 bg-white">
+            <option>All</option>
+          </select>
+
+          <div class="mt-3 flex items-center justify-between gap-2">
+            <button id="btnClearFilters" class="btn btn-ghost px-3 py-2" type="button">Clear</button>
+            <div class="text-xs text-slate-500"><span id="poolCount">0</span> items</div>
+          </div>
+        </div>
+
+        <div class="panel rounded-2xl p-4">
+          <div class="text-sm font-medium mb-3">Session</div>
+
+          <div class="grid grid-cols-3 gap-2">
+            <div class="rounded-xl border border-slate-200 bg-white p-3">
+              <div class="text-xs text-slate-500">Score</div>
+              <div id="statScore" class="text-2xl font-bold">0</div>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-3">
+              <div class="text-xs text-slate-500">Streak</div>
+              <div id="statStreak" class="text-2xl font-bold">0</div>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-3">
+              <div class="text-xs text-slate-500">Done</div>
+              <div id="statDone" class="text-2xl font-bold">0</div>
+            </div>
+          </div>
+
+          <div class="mt-3 text-sm text-slate-600">
+            <span class="font-medium">Accuracy:</span> <span id="statAcc">0%</span>
+          </div>
+
+          <div class="mt-3 flex gap-2">
+            <button id="btnResetStats" class="btn btn-ghost px-3 py-2" type="button">Reset stats</button>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
 </body>
 </html>
+
