@@ -3,91 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hyfforddwr Arddodiaid</title>
+  <title>Hyfforddwr Prep</title>
 
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Your site CSS (restored below if yours is corrupted) -->
+  <!-- site styles -->
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- PapaParse for CSV -->
+  <!-- Fonts  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <!-- PapaParse -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-
-  <!-- Shared navbar -->
-  <script src="navbar.js" defer></script>
-
-  <!-- Prep app -->
-  <script src="prep.js" defer></script>
 </head>
 
-<body class="min-h-screen text-slate-900">
+<!-- data-current is used by navbar.js to highlight active link -->
+<body class="min-h-screen text-slate-900" data-current="prep">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- Navbar mounts here -->
+    <!-- Navbar injection point -->
     <div id="navbarMount"></div>
 
-    <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6">
+    <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
       <div class="grid md:grid-cols-3 gap-4 items-start">
 
-        <!-- Left: card -->
+        <!-- Left: practice -->
         <section class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
           <div id="prepCard"></div>
         </section>
 
         <!-- Right: filters + session -->
         <aside class="md:col-span-1 flex flex-col gap-4">
-          <div class="panel rounded-2xl p-4">
+
+          <section class="panel rounded-2xl p-4">
             <div class="flex items-center justify-between gap-2">
               <div class="text-sm font-medium">Session</div>
-              <button id="btnFilters" class="btn btn-ghost px-3 py-1.5" type="button">Filters</button>
+              <button id="btnResetSession" class="btn btn-ghost px-3 py-1.5" type="button">Reset</button>
             </div>
 
-            <div class="mt-3">
-              <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
-              <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
-              <div id="streakText" class="text-sm text-slate-600">Streak: 0</div>
-              <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
-            </div>
-
-            <div class="mt-3 flex gap-2">
-              <button id="btnReset" class="btn btn-ghost px-3 py-1.5" type="button">Reset stats</button>
-            </div>
-          </div>
-
-          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
-            <div class="text-sm font-medium mb-2">Filters</div>
-
-            <div class="grid grid-cols-1 gap-3 text-sm">
-              <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500">Topic</label>
-                <select id="fTopic" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white">
-                  <option value="">All</option>
-                </select>
+            <div class="mt-3 grid grid-cols-3 gap-2 text-center">
+              <div class="rounded-xl bg-slate-50 border border-slate-200 p-2">
+                <div class="text-xs text-slate-500">Score</div>
+                <div id="statScore" class="text-2xl font-semibold">0</div>
               </div>
+              <div class="rounded-xl bg-slate-50 border border-slate-200 p-2">
+                <div class="text-xs text-slate-500">Streak</div>
+                <div id="statStreak" class="text-2xl font-semibold">0</div>
+              </div>
+              <div class="rounded-xl bg-slate-50 border border-slate-200 p-2">
+                <div class="text-xs text-slate-500">Done</div>
+                <div id="statDone" class="text-2xl font-semibold">0</div>
+              </div>
+            </div>
+          </section>
 
+          <section class="panel rounded-2xl p-4">
+            <div class="text-sm font-medium mb-2">Focus</div>
+
+            <div class="grid gap-3 text-sm">
               <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500">Level</label>
-                <select id="fLevel" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white">
-                  <option value="">All</option>
-                </select>
+                <label class="text-xs uppercase tracking-wide text-slate-500" for="fLevel">Level</label>
+                <select id="fLevel" class="mt-1 w-full border rounded-xl px-3 py-2"></select>
               </div>
 
               <div>
-                <label class="text-xs uppercase tracking-wide text-slate-500">Focus (answer contains)</label>
-                <input id="fContains" class="mt-1 w-full border rounded-xl px-3 py-2" placeholder="e.g. arna, at, i, gyda" />
+                <label class="text-xs uppercase tracking-wide text-slate-500" for="fTopic">Topic</label>
+                <select id="fTopic" class="mt-1 w-full border rounded-xl px-3 py-2"></select>
               </div>
 
-              <label class="inline-flex items-center gap-2">
-                <input id="fPhrasesOnly" type="checkbox" />
-                <span>Phrase answers only (e.g. <b>arna i</b>)</span>
-              </label>
-
-              <div class="flex gap-2 pt-1">
-                <button id="btnClearFilters" class="btn btn-ghost px-3 py-1.5" type="button">Clear</button>
+              <div>
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Difficulty</div>
+                <div class="seg" role="group" aria-label="Difficulty">
+                  <button id="diffEasy" class="seg-btn" type="button">EASY</button>
+                  <button id="diffHard" class="seg-btn" type="button">HARD</button>
+                </div>
+                <div class="mt-2 text-xs text-slate-500">
+                  Easy = choose • Hard = type
+                </div>
               </div>
+
+              <div class="pt-2 border-t border-slate-200">
+                <div class="text-xs text-slate-500 leading-relaxed">
+                  Tip: the English sentence is what you’re translating. The “?” shows the full correct English sentence again (same as your mutation trainer tooltip behaviour).
+                </div>
+              </div>
+
+              <div id="debugBox" class="hidden text-xs text-slate-500 pt-2 border-t border-slate-200"></div>
             </div>
-          </div>
+          </section>
 
         </aside>
       </div>
@@ -104,10 +110,14 @@
 
     <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
       <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyfforddwr</span>
+        <span>© Hyffordwr Treiglad</span>
         <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1" type="button">Back to top</button>
       </div>
     </footer>
   </div>
+
+  <!-- Navbar must load first (it injects HTML) -->
+  <script src="./navbar.js" defer></script>
+  <script src="./prep.js" defer></script>
 </body>
 </html>
