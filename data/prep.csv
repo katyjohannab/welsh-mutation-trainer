@@ -1,11 +1,37 @@
 CardId,Level,Topic,Set,PromptEN,BeforeCY,AfterCY,GapAnswer,BasePrep,WhyEN,WhyCY,Distractors
-P0001,1,Letters,AT_vs_I,Send a letter to Sioned,Danfon lythyr,Sioned,at,at,To a person -> at,At berson -> at,at|i|o|gyda
-P0002,1,Travel,AT_vs_I,Send a letter to London,Danfon lythyr,Lundain,i,i,To a place -> i,I le -> i,at|i|o|gyda
-P0003,1,Appointments,AT_vs_I,Im going to the doctor,Dw in mynd,y meddyg,at,at,Going to a person or appointment -> at,Mynd at berson neu apwyntiad -> at,at|i|o|gyda
-P0004,2,Time,CYN_vs_OFLAEN,Ill see you before the concert,Bydda in dy weld di,y cyngerdd,cyn,cyn,Before in time -> cyn,Cyn o ran amser -> cyn,cyn|o flaen|ar ol|wrth
-P0005,2,Directions,CYN_vs_OFLAEN,Park the car in front of the house,Parciar car,y ty,o flaen,o flaen,In front of a place -> o flaen,O flaen lle -> o flaen,o flaen|cyn|ar ol|wrth
-P0006,2,Feelings,GYDA_vs_AR,He is angry with me,Mae en ddig,fi,gyda,gyda,This pattern uses gyda with a person,Mae’r patrwm yma’n defnyddio gyda gyda pherson,gyda|ar|at|i
-P0007,2,Chat,A_vs_GYDA,She is talking to me,Mae hin siarad,fi,a,a,To talk to someone often uses a or gyda,Siarad â rhywun yn aml gyda a neu gyda,a|gyda|at|i
-P0008,3,Possession,INFLECTED_AR,I have a cold,Mae annwyd,,arna i,ar,Ar inflects with pronouns -> arna i,Mae ar yn cyflyru gyda rhagenwau -> arna i,arna i|gyda fi|a fi|i mi
-P0009,3,Work,O_vs_AM,Im from Cardiff,Dw in dod,Caerdydd,o,o,Origin -> o,Tarddiad -> o,o|am|i|at
-P0010,3,Movement,I_vs_O,Im going into the house,Dw in mynd,ty,i,i,Movement into a place -> i,Symud i mewn i le -> i,i|o|at|wrth
+P0001,1,Recipient (to a person),AT_vs_I,Send a letter to Sioned.,Danfon lythyr , Sioned.,at,at,"To a person/recipient is commonly expressed with “at” (not “i”).","At berson/derbynnydd, defnyddir “at” yn aml (nid “i”).",at|i|o|gyda
+P0002,1,Destination (to a place),AT_vs_I,Send a letter to London.,Danfon lythyr , Lundain.,i,i,"Destination/place you go or send into → “i”.","Cyrchfan/lle (mynd/danfon i mewn iddo) → “i”.",at|i|o|gyda
+P0003,1,Destination (to a place),AT_vs_I,I’m going to Cardiff.,Dw i’n mynd , Gaerdydd.,i,i,"Going to a place → “i” + soft mutation (Caerdydd → Gaerdydd).","Mynd i le → “i” + treiglad meddal (Caerdydd → Gaerdydd).",at|i|o|yn
+P0004,1,Recipient (to a person),AT_vs_I,I’m going to the doctor.,Dw i’n mynd , y meddyg.,at,at,"Appointments/people as a target often take “at”.","At apwyntiad/person fel targed, mae “at” yn gyffredin.",at|i|o|wrth
+P0005,1,Recipient (to a person),AT_vs_I,She’s speaking to the teacher.,Mae hi’n siarad , yr athro.,at,at,"Talking to a person often uses “at”.","Siarad â pherson yn aml → “at”.",at|i|â|gyda
+P0006,1,Destination (to a place),AT_vs_I,We’re walking to the park.,Dyn ni’n cerdded , y parc.,i,i,"Destination/place → “i”.","Cyrchfan/lle → “i”.",at|i|o|ar
+P0007,1,Origin (from a place),O_vs_I,I’m from Cardiff.,Dw i , Gaerdydd.,o,o,"Origin/source → “o” + soft mutation (Caerdydd → Gaerdydd).","Tarddiad/ffynhonnell → “o” + treiglad meddal (Caerdydd → Gaerdydd).",o|i|at|gan
+P0008,1,Origin (from a place),O_vs_I,She’s from Bangor.,Mae hi , Fangor.,o,o,"“o” triggers soft mutation (Bangor → Fangor).","Mae “o” yn treiglo’n feddal (Bangor → Fangor).",o|i|at|gan
+P0009,1,Origin (from a place),O_vs_I,We’re coming from Swansea.,Dyn ni’n dod , Abertawe.,o,o,"Origin/source → “o”. (Abertawe doesn’t change here.)","Tarddiad/ffynhonnell → “o”. (Does dim newid i Abertawe yma.)",o|i|at|gan
+P0010,1,Origin (from a place),O_vs_I,I’m coming from Treorchy.,Dw i’n dod , Dreorci.,o,o,"“o” triggers soft mutation (Treorci → Dreorci).","Mae “o” yn treiglo’n feddal (Treorci → Dreorci).",o|i|at|gan
+P0011,1,Origin (from a place),O_vs_I,They’re from Llanelli.,Maen nhw , Lanelli.,o,o,"“o” triggers soft mutation (Llanelli → Lanelli).","Mae “o” yn treiglo’n feddal (Llanelli → Lanelli).",o|i|at|gan
+P0012,1,Location (at a place),YN_vs_AR,I’m in Cardiff.,Dw i , Nghaerdydd.,yng,yng,"Static location “in” → “yn/yng” + nasal mutation (Caerdydd → Nghaerdydd).","Lleoliad “yn” → “yn/yng” + treiglad trwynol (Caerdydd → Nghaerdydd).",yng|ar|i|o
+P0013,1,Location (at a place),YN_vs_AR,She’s in Bangor.,Mae hi , Mangor.,ym,yn,"“yn” triggers nasal mutation (Bangor → Mangor).","Mae “yn” yn treiglo’n drwynol (Bangor → Mangor).",yn|ym|ar|i
+P0014,1,Location (at a place),YN_vs_AR,We’re on the beach.,Dyn ni , y traeth.,ar,ar,"On a surface/location → “ar”.","Ar arwyneb/lleoliad → “ar”.",ar|yn|i|o
+P0015,1,Location (at a place),YN_vs_AR,My keys are on the table.,Mae fy allweddi , y bwrdd.,ar,ar,"On a surface → “ar”.","Ar arwyneb → “ar”.",ar|yn|i|o
+P0016,1,Time (before/after),CYN_vs_AR_OL,I’ll see you before the concert.,Bydda i’n dy weld di , y cyngerdd.,cyn,cyn,"Before in time → “cyn”.","“Cyn” o ran amser → “cyn”.",cyn|ar ôl|wrth|o flaen
+P0017,1,Time (before/after),CYN_vs_AR_OL,We’ll eat after work.,Dyn ni’n bwyta , gwaith.,ar ôl,ar ôl,"After in time → “ar ôl”.","Ar ôl o ran amser → “ar ôl”.",cyn|ar ôl|wrth|o flaen
+P0018,1,Time (before/after),CYN_vs_AR_OL,Call me after the lesson.,Ffonia fi , y wers.,ar ôl,ar ôl,"After in time → “ar ôl”.","Ar ôl o ran amser → “ar ôl”.",cyn|ar ôl|wrth|o flaen
+P0019,1,Spatial relation (in front of),O_FLAEN_vs_CYN,Park in front of the house.,Parcia’r car , y tŷ.,o flaen,o flaen,"In front of (place/space) → “o flaen” (not time “cyn”).","O flaen (lleoliad) → “o flaen” (nid amser “cyn”).",o flaen|cyn|ar ôl|wrth
+P0020,1,Spatial relation (behind),O_FLAEN_vs_TU_OL,The garden is behind the house.,Mae’r ardd , y tŷ.,tu ôl,tu ôl,"Behind a place/thing → “tu ôl”.","Tu ôl i le/peth → “tu ôl”.",tu ôl|o flaen|cyn|ar ôl
+P0021,2,Accompaniment (with),A_vs_GYDA,I’m coming with you.,Dw i’n dod , ti.,gyda,gyda,"With someone (accompaniment) commonly uses “gyda” + pronoun.","Gyda rhywun (cwmni) yn aml → “gyda” + rhagenw.",gyda|â|at|i
+P0022,2,Accompaniment (with),A_vs_GYDA,She’s travelling with her friend.,Mae hi’n teithio , ei ffrind.,gyda,gyda,"Accompaniment → “gyda”.","Cwmni → “gyda”.",gyda|â|at|i
+P0023,2,Accompaniment (with),A_vs_GYDA,Tea with milk.,Te , llaeth.,gyda,gyda,"“with” in the sense of ‘including’ often uses “gyda”.","“Gyda” am ‘gyda/yn cynnwys’ yn aml → “gyda”.",gyda|â|at|i
+P0024,2,Possession/experience (on me),INFLECTED_AR,I have a cold.,Mae annwyd , fi.,arna i,ar,"With feelings/conditions, Welsh often uses inflected “ar”: arna i.","Gyda chyflwr/teimlad, defnyddir “ar” cyfunol: arna i.",arna i|gyda fi|â fi|ata i
+P0025,2,Possession/experience (on him),INFLECTED_AR,He is hungry.,Mae eisiau bwyd , fe.,arno fe,ar,"Hunger/need commonly uses “ar” inflected with pronouns.","Mae eisiau/newyn yn aml gyda “ar” cyfunol.",arno fe|gyda fe|â fe|ato fe
+P0026,2,Possession/experience (on her),INFLECTED_AR,She is scared.,Mae ofn , hi.,arni hi,ar,"Some experiences use “ar” inflected: arni hi.","Mae rhai profiadau gyda “ar” cyfunol: arni hi.",arni hi|gyda hi|â hi|ati hi
+P0027,2,Means/through,DRWY_vs_TRWY,We walked through the park.,Aethon ni , y parc.,drwy,drwy,"Through/along a space → “drwy/trwy”.","Trwy/ofod → “drwy/trwy”.",drwy|trwy|i|o
+P0028,2,Means/through,DRWY_vs_TRWY,She heard it through a friend.,Clywodd hi amdano , ffrind.,drwy,drwy,"Through a channel/means → “drwy”.","Trwy gyfrwng/sianel → “drwy”.",drwy|trwy|gan|gyda
+P0029,2,Agent/by,GAN_vs_GYDA,It was done by the teacher.,Cafodd e’i wneud , yr athro.,gan,gan,"Agent (‘by’) is typically “gan”.","Asiant (‘gan’) yn nodweddiadol → “gan”.",gan|gyda|at|i
+P0030,2,Agent/by,GAN_vs_GYDA,A letter from the teacher.,Llythyr , yr athro.,gan,gan,"Source/agent ‘from/by’ → often “gan”.","Ffynhonnell/asiant ‘gan’ → yn aml “gan”.",gan|o|i|gyda
+P0031,3,Contact/at (near a point),WRTH_vs_I,Meet at the station.,Cwrdd , yr orsaf.,wrth,wrth,"At/near a point/place is often “wrth” (context-dependent).","Wrth fan/lle (gerllaw) yn aml → “wrth” (yn dibynnu ar y cyd-destun).",wrth|i|at|ar
+P0032,3,Contact/at (near a person),WRTH_vs_AT,Stay with me (at my place / near me).,Arhosa , fi.,wrth,wrth,"“wrth” can mean near/at someone (not accompaniment ‘gyda’).","Gall “wrth” olygu ger/at rywun (nid cwmni ‘gyda’).",wrth|gyda|â|at
+P0033,3,Motion into (not location),I_vs_YN,I’m going into the house.,Dw i’n mynd , y tŷ.,i,i,"Motion ‘into’ → “i” (not static ‘yn’).","Symudiad ‘i mewn’ → “i” (nid lleoliad ‘yn’).",i|yn|ar|o
+P0034,3,Location in (not motion),I_vs_YN,I’m in the house.,Dw i , y tŷ.,yn,yn,"Static location ‘in’ → “yn” (not motion ‘i’).","Lleoliad statig ‘yn’ → “yn” (nid symudiad ‘i’).",yn|i|ar|o
+P0035,3,About/topic (re),AM_vs_AR,We’re talking about the lesson.,Dyn ni’n siarad , y wers.,am,am,"About/topic → “am”.","Am bwnc → “am”.",am|ar|i|o
+P0036,3,On (surface) not about,AM_vs_AR,The book is on the table.,Mae’r llyfr , y bwrdd.,ar,ar,"On a surface → “ar” (not “am” = about).","Ar arwyneb → “ar” (nid “am” = am bwnc).",ar|am|i|o
