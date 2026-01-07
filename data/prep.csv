@@ -1,0 +1,3 @@
+CardId,Level,Topic,English,Before,Answer,After,Hint,Why,Choices
+1,1,Travel,Send a letter to London.,Danfon lythyr,i,Lundain.,Destination = place.,Place/destination usually takes "i".,i|at|o|gyda
+2,3,Perchnogaeth,It’s on me.,Mae e,arna i,.,Uses inflected form.,“ar” + pronoun becomes “arna i”.,"arna i|atat ti|gyda fi|i mi"
