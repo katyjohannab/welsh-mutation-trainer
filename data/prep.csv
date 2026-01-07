@@ -1,3 +1,13 @@
-CardId,Level,Topic,English,Before,Answer,After,Hint,Why,Choices
-1,1,Travel,Send a letter to London.,Danfon lythyr,i,Lundain.,Destination = place.,Place/destination usually takes "i".,i|at|o|gyda
-2,3,Perchnogaeth,It’s on me.,Mae e,arna i,.,Uses inflected form.,“ar” + pronoun becomes “arna i”.,"arna i|atat ti|gyda fi|i mi"
+id,level,topic_en,topic_cy,prompt_en,before_cy,after_cy,answer_cy,answer_alt,distractors,hint_en,hint_cy,why_en,why_cy,prep
+P001,1,Letters,Llythyrau,Send a letter to Sioned.,Danfon lythyr,Sioned.,at,,i|o|gyda,Person (recipient).,Person (derbynnydd).,For a person as the recipient, Welsh often uses “at”.,"Ar gyfer person fel derbynnydd, defnyddir “at” yn aml.",at
+P002,1,Travel,Teithio,Send a letter to London.,Danfon lythyr,Lundain.,i,,at|o|gyda,Destination is a place.,Cyrchfan = lle.,For a place/destination, Welsh commonly uses “i”.,"Ar gyfer lle/cyrchfan, defnyddir “i” yn aml.",i
+P003,1,Appointments,Apwyntiadau,I’m going to the doctor.,Dw i’n mynd,at y meddyg.,at,,i|wrth|gyda,Target is a person/appointment.,Targed = person/apwyntiad.,“At” is very common when you’re going to a person/profession.,Mae “at” yn gyffredin iawn wrth fynd at berson/broffesiwn.,at
+P004,2,Directions,Cyfeiriadau,Park in front of the house.,Parcia,o flaen y tŷ.,o flaen,,cyn|ar ôl|wrth,This is position in space.,Safle mewn lle.,“O flaen” is “in front of” (place).,"“O flaen” = “in front of” (lle).",o flaen
+P005,2,Events,Digwyddiadau,I’ll see you before the concert.,Bydda i’n dy weld di,cyn y cyngerdd.,cyn,,o flaen|ar ôl|wrth,This is time “before”.,“Cyn” o ran amser.,“Cyn” is “before” in time.,Mae “cyn” = “before” o ran amser.,cyn
+P006,2,Requests,Cais,Ask for help.,Gofyn,am help.,am,,i|at|o,You’re requesting something.,Rwyt ti’n gofyn am rywbeth.,“Am” is used for asking for/requesting.,Defnyddir “am” ar gyfer gofyn am/geisio.,am
+P007,2,Movement,Symud,Go out of the car.,Ewch allan,o’r car.,o,,i|at|am,Think “out of / from”.,Meddylia “allan o / o”.,“O” is used for “out of/from”.,Defnyddir “o” am “out of/from”.,o
+P008,3,Ownership,Perchnogaeth,It’s on me.,Mae e,arna i.,arna i,ar fi|arnaf i,gyda fi|ata i|i mi,This one uses an inflected form.,Mae hwn yn ffurf gyfunol.,With pronouns you say “arna i” (not “ar fi”).,"Gyda rhagenwau: “arna i” (nid “ar fi”).",ar
+P009,3,Feelings,Teimladau,He’s angry with me.,Mae e’n ddig,gyda fi.,gyda fi,,arna i|â fi|ata i,Learn the pattern (not word-for-word).,Dysga’r patrwm.,This expression uses “dig gyda …”.,"Mae’r ymadrodd yn defnyddio “dig gyda …”.",gyda
+P010,3,Chat,Sgwrsio,She’s talking to me.,Mae hi’n siarad,â fi.,â fi,a fi|ag e,gyda fi|at fi|arna i,This is “â + pronoun”.,"Dyma “â + rhagenw”.",After “â”, you use the pronoun: “â fi”.,"Ar ôl “â”, defnyddia’r rhagenw: “â fi”.",â
+P011,2,Travel,Teithio,We’re going to Cardiff.,Dyn ni’n mynd,i Gaerdydd.,i,,at|o|wrth,Destination is a place.,Cyrchfan = lle.,For destinations, “i” is standard.,Ar gyfer cyrchfannau, “i” yw’r arfer.,i
+P012,2,Company,Cwmni,I’m with Sioned.,Dw i,gyda Sioned.,gyda,,â|at|i,Think “with”.,Meddylia “with”.,“Gyda” is “with” in this pattern.,Mae “gyda” = “with” yn y patrwm yma.,gyda
