@@ -61,30 +61,45 @@
   }
 
   function coerceRow(row, idx) {
-    const id = getVal(row, ["id","item_id","CardId","cardid","ItemId"]) || `row_${idx}`;
-    const levelRaw = getVal(row, ["level","Level"]);
-    const level = levelRaw ? Number(levelRaw) : null;
+  const id = getVal(row, ["id","item_id","CardId","cardid","ItemId"]) || `row_${idx}`;
 
-    return {
-      id,
-      level: Number.isFinite(level) ? level : null,
-      topic_en: getVal(row, ["topic_en","TopicEn","topic","Topic"]) || "",
-      topic_cy: getVal(row, ["topic_cy","TopicCy"]) || "",
-      prompt_en: getVal(row, ["prompt_en","PromptEn","english","English","SentenceEn","MeaningEn"]) || "",
-      prompt_cy: getVal(row, ["prompt_cy","PromptCy"]) || "",
-      before_cy: getVal(row, ["before_cy","BeforeCy","before","Before"]) || "",
-      after_cy: getVal(row, ["after_cy","AfterCy","after","After"]) || "",
-      answer_cy: getVal(row, ["answer_cy","AnswerCy","answer","Answer","Expected","Target","Preposition"]) || "",
-      group: getVal(row, ["group","Group","set","Set","contrast_group","ContrastGroup"]) || "",
-      hint_en: getVal(row, ["hint_en","HintEn","hint","Hint"]) || "",
-      hint_cy: getVal(row, ["hint_cy","HintCy"]) || "",
-      why_en: getVal(row, ["why_en","WhyEn","why","Why","ExplanationEn"]) || "",
-      why_cy: getVal(row, ["why_cy","WhyCy","ExplanationCy"]) || "",
-      rule_en: getVal(row, ["rule_en","RuleEn","rule","Rule"]) || "",
-      rule_cy: getVal(row, ["rule_cy","RuleCy"]) || "",
-      choices: getVal(row, ["choices","Choices","options","Options"]) || "", // optional: "at|i|o|gyda"
-    };
-  }
+  const levelRaw = getVal(row, ["level","Level"]);
+  const level = levelRaw ? Number(levelRaw) : null;
+
+  // ✅ your CSV uses BasePrep + GapAnswer
+  const basePrep = getVal(row, ["BasePrep", "Base Prep", "base_prep", "Base"]);
+  const gapAnswer = getVal(row, ["GapAnswer", "Gap Answer", "answer_cy","AnswerCy","answer","Answer","Expected","Target","Preposition"]);
+
+  // ✅ your CSV uses Distractors like: at|i|o|gyda
+  const distractors = getVal(row, ["Distractors", "distractors", "choices","Choices","options","Options"]);
+
+  return {
+    id,
+    level: Number.isFinite(level) ? level : null,
+    topic_en: getVal(row, ["topic_en","TopicEn","topic","Topic"]) || "",
+    topic_cy: getVal(row, ["topic_cy","TopicCy"]) || "",
+    prompt_en: getVal(row, ["prompt_en","PromptEn","PromptEN","english","English","SentenceEn","MeaningEn"]) || "",
+    prompt_cy: getVal(row, ["prompt_cy","PromptCy"]) || "",
+    before_cy: getVal(row, ["before_cy","BeforeCy","BeforeCY","before","Before"]) || "",
+    after_cy: getVal(row, ["after_cy","AfterCy","AfterCY","after","After"]) || "",
+
+    // ✅ IMPORTANT: use GapAnswer, fallback to BasePrep
+    answer_cy: (gapAnswer || basePrep || "").trim(),
+
+    group: getVal(row, ["group","Group","set","Set","contrast_group","ContrastGroup"]) || "",
+
+    hint_en: getVal(row, ["hint_en","HintEn","hint","Hint"]) || "",
+    hint_cy: getVal(row, ["hint_cy","HintCy"]) || "",
+    why_en: getVal(row, ["why_en","WhyEn","WhyEN","why","Why","ExplanationEn"]) || "",
+    why_cy: getVal(row, ["why_cy","WhyCy","WhyCY","ExplanationCy"]) || "",
+    rule_en: getVal(row, ["rule_en","RuleEn","rule","Rule"]) || "",
+    rule_cy: getVal(row, ["rule_cy","RuleCy"]) || "",
+
+    // ✅ IMPORTANT: use Distractors
+    choices: (distractors || "").trim(),
+  };
+}
+
 
   function buildWelshSentence(before, answer, after) {
     let s = [before || "", answer || "", after || ""].join("");
