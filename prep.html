@@ -3,218 +3,111 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prepositions • Hyffordwr Treiglad</title>
+  <title>Hyfforddwr Arddodiaid</title>
 
   <!-- Tailwind via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Shared site CSS -->
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- Your site CSS (restored below if yours is corrupted) -->
+  <link rel="stylesheet" href="styles.css" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-  <!-- PapaParse for CSV loading -->
+  <!-- PapaParse for CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <!-- Page-specific CSS only -->
-  <style>
-    /* Keep everything keyboard-scroll friendly and tidy */
-    #prepMain { scroll-margin-top: 96px; }
+  <!-- Shared navbar -->
+  <script src="navbar.js" defer></script>
 
-    .prep-grid {
-      display: grid;
-      gap: 1rem;
-      align-items: start;
-    }
-    @media (min-width: 768px){
-      .prep-grid { grid-template-columns: 2fr 1fr; }
-    }
-
-    /* English prompt block */
-    .prompt-card{
-      position: relative; /* anchor the ? popover */
-      padding: 1rem;
-      border-radius: 1rem;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(15,23,42,0.10);
-      box-shadow: 0 10px 24px rgba(2,6,23,0.06);
-    }
-    .prompt-text{
-      font-family: "Merriweather", serif;
-      font-style: italic;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: rgba(15,23,42,0.92);
-      font-size: clamp(1.15rem, 2.1vw, 1.65rem);
-      line-height: 1.25;
-    }
-
-    /* Welsh sentence line */
-    .cy-line{
-      font-size: clamp(1.05rem, 1.9vw, 1.35rem);
-      line-height: 1.4;
-      color: rgba(15,23,42,0.88);
-    }
-
-    /* Choices grid (easy mode) */
-    .choice-grid{
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: .6rem;
-    }
-    @media (min-width: 640px){
-      .choice-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    }
-
-    /* Small status text area */
-    .prep-status{
-      font-size: .9rem;
-      color: rgba(71,85,105,0.92);
-    }
-  </style>
+  <!-- Prep app -->
+  <script src="prep.js" defer></script>
 </head>
 
-<body class="min-h-screen text-slate-900" data-current="practice">
+<body class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- Shared navbar mount -->
+    <!-- Navbar mounts here -->
     <div id="navbarMount"></div>
-    <script src="./navbar.js" defer></script>
 
-    <main id="prepMain" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6">
-      <div class="prep-grid">
+    <main class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-6">
+      <div class="grid md:grid-cols-3 gap-4 items-start">
 
-        <!-- LEFT: practice -->
-        <section class="panel rounded-2xl p-6 md:p-7">
-          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div class="min-w-0">
-              <h2 class="bbh-bogle-regular text-2xl md:text-3xl tracking-tight">
-                <span class="title-hy">Prepositions</span>
-              </h2>
-              <p id="prepInstruction" class="subtle mt-1">
-                Choose the missing Welsh preposition to match the English meaning.
-              </p>
-            </div>
-
-            <div class="flex items-center gap-2">
-              <!-- Mode toggle (Easy = options, Hard = type) -->
-              <div class="seg" role="group" aria-label="Mode">
-                <button id="btnModeEasy" class="seg-btn" type="button" aria-pressed="true">EASY</button>
-                <button id="btnModeHard" class="seg-btn" type="button" aria-pressed="false">HARD</button>
-              </div>
-
-              <button id="btnNextTop" class="btn btn-primary" type="button">Next</button>
-            </div>
-          </div>
-
-          <!-- English prompt (always visible, plus ? popover repeats the same text) -->
-          <div id="promptCard" class="prompt-card mb-4">
-            <div id="enPrompt" class="prompt-text">Loading…</div>
-          </div>
-
-          <!-- Welsh sentence with answer box -->
-          <div class="mt-3">
-            <div class="cy-line flex flex-wrap items-baseline gap-2">
-              <span id="cyBefore" class="text-slate-700"></span>
-
-              <!-- Always present, so layout doesn’t jump between modes -->
-              <input
-                id="answerBox"
-                class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-xl md:text-2xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0"
-                placeholder="Answer"
-                aria-label="Answer"
-                autocomplete="off"
-                spellcheck="false"
-              />
-
-              <span id="cyAfter" class="text-slate-700"></span>
-            </div>
-
-            <div class="mt-3 flex flex-wrap gap-2">
-              <button id="btnCheck" class="btn btn-primary shadow" type="button">Check</button>
-              <button id="btnHint" class="btn btn-ghost" type="button">Hint</button>
-              <button id="btnReveal" class="btn btn-ghost" type="button">Reveal</button>
-            </div>
-
-            <div id="hintBox" class="mt-3 hidden feedback-box">
-              <div class="text-slate-800 font-semibold mb-1" id="hintTitle">Hint</div>
-              <div class="text-slate-700" id="hintText"></div>
-            </div>
-
-            <div id="choicesWrap" class="mt-4">
-              <div id="choices" class="choice-grid"></div>
-            </div>
-
-            <div id="feedback" class="mt-4 hidden"></div>
-
-            <div id="loadStatus" class="mt-4 prep-status"></div>
-          </div>
+        <!-- Left: card -->
+        <section class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
+          <div id="prepCard"></div>
         </section>
 
-        <!-- RIGHT: filters + session -->
-        <aside class="flex flex-col gap-4">
+        <!-- Right: filters + session -->
+        <aside class="md:col-span-1 flex flex-col gap-4">
+          <div class="panel rounded-2xl p-4">
+            <div class="flex items-center justify-between gap-2">
+              <div class="text-sm font-medium">Session</div>
+              <button id="btnFilters" class="btn btn-ghost px-3 py-1.5" type="button">Filters</button>
+            </div>
 
-          <section class="panel rounded-2xl p-4">
-            <div class="text-sm font-medium mb-2" id="filtersTitle">Filters</div>
-
-            <div class="grid grid-cols-2 gap-2 text-sm">
-              <div class="col-span-2">
-                <label class="text-xs uppercase tracking-wide text-slate-500" for="fTopic" id="lblTopic">Topic</label>
-                <select id="fTopic" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white/80"></select>
-              </div>
-
-              <div class="col-span-2">
-                <label class="text-xs uppercase tracking-wide text-slate-500" for="fLevel" id="lblLevel">Level</label>
-                <select id="fLevel" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white/80"></select>
-              </div>
+            <div class="mt-3">
+              <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
+              <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
+              <div id="streakText" class="text-sm text-slate-600">Streak: 0</div>
+              <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
             </div>
 
             <div class="mt-3 flex gap-2">
-              <button id="btnReset" class="btn btn-ghost px-3 py-1.5" type="button">Reset</button>
+              <button id="btnReset" class="btn btn-ghost px-3 py-1.5" type="button">Reset stats</button>
             </div>
-          </section>
+          </div>
 
-          <section class="panel rounded-2xl p-4">
-            <div class="text-sm font-medium mb-2" id="sessionTitle">Session</div>
+          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+            <div class="text-sm font-medium mb-2">Filters</div>
 
-            <div class="grid grid-cols-3 gap-2">
-              <div class="panel rounded-xl p-3">
-                <div class="text-xs uppercase tracking-wide text-slate-500" id="kScore">Score</div>
-                <div class="text-2xl font-semibold" id="vScore">0</div>
+            <div class="grid grid-cols-1 gap-3 text-sm">
+              <div>
+                <label class="text-xs uppercase tracking-wide text-slate-500">Topic</label>
+                <select id="fTopic" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white">
+                  <option value="">All</option>
+                </select>
               </div>
-              <div class="panel rounded-xl p-3">
-                <div class="text-xs uppercase tracking-wide text-slate-500" id="kStreak">Streak</div>
-                <div class="text-2xl font-semibold" id="vStreak">0</div>
+
+              <div>
+                <label class="text-xs uppercase tracking-wide text-slate-500">Level</label>
+                <select id="fLevel" class="mt-1 w-full border rounded-xl px-3 py-2 bg-white">
+                  <option value="">All</option>
+                </select>
               </div>
-              <div class="panel rounded-xl p-3">
-                <div class="text-xs uppercase tracking-wide text-slate-500" id="kDone">Done</div>
-                <div class="text-2xl font-semibold" id="vDone">0</div>
+
+              <div>
+                <label class="text-xs uppercase tracking-wide text-slate-500">Focus (answer contains)</label>
+                <input id="fContains" class="mt-1 w-full border rounded-xl px-3 py-2" placeholder="e.g. arna, at, i, gyda" />
+              </div>
+
+              <label class="inline-flex items-center gap-2">
+                <input id="fPhrasesOnly" type="checkbox" />
+                <span>Phrase answers only (e.g. <b>arna i</b>)</span>
+              </label>
+
+              <div class="flex gap-2 pt-1">
+                <button id="btnClearFilters" class="btn btn-ghost px-3 py-1.5" type="button">Clear</button>
               </div>
             </div>
-
-            <div class="mt-3 text-sm text-slate-600" id="kbdHelp">
-              <div><span class="kbd">Enter</span> Check / Next</div>
-              <div><span class="kbd">1–4</span> Choose option (Easy mode)</div>
-              <div><span class="kbd">H</span> Hint</div>
-            </div>
-          </section>
+          </div>
 
         </aside>
       </div>
     </main>
 
+    <!-- Mobile action bar -->
+    <div class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
+      <div class="max-w-6xl mx-auto flex gap-2">
+        <button id="mbHint" class="flex-1 btn btn-ghost px-3 py-2" type="button">Hint</button>
+        <button id="mbCheck" class="flex-1 btn btn-primary px-3 py-2" type="button">Check</button>
+        <button id="mbNext" class="flex-1 btn btn-ghost px-3 py-2" type="button">Next</button>
+      </div>
+    </div>
+
     <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
       <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Treiglad</span>
+        <span>© Hyfforddwr</span>
         <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1" type="button">Back to top</button>
       </div>
     </footer>
   </div>
-
-  <!-- App logic -->
-  <script src="./prep.js" defer></script>
 </body>
 </html>
