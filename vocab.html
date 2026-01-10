@@ -208,7 +208,7 @@
 <script>
 /* ========= Utilities ========= */
 
-  function shuffleInPlace(arr) {
+function shuffleInPlace(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
@@ -233,13 +233,6 @@ function esc(s) {
   return (s == null ? "" : String(s)).replace(/[&<>"]/g, ch => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
   }[ch]));
-}
-function download(text, filename, type = "text/plain") {
-  const blob = new Blob([text], { type });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
 }
 function getParam(k) { return new URLSearchParams(location.search).get(k); }
 function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -298,7 +291,6 @@ function pickNextSmartIdx() {
 
   if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
 
-  // decrement retry timers, serve first due that's not the current one
   if (state.smartQueue.length) {
     state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1));
     const duePos = state.smartQueue.findIndex(item => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
@@ -390,12 +382,11 @@ async function playPollySentence(sentence) {
   await audio.play();
 }
 
-/* ========= “?” popover UI (reuses your existing base-info-* styling) ========= */
+/* ========= “?” popover UI ========= */
 function mountInfoPopover(hostEl, htmlBody, ariaLabel = "Help") {
   if (!hostEl) return;
   if (!htmlBody || !String(htmlBody).trim()) return;
 
-  // anchor absolute-positioned “?” to the host (THIS fixes drifting and spacing weirdness)
   hostEl.style.position = "relative";
 
   const btn = document.createElement("button");
@@ -437,7 +428,6 @@ function mountInfoPopover(hostEl, htmlBody, ariaLabel = "Help") {
   hostEl.appendChild(pop);
 }
 
-// Global closer (single listeners)
 document.addEventListener("click", () => {
   $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
 });
@@ -475,9 +465,10 @@ function coerceRow(r) {
 
   // Accepted answers (what counts as correct)
   let accepted = parsePipe(acceptedRaw);
-
-  // Ensure AnswerCY is always accepted if present
-  if (answerCY && !accepted.map(normalize).includes(normalize(answerCY))) accepted.unshift(answerCY);
+  if (answerCY) {
+    // Ensure canonical answer is always first
+    accepted = [answerCY, ...accepted.filter(a => normalize(a) !== normalize(answerCY))];
+  }
 
   // Options (what shows in Easy / MCQ mode)
   let options = parsePipe(optionsRaw);
@@ -497,11 +488,10 @@ function coerceRow(r) {
 
     AnswerCY: answerCY,
 
-    // New canonical fields
     AcceptedAnswerArray: accepted,
     OptionsArray: options,
 
-    // Back-compat: keep old name used elsewhere
+    // Back-compat
     AnswerArray: accepted,
 
     WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
@@ -509,7 +499,6 @@ function coerceRow(r) {
     Tags: getVal(row, ["Tags","Tag"]).trim()
   };
 }
-
 
 async function loadCsvUrl(u) {
   return new Promise((resolve, reject) => {
@@ -573,14 +562,12 @@ const state = {
   filtered: [],
   mode: loadLS("vocab_mode", "practice"),
 
-  // Filters
-  diffPreset: loadLS("vocab_diff", "all"),        // all | easy | hard
+  diffPreset: loadLS("vocab_diff", "all"),
   course: loadLS("vocab_course", ""),
   unit: loadLS("vocab_unit", ""),
-  wordCats: loadLS("vocab_wc", []),               // multi-select
+  wordCats: loadLS("vocab_wc", []),
   search: loadLS("vocab_search", ""),
 
-  // Practice
   practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
   inputMode: loadLS("vocab_input_mode_v1", "hard"),
   leitner: loadLS(LEITNER_LS_KEY, {}),
@@ -595,6 +582,9 @@ const state = {
   freezeIdx: null,
   freezePos: null,
 
+  // Easy-mode option order cache (so options don't reshuffle on incidental rerenders)
+  easyOpt: { cardKey: null, options: [] },
+
   history: loadLS("vocab_hist", []),
   admin: getParam("admin") === "1",
 
@@ -607,7 +597,7 @@ const COURSE_EASY = new Set(["Mynediad","Sylfaen"]);
 const COURSE_HARD = new Set(["Uwch 1","Uwch 2","Uwch 3","Uwch1","Uwch2","Uwch3"]);
 
 function applyDiffPreset(list) {
-  if (state.course) return list; // explicit course overrides preset
+  if (state.course) return list;
   if (state.diffPreset === "easy") return list.filter(r => COURSE_EASY.has(r.Course));
   if (state.diffPreset === "hard") return list.filter(r => COURSE_HARD.has(r.Course));
   return list;
@@ -651,6 +641,7 @@ function rebuildDeck() {
   state.freezeIdx = null;
   state.freezePos = null;
   state.smartQueue = [];
+  state.easyOpt = { cardKey: null, options: [] };
 
   if (state.practiceMode === "smart") {
     state.smartCount = 0;
@@ -674,7 +665,6 @@ function applyLanguage() {
 
 /* ========= Filters UI build ========= */
 function buildFilterControls() {
-  // Difficulty buttons (seg)
   const setDiffBtnState = () => {
     const map = { all:"#diffAll", easy:"#diffEasy", hard:"#diffHard" };
     Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
@@ -710,7 +700,6 @@ function buildFilterControls() {
 
   setDiffBtnState();
 
-  // Course dropdown
   const courseSel = $("#courseSelect");
   const unitSel = $("#unitSelect");
 
@@ -729,7 +718,6 @@ function buildFilterControls() {
     courseSel.onchange = (e) => {
       state.course = e.target.value;
       state.unit = "";
-      // Choosing a specific course implies preset "all" (otherwise it feels contradictory)
       state.diffPreset = "all";
       saveLS("vocab_course", state.course);
       saveLS("vocab_unit", state.unit);
@@ -738,7 +726,6 @@ function buildFilterControls() {
     };
   }
 
-  // Unit dropdown depends on current course/preset
   const unitsBase = applyDiffPreset(state.rows.slice())
     .filter(r => !state.course || r.Course === state.course)
     .map(r => r.Unit)
@@ -764,7 +751,6 @@ function buildFilterControls() {
     };
   }
 
-  // WordCategory pills
   const wcHost = $("#wcBtns");
   if (wcHost) {
     wcHost.innerHTML = "";
@@ -787,7 +773,6 @@ function buildFilterControls() {
     });
   }
 
-  // Search box
   const sb = $("#searchBox");
   if (sb) {
     sb.value = state.search || "";
@@ -830,7 +815,6 @@ function renderPractice() {
     return;
   }
 
-  // pick current card
   let idxNow;
   let posText = "";
 
@@ -853,6 +837,8 @@ function renderPractice() {
   const idxShown = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
   const card = state.filtered[idxShown];
   state.currentIdx = idxNow;
+
+  const cardKey = card.CardID || `row_${idxShown}`;
 
   const wrap = document.createElement("div");
 
@@ -906,6 +892,7 @@ function renderPractice() {
       if (state.inputMode === value) return;
       state.inputMode = value;
       saveLS("vocab_input_mode_v1", state.inputMode);
+      state.easyOpt = { cardKey: null, options: [] };
       state.guess = "";
       state.revealed = false;
       state.lastResult = null;
@@ -934,14 +921,12 @@ function renderPractice() {
     return s;
   };
 
-  // Only show what’s actually active
   if (state.diffPreset && state.diffPreset !== "all") activeFilters.appendChild(chip(`Preset: ${state.diffPreset}`));
   if (state.course) activeFilters.appendChild(chip(state.course));
   if (state.unit) activeFilters.appendChild(chip(state.unit));
   if (state.wordCats?.length) state.wordCats.forEach(c => activeFilters.appendChild(chip(c)));
   if ((state.search || "").trim()) activeFilters.appendChild(chip(`Search: ${state.search.trim()}`));
 
-  // If nothing selected, keep it clean (don’t render an empty row)
   const hasAnyFilters = activeFilters.childElementCount > 0;
 
   // Instruction
@@ -962,7 +947,6 @@ function renderPractice() {
   baseSpan.textContent = card.BaseEN || "—";
   capsule.appendChild(baseSpan);
 
-  // Base “?” (hint)
   const hintParts = [];
   if (card.HintEN) hintParts.push(`<div class="base-info-meaning">${esc(card.HintEN)}</div>`);
   if (card.HintCY) hintParts.push(`<div class="base-info-meaning">${esc(card.HintCY)}</div>`);
@@ -970,8 +954,7 @@ function renderPractice() {
 
   baseBlock.appendChild(capsule);
 
-  // ===== Sentence line with FIXED “?” positioning =====
-  // Use inline-flex directly (NOT a full-width block) so the “?” anchors to the sentence chunk, not the card edge.
+  // ===== Sentence line + input =====
   const sentenceWrap = document.createElement("div");
   sentenceWrap.className = "mt-5";
 
@@ -987,11 +970,7 @@ function renderPractice() {
   input.className = "border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0";
   input.placeholder = (state.inputMode === "easy") ? "Choose below" : "Type Welsh";
   input.setAttribute("aria-label", "Answer");
-
-  // In easy mode, we still show the input, but it’s read-only and filled by clicking options
-  if (state.inputMode === "easy") {
-    input.readOnly = true;
-  }
+  if (state.inputMode === "easy") input.readOnly = true;
 
   const afterSpan = document.createElement("span");
   afterSpan.className = "text-slate-600";
@@ -999,7 +978,6 @@ function renderPractice() {
 
   sentenceCapsule.append(beforeSpan, input, afterSpan);
 
-  // Sentence “?” (gloss/help)
   const sentHelp = (card.SentenceHelpEN || "").trim();
   if (sentHelp) {
     mountInfoPopover(sentenceCapsule, `<div class="base-info-meaning">${esc(sentHelp)}</div>`, "Sentence help");
@@ -1010,26 +988,25 @@ function renderPractice() {
   // ===== Accepted answers + canonical answer =====
   const acceptedAnswers = Array.isArray(card.AcceptedAnswerArray) ? card.AcceptedAnswerArray
     : (Array.isArray(card.AnswerArray) ? card.AnswerArray : []);
-  const canonicalAnswer = acceptedAnswers[0] || card.AnswerCY || "";
+  const canonicalAnswer = (card.AnswerCY || acceptedAnswers[0] || "").trim();
 
-  // ===== EASY MODE: options (OptionsArray) =====
-  // If OptionsArray is missing/short, auto-fill options from other answers so Easy mode still works for testing.
+  // ===== EASY MODE: options =====
   let optionList = [];
 
-  if (state.inputMode === "easy" && !state.revealed) {
-    const uniqNorm = (arr) => {
-      const out = [];
-      const seen = new Set();
-      (arr || []).forEach(v => {
-        const s = (v || "").toString().trim();
-        const k = normalize(s);
-        if (!k || seen.has(k)) return;
-        seen.add(k);
-        out.push(s);
-      });
-      return out;
-    };
+  const uniqNorm = (arr) => {
+    const out = [];
+    const seen = new Set();
+    (arr || []).forEach(v => {
+      const s = (v || "").toString().trim();
+      const k = normalize(s);
+      if (!k || seen.has(k)) return;
+      seen.add(k);
+      out.push(s);
+    });
+    return out;
+  };
 
+  const buildEasyOptions = () => {
     let opts = uniqNorm(Array.isArray(card.OptionsArray) ? card.OptionsArray : []);
     if (canonicalAnswer && !opts.map(normalize).includes(normalize(canonicalAnswer))) opts.unshift(canonicalAnswer);
 
@@ -1055,12 +1032,21 @@ function renderPractice() {
 
     opts = uniqNorm(opts);
     shuffleInPlace(opts);
-    optionList = opts;
+    return opts;
+  };
+
+  if (state.inputMode === "easy" && !state.revealed) {
+    if (state.easyOpt.cardKey === cardKey && Array.isArray(state.easyOpt.options) && state.easyOpt.options.length) {
+      optionList = state.easyOpt.options.slice();
+    } else {
+      optionList = buildEasyOptions();
+      state.easyOpt = { cardKey, options: optionList.slice() };
+    }
 
     const optWrap = document.createElement("div");
     optWrap.className = "mt-4 grid grid-cols-2 gap-2 max-w-xl";
 
-    optionList.forEach((opt, i) => {
+    optionList.forEach((opt) => {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "btn btn-ghost px-3 py-2 text-left";
@@ -1106,11 +1092,11 @@ function renderPractice() {
     state.freezeIdx = idxNow;
     state.freezePos = state.currentDeckPos;
 
-    const cardId = card.CardID || `row_${idxShown}`;
+    const idForStats = card.CardID || `row_${idxShown}`;
     state.history = [{
       t: Date.now(),
       ok,
-      cardId,
+      cardId: idForStats,
       course: card.Course || "",
       expected: acceptedAnswers.join("|"),
       got: guess,
@@ -1119,7 +1105,7 @@ function renderPractice() {
     }, ...state.history].slice(0, 1000);
     saveLS("vocab_hist", state.history);
 
-    updateLeitner(cardId, ok ? "correct" : "wrong");
+    updateLeitner(idForStats, ok ? "correct" : "wrong");
     if (!ok && state.practiceMode === "smart") {
       state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
     }
@@ -1160,12 +1146,12 @@ function renderPractice() {
       state.freezeIdx = idxNow;
       state.freezePos = state.currentDeckPos;
 
-      const cardId = card.CardID || `row_${idxShown}`;
+      const idForStats = card.CardID || `row_${idxShown}`;
       state.history = [{
         t: Date.now(),
         ok: false,
         skipped: true,
-        cardId,
+        cardId: idForStats,
         course: card.Course || "",
         expected: acceptedAnswers.join("|"),
         got: "",
@@ -1174,7 +1160,7 @@ function renderPractice() {
       }, ...state.history].slice(0, 1000);
       saveLS("vocab_hist", state.history);
 
-      updateLeitner(cardId, "skipped");
+      updateLeitner(idForStats, "skipped");
       if (state.practiceMode === "smart") state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
 
       nextCard(1);
@@ -1245,13 +1231,11 @@ function renderPractice() {
     }, 0);
   }
 
-  // Build final layout
   wrap.append(header);
   if (hasAnyFilters) wrap.append(activeFilters);
   wrap.append(instruction, baseBlock, sentenceWrap, actions, hintBox, feedback);
   host.appendChild(wrap);
 
-  // Input handling
   const ab = $("#answerBox");
   if (ab) {
     ab.value = state.guess;
@@ -1262,7 +1246,7 @@ function renderPractice() {
         e.preventDefault(); e.stopPropagation();
         onCheck();
       }
-      // Easy mode quick-pick: keys 1–4 choose options if present
+
       if (state.inputMode === "easy") {
         const k = e.key;
         if (["1","2","3","4"].includes(k) && Array.isArray(optionList) && optionList.length) {
@@ -1275,262 +1259,10 @@ function renderPractice() {
       }
     });
 
-    // Only allow typing in hard mode
     ab.addEventListener("input", (e) => {
       if (state.inputMode === "easy") return;
       state.guess = e.target.value;
     });
-  }
-}
-
-  // Instruction
-  const instruction = document.createElement("div");
-  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
-  instruction.textContent = "Type the Welsh word that matches the English base word.";
-
-  // Base capsule (English), styled like your index page
-  const baseBlock = document.createElement("div");
-  baseBlock.className = "mb-3";
-
-  const capsule = document.createElement("div");
-  capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-3 shadow-sm pr-12";
-  // pr-12 gives the “?” breathing room so it isn’t cramped into the corner
-  const baseSpan = document.createElement("span");
-  baseSpan.className = "base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight";
-  baseSpan.textContent = card.BaseEN || "—";
-  capsule.appendChild(baseSpan);
-
-  // Base “?”: show hint (EN + optional CY)
-  const hintParts = [];
-  if (card.HintEN) hintParts.push(`<div class="base-info-meaning">${esc(card.HintEN)}</div>`);
-  if (card.HintCY) hintParts.push(`<div class="base-info-meaning">${esc(card.HintCY)}</div>`);
-  const hintHtml = hintParts.join("");
-  mountInfoPopover(capsule, hintHtml, "Hint");
-
-  baseBlock.appendChild(capsule);
-
-  // Meta chips under base word (course / unit / word category)
-  const meta = document.createElement("div");
-  meta.className = "flex flex-wrap gap-2 mt-3";
-  const addMetaChip = (txt) => {
-    const c = document.createElement("span");
-    c.className = "chip";
-    c.textContent = txt;
-    return c;
-  };
-  if (card.Course) meta.appendChild(addMetaChip(card.Course));
-  if (card.Unit) meta.appendChild(addMetaChip(card.Unit));
-  if (card.WordCategory) meta.appendChild(addMetaChip(card.WordCategory));
-  baseBlock.appendChild(meta);
-
-  // Sentence capsule (Welsh sentence with input) + sentence “?” for glosses
-  const sentenceWrap = document.createElement("div");
-  sentenceWrap.className = "mt-5";
-
-  // This is the key spacing fix:
-  // - inline-block so the “?” sits at the top-right of the sentence chunk, not the far right edge of the card
-  // - pr-12 so the “?” has breathing space
-  const sentenceCapsule = document.createElement("div");
-  sentenceCapsule.className = "inline-block max-w-full relative pr-12";
-
-  sentenceCapsule.innerHTML = `
-    <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
-      <span class="text-slate-600">${esc(card.BeforeCY || "")}</span>
-      <input id="answerBox"
-        class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0"
-        placeholder="Type Welsh"
-        aria-label="Answer" />
-      <span class="text-slate-600">${esc(card.AfterCY || "")}</span>
-    </div>
-  `;
-
-  // Sentence “?”: show SentenceHelpEN (glosses / translation cues)
-  const sentHelp = (card.SentenceHelpEN || "").trim();
-  if (sentHelp) {
-    const html = `<div class="base-info-meaning">${esc(sentHelp)}</div>`;
-    mountInfoPopover(sentenceCapsule, html, "Sentence help");
-  }
-
-  sentenceWrap.appendChild(sentenceCapsule);
-
-  // Actions row (Check / Hint / Next) – uses your existing button styles
-  const actions = document.createElement("div");
-  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
-
-  const main = document.createElement("div");
-  main.className = "practice-actions-main";
-
-  const hintBox = document.createElement("div");
-  hintBox.className = "hidden practice-hint text-sm text-slate-600 mt-3";
-
-  const acceptedAnswers = Array.isArray(card.AnswerArray) ? card.AnswerArray : [];
-  const canonicalAnswer = acceptedAnswers[0] || card.AnswerCY || "";
-
-  const showHint = () => {
-    const first = canonicalAnswer ? canonicalAnswer.slice(0,1) : "?";
-    const extra = card.HintEN ? ` · ${card.HintEN}` : "";
-    hintBox.innerHTML = `Hint: starts with <b>${esc(first)}</b>${extra ? `<span>${esc(extra)}</span>` : ""}`;
-    hintBox.classList.remove("hidden");
-    $("#answerBox")?.focus();
-  };
-
-  const onCheck = () => {
-    const guess = state.guess || "";
-    const ok = acceptedAnswers.some(a => normalize(a) === normalize(guess));
-
-    state.revealed = true;
-    state.lastResult = ok ? "correct" : "wrong";
-    state.freezeIdx = idxNow;
-    state.freezePos = state.currentDeckPos;
-
-    const cardId = card.CardID || `row_${idxShown}`;
-    state.history = [{
-      t: Date.now(),
-      ok,
-      cardId,
-      course: card.Course || "",
-      expected: acceptedAnswers.join("|"),
-      got: guess,
-      mode: state.practiceMode
-    }, ...state.history].slice(0, 1000);
-    saveLS("vocab_hist", state.history);
-
-    updateLeitner(cardId, ok ? "correct" : "wrong");
-    if (!ok && state.practiceMode === "smart") {
-      state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
-    }
-
-    const ab = $("#answerBox");
-    if (ab) {
-      ab.disabled = true;
-      ab.classList.add("opacity-70", "cursor-not-allowed");
-    }
-    render();
-    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
-  };
-
-  const btnCheck = document.createElement("button");
-  btnCheck.type = "button";
-  btnCheck.id = "btnCheck";
-  btnCheck.className = "btn btn-primary shadow";
-  btnCheck.textContent = "Check";
-  btnCheck.onclick = onCheck;
-
-  const btnHint = document.createElement("button");
-  btnHint.type = "button";
-  btnHint.id = "btnHint";
-  btnHint.className = "btn btn-ghost";
-  btnHint.textContent = "Hint";
-  btnHint.onclick = showHint;
-
-  const btnNext = document.createElement("button");
-  btnNext.type = "button";
-  btnNext.className = "btn btn-ghost";
-  btnNext.textContent = "Next";
-  btnNext.onclick = () => {
-    // If they hit Next without checking, treat as skipped (keeps flow similar to your current UI)
-    if (!state.revealed) {
-      state.guess = "";
-      state.revealed = true;
-      state.lastResult = "skipped";
-      state.freezeIdx = idxNow;
-      state.freezePos = state.currentDeckPos;
-
-      const cardId = card.CardID || `row_${idxShown}`;
-      state.history = [{
-        t: Date.now(),
-        ok: false,
-        skipped: true,
-        cardId,
-        course: card.Course || "",
-        expected: acceptedAnswers.join("|"),
-        got: "",
-        mode: state.practiceMode
-      }, ...state.history].slice(0, 1000);
-      saveLS("vocab_hist", state.history);
-
-      updateLeitner(cardId, "skipped");
-      if (state.practiceMode === "smart") state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
-
-      nextCard(1);
-      return;
-    }
-    nextCard(1);
-  };
-
-  main.append(btnCheck, btnHint, btnNext);
-  actions.append(main);
-
-  // Feedback block with HEAR button restored (same markup/class as your index page)
-  const feedback = document.createElement("div");
-  feedback.className = "practice-feedback mt-4";
-  feedback.setAttribute("aria-live", "polite");
-
-  if (state.revealed) {
-    const ok = state.lastResult === "correct";
-    const skipped = state.lastResult === "skipped";
-
-    const statusIcon = skipped ? "⏭️" : (ok ? "✅" : "❌");
-    const statusText = skipped ? "Skipped" : (ok ? "Correct!" : "Not quite");
-
-    const fullSentence = buildCompleteSentence(card, canonicalAnswer);
-    const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
-
-    feedback.innerHTML = `
-      <div class="feedback-box">
-        <div class="flex items-center gap-2 ${ok ? "text-indigo-900" : "text-rose-900"} text-2xl md:text-3xl font-semibold">
-          ${statusIcon} ${esc(statusText)}
-        </div>
-
-        ${(!ok && !skipped)
-          ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || "(blank)"}</b></div>`
-          : ""
-        }
-
-        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
-          <span>${esc(card.BeforeCY || "")}</span>
-          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(canonicalAnswer)}</span>
-          <span>${esc(card.AfterCY || "")}</span>
-
-          <button id="btnHear" class="btn-hear" type="button">
-            <span class="icon" aria-hidden="true">▶︎</span>
-            <span>Hear</span>
-          </button>
-        </div>
-
-        ${whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : ""}
-
-        <div class="mt-4 flex justify-end">
-          <button id="inlineNext" class="btn btn-primary shadow transition" type="button" title="Next (Enter)">
-            Next
-          </button>
-        </div>
-      </div>
-    `;
-
-    setTimeout(() => {
-      $("#btnHear")?.addEventListener("click", async () => {
-        try {
-          await playPollySentence(fullSentence);
-        } catch (e) {
-          alert("Couldn't play audio: " + (e?.message || e));
-        }
-      });
-      $("#inlineNext")?.addEventListener("click", () => nextCard(1));
-    }, 0);
-  }
-
-  wrap.append(header, instruction, baseBlock, sentenceWrap, actions, hintBox, feedback);
-  host.appendChild(wrap);
-
-  const ab = $("#answerBox");
-  if (ab) {
-    ab.value = state.guess;
-    ab.focus();
-    ab.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); onCheck(); }
-    });
-    ab.addEventListener("input", (e) => { state.guess = e.target.value; });
   }
 }
 
@@ -1618,6 +1350,8 @@ function render() {
 }
 
 function nextCard(offset = 1) {
+  state.easyOpt = { cardKey: null, options: [] };
+
   if (state.practiceMode === "smart") {
     if (!state.filtered.length) return;
     state.freezeIdx = null;
@@ -1633,7 +1367,6 @@ function nextCard(offset = 1) {
 
   if (!state.deck.length) return;
 
-  // In random mode, if wrong: push same card a few steps later
   if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
     const idxVal = state.freezeIdx;
     let deckPos = state.freezePos;
