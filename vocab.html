@@ -14,56 +14,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-  <style>
-    /* Small page-specific bits only; keep the rest in styles.css */
-    .mini-label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-    .info-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,.15);
-      background: rgba(255,255,255,.85);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    .info-pop {
-      position: absolute;
-      right: 6px;
-      top: 40px;
-      width: min(360px, calc(100vw - 32px));
-      background: white;
-      border: 1px solid rgba(0,0,0,.12);
-      box-shadow: 0 12px 30px rgba(0,0,0,.12);
-      border-radius: 14px;
-      padding: 12px 12px 10px;
-      z-index: 50;
-    }
-    .info-pop .close {
-      position: absolute;
-      right: 10px;
-      top: 8px;
-      font-size: 18px;
-      line-height: 1;
-      opacity: .7;
-      cursor: pointer;
-      border: none;
-      background: transparent;
-    }
-    .seg { display: inline-flex; border: 1px solid rgba(0,0,0,.12); border-radius: attachments; border-radius: 999px; overflow: hidden; }
-    .seg-btn { padding: 6px 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-    .seg-btn.is-on { background: rgba(15,23,42,.08); font-weight: 700; }
-  </style>
 </head>
 
 <body class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
+    <!-- Header: keep structure consistent with your index page -->
     <header id="siteHeader" class="sticky top-0 z-10">
       <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
         <div class="brand-lockup grow min-w-0">
@@ -75,17 +31,19 @@
 
         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
           <span id="itemCount" class="hidden text-xs text-slate-500"></span>
+          <span id="adminBadge" class="hidden text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Admin</span>
 
           <!-- Primary nav -->
           <div class="flex flex-wrap items-center gap-2">
             <a class="btn btn-ghost" href="./home.html" title="Home">Home</a>
             <a class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
-            <a class="btn btn-ghost" href="./index.html" title="Mutation practice">Mutations</a>
+            <a class="btn btn-ghost" href="./index.html" title="Mutations">Mutations</a>
             <button id="btnPractice" class="btn btn-primary" title="Vocab practice">Vocab</button>
           </div>
 
           <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
 
+          <!-- Secondary actions -->
           <div class="flex flex-wrap items-center gap-2">
             <button id="btnStats" class="btn btn-ghost" title="Stats">Stats</button>
             <button id="btnFilters" class="btn btn-ghost" title="Filters">Filters</button>
@@ -106,12 +64,13 @@
       <div class="panel rounded-2xl p-4 flex items-start gap-3">
         <div class="text-2xl">💡</div>
         <div class="text-sm text-slate-700">
-          <div class="font-medium mb-1">Welcome! How to use this vocab trainer.</div>
+          <div class="font-medium mb-1">Vocab mode (English → Welsh)</div>
           <ol class="list-decimal ml-5 leading-relaxed">
-            <li>Use <b>Filters</b> to choose a course/unit, word type, or search by tags.</li>
-            <li>You’ll see an <b>English base word</b>. Type the correct <b>Welsh</b> form into the sentence.</li>
-            <li>Use the <b>?</b> on the English word for a <b>hint</b>. Use the <b>?</b> on the sentence line for <b>sentence help</b>.</li>
-            <li>Press <b>Check</b>, read the explanation, then <b>Next</b>.</li>
+            <li>Use <b>Random</b> or <b>Smart</b> review at the top of the card.</li>
+            <li>Click <b>Filters</b> to pick Course, Unit, Word category, or search by tags.</li>
+            <li>Read the Welsh sentence and type the matching Welsh word.</li>
+            <li>Use the <b>?</b> next to the base word for a hint. Use the <b>?</b> by the sentence for word glosses.</li>
+            <li>After checking, use <b>Hear</b> to play the completed Welsh sentence.</li>
           </ol>
           <div class="mt-3 flex gap-2">
             <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
@@ -121,36 +80,65 @@
       </div>
     </section>
 
+    <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
       <div id="practiceView" class="grid md:grid-cols-3 gap-4 items-start">
+        <!-- Left: practice card -->
         <div class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
           <div id="practiceCard"></div>
         </div>
 
+        <!-- Right: filters + session -->
         <div class="md:col-span-1 flex flex-col gap-4">
-          <!-- Filters -->
+
           <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+            <!-- Admin tools -->
+            <div id="adminPanel" class="hidden mb-4">
+              <div class="text-sm font-medium mb-2">Admin tools</div>
+              <label class="text-sm font-medium">Data URL </label>
+              <div class="mt-2 flex gap-2">
+                <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste CSV URL">
+                <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
+              </div>
+              <div class="mt-3">
+                <div class="text-sm font-medium mb-1">Load local CSV</div>
+                <input id="fileCsv" type="file" accept=".csv" />
+              </div>
+              <hr class="my-4" />
+            </div>
+
             <div class="text-sm font-medium mb-2">Filters</div>
 
-            <div class="grid grid-cols-1 gap-3 text-sm">
+            <!-- Quick difficulty toggle (doesn't replace Course/Unit, just a quick preset) -->
+            <div class="mb-3">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Difficulty</div>
+              <div class="seg">
+                <button id="diffAll" class="seg-btn">ALL</button>
+                <button id="diffEasy" class="seg-btn">EASY</button>
+                <button id="diffHard" class="seg-btn">HARD</button>
+              </div>
+              <div class="mt-1 text-xs text-slate-500">Easy = Mynediad/Sylfaen · Hard = Uwch 1–3</div>
+            </div>
+
+            <div class="grid gap-3 text-sm">
               <div>
-                <div class="mini-label text-slate-500 mb-1">Course</div>
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Course</div>
                 <select id="courseSelect" class="w-full border rounded-xl px-3 py-2 bg-white"></select>
               </div>
 
               <div>
-                <div class="mini-label text-slate-500 mb-1">Unit</div>
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Unit</div>
                 <select id="unitSelect" class="w-full border rounded-xl px-3 py-2 bg-white"></select>
               </div>
 
               <div>
-                <div class="mini-label text-slate-500 mb-1">Word category</div>
-                <div id="wordCatBtns" class="flex flex-wrap gap-1"></div>
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Word category</div>
+                <div id="wcBtns" class="flex flex-wrap gap-1"></div>
               </div>
 
               <div>
-                <div class="mini-label text-slate-500 mb-1">Search tags / English</div>
-                <input id="tagQuery" class="w-full border rounded-xl px-3 py-2" placeholder="e.g. food, travel, rights, work" />
+                <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Search tags / English</div>
+                <input id="searchBox" class="w-full border rounded-xl px-3 py-2" placeholder="e.g. food, travel, rights, work" />
               </div>
 
               <div class="flex gap-2">
@@ -159,7 +147,6 @@
             </div>
           </div>
 
-          <!-- Session / stats -->
           <aside id="sessionPanel" class="panel rounded-2xl p-4">
             <div class="text-sm font-medium mb-2">Session</div>
             <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
@@ -204,9 +191,9 @@
     <!-- Mobile action bar -->
     <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
       <div class="max-w-6xl mx-auto flex gap-2">
-        <button id="mbHint" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
-        <button id="mbCheck" class="flex-1 btn btn-primary px-3 py-2">Check</button>
-        <button id="mbNext" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
+        <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
+        <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
+        <button id="mbNext" title="Next (Enter)" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
       </div>
     </div>
 
@@ -227,7 +214,7 @@ function normalize(s) {
   return (s || "")
     .toString()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")   // strip diacritics (dŵr == dwr)
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/’/g, "'")
     .toLowerCase()
     .trim()
@@ -238,38 +225,258 @@ function esc(s) {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
   }[ch]));
 }
+function download(text, filename, type = "text/plain") {
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
 function getParam(k) { return new URLSearchParams(location.search).get(k); }
 function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
 
-/* ========= App state ========= */
-const PRACTICE_MODE_LS_KEY = "wv_practice_mode_v1";
-const state = {
-  rows: [],
-  filtered: [],
-  deck: [],
-  p: 0,
-  guess: "",
-  revealed: false,
-  lastResult: null,
+function toggleBtn(text, active, onToggle) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.className = `pill ${active ? "pill-on" : ""}`;
+  b.textContent = text;
+  b.onclick = () => onToggle(!active);
+  return b;
+}
 
-  mode: loadLS("wv_mode", "practice"),
-  lang: loadLS("wv_lang", "en"),
-  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
+/* ========= Practice mode (Random / Smart - Leitner) ========= */
+const PRACTICE_MODE_LS_KEY = "vocab_practice_mode_v1";
+const LEITNER_LS_KEY = "vocab_leitner_boxes_v1";
+const LEITNER_MAX_BOX = 5;
+const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
 
-  // Filters
-  course: loadLS("wv_course", "ALL"),
-  unit: loadLS("wv_unit", "ALL"),
-  wordCats: loadLS("wv_wordcats", []), // empty == all
-  tagQuery: loadLS("wv_tagq", ""),
+function clampBox(n) {
+  const x = Number(n);
+  if (!Number.isFinite(x)) return 1;
+  return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
+}
+function getBoxFor(cardId) {
+  return clampBox(state.leitner?.[cardId] ?? 1);
+}
+function setBoxFor(cardId, box) {
+  if (!state.leitner) state.leitner = {};
+  state.leitner[cardId] = clampBox(box);
+  saveLS(LEITNER_LS_KEY, state.leitner);
+}
+function updateLeitner(cardId, result) {
+  const cur = getBoxFor(cardId);
+  const next = (result === "correct") ? Math.min(LEITNER_MAX_BOX, cur + 1) : 1;
+  setBoxFor(cardId, next);
+}
+function weightedPickBox(candidatesByBox) {
+  let total = 0;
+  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+    if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
+  }
+  if (!total) return 1;
+  let r = Math.random() * total;
+  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+    if (!candidatesByBox[b]?.length) continue;
+    r -= LEITNER_WEIGHTS[b];
+    if (r <= 0) return b;
+  }
+  return 1;
+}
+function pickNextSmartIdx() {
+  const n = state.filtered?.length || 0;
+  if (!n) return 0;
 
-  // Stats
-  history: loadLS("wv_hist", []), // {t, ok, cardId, course, unit, baseEN, expected, got}
-};
+  if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
 
-/* ========= Data loading (vocab index list) ========= */
-const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json";
-const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
+  // decrement retry timers, serve first due that's not the current one
+  if (state.smartQueue.length) {
+    state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1));
+    const duePos = state.smartQueue.findIndex(item => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
+    if (duePos >= 0) {
+      const item = state.smartQueue.splice(duePos, 1)[0];
+      return item.idx;
+    }
+  }
+
+  const byBox = { 1: [], 2: [], 3: [], 4: [], 5: [] };
+  for (let i = 0; i < n; i++) {
+    const id = state.filtered[i]?.CardID || `row_${i}`;
+    const box = getBoxFor(id);
+    byBox[box].push(i);
+  }
+
+  let chosenBox = weightedPickBox(byBox);
+  if (!byBox[chosenBox].length) {
+    for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
+      if (byBox[b].length) { chosenBox = b; break; }
+    }
+  }
+
+  const pool = byBox[chosenBox] || [];
+  if (!pool.length) return Math.floor(Math.random() * n);
+
+  let idx = pool[Math.floor(Math.random() * pool.length)];
+  for (let tries = 0; tries < 6 && idx === state.smartIdx && pool.length > 1; tries++) {
+    idx = pool[Math.floor(Math.random() * pool.length)];
+  }
+  return idx;
+}
+
+/* ========= TTS (Polly via Lambda URL) ========= */
+const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
+const ttsCache = new Map();
+
+function buildCompleteSentence(card, answerOverride = null) {
+  const before = (card.BeforeCY || "").trimEnd();
+  const answer = (answerOverride != null ? answerOverride : (card.AnswerCY || "")).trim();
+  const after  = (card.AfterCY || "").trimStart();
+  let s = [before, answer, after].filter(Boolean).join(" ");
+  s = s.replace(/\s+/g, " ").trim();
+  s = s.replace(/\s+([,.;:!?])/g, "$1");
+  return s;
+}
+async function playPollySentence(sentence) {
+  if (!sentence) throw new Error("No sentence to speak.");
+  const cachedUrl = ttsCache.get(sentence);
+  if (cachedUrl) {
+    const audio = new Audio(cachedUrl);
+    await audio.play();
+    return;
+  }
+
+  const res = await fetch(POLLY_FUNCTION_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: sentence })
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    throw new Error(msg || `TTS failed (${res.status})`);
+  }
+
+  const ct = (res.headers.get("content-type") || "").toLowerCase();
+  let url = null;
+
+  if (ct.includes("audio") || ct.includes("octet-stream")) {
+    const buf = await res.arrayBuffer();
+    const blob = new Blob([buf], { type: "audio/mpeg" });
+    url = URL.createObjectURL(blob);
+  } else {
+    const j = await res.json();
+    if (j.url) url = j.url;
+    else if (j.audioBase64 || j.audioContent) {
+      const b64 = j.audioBase64 || j.audioContent;
+      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const blob = new Blob([bytes], { type: "audio/mpeg" });
+      url = URL.createObjectURL(blob);
+    } else {
+      throw new Error("TTS response didn't include audio.");
+    }
+  }
+
+  ttsCache.set(sentence, url);
+  const audio = new Audio(url);
+  await audio.play();
+}
+
+/* ========= “?” popover UI (reuses your existing base-info-* styling) ========= */
+function mountInfoPopover(hostEl, htmlBody, ariaLabel = "Help") {
+  if (!hostEl) return;
+  if (!htmlBody || !String(htmlBody).trim()) return;
+
+  // anchor absolute-positioned “?” to the host (THIS fixes drifting and spacing weirdness)
+  hostEl.style.position = "relative";
+
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "base-info-btn";
+  btn.textContent = "?";
+  btn.setAttribute("aria-label", ariaLabel);
+  btn.setAttribute("title", ariaLabel);
+
+  const pop = document.createElement("div");
+  pop.className = "base-info-popover hidden animate-pop";
+  pop.setAttribute("role", "dialog");
+
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "base-info-close";
+  close.setAttribute("aria-label", "Close");
+  close.textContent = "×";
+
+  pop.innerHTML = htmlBody;
+  pop.appendChild(close);
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isHidden = pop.classList.contains("hidden");
+    $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+    if (isHidden) pop.classList.remove("hidden");
+    else pop.classList.add("hidden");
+  });
+
+  close.addEventListener("click", (e) => {
+    e.stopPropagation();
+    pop.classList.add("hidden");
+  });
+
+  pop.addEventListener("click", (e) => e.stopPropagation());
+
+  hostEl.appendChild(btn);
+  hostEl.appendChild(pop);
+}
+
+// Global closer (single listeners)
+document.addEventListener("click", () => {
+  $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
+});
+
+/* ========= Data loading ========= */
+function getVal(row, names) {
+  const keys = Object.keys(row || {});
+  for (const key of keys) {
+    if (names.some(n => key.trim().toLowerCase() === n.trim().toLowerCase())) {
+      return (row[key] ?? "").toString();
+    }
+  }
+  return "";
+}
+
+function coerceRow(r) {
+  const row = r || {};
+  const answerCY = getVal(row, ["AnswerCY","Answer","Welsh","Answer (CY)"]).trim();
+  const answerArrayRaw = getVal(row, ["AnswerArray","Answer Array","Answers"]).trim();
+  const answers = []
+    .concat(answerArrayRaw ? answerArrayRaw.split("|") : [])
+    .map(s => (s || "").trim())
+    .filter(Boolean);
+
+  // Ensure AnswerCY is included as an accepted answer if present
+  if (answerCY && !answers.map(normalize).includes(normalize(answerCY))) answers.unshift(answerCY);
+
+  return {
+    CardID: getVal(row, ["CardID","CardId","ID","Id"]).trim(),
+    Course: getVal(row, ["Course"]).trim(),
+    Unit: getVal(row, ["Unit"]).trim(),
+    WordCategory: getVal(row, ["WordCategory","Word Category"]).trim(),
+    BaseEN: getVal(row, ["BaseEN","Base EN","Base"]).trim(),
+    HintEN: getVal(row, ["HintEN","Hint EN"]).trim(),
+    HintCY: getVal(row, ["HintCY","Hint CY"]).trim(),
+    BeforeCY: getVal(row, ["BeforeCY","Before CY","Before"]).trim(),
+    AfterCY: getVal(row, ["AfterCY","After CY","After"]).trim(),
+    SentenceHelpEN: getVal(row, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]).trim(),
+    AnswerCY: answerCY,
+    AnswerArray: answers,
+    WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
+    WhyCY: getVal(row, ["WhyCY","Why CY"]).trim(),
+    Tags: getVal(row, ["Tags","Tag"]).trim()
+  };
+}
 
 async function loadCsvUrl(u) {
   return new Promise((resolve, reject) => {
@@ -282,6 +489,7 @@ async function loadCsvUrl(u) {
     });
   });
 }
+
 function isAbsUrl(u) { return /^https?:\/\//i.test(u || ""); }
 function resolveFromRoot(path, root) {
   const p = (path || "").toString().trim();
@@ -296,6 +504,10 @@ async function fetchIndexList(url) {
   if (!Array.isArray(j)) throw new Error("Index JSON is not an array: " + url);
   return j;
 }
+
+const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json";
+const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
+
 async function loadAllDefault() {
   let list = null;
   let usingFallbackRoot = false;
@@ -312,264 +524,260 @@ async function loadAllDefault() {
   for (const p of list) {
     const url = resolveFromRoot(p, root);
     if (!url) continue;
-    const d = await loadCsvUrl(url);
-    merged = merged.concat(d);
+    try {
+      const d = await loadCsvUrl(url);
+      merged = merged.concat(d);
+    } catch (err) {
+      console.warn("Failed to load source:", url, err);
+    }
   }
   return merged;
 }
 
-/* ========= Row coercion (YOUR vocab schema) ========= */
-function getVal(row, names) {
-  const keys = Object.keys(row || {});
-  for (const key of keys) {
-    const k = key.trim().toLowerCase();
-    if (names.some(n => k === n.trim().toLowerCase())) {
-      return (row[key] ?? "").toString().trim();
-    }
+/* ========= App State ========= */
+const state = {
+  rows: [],
+  filtered: [],
+  mode: loadLS("vocab_mode", "practice"),
+
+  // Filters
+  diffPreset: loadLS("vocab_diff", "all"),        // all | easy | hard
+  course: loadLS("vocab_course", ""),
+  unit: loadLS("vocab_unit", ""),
+  wordCats: loadLS("vocab_wc", []),               // multi-select
+  search: loadLS("vocab_search", ""),
+
+  // Practice
+  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),  // shuffle | smart
+  leitner: loadLS(LEITNER_LS_KEY, {}),
+  smartIdx: null,
+  smartCount: 0,
+  smartQueue: [],
+  deck: [],
+  p: 0,
+  guess: "",
+  revealed: false,
+  lastResult: null,
+  freezeIdx: null,
+  freezePos: null,
+
+  history: loadLS("vocab_hist", []),
+  admin: getParam("admin") === "1",
+
+  lang: loadLS("vocab_lang", "en"),
+  currentIdx: 0,
+  currentDeckPos: -1,
+};
+
+const COURSE_EASY = new Set(["Mynediad","Sylfaen"]);
+const COURSE_HARD = new Set(["Uwch 1","Uwch 2","Uwch 3","Uwch1","Uwch2","Uwch3"]);
+
+function applyDiffPreset(list) {
+  if (state.course) return list; // explicit course overrides preset
+  if (state.diffPreset === "easy") return list.filter(r => COURSE_EASY.has(r.Course));
+  if (state.diffPreset === "hard") return list.filter(r => COURSE_HARD.has(r.Course));
+  return list;
+}
+
+function applyFilters() {
+  let list = state.rows.slice();
+
+  list = applyDiffPreset(list);
+
+  if (state.course) list = list.filter(r => r.Course === state.course);
+  if (state.unit) list = list.filter(r => r.Unit === state.unit);
+  if (state.wordCats?.length) list = list.filter(r => state.wordCats.includes(r.WordCategory));
+
+  const q = (state.search || "").trim();
+  if (q) {
+    const nq = normalize(q);
+    list = list.filter(r => {
+      const hay = [
+        r.BaseEN, r.Tags, r.HintEN, r.BeforeCY, r.AfterCY, r.Course, r.Unit, r.WordCategory
+      ].filter(Boolean).join(" • ");
+      return normalize(hay).includes(nq);
+    });
   }
-  return "";
-}
-function coerceRow(row, idxFallback) {
-  const r = row || {};
-  const cardId = getVal(r, ["CardID","CardId","Card ID","ID","Id","id"]) || `row_${idxFallback}`;
 
-  return {
-    CardID: cardId,
-    Course: getVal(r, ["Course"]),
-    Unit: getVal(r, ["Unit"]),
-    WordCategory: getVal(r, ["WordCategory","Word Category","POS"]),
-    BaseEN: getVal(r, ["BaseEN","Base EN","English","Base"]),
-    HintEN: getVal(r, ["HintEN","Hint EN"]),
-    HintCY: getVal(r, ["HintCY","Hint CY","HintCY (Welsh)"]),
-    BeforeCY: getVal(r, ["BeforeCY","Before CY","Before"]),
-    AfterCY: getVal(r, ["AfterCY","After CY","After"]),
-    SentenceHelpEN: getVal(r, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]),
-    AnswerCY: getVal(r, ["AnswerCY","Answer CY","Answer"]),
-    AnswerArray: getVal(r, ["AnswerArray","Answer Array","Accepted","AcceptedAnswers"]),
-    WhyEN: getVal(r, ["WhyEN","Why EN","Why"]),
-    WhyCY: getVal(r, ["WhyCY","Why CY"]),
-    Tags: getVal(r, ["Tags","Tag"])
+  state.filtered = list;
+}
+
+function rebuildDeck() {
+  const n = state.filtered.length;
+  const d = Array.from({ length: n }, (_, i) => i);
+  for (let i = d.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [d[i], d[j]] = [d[j], d[i]];
+  }
+  state.deck = d;
+  state.p = 0;
+  state.guess = "";
+  state.revealed = false;
+  state.lastResult = null;
+  state.freezeIdx = null;
+  state.freezePos = null;
+  state.smartQueue = [];
+
+  if (state.practiceMode === "smart") {
+    state.smartCount = 0;
+    state.smartIdx = pickNextSmartIdx();
+  } else {
+    state.smartIdx = null;
+    state.smartCount = 0;
+  }
+}
+
+/* ========= UI: Language toggle text ========= */
+function applyLanguage() {
+  const langBtn = $("#btnLangToggle");
+  if (langBtn) {
+    const nextLang = (state.lang === "en") ? "CY" : "EN";
+    langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
+    langBtn.title = (state.lang === "en") ? "Switch to Cymraeg" : "Switch to English";
+    langBtn.setAttribute("aria-label", (state.lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
+  }
+}
+
+/* ========= Filters UI build ========= */
+function buildFilterControls() {
+  // Difficulty buttons (seg)
+  const setDiffBtnState = () => {
+    const map = { all:"#diffAll", easy:"#diffEasy", hard:"#diffHard" };
+    Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
+    const activeId = map[state.diffPreset] || "#diffAll";
+    $(activeId)?.classList.add("is-on");
+    [$("#diffAll"), $("#diffEasy"), $("#diffHard")].forEach(b => {
+      if (!b) return;
+      b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
+    });
   };
-}
 
-async function initData() {
-  const sheet = getParam("sheet"); // optional override
-  const raw = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
+  $("#diffAll")?.addEventListener("click", () => {
+    state.diffPreset = "all";
+    saveLS("vocab_diff", state.diffPreset);
+    applyFilters(); rebuildDeck(); buildFilterControls(); render();
+  });
+  $("#diffEasy")?.addEventListener("click", () => {
+    state.diffPreset = "easy";
+    state.course = ""; state.unit = "";
+    saveLS("vocab_diff", state.diffPreset);
+    saveLS("vocab_course", state.course);
+    saveLS("vocab_unit", state.unit);
+    applyFilters(); rebuildDeck(); buildFilterControls(); render();
+  });
+  $("#diffHard")?.addEventListener("click", () => {
+    state.diffPreset = "hard";
+    state.course = ""; state.unit = "";
+    saveLS("vocab_diff", state.diffPreset);
+    saveLS("vocab_course", state.course);
+    saveLS("vocab_unit", state.unit);
+    applyFilters(); rebuildDeck(); buildFilterControls(); render();
+  });
 
-  state.rows = raw.map((r, i) => coerceRow(r, i)).filter(r => r.BaseEN && (r.AnswerCY || r.AnswerArray));
-  $("#itemCount")?.classList.remove("hidden");
-  $("#itemCount").textContent = `${state.rows.length} items`;
+  setDiffBtnState();
 
-  applyFilters();
-  rebuildDeck();
-  buildFilters();
-  render();
-}
-
-/* ========= Filters ========= */
-function toggleBtn(text, active, onToggle) {
-  const b = document.createElement("button");
-  b.type = "button";
-  b.className = `pill ${active ? "pill-on" : ""}`;
-  b.textContent = text;
-  b.onclick = () => onToggle(!active);
-  return b;
-}
-
-function buildFilters() {
   // Course dropdown
-  const courses = Array.from(new Set(state.rows.map(r => r.Course).filter(Boolean))).sort();
   const courseSel = $("#courseSelect");
+  const unitSel = $("#unitSelect");
+
+  const courses = Array.from(new Set(state.rows.map(r => r.Course).filter(Boolean))).sort();
   if (courseSel) {
     courseSel.innerHTML = "";
-    const optAll = document.createElement("option");
-    optAll.value = "ALL";
-    optAll.textContent = "All courses";
-    courseSel.appendChild(optAll);
-
-    for (const c of courses) {
+    const opt0 = document.createElement("option");
+    opt0.value = ""; opt0.textContent = "All courses";
+    courseSel.appendChild(opt0);
+    courses.forEach(c => {
       const o = document.createElement("option");
-      o.value = c;
-      o.textContent = c;
+      o.value = c; o.textContent = c;
       courseSel.appendChild(o);
-    }
-    courseSel.value = state.course || "ALL";
+    });
+    courseSel.value = state.course || "";
     courseSel.onchange = (e) => {
-      state.course = e.target.value || "ALL";
-      saveLS("wv_course", state.course);
-      // Reset unit when course changes (to avoid empty result traps)
-      state.unit = "ALL";
-      saveLS("wv_unit", state.unit);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
+      state.course = e.target.value;
+      state.unit = "";
+      // Choosing a specific course implies preset "all" (otherwise it feels contradictory)
+      state.diffPreset = "all";
+      saveLS("vocab_course", state.course);
+      saveLS("vocab_unit", state.unit);
+      saveLS("vocab_diff", state.diffPreset);
+      applyFilters(); rebuildDeck(); buildFilterControls(); render();
     };
   }
 
-  // Unit dropdown (dependent on course)
-  const unitSel = $("#unitSelect");
+  // Unit dropdown depends on current course/preset
+  const unitsBase = applyDiffPreset(state.rows.slice())
+    .filter(r => !state.course || r.Course === state.course)
+    .map(r => r.Unit)
+    .filter(Boolean);
+
+  const units = Array.from(new Set(unitsBase)).sort((a,b) => a.localeCompare(b, undefined, { numeric:true, sensitivity:"base" }));
+
   if (unitSel) {
     unitSel.innerHTML = "";
-    const optAllU = document.createElement("option");
-    optAllU.value = "ALL";
-    optAllU.textContent = "All units";
-    unitSel.appendChild(optAllU);
-
-    const unitPool = state.rows
-      .filter(r => (state.course === "ALL" ? true : r.Course === state.course))
-      .map(r => r.Unit)
-      .filter(Boolean);
-    const units = Array.from(new Set(unitPool)).sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
-
-    for (const u of units) {
+    const opt0 = document.createElement("option");
+    opt0.value = ""; opt0.textContent = "All units";
+    unitSel.appendChild(opt0);
+    units.forEach(u => {
       const o = document.createElement("option");
-      o.value = u;
-      o.textContent = u;
+      o.value = u; o.textContent = u;
       unitSel.appendChild(o);
-    }
-    unitSel.value = state.unit || "ALL";
+    });
+    unitSel.value = state.unit || "";
     unitSel.onchange = (e) => {
-      state.unit = e.target.value || "ALL";
-      saveLS("wv_unit", state.unit);
+      state.unit = e.target.value;
+      saveLS("vocab_unit", state.unit);
       applyFilters(); rebuildDeck(); render();
     };
   }
 
   // WordCategory pills
-  const cats = Array.from(new Set(state.rows.map(r => r.WordCategory).filter(Boolean))).sort();
-  const host = $("#wordCatBtns");
-  if (host) {
-    host.innerHTML = "";
-    const allOn = !state.wordCats.length;
-    host.appendChild(toggleBtn("All", allOn, () => {
+  const wcHost = $("#wcBtns");
+  if (wcHost) {
+    wcHost.innerHTML = "";
+    const cats = Array.from(new Set(state.rows.map(r => r.WordCategory).filter(Boolean))).sort();
+    const allActive = !state.wordCats?.length;
+
+    wcHost.appendChild(toggleBtn("All", allActive, () => {
       state.wordCats = [];
-      saveLS("wv_wordcats", state.wordCats);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
+      saveLS("vocab_wc", state.wordCats);
+      applyFilters(); rebuildDeck(); buildFilterControls(); render();
     }));
-    for (const c of cats) {
+
+    cats.forEach(c => {
       const active = state.wordCats.includes(c);
-      host.appendChild(toggleBtn(c, active, (on) => {
+      wcHost.appendChild(toggleBtn(c, active, (on) => {
         state.wordCats = on ? Array.from(new Set([...state.wordCats, c])) : state.wordCats.filter(x => x !== c);
-        saveLS("wv_wordcats", state.wordCats);
+        saveLS("vocab_wc", state.wordCats);
         applyFilters(); rebuildDeck(); render();
       }));
-    }
+    });
   }
 
-  // Tag query
-  const q = $("#tagQuery");
-  if (q) {
-    q.value = state.tagQuery || "";
-    q.oninput = (e) => {
-      state.tagQuery = e.target.value || "";
-      saveLS("wv_tagq", state.tagQuery);
+  // Search box
+  const sb = $("#searchBox");
+  if (sb) {
+    sb.value = state.search || "";
+    sb.oninput = (e) => {
+      state.search = e.target.value;
+      saveLS("vocab_search", state.search);
       applyFilters(); rebuildDeck(); render();
     };
   }
 
   $("#btnClearFilters")?.addEventListener("click", () => {
-    state.course = "ALL";
-    state.unit = "ALL";
+    state.diffPreset = "all";
+    state.course = "";
+    state.unit = "";
     state.wordCats = [];
-    state.tagQuery = "";
-    saveLS("wv_course", state.course);
-    saveLS("wv_unit", state.unit);
-    saveLS("wv_wordcats", state.wordCats);
-    saveLS("wv_tagq", state.tagQuery);
-    applyFilters(); rebuildDeck(); buildFilters(); render();
+    state.search = "";
+    saveLS("vocab_diff", state.diffPreset);
+    saveLS("vocab_course", state.course);
+    saveLS("vocab_unit", state.unit);
+    saveLS("vocab_wc", state.wordCats);
+    saveLS("vocab_search", state.search);
+    applyFilters(); rebuildDeck(); buildFilterControls(); render();
   });
 }
-
-function applyFilters() {
-  const q = normalize(state.tagQuery || "");
-  state.filtered = state.rows.filter(r => {
-    if (state.course !== "ALL" && r.Course !== state.course) return false;
-    if (state.unit !== "ALL" && r.Unit !== state.unit) return false;
-    if (state.wordCats.length && !state.wordCats.includes(r.WordCategory)) return false;
-
-    if (q) {
-      const hay = normalize([r.Tags, r.BaseEN, r.SentenceHelpEN, r.BeforeCY, r.AfterCY].filter(Boolean).join(" "));
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  });
-}
-
-function rebuildDeck() {
-  const n = state.filtered.length;
-  state.deck = Array.from({length:n}, (_,i)=>i);
-  for (let i = state.deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
-  }
-  state.p = 0;
-  state.guess = "";
-  state.revealed = false;
-  state.lastResult = null;
-}
-
-/* ========= Answer checking ========= */
-function acceptedAnswers(card) {
-  const raw = (card.AnswerArray || "").trim();
-  const list = raw ? raw.split("|").map(s => s.trim()).filter(Boolean) : [];
-  const fallback = (card.AnswerCY || "").trim();
-  if (fallback && !list.length) list.push(fallback);
-  if (fallback && list.length && !list.includes(fallback)) list.push(fallback);
-  // normalise duplicates
-  const uniq = [];
-  const seen = new Set();
-  for (const a of list) {
-    const k = normalize(a);
-    if (!k || seen.has(k)) continue;
-    seen.add(k);
-    uniq.push(a);
-  }
-  return uniq;
-}
-function isCorrect(guess, card) {
-  const g = normalize(guess);
-  if (!g) return false;
-  return acceptedAnswers(card).some(a => normalize(a) === g);
-}
-
-/* ========= Popovers ========= */
-function mountPopover(anchorEl, kindLabel, bodyText) {
-  if (!anchorEl) return;
-  if (!bodyText) return;
-
-  anchorEl.style.position = "relative";
-
-  const btn = document.createElement("button");
-  btn.type = "button";
-  btn.className = "info-btn";
-  btn.textContent = "?";
-  btn.title = kindLabel;
-
-  const pop = document.createElement("div");
-  pop.className = "info-pop hidden";
-  pop.innerHTML = `
-    <button class="close" aria-label="Close" type="button">×</button>
-    <div class="text-sm text-slate-700 pr-6">
-      <div class="font-semibold mb-1">${esc(kindLabel)}</div>
-      <div class="leading-relaxed whitespace-pre-wrap">${esc(bodyText)}</div>
-    </div>
-  `;
-
-  const close = $(".close", pop);
-  const hide = () => pop.classList.add("hidden");
-
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    $$(".info-pop").forEach(p => p.classList.add("hidden"));
-    pop.classList.toggle("hidden");
-  });
-  close.addEventListener("click", (e) => { e.stopPropagation(); hide(); });
-  pop.addEventListener("click", (e) => e.stopPropagation());
-
-  anchorEl.appendChild(btn);
-  anchorEl.appendChild(pop);
-}
-
-document.addEventListener("click", () => $$(".info-pop").forEach(p => p.classList.add("hidden")));
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".info-pop").forEach(p => p.classList.add("hidden")); });
 
 /* ========= Render ========= */
 function renderPractice() {
@@ -582,332 +790,208 @@ function renderPractice() {
     host.innerHTML = `
       <div class="text-slate-700 panel rounded-xl p-4">
         No cards match your filters.
-        <button id="btnOpenFilters" class="ml-2 btn btn-primary px-3 py-1.5">Open filters</button>
-        <button id="btnResetAll" class="ml-2 btn btn-ghost px-3 py-1.5">Clear</button>
+        <button id="localClear" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button>
       </div>`;
-    $("#btnOpenFilters")?.addEventListener("click", () => $("#filtersPanel")?.classList.remove("hidden"));
-    $("#btnResetAll")?.addEventListener("click", () => $("#btnClearFilters")?.click());
-    $("#cardPos") && ($("#cardPos").textContent = "Card 0 / 0");
+    $("#localClear")?.addEventListener("click", () => $("#btnClearFilters")?.click());
     return;
   }
 
-  const deckIdx = state.p % state.deck.length;
-  const idxNow = state.deck[deckIdx];
-  const card = state.filtered[idxNow];
+  // pick current card
+  let idxNow;
+  let posText = "";
 
-  $("#cardPos") && ($("#cardPos").textContent = `Card ${deckIdx + 1} / ${state.deck.length}`);
+  if (state.practiceMode === "smart") {
+    if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
+    idxNow = state.smartIdx;
+    state.currentDeckPos = -1;
+    const reviewed = (state.smartCount || 0) + 1;
+    posText = `Reviewed ${reviewed} · Pool ${n}`;
+    $("#cardPos").textContent = `Smart · ${posText}`;
+  } else {
+    const deckIdx = state.p % state.deck.length;
+    idxNow = state.deck[deckIdx];
+    state.currentDeckPos = deckIdx;
+    const pos = state.deck.length ? (deckIdx + 1) : 0;
+    posText = `Card ${pos} / ${state.deck.length || 0}`;
+    $("#cardPos").textContent = posText;
+  }
+
+  const idxShown = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
+  const card = state.filtered[idxShown];
+  state.currentIdx = idxNow;
 
   const wrap = document.createElement("div");
 
-  // English prompt (BaseEN)
-  const prompt = document.createElement("div");
-  prompt.className = "mb-4";
+  // Header row: position + Random/Smart seg (this restores the missing toggle)
+  const header = document.createElement("div");
+  header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
 
-  const baseBox = document.createElement("div");
-  baseBox.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-3 shadow-sm";
-  baseBox.style.position = "relative";
+  const headerLeft = document.createElement("div");
+  headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
+  headerLeft.textContent = posText;
 
-  const base = document.createElement("div");
-  base.className = "text-3xl md:text-4xl font-bold tracking-tight text-indigo-900";
-  base.textContent = card.BaseEN || "—";
+  const headerRight = document.createElement("div");
+  headerRight.className = "flex items-center gap-2";
 
-  baseBox.appendChild(base);
+  const seg = document.createElement("div");
+  seg.className = "seg";
 
-  const hintText = (state.lang === "cy" ? (card.HintCY || card.HintEN) : (card.HintEN || card.HintCY)) || "";
-  mountPopover(baseBox, "Hint", hintText);
-
-  const meta = document.createElement("div");
-  meta.className = "mt-2 flex flex-wrap gap-2 text-xs text-slate-600";
-  const chip = (t) => {
-    const s = document.createElement("span");
-    s.className = "chip";
-    s.textContent = t;
-    return s;
-  };
-  if (card.Course) meta.appendChild(chip(card.Course));
-  if (card.Unit) meta.appendChild(chip(`Unit ${card.Unit}`));
-  if (card.WordCategory) meta.appendChild(chip(card.WordCategory));
-
-  prompt.appendChild(baseBox);
-  prompt.appendChild(meta);
-
-  // Welsh sentence line with input
-  const sentenceWrap = document.createElement("div");
-  sentenceWrap.className = "practice-sentence";
-  sentenceWrap.style.position = "relative";
-
-  sentenceWrap.innerHTML = `
-    <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
-      <span class="text-slate-700">${esc(card.BeforeCY || "")}</span>
-      <input id="answerBox"
-             class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-64 flex-shrink-0"
-             placeholder="Type Welsh"
-             aria-label="Answer" />
-      <span class="text-slate-700">${esc(card.AfterCY || "")}</span>
-    </div>
-  `;
-
-  mountPopover(sentenceWrap, "Sentence help", card.SentenceHelpEN || "");
-
-  // Actions
-  const actions = document.createElement("div");
-  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
-
-  const btn = (txt, cls, fn) => {
+  const mkSegBtn = (labelText, value) => {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = `btn ${cls}`.trim();
-    b.textContent = txt;
-    b.onclick = fn;
+    const on = state.practiceMode === value;
+    b.className = `seg-btn ${on ? "is-on" : ""}`;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.textContent = String(labelText).toUpperCase();
+    b.onclick = () => {
+      if (state.practiceMode === value) return;
+      state.practiceMode = value;
+      saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
+      rebuildDeck();
+      render();
+    };
     return b;
   };
 
+  seg.append(
+    mkSegBtn("Random", "shuffle"),
+    mkSegBtn("Smart", "smart")
+  );
+
+  headerRight.appendChild(seg);
+  header.append(headerLeft, headerRight);
+
+  // Instruction
+  const instruction = document.createElement("div");
+  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
+  instruction.textContent = "Type the Welsh word that matches the English base word.";
+
+  // Base capsule (English), styled like your index page
+  const baseBlock = document.createElement("div");
+  baseBlock.className = "mb-3";
+
+  const capsule = document.createElement("div");
+  capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-3 shadow-sm pr-12";
+  // pr-12 gives the “?” breathing room so it isn’t cramped into the corner
+  const baseSpan = document.createElement("span");
+  baseSpan.className = "base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight";
+  baseSpan.textContent = card.BaseEN || "—";
+  capsule.appendChild(baseSpan);
+
+  // Base “?”: show hint (EN + optional CY)
+  const hintParts = [];
+  if (card.HintEN) hintParts.push(`<div class="base-info-meaning">${esc(card.HintEN)}</div>`);
+  if (card.HintCY) hintParts.push(`<div class="base-info-meaning">${esc(card.HintCY)}</div>`);
+  const hintHtml = hintParts.join("");
+  mountInfoPopover(capsule, hintHtml, "Hint");
+
+  baseBlock.appendChild(capsule);
+
+  // Meta chips under base word (course / unit / word category)
+  const meta = document.createElement("div");
+  meta.className = "flex flex-wrap gap-2 mt-3";
+  const addMetaChip = (txt) => {
+    const c = document.createElement("span");
+    c.className = "chip";
+    c.textContent = txt;
+    return c;
+  };
+  if (card.Course) meta.appendChild(addMetaChip(card.Course));
+  if (card.Unit) meta.appendChild(addMetaChip(card.Unit));
+  if (card.WordCategory) meta.appendChild(addMetaChip(card.WordCategory));
+  baseBlock.appendChild(meta);
+
+  // Sentence capsule (Welsh sentence with input) + sentence “?” for glosses
+  const sentenceWrap = document.createElement("div");
+  sentenceWrap.className = "mt-5";
+
+  // This is the key spacing fix:
+  // - inline-block so the “?” sits at the top-right of the sentence chunk, not the far right edge of the card
+  // - pr-12 so the “?” has breathing space
+  const sentenceCapsule = document.createElement("div");
+  sentenceCapsule.className = "inline-block max-w-full relative pr-12";
+
+  sentenceCapsule.innerHTML = `
+    <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
+      <span class="text-slate-600">${esc(card.BeforeCY || "")}</span>
+      <input id="answerBox"
+        class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0"
+        placeholder="Type Welsh"
+        aria-label="Answer" />
+      <span class="text-slate-600">${esc(card.AfterCY || "")}</span>
+    </div>
+  `;
+
+  // Sentence “?”: show SentenceHelpEN (glosses / translation cues)
+  const sentHelp = (card.SentenceHelpEN || "").trim();
+  if (sentHelp) {
+    const html = `<div class="base-info-meaning">${esc(sentHelp)}</div>`;
+    mountInfoPopover(sentenceCapsule, html, "Sentence help");
+  }
+
+  sentenceWrap.appendChild(sentenceCapsule);
+
+  // Actions row (Check / Hint / Next) – uses your existing button styles
+  const actions = document.createElement("div");
+  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
+
+  const main = document.createElement("div");
+  main.className = "practice-actions-main";
+
+  const hintBox = document.createElement("div");
+  hintBox.className = "hidden practice-hint text-sm text-slate-600 mt-3";
+
+  const acceptedAnswers = Array.isArray(card.AnswerArray) ? card.AnswerArray : [];
+  const canonicalAnswer = acceptedAnswers[0] || card.AnswerCY || "";
+
+  const showHint = () => {
+    const first = canonicalAnswer ? canonicalAnswer.slice(0,1) : "?";
+    const extra = card.HintEN ? ` · ${card.HintEN}` : "";
+    hintBox.innerHTML = `Hint: starts with <b>${esc(first)}</b>${extra ? `<span>${esc(extra)}</span>` : ""}`;
+    hintBox.classList.remove("hidden");
+    $("#answerBox")?.focus();
+  };
+
   const onCheck = () => {
-    const ok = isCorrect(state.guess, card);
+    const guess = state.guess || "";
+    const ok = acceptedAnswers.some(a => normalize(a) === normalize(guess));
+
     state.revealed = true;
     state.lastResult = ok ? "correct" : "wrong";
-    // freeze input
-    const ab = $("#answerBox");
-    if (ab) { ab.disabled = true; ab.classList.add("opacity-70","cursor-not-allowed"); }
+    state.freezeIdx = idxNow;
+    state.freezePos = state.currentDeckPos;
 
+    const cardId = card.CardID || `row_${idxShown}`;
     state.history = [{
       t: Date.now(),
       ok,
-      cardId: card.CardID,
-      course: card.Course,
-      unit: card.Unit,
-      baseEN: card.BaseEN,
-      expected: acceptedAnswers(card).join(" | "),
-      got: state.guess
-    }, ...state.history].slice(0, 500);
+      cardId,
+      course: card.Course || "",
+      expected: acceptedAnswers.join("|"),
+      got: guess,
+      mode: state.practiceMode
+    }, ...state.history].slice(0, 1000);
+    saveLS("vocab_hist", state.history);
 
-    saveLS("wv_hist", state.history);
-    render();
-  };
-
-  const onNext = () => {
-    state.p = (state.p + 1) % state.deck.length;
-    state.guess = "";
-    state.revealed = false;
-    state.lastResult = null;
-    render();
-  };
-
-  const onHint = () => {
-    // open the base hint popover
-    // (clicking the first info button inside baseBox)
-    baseBox.querySelector(".info-btn")?.click();
-    $("#answerBox")?.focus();
-  };
-
-  actions.append(
-    btn("Check","btn-primary shadow", onCheck),
-    btn("Hint","btn-ghost", onHint),
-    btn("Next","btn-ghost", onNext)
-  );
-
-  // Feedback
-  const feedback = document.createElement("div");
-  feedback.className = "practice-feedback mt-4";
-  feedback.setAttribute("aria-live","polite");
-
-  if (state.revealed) {
-    const ok = state.lastResult === "correct";
-    const status = ok ? "✅ Correct!" : "❌ Not quite";
-    const why = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
-    const accepted = acceptedAnswers(card);
-
-    feedback.innerHTML = `
-      <div class="feedback-box">
-        <div class="text-2xl md:text-3xl font-semibold ${ok ? "text-indigo-900" : "text-rose-900"}">${esc(status)}</div>
-        ${ok ? "" : `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess || "(blank)")}</b></div>`}
-
-        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
-          <span>${esc(card.BeforeCY || "")}</span>
-          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(accepted[0] || "")}</span>
-          <span>${esc(card.AfterCY || "")}</span>
-        </div>
-
-        ${accepted.length > 1 ? `<div class="mt-2 text-slate-700 text-sm">Also accepted: <b>${esc(accepted.slice(1).join(" · "))}</b></div>` : ""}
-
-        ${why ? `<div class="mt-4 text-slate-700">${esc(why)}</div>` : ""}
-
-        <div class="mt-4 flex justify-end">
-          <button id="inlineNext" class="btn btn-primary shadow" type="button">Next</button>
-        </div>
-      </div>
-    `;
-    setTimeout(() => $("#inlineNext")?.addEventListener("click", onNext), 0);
-  }
-
-  wrap.append(prompt, sentenceWrap, actions, feedback);
-  host.appendChild(wrap);
-
-  const ab = $("#answerBox");
-  if (ab) {
-    ab.value = state.guess;
-    ab.focus();
-    ab.addEventListener("input", (e) => state.guess = e.target.value);
-    ab.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        if (!state.revealed) onCheck();
-        else onNext();
-      }
-    });
-  }
-}
-
-function renderBrowse() {
-  const head = $("#browseHead");
-  const body = $("#browseBody");
-  if (!head || !body) return;
-
-  head.innerHTML = "";
-  body.innerHTML = "";
-  const cols = ["Course","Unit","WordCategory","BaseEN","BeforeCY","AfterCY","AnswerCY","AnswerArray","Tags"];
-
-  for (const h of cols) {
-    const th = document.createElement("th");
-    th.className = "text-left p-2 border-b";
-    th.textContent = h;
-    head.appendChild(th);
-  }
-
-  state.filtered.forEach((r, i) => {
-    const tr = document.createElement("tr");
-    tr.className = (i % 2 ? "bg-white" : "bg-slate-50");
-    for (const k of cols) {
-      const td = document.createElement("td");
-      td.className = "p-2 align-top";
-      td.textContent = r[k] || "";
-      tr.appendChild(td);
+    updateLeitner(cardId, ok ? "correct" : "wrong");
+    if (!ok && state.practiceMode === "smart") {
+      state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
     }
-    body.appendChild(tr);
-  });
-}
 
-function computeStats() {
-  const total = state.history.length;
-  const correct = state.history.filter(h => h.ok).length;
-  const acc = total ? Math.round((correct / total) * 100) : 0;
-
-  const byCourse = {};
-  for (const h of state.history) {
-    const c = h.course || "(none)";
-    byCourse[c] = byCourse[c] || { total: 0, ok: 0 };
-    byCourse[c].total++;
-    if (h.ok) byCourse[c].ok++;
-  }
-  return { total, correct, acc, byCourse };
-}
-
-function renderStatsPanels() {
-  const s = computeStats();
-  $("#accBig") && ($("#accBig").textContent = `${s.acc}%`);
-  $("#accText") && ($("#accText").textContent = `${s.correct} / ${s.total} correct`);
-  $("#statsAcc") && ($("#statsAcc").textContent = `${s.acc}%`);
-  $("#statsText") && ($("#statsText").textContent = `${s.correct} correct out of ${s.total}`);
-
-  const ul1 = $("#byCourse");
-  const ul2 = $("#statsByCourse");
-  if (ul1) ul1.innerHTML = "";
-  if (ul2) ul2.innerHTML = "";
-
-  Object.entries(s.byCourse)
-    .sort((a,b) => (b[1].total - a[1].total))
-    .forEach(([k,v]) => {
-      const li1 = document.createElement("li");
-      li1.className = "flex justify-between";
-      li1.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
-      ul1?.appendChild(li1);
-
-      const li2 = document.createElement("li");
-      li2.className = "flex justify-between";
-      li2.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
-      ul2?.appendChild(li2);
-    });
-}
-
-function render() {
-  $("#practiceView")?.classList.toggle("hidden", state.mode !== "practice");
-  $("#browseView")?.classList.toggle("hidden", state.mode !== "browse");
-  $("#statsView")?.classList.toggle("hidden", state.mode !== "stats");
-
-  renderPractice();
-  if (state.mode === "browse") renderBrowse();
-  renderStatsPanels();
-}
-
-/* ========= UI wiring ========= */
-function applyLanguageButton() {
-  const langBtn = $("#btnLangToggle");
-  if (!langBtn) return;
-  const nextLang = (state.lang === "en") ? "CY" : "EN";
-  langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
-  langBtn.title = (state.lang === "en") ? "Switch to Cymraeg" : "Switch to English";
-}
-function wireUi() {
-  $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("wv_mode", state.mode); render(); });
-  $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("wv_mode", state.mode); render(); });
-  $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("wv_mode", state.mode); render(); });
-
-  $("#btnFilters")?.addEventListener("click", () => { $("#filtersPanel")?.classList.toggle("hidden"); });
-  $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
-
-  $("#btnLangToggle")?.addEventListener("click", () => {
-    state.lang = (state.lang === "en") ? "cy" : "en";
-    saveLS("wv_lang", state.lang);
-    applyLanguageButton();
-    render();
-  });
-
-  $("#onboardFilters")?.addEventListener("click", () => {
-    $("#onboard")?.classList.add("hidden");
-    $("#filtersPanel")?.classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-  $("#onboardDismiss")?.addEventListener("click", () => $("#onboard")?.classList.add("hidden"));
-
-  $("#btnResetStats")?.addEventListener("click", () => { state.history = []; saveLS("wv_hist", state.history); render(); });
-  $("#btnResetStats2")?.addEventListener("click", () => { state.history = []; saveLS("wv_hist", state.history); render(); });
-
-  $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-
-  document.addEventListener("keydown", (e) => {
-    const tag = (e.target && e.target.tagName) || "";
-    if (["INPUT", "TEXTAREA"].includes(tag.toUpperCase())) return;
-    if (state.mode !== "practice") return;
-
-    if (e.key === "Enter") {
-      e.preventDefault();
-      if (!state.revealed) $("#practiceCard #answerBox")?.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter"}));
-      else $("#inlineNext")?.click();
-    }
-  });
-
-  $("#mbCheck")?.addEventListener("click", () => {
     const ab = $("#answerBox");
-    if (!ab) return;
-    ab.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter"}));
-  });
-  $("#mbNext")?.addEventListener("click", () => $("#inlineNext")?.click() || (() => {})());
-  $("#mbHint")?.addEventListener("click", () => {
-    // open hint
-    $("#practiceCard .info-btn")?.click();
-    $("#answerBox")?.focus();
-  });
+    if (ab) {
+      ab.disabled = true;
+      ab.classList.add("opacity-70", "cursor-not-allowed");
+    }
+    render();
+    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
+  };
 
-  applyLanguageButton();
-}
-
-/* ========= Boot ========= */
-(async function boot() {
-  wireUi();
-  await initData();
-})();
-</script>
-</body>
-</html>
+  const btnCheck = document.createElement("button");
+  btnCheck.type = "button";
+  btnCheck.id = "btnCheck";
+  btnCheck.className = "btn btn-primary shadow";
+  btnCheck.textContent = "Check";
+  btn
 
 
