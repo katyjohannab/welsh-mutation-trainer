@@ -3,24 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Welsh Mutation Trainer</title>
+  <title>Welsh Vocab Trainer</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
   </style>
-<!-- Tailwind via CDN -->
-  
+  <!-- Tailwind via CDN -->
+
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-  
 </head>
 
-<body class="min-h-screen text-slate-900">
+<!-- IMPORTANT: vocab page uses its own index list -->
+<body class="min-h-screen text-slate-900"
+      data-index="data/vocab/index.json"
+      data-fallback-index="https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json">
+
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
     <header id="siteHeader" class="sticky top-0 z-10">
@@ -28,7 +30,8 @@
 
         <div class="brand-lockup grow min-w-0">
           <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyfforddwr</span><span class="title-trei">Treiglad</span></h1>
+          <!-- Only branding text changed -->
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyffordwr</span><span class="title-trei">Geirfa</span></h1>
         </div>
 
         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
@@ -67,8 +70,7 @@
         <div class="text-sm text-slate-700">
           <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
           <ol class="list-decimal ml-5 leading-relaxed">
-            <!-- Added explicit explanation of practice modes. Users can choose Random (random order) or Smart (adaptive Leitner) before practising. -->
-            <li>Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle the deck at any time. <b>Smart review</b> adapts to your progress using a spaced‑repetition (Leitner) system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at the top of the card to switch modes.</li>
+            <li>Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle the deck at any time. <b>Smart review</b> adapts to your progress using a spaced-repetition (Leitner) system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at the top of the card to switch modes.</li>
             <li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
             <li>Read the sentence and type the correct form in the box.</li>
             <li>Press <b>Check</b> to mark your answer.</li>
@@ -90,11 +92,11 @@
           <div id="practiceCard"></div>
         </div>
 
-        <!-- Right: filters + session (stacked so layout never "jumps" when filters are hidden) -->
+        <!-- Right: filters + session -->
         <div class="md:col-span-1 flex flex-col gap-4">
-          <!-- Filter controls (hidden by default; toggled via Filters button) -->
+          <!-- Filter controls -->
           <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
-            <!-- Admin / Data panel: only visible when admin=1 -->
+            <!-- Admin / Data panel -->
             <div id="adminPanel" class="hidden mb-4">
               <div class="text-sm font-medium mb-2">Admin tools</div>
               <label class="text-sm font-medium">Data URL </label>
@@ -112,6 +114,7 @@
               </div>
               <hr class="my-4" />
             </div>
+
             <!-- Focus filters -->
             <div id="focusTitle" class="text-sm font-medium mb-2">Focus</div>
             <div class="grid grid-cols-2 gap-2 text-sm">
@@ -133,7 +136,7 @@
               </div>
               <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
                 <input id="nilOnly" type="checkbox" />
-                <span id="nilOnlyText">Nil‑cases only (no mutation expected)</span>
+                <span id="nilOnlyText">Nil-cases only (no mutation expected)</span>
               </label>
             </div>
           </div>
@@ -190,7 +193,7 @@
 
     <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
       <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Treiglad</span>
+        <span>© Hyffordwr Geirfa</span>
         <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">Back to top</button>
       </div>
     </footer>
@@ -252,7 +255,6 @@ function setBoxFor(cardId, box) {
   saveLS(LEITNER_LS_KEY, state.leitner);
 }
 function updateLeitner(cardId, result) {
-  // result: 'correct' | 'wrong' | 'skipped'
   const cur = getBoxFor(cardId);
   const next = (result === "correct") ? Math.min(LEITNER_MAX_BOX, cur + 1) : 1;
   setBoxFor(cardId, next);
@@ -277,7 +279,6 @@ function pickNextSmartIdx() {
 
   if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
 
-  // decrement retry timers, serve first due that's not the current one
   if (state.smartQueue.length) {
     state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1));
     const duePos = state.smartQueue.findIndex(item => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
@@ -500,7 +501,10 @@ function applyLanguage() {
 }
 
 /* ========= Data loading (index list) ========= */
-const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json";
+/* EXACTLY as suggested: index path comes from body dataset */
+const INDEX_URL = document.body?.dataset?.index || "data/index.json";
+const FALLBACK_INDEX_URL = document.body?.dataset?.fallbackIndex
+  || "https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json";
 const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
 
 async function loadCsvUrl(u) {
@@ -533,7 +537,7 @@ async function loadAllDefault() {
   let usingFallbackRoot = false;
 
   try {
-    list = await fetchIndexList("data/index.json");
+    list = await fetchIndexList(INDEX_URL);
   } catch (e) {
     try {
       list = await fetchIndexList(FALLBACK_INDEX_URL);
@@ -787,7 +791,6 @@ function mountBaseTranslationUI(capsuleEl, card) {
   const meaning = (card?.Translate || "").trim();
   if (!meaning) return;
 
-  // CRITICAL: anchor absolute-positioned “?” to the capsule (fixes your screenshot bug)
   capsuleEl.style.position = "relative";
 
   const btn = document.createElement("button");
@@ -816,11 +819,9 @@ function mountBaseTranslationUI(capsuleEl, card) {
   `;
   pop.appendChild(close);
 
-  // Toggle behaviour
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     const isHidden = pop.classList.contains("hidden");
-    // close any other open popovers
     $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
     if (isHidden) pop.classList.remove("hidden");
     else pop.classList.add("hidden");
@@ -831,14 +832,13 @@ function mountBaseTranslationUI(capsuleEl, card) {
     pop.classList.add("hidden");
   });
 
-  // Keep clicks inside the capsule from bubbling to the global closer
   pop.addEventListener("click", (e) => e.stopPropagation());
 
   capsuleEl.appendChild(btn);
   capsuleEl.appendChild(pop);
 }
 
-/* Close popovers globally (single listener; no render-leaks) */
+/* Close popovers globally */
 document.addEventListener("click", () => {
   $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
 });
@@ -890,7 +890,6 @@ function renderPractice() {
     return;
   }
 
-  // pick current card
   let idxNow;
   let posText = "";
   if (state.practiceMode === "smart") {
@@ -917,7 +916,6 @@ function renderPractice() {
 
   const wrap = document.createElement("div");
 
-  /* Header row */
   const header = document.createElement("div");
   header.className = "flex flex-wrap items-center justify-between gap-2 mb-2";
 
@@ -940,9 +938,6 @@ function renderPractice() {
     b.className = `seg-btn ${on ? "is-on" : ""}`;
     b.setAttribute("aria-pressed", on ? "true" : "false");
     b.title = (value === "shuffle") ? (t.shuffleModeDesc || "") : (t.smartModeDesc || "");
-
-    // Typography fix: feed the CSS what it expects (your CSS handles styling)
-    // If you want caps, you’ll get them here without fighting CSS.
     b.textContent = String(labelText).toUpperCase();
 
     b.onclick = () => {
@@ -963,7 +958,6 @@ function renderPractice() {
   headerRight.appendChild(seg);
   header.append(headerLeft, headerRight);
 
-  /* Active filters summary chips */
   const summary = document.createElement("div");
   summary.className = "flex flex-wrap items-center gap-2 mb-4";
 
@@ -1025,18 +1019,15 @@ function renderPractice() {
     summary.classList.add("hidden");
   }
 
-  /* Instruction */
   const instruction = document.createElement("div");
   instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-6";
   instruction.textContent = t.instruction;
 
-  /* Base capsule */
   const chips = document.createElement("div");
   chips.className = "practice-base text-2xl md:text-3xl font-medium";
 
   const capsule = document.createElement("div");
   capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm";
-  // anchor ? to the capsule (fixes your “?” drifting to card corner)
   capsule.style.position = "relative";
 
   const baseSpan = document.createElement("span");
@@ -1046,10 +1037,8 @@ function renderPractice() {
   capsule.appendChild(baseSpan);
   chips.appendChild(capsule);
 
-  // add the ? to the capsule (only when Translate exists)
   mountBaseTranslationUI(capsule, card);
 
-  /* Sentence row */
   const row = document.createElement("div");
   row.className = "practice-sentence";
   row.innerHTML = `
@@ -1063,7 +1052,6 @@ function renderPractice() {
     </div>
   `;
 
-  /* Actions row (matches YOUR CSS: main + aux) */
   const actions = document.createElement("div");
   actions.className = "practice-actions flex flex-wrap gap-3";
 
@@ -1077,7 +1065,7 @@ function renderPractice() {
     const ok = normalize(state.guess) === normalize(card.Answer);
     state.revealed = true;
     state.lastResult = ok ? "correct" : "wrong";
-    state.freezeIdx = idxNow;            // freeze the card that was shown (not the post-reveal re-pick)
+    state.freezeIdx = idxNow;
     state.freezePos = state.currentDeckPos;
 
     const shownIdx = idxShown;
@@ -1167,7 +1155,6 @@ function renderPractice() {
     render();
   });
 
-  // Shuffle button: use YOUR CSS class name (.btn-shuffle)
   const btnShuffle = document.createElement("button");
   btnShuffle.type = "button";
   btnShuffle.className = "btn btn-shuffle";
@@ -1179,7 +1166,6 @@ function renderPractice() {
   aux.append(btnShuffle);
   actions.append(main, aux);
 
-  /* Feedback */
   const feedback = document.createElement("div");
   feedback.className = "practice-feedback";
   feedback.setAttribute("aria-live", "polite");
@@ -1208,7 +1194,6 @@ function renderPractice() {
           <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
           <span>${esc(card.After || "")}</span>
 
-          <!-- HEAR button: ensure ONLY btn-hear class (so your CSS wins) -->
           <button id="btnHear" class="btn-hear" type="button">
             <span class="icon" aria-hidden="true">▶︎</span>
             <span>${esc(t.hear)}</span>
@@ -1216,9 +1201,9 @@ function renderPractice() {
         </div>
 
         ${(() => {
-        const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
-        return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
-      })()}
+          const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
+          return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
+        })()}
 
         <div class="mt-4 flex justify-end">
           <button id="inlineNext"
@@ -1247,7 +1232,6 @@ function renderPractice() {
     }, 0);
   }
 
-  /* Assemble */
   const answerBlock = document.createElement("div");
   answerBlock.className = "practice-answerBlock";
   answerBlock.append(row, actions, hint, feedback);
@@ -1365,7 +1349,6 @@ function nextCard(offset = 1) {
 
   if (!state.deck.length) return;
 
-  // In shuffle mode, if wrong: push same card a few steps later
   if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
     const idxVal = state.freezeIdx;
     let deckPos = state.freezePos;
@@ -1470,7 +1453,7 @@ function wireUi() {
         lines.push([cat, trig, base, m.expected, m.got, new Date(m.t).toISOString()]
           .map(s => `"${(s || "").replaceAll('"','""')}"`).join(","));
       }
-      download(lines.join("\n"), "mutation-trainer-misses.csv", "text/csv");
+      download(lines.join("\n"), "trainer-misses.csv", "text/csv");
     });
 
     $("#fileCsv")?.addEventListener("change", (e) => {
@@ -1497,10 +1480,10 @@ function wireUi() {
 (async function boot() {
   wireUi();
   await initData();
-  applyLanguage(); // applies translations + builds filters + renders
+  applyLanguage();
 })();
 </script>
 
-
 </body>
 </html>
+
