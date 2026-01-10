@@ -207,6 +207,15 @@
 
 <script>
 /* ========= Utilities ========= */
+
+  function shuffleInPlace(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
@@ -449,15 +458,30 @@ function getVal(row, names) {
 
 function coerceRow(r) {
   const row = r || {};
-  const answerCY = getVal(row, ["AnswerCY","Answer","Welsh","Answer (CY)"]).trim();
-  const answerArrayRaw = getVal(row, ["AnswerArray","Answer Array","Answers"]).trim();
-  const answers = []
-    .concat(answerArrayRaw ? answerArrayRaw.split("|") : [])
-    .map(s => (s || "").trim())
-    .filter(Boolean);
 
-  // Ensure AnswerCY is included as an accepted answer if present
-  if (answerCY && !answers.map(normalize).includes(normalize(answerCY))) answers.unshift(answerCY);
+  const answerCY = getVal(row, ["AnswerCY","Answer","Welsh","Answer (CY)"]).trim();
+
+  const acceptedRaw = getVal(row, [
+    "AcceptedAnswerArray","Accepted Answer Array","AcceptedAnswers","Accepted Answers",
+    "AnswerArray","Answer Array","Answers"
+  ]).trim();
+
+  const optionsRaw = getVal(row, [
+    "OptionsArray","Options Array","Options","MCQOptions","ChoiceOptions"
+  ]).trim();
+
+  const parsePipe = (raw) =>
+    (raw ? raw.split("|") : []).map(s => (s || "").trim()).filter(Boolean);
+
+  // Accepted answers (what counts as correct)
+  let accepted = parsePipe(acceptedRaw);
+
+  // Ensure AnswerCY is always accepted if present
+  if (answerCY && !accepted.map(normalize).includes(normalize(answerCY))) accepted.unshift(answerCY);
+
+  // Options (what shows in Easy / MCQ mode)
+  let options = parsePipe(optionsRaw);
+  if (answerCY && !options.map(normalize).includes(normalize(answerCY))) options.unshift(answerCY);
 
   return {
     CardID: getVal(row, ["CardID","CardId","ID","Id"]).trim(),
@@ -470,13 +494,22 @@ function coerceRow(r) {
     BeforeCY: getVal(row, ["BeforeCY","Before CY","Before"]).trim(),
     AfterCY: getVal(row, ["AfterCY","After CY","After"]).trim(),
     SentenceHelpEN: getVal(row, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]).trim(),
+
     AnswerCY: answerCY,
-    AnswerArray: answers,
+
+    // New canonical fields
+    AcceptedAnswerArray: accepted,
+    OptionsArray: options,
+
+    // Back-compat: keep old name used elsewhere
+    AnswerArray: accepted,
+
     WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
     WhyCY: getVal(row, ["WhyCY","Why CY"]).trim(),
     Tags: getVal(row, ["Tags","Tag"]).trim()
   };
 }
+
 
 async function loadCsvUrl(u) {
   return new Promise((resolve, reject) => {
@@ -548,7 +581,8 @@ const state = {
   search: loadLS("vocab_search", ""),
 
   // Practice
-  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),  // shuffle | smart
+  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
+  inputMode: loadLS("vocab_input_mode_v1", "hard"),
   leitner: loadLS(LEITNER_LS_KEY, {}),
   smartIdx: null,
   smartCount: 0,
@@ -822,7 +856,7 @@ function renderPractice() {
 
   const wrap = document.createElement("div");
 
-  // Header row: position + Random/Smart seg (this restores the missing toggle)
+  // ===== TOP: header controls (Random/Smart + Easy/Hard) =====
   const header = document.createElement("div");
   header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
 
@@ -831,10 +865,10 @@ function renderPractice() {
   headerLeft.textContent = posText;
 
   const headerRight = document.createElement("div");
-  headerRight.className = "flex items-center gap-2";
+  headerRight.className = "flex flex-wrap items-center gap-2";
 
-  const seg = document.createElement("div");
-  seg.className = "seg";
+  const segReview = document.createElement("div");
+  segReview.className = "seg";
 
   const mkSegBtn = (labelText, value) => {
     const b = document.createElement("button");
@@ -853,13 +887,401 @@ function renderPractice() {
     return b;
   };
 
-  seg.append(
+  segReview.append(
     mkSegBtn("Random", "shuffle"),
     mkSegBtn("Smart", "smart")
   );
 
-  headerRight.appendChild(seg);
+  const segInput = document.createElement("div");
+  segInput.className = "seg";
+
+  const mkInputBtn = (labelText, value) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    const on = state.inputMode === value;
+    b.className = `seg-btn ${on ? "is-on" : ""}`;
+    b.setAttribute("aria-pressed", on ? "true" : "false");
+    b.textContent = String(labelText).toUpperCase();
+    b.onclick = () => {
+      if (state.inputMode === value) return;
+      state.inputMode = value;
+      saveLS("vocab_input_mode_v1", state.inputMode);
+      state.guess = "";
+      state.revealed = false;
+      state.lastResult = null;
+      render();
+      setTimeout(() => $("#answerBox")?.focus(), 0);
+    };
+    return b;
+  };
+
+  segInput.append(
+    mkInputBtn("Hard", "hard"),
+    mkInputBtn("Easy", "easy")
+  );
+
+  headerRight.append(segReview, segInput);
   header.append(headerLeft, headerRight);
+
+  // ===== Active filters row (TOP OF CARD) =====
+  const activeFilters = document.createElement("div");
+  activeFilters.className = "flex flex-wrap gap-2 mb-4";
+
+  const chip = (txt) => {
+    const s = document.createElement("span");
+    s.className = "chip";
+    s.textContent = txt;
+    return s;
+  };
+
+  // Only show what’s actually active
+  if (state.diffPreset && state.diffPreset !== "all") activeFilters.appendChild(chip(`Preset: ${state.diffPreset}`));
+  if (state.course) activeFilters.appendChild(chip(state.course));
+  if (state.unit) activeFilters.appendChild(chip(state.unit));
+  if (state.wordCats?.length) state.wordCats.forEach(c => activeFilters.appendChild(chip(c)));
+  if ((state.search || "").trim()) activeFilters.appendChild(chip(`Search: ${state.search.trim()}`));
+
+  // If nothing selected, keep it clean (don’t render an empty row)
+  const hasAnyFilters = activeFilters.childElementCount > 0;
+
+  // Instruction
+  const instruction = document.createElement("div");
+  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
+  instruction.textContent = (state.inputMode === "easy")
+    ? "Choose the correct Welsh word (multiple choice)."
+    : "Type the Welsh word that matches the English base word.";
+
+  // Base capsule (English)
+  const baseBlock = document.createElement("div");
+  baseBlock.className = "mb-3";
+
+  const capsule = document.createElement("div");
+  capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-3 shadow-sm pr-14";
+  const baseSpan = document.createElement("span");
+  baseSpan.className = "base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight";
+  baseSpan.textContent = card.BaseEN || "—";
+  capsule.appendChild(baseSpan);
+
+  // Base “?” (hint)
+  const hintParts = [];
+  if (card.HintEN) hintParts.push(`<div class="base-info-meaning">${esc(card.HintEN)}</div>`);
+  if (card.HintCY) hintParts.push(`<div class="base-info-meaning">${esc(card.HintCY)}</div>`);
+  mountInfoPopover(capsule, hintParts.join(""), "Hint");
+
+  baseBlock.appendChild(capsule);
+
+  // ===== Sentence line with FIXED “?” positioning =====
+  // Use inline-flex directly (NOT a full-width block) so the “?” anchors to the sentence chunk, not the card edge.
+  const sentenceWrap = document.createElement("div");
+  sentenceWrap.className = "mt-5";
+
+  const sentenceCapsule = document.createElement("div");
+  sentenceCapsule.className = "relative inline-flex flex-wrap items-baseline gap-2 pr-12 max-w-full";
+
+  const beforeSpan = document.createElement("span");
+  beforeSpan.className = "text-slate-600";
+  beforeSpan.textContent = (card.BeforeCY || "").trim();
+
+  const input = document.createElement("input");
+  input.id = "answerBox";
+  input.className = "border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0";
+  input.placeholder = (state.inputMode === "easy") ? "Choose below" : "Type Welsh";
+  input.setAttribute("aria-label", "Answer");
+
+  // In easy mode, we still show the input, but it’s read-only and filled by clicking options
+  if (state.inputMode === "easy") {
+    input.readOnly = true;
+  }
+
+  const afterSpan = document.createElement("span");
+  afterSpan.className = "text-slate-600";
+  afterSpan.textContent = (card.AfterCY || "").trim();
+
+  sentenceCapsule.append(beforeSpan, input, afterSpan);
+
+  // Sentence “?” (gloss/help)
+  const sentHelp = (card.SentenceHelpEN || "").trim();
+  if (sentHelp) {
+    mountInfoPopover(sentenceCapsule, `<div class="base-info-meaning">${esc(sentHelp)}</div>`, "Sentence help");
+  }
+
+  sentenceWrap.appendChild(sentenceCapsule);
+
+  // ===== Accepted answers + canonical answer =====
+  const acceptedAnswers = Array.isArray(card.AcceptedAnswerArray) ? card.AcceptedAnswerArray
+    : (Array.isArray(card.AnswerArray) ? card.AnswerArray : []);
+  const canonicalAnswer = acceptedAnswers[0] || card.AnswerCY || "";
+
+  // ===== EASY MODE: options (OptionsArray) =====
+  // If OptionsArray is missing/short, auto-fill options from other answers so Easy mode still works for testing.
+  let optionList = [];
+
+  if (state.inputMode === "easy" && !state.revealed) {
+    const uniqNorm = (arr) => {
+      const out = [];
+      const seen = new Set();
+      (arr || []).forEach(v => {
+        const s = (v || "").toString().trim();
+        const k = normalize(s);
+        if (!k || seen.has(k)) return;
+        seen.add(k);
+        out.push(s);
+      });
+      return out;
+    };
+
+    let opts = uniqNorm(Array.isArray(card.OptionsArray) ? card.OptionsArray : []);
+    if (canonicalAnswer && !opts.map(normalize).includes(normalize(canonicalAnswer))) opts.unshift(canonicalAnswer);
+
+    const target = 4;
+    if (opts.length < target) {
+      const poolSameCat = state.rows
+        .filter(r => r.AnswerCY && r.WordCategory && r.WordCategory === card.WordCategory)
+        .map(r => r.AnswerCY);
+
+      const poolAny = state.rows
+        .filter(r => r.AnswerCY)
+        .map(r => r.AnswerCY);
+
+      const pool = (poolSameCat.length >= 8) ? poolSameCat : poolAny;
+      const candidates = uniqNorm(pool).filter(x => normalize(x) !== normalize(canonicalAnswer));
+
+      shuffleInPlace(candidates);
+      for (const c of candidates) {
+        if (opts.length >= target) break;
+        if (!opts.map(normalize).includes(normalize(c))) opts.push(c);
+      }
+    }
+
+    opts = uniqNorm(opts);
+    shuffleInPlace(opts);
+    optionList = opts;
+
+    const optWrap = document.createElement("div");
+    optWrap.className = "mt-4 grid grid-cols-2 gap-2 max-w-xl";
+
+    optionList.forEach((opt, i) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "btn btn-ghost px-3 py-2 text-left";
+      b.textContent = opt;
+
+      b.addEventListener("click", () => {
+        state.guess = opt;
+        const ab = $("#answerBox");
+        if (ab) ab.value = opt;
+        ab?.focus();
+      });
+
+      optWrap.appendChild(b);
+    });
+
+    sentenceWrap.appendChild(optWrap);
+  }
+
+  // Actions + hint
+  const actions = document.createElement("div");
+  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
+
+  const main = document.createElement("div");
+  main.className = "practice-actions-main";
+
+  const hintBox = document.createElement("div");
+  hintBox.className = "hidden practice-hint text-sm text-slate-600 mt-3";
+
+  const showHint = () => {
+    const first = canonicalAnswer ? canonicalAnswer.slice(0,1) : "?";
+    const extra = card.HintEN ? ` · ${card.HintEN}` : "";
+    hintBox.innerHTML = `Hint: starts with <b>${esc(first)}</b>${extra ? `<span>${esc(extra)}</span>` : ""}`;
+    hintBox.classList.remove("hidden");
+    $("#answerBox")?.focus();
+  };
+
+  const onCheck = () => {
+    const guess = state.guess || "";
+    const ok = acceptedAnswers.some(a => normalize(a) === normalize(guess));
+
+    state.revealed = true;
+    state.lastResult = ok ? "correct" : "wrong";
+    state.freezeIdx = idxNow;
+    state.freezePos = state.currentDeckPos;
+
+    const cardId = card.CardID || `row_${idxShown}`;
+    state.history = [{
+      t: Date.now(),
+      ok,
+      cardId,
+      course: card.Course || "",
+      expected: acceptedAnswers.join("|"),
+      got: guess,
+      mode: state.practiceMode,
+      input: state.inputMode
+    }, ...state.history].slice(0, 1000);
+    saveLS("vocab_hist", state.history);
+
+    updateLeitner(cardId, ok ? "correct" : "wrong");
+    if (!ok && state.practiceMode === "smart") {
+      state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
+    }
+
+    const ab = $("#answerBox");
+    if (ab) {
+      ab.disabled = true;
+      ab.classList.add("opacity-70", "cursor-not-allowed");
+    }
+
+    render();
+    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
+  };
+
+  const btnCheck = document.createElement("button");
+  btnCheck.type = "button";
+  btnCheck.id = "btnCheck";
+  btnCheck.className = "btn btn-primary shadow";
+  btnCheck.textContent = "Check";
+  btnCheck.onclick = onCheck;
+
+  const btnHint = document.createElement("button");
+  btnHint.type = "button";
+  btnHint.id = "btnHint";
+  btnHint.className = "btn btn-ghost";
+  btnHint.textContent = "Hint";
+  btnHint.onclick = showHint;
+
+  const btnNext = document.createElement("button");
+  btnNext.type = "button";
+  btnNext.className = "btn btn-ghost";
+  btnNext.textContent = "Next";
+  btnNext.onclick = () => {
+    if (!state.revealed) {
+      state.guess = "";
+      state.revealed = true;
+      state.lastResult = "skipped";
+      state.freezeIdx = idxNow;
+      state.freezePos = state.currentDeckPos;
+
+      const cardId = card.CardID || `row_${idxShown}`;
+      state.history = [{
+        t: Date.now(),
+        ok: false,
+        skipped: true,
+        cardId,
+        course: card.Course || "",
+        expected: acceptedAnswers.join("|"),
+        got: "",
+        mode: state.practiceMode,
+        input: state.inputMode
+      }, ...state.history].slice(0, 1000);
+      saveLS("vocab_hist", state.history);
+
+      updateLeitner(cardId, "skipped");
+      if (state.practiceMode === "smart") state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
+
+      nextCard(1);
+      return;
+    }
+    nextCard(1);
+  };
+
+  main.append(btnCheck, btnHint, btnNext);
+  actions.append(main);
+
+  // Feedback (includes Hear)
+  const feedback = document.createElement("div");
+  feedback.className = "practice-feedback mt-4";
+  feedback.setAttribute("aria-live", "polite");
+
+  if (state.revealed) {
+    const ok = state.lastResult === "correct";
+    const skipped = state.lastResult === "skipped";
+
+    const statusIcon = skipped ? "⏭️" : (ok ? "✅" : "❌");
+    const statusText = skipped ? "Skipped" : (ok ? "Correct!" : "Not quite");
+
+    const fullSentence = buildCompleteSentence(card, canonicalAnswer);
+    const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
+
+    feedback.innerHTML = `
+      <div class="feedback-box">
+        <div class="flex items-center gap-2 ${ok ? "text-indigo-900" : "text-rose-900"} text-2xl md:text-3xl font-semibold">
+          ${statusIcon} ${esc(statusText)}
+        </div>
+
+        ${(!ok && !skipped)
+          ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || "(blank)"}</b></div>`
+          : ""
+        }
+
+        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
+          <span>${esc(card.BeforeCY || "")}</span>
+          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(canonicalAnswer)}</span>
+          <span>${esc(card.AfterCY || "")}</span>
+
+          <button id="btnHear" class="btn-hear" type="button">
+            <span class="icon" aria-hidden="true">▶︎</span>
+            <span>Hear</span>
+          </button>
+        </div>
+
+        ${whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : ""}
+
+        <div class="mt-4 flex justify-end">
+          <button id="inlineNext" class="btn btn-primary shadow transition" type="button" title="Next (Enter)">
+            Next
+          </button>
+        </div>
+      </div>
+    `;
+
+    setTimeout(() => {
+      $("#btnHear")?.addEventListener("click", async () => {
+        try {
+          await playPollySentence(fullSentence);
+        } catch (e) {
+          alert("Couldn't play audio: " + (e?.message || e));
+        }
+      });
+      $("#inlineNext")?.addEventListener("click", () => nextCard(1));
+    }, 0);
+  }
+
+  // Build final layout
+  wrap.append(header);
+  if (hasAnyFilters) wrap.append(activeFilters);
+  wrap.append(instruction, baseBlock, sentenceWrap, actions, hintBox, feedback);
+  host.appendChild(wrap);
+
+  // Input handling
+  const ab = $("#answerBox");
+  if (ab) {
+    ab.value = state.guess;
+    ab.focus();
+
+    ab.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault(); e.stopPropagation();
+        onCheck();
+      }
+      // Easy mode quick-pick: keys 1–4 choose options if present
+      if (state.inputMode === "easy") {
+        const k = e.key;
+        if (["1","2","3","4"].includes(k) && Array.isArray(optionList) && optionList.length) {
+          const idx = Number(k) - 1;
+          if (optionList[idx]) {
+            state.guess = optionList[idx];
+            ab.value = optionList[idx];
+          }
+        }
+      }
+    });
+
+    // Only allow typing in hard mode
+    ab.addEventListener("input", (e) => {
+      if (state.inputMode === "easy") return;
+      state.guess = e.target.value;
+    });
+  }
+}
 
   // Instruction
   const instruction = document.createElement("div");
