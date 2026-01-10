@@ -4,61 +4,99 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welsh Vocab Trainer</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
-  </style>
-  <!-- Tailwind via CDN -->
 
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Small page-specific bits only; keep the rest in styles.css */
+    .mini-label { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .info-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.15);
+      background: rgba(255,255,255,.85);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .info-pop {
+      position: absolute;
+      right: 6px;
+      top: 40px;
+      width: min(360px, calc(100vw - 32px));
+      background: white;
+      border: 1px solid rgba(0,0,0,.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12);
+      border-radius: 14px;
+      padding: 12px 12px 10px;
+      z-index: 50;
+    }
+    .info-pop .close {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      font-size: 18px;
+      line-height: 1;
+      opacity: .7;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+    .seg { display: inline-flex; border: 1px solid rgba(0,0,0,.12); border-radius: attachments; border-radius: 999px; overflow: hidden; }
+    .seg-btn { padding: 6px 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .seg-btn.is-on { background: rgba(15,23,42,.08); font-weight: 700; }
+  </style>
 </head>
 
-<!-- IMPORTANT: vocab page uses its own index list -->
-<body class="min-h-screen text-slate-900"
-      data-index="data/vocab/index.json"
-      data-fallback-index="https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json">
-
+<body class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
     <header id="siteHeader" class="sticky top-0 z-10">
       <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
-
         <div class="brand-lockup grow min-w-0">
           <img class="brand-dragon" alt="" aria-hidden="true" src="https://katyjohannab.github.io/welsh-mutation-trainer/images/dragon.png" />
-          <!-- Only branding text changed -->
-          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight"><span class="title-hy">Hyffordwr</span><span class="title-trei">Geirfa</span></h1>
+          <h1 class="bbh-bogle-regular brand-title text-3xl md:text-4xl lg:text-5xl tracking-tight">
+            <span class="title-hy">Hyffordwr</span><span class="title-trei">Cymraeg</span>
+          </h1>
         </div>
 
         <div class="flex flex-wrap items-center justify-start md:justify-end gap-2 md:gap-3">
           <span id="itemCount" class="hidden text-xs text-slate-500"></span>
-          <span id="adminBadge" class="hidden text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2 py-1 rounded-full">Admin</span>
 
           <!-- Primary nav -->
           <div class="flex flex-wrap items-center gap-2">
-            <a id="btnLearn" class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
-            <button id="btnPractice" class="btn btn-primary" title="Practice mode">Practice</button>
+            <a class="btn btn-ghost" href="./home.html" title="Home">Home</a>
+            <a class="btn btn-ghost" href="./learn.html" title="Learn">Learn</a>
+            <a class="btn btn-ghost" href="./index.html" title="Mutation practice">Mutations</a>
+            <button id="btnPractice" class="btn btn-primary" title="Vocab practice">Vocab</button>
           </div>
 
-          <!-- Secondary actions for the Practice page -->
           <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
 
           <div class="flex flex-wrap items-center gap-2">
             <button id="btnStats" class="btn btn-ghost" title="Stats">Stats</button>
             <button id="btnFilters" class="btn btn-ghost" title="Filters">Filters</button>
-            <button id="btnBrowse" class="btn btn-ghost hidden" title="Browse all cards">Browse</button>
-            <button id="btnHelp" class="btn btn-ghost hidden" title="Help">Help</button>
+            <button id="btnBrowse" class="btn btn-ghost" title="Browse">Browse</button>
+            <button id="btnHelp" class="btn btn-ghost" title="Help">Help</button>
           </div>
 
           <div class="hidden md:block h-6 w-px bg-slate-200/80"></div>
 
           <button id="btnLangToggle" class="btn-lang" aria-label="Switch language" title="Switch language"></button>
         </div>
-
       </div>
       <div class="cymru-red-bar" aria-hidden="true"></div>
     </header>
@@ -68,13 +106,12 @@
       <div class="panel rounded-2xl p-4 flex items-start gap-3">
         <div class="text-2xl">💡</div>
         <div class="text-sm text-slate-700">
-          <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
+          <div class="font-medium mb-1">Welcome! How to use this vocab trainer.</div>
           <ol class="list-decimal ml-5 leading-relaxed">
-            <li>Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle the deck at any time. <b>Smart review</b> adapts to your progress using a spaced-repetition (Leitner) system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at the top of the card to switch modes.</li>
-            <li>Click <b>Filters</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
-            <li>Read the sentence and type the correct form in the box.</li>
-            <li>Press <b>Check</b> to mark your answer.</li>
-            <li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li>
+            <li>Use <b>Filters</b> to choose a course/unit, word type, or search by tags.</li>
+            <li>You’ll see an <b>English base word</b>. Type the correct <b>Welsh</b> form into the sentence.</li>
+            <li>Use the <b>?</b> on the English word for a <b>hint</b>. Use the <b>?</b> on the sentence line for <b>sentence help</b>.</li>
+            <li>Press <b>Check</b>, read the explanation, then <b>Next</b>.</li>
           </ol>
           <div class="mt-3 flex gap-2">
             <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
@@ -84,74 +121,56 @@
       </div>
     </section>
 
-    <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
       <div id="practiceView" class="grid md:grid-cols-3 gap-4 items-start">
-        <!-- Left: practice card -->
         <div class="md:col-span-2 panel rounded-2xl p-6 md:p-7">
           <div id="practiceCard"></div>
         </div>
 
-        <!-- Right: filters + session -->
         <div class="md:col-span-1 flex flex-col gap-4">
-          <!-- Filter controls -->
+          <!-- Filters -->
           <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
-            <!-- Admin / Data panel -->
-            <div id="adminPanel" class="hidden mb-4">
-              <div class="text-sm font-medium mb-2">Admin tools</div>
-              <label class="text-sm font-medium">Data URL </label>
-              <div class="mt-2 flex gap-2">
-                <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste Google Sheet CSV (Publish → CSV)">
-                <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
-              </div>
-              <div class="mt-2 flex flex-wrap gap-2 text-sm">
-                <button id="btnShareable" class="btn btn-ghost px-3 py-1.5">Shareable link</button>
-                <button id="btnExportMisses" class="btn btn-ghost px-3 py-1.5">Export misses</button>
-              </div>
-              <div class="mt-3">
-                <div class="text-sm font-medium mb-1">Load local CSV</div>
-                <input id="fileCsv" type="file" accept=".csv" />
-              </div>
-              <hr class="my-4" />
-            </div>
+            <div class="text-sm font-medium mb-2">Filters</div>
 
-            <!-- Focus filters -->
-            <div id="focusTitle" class="text-sm font-medium mb-2">Focus</div>
-            <div class="grid grid-cols-2 gap-2 text-sm">
-              <div id="familyCol">
-                <div id="rulefamilyTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
-                <div id="familyBtns" class="flex flex-wrap gap-1"></div>
+            <div class="grid grid-cols-1 gap-3 text-sm">
+              <div>
+                <div class="mini-label text-slate-500 mb-1">Course</div>
+                <select id="courseSelect" class="w-full border rounded-xl px-3 py-2 bg-white"></select>
               </div>
-              <div id="outcomeCol">
-                <div id="outcomeTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
-                <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
+
+              <div>
+                <div class="mini-label text-slate-500 mb-1">Unit</div>
+                <select id="unitSelect" class="w-full border rounded-xl px-3 py-2 bg-white"></select>
               </div>
-              <div class="col-span-2">
-                <div id="categoriesTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
-                <div id="catBtns" class="flex flex-wrap gap-1"></div>
+
+              <div>
+                <div class="mini-label text-slate-500 mb-1">Word category</div>
+                <div id="wordCatBtns" class="flex flex-wrap gap-1"></div>
               </div>
-              <div class="col-span-2">
-                <label id="triggerLabel" class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
-                <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
+
+              <div>
+                <div class="mini-label text-slate-500 mb-1">Search tags / English</div>
+                <input id="tagQuery" class="w-full border rounded-xl px-3 py-2" placeholder="e.g. food, travel, rights, work" />
               </div>
-              <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
-                <input id="nilOnly" type="checkbox" />
-                <span id="nilOnlyText">Nil-cases only (no mutation expected)</span>
-              </label>
+
+              <div class="flex gap-2">
+                <button id="btnClearFilters" class="btn btn-ghost px-3 py-2">Clear</button>
+              </div>
             </div>
           </div>
 
-          <!-- Session / stats panel -->
+          <!-- Session / stats -->
           <aside id="sessionPanel" class="panel rounded-2xl p-4">
             <div class="text-sm font-medium mb-2">Session</div>
             <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
             <div id="accText" class="text-sm text-slate-600">0 / 0 correct</div>
             <div id="cardPos" class="text-sm text-slate-600">Card 0 / 0</div>
-            <div class="mt-2 text-sm">
-              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By outcome</div>
-              <ul id="byOutcome" class="space-y-1"></ul>
-              <div class="mt-2 text-xs text-slate-500">Legend: <b>SM</b>=Soft, <b>AM</b>=Aspirate, <b>NM</b>=Nasal, <b>NONE</b>=No mutation</div>
+
+            <div class="mt-3 text-sm">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">By course</div>
+              <ul id="byCourse" class="space-y-1"></ul>
             </div>
+
             <div class="mt-3 flex gap-2">
               <button id="btnResetStats" class="btn btn-ghost px-3 py-1.5">Reset stats</button>
             </div>
@@ -176,8 +195,8 @@
           <button id="btnResetStats2" class="mt-4 btn btn-ghost px-3 py-1.5">Reset</button>
         </div>
         <div class="panel rounded-2xl p-6">
-          <h2 class="text-lg font-medium mb-2">By outcome</h2>
-          <ul id="statsByOutcome" class="space-y-1 text-sm"></ul>
+          <h2 class="text-lg font-medium mb-2">By course</h2>
+          <ul id="statsByCourse" class="space-y-1 text-sm"></ul>
         </div>
       </div>
     </main>
@@ -185,15 +204,15 @@
     <!-- Mobile action bar -->
     <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
       <div class="max-w-6xl mx-auto flex gap-2">
-        <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
-        <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
-        <button id="mbNext" title="Next (Enter)" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
+        <button id="mbHint" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
+        <button id="mbCheck" class="flex-1 btn btn-primary px-3 py-2">Check</button>
+        <button id="mbNext" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
       </div>
     </div>
 
     <footer class="max-w-6xl mx-auto p-6 text-xs text-slate-500">
       <div class="flex flex-wrap gap-4 items-center">
-        <span>© Hyffordwr Geirfa</span>
+        <span>© Hyffordwr Cymraeg</span>
         <button id="btnTop" class="ml-auto btn btn-ghost px-2 py-1">Back to top</button>
       </div>
     </footer>
@@ -208,7 +227,7 @@ function normalize(s) {
   return (s || "")
     .toString()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")   // strip diacritics (dŵr == dwr)
     .replace(/’/g, "'")
     .toLowerCase()
     .trim()
@@ -219,292 +238,37 @@ function esc(s) {
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"
   }[ch]));
 }
-function download(text, filename, type = "text/plain") {
-  const blob = new Blob([text], { type });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = filename; a.click();
-  URL.revokeObjectURL(url);
-}
 function getParam(k) { return new URLSearchParams(location.search).get(k); }
 function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
 
-/* ========= Smart review (Leitner) ========= */
-const LEITNER_LS_KEY = "wm_leitner_boxes_v1";
-const PRACTICE_MODE_LS_KEY = "wm_practice_mode_v1";
-const LEITNER_MAX_BOX = 5;
-const LEITNER_WEIGHTS = [0, 50, 25, 15, 7, 3]; // index 1..5
-
-function getCardId(card, idxFallback) {
-  const raw = (card && (card.CardId ?? card.CardID ?? card.ID ?? card.Id ?? card.id));
-  const s = (raw == null ? "" : String(raw)).trim();
-  return s ? s : `row_${idxFallback}`;
-}
-function clampBox(n) {
-  const x = Number(n);
-  if (!Number.isFinite(x)) return 1;
-  return Math.max(1, Math.min(LEITNER_MAX_BOX, Math.round(x)));
-}
-function getBoxFor(cardId) {
-  return clampBox(state.leitner?.[cardId] ?? 1);
-}
-function setBoxFor(cardId, box) {
-  if (!state.leitner) state.leitner = {};
-  state.leitner[cardId] = clampBox(box);
-  saveLS(LEITNER_LS_KEY, state.leitner);
-}
-function updateLeitner(cardId, result) {
-  const cur = getBoxFor(cardId);
-  const next = (result === "correct") ? Math.min(LEITNER_MAX_BOX, cur + 1) : 1;
-  setBoxFor(cardId, next);
-}
-function weightedPickBox(candidatesByBox) {
-  let total = 0;
-  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
-    if (candidatesByBox[b]?.length) total += LEITNER_WEIGHTS[b];
-  }
-  if (!total) return 1;
-  let r = Math.random() * total;
-  for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
-    if (!candidatesByBox[b]?.length) continue;
-    r -= LEITNER_WEIGHTS[b];
-    if (r <= 0) return b;
-  }
-  return 1;
-}
-function pickNextSmartIdx() {
-  const n = state.filtered?.length || 0;
-  if (!n) return 0;
-
-  if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
-
-  if (state.smartQueue.length) {
-    state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1));
-    const duePos = state.smartQueue.findIndex(item => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
-    if (duePos >= 0) {
-      const item = state.smartQueue.splice(duePos, 1)[0];
-      return item.idx;
-    }
-  }
-
-  const byBox = { 1: [], 2: [], 3: [], 4: [], 5: [] };
-  for (let i = 0; i < n; i++) {
-    const id = getCardId(state.filtered[i], i);
-    const box = getBoxFor(id);
-    byBox[box].push(i);
-  }
-
-  let chosenBox = weightedPickBox(byBox);
-  if (!byBox[chosenBox].length) {
-    for (let b = 1; b <= LEITNER_MAX_BOX; b++) {
-      if (byBox[b].length) { chosenBox = b; break; }
-    }
-  }
-
-  const pool = byBox[chosenBox] || [];
-  if (!pool.length) return Math.floor(Math.random() * n);
-
-  let idx = pool[Math.floor(Math.random() * pool.length)];
-  for (let tries = 0; tries < 6 && idx === state.smartIdx && pool.length > 1; tries++) {
-    idx = pool[Math.floor(Math.random() * pool.length)];
-  }
-  return idx;
-}
-
-/* ========= Data coercion ========= */
-const PREP = new Set(["am","ar","at","dan","dros","tros","drwy","trwy","gan","heb","hyd","i","o","tan","wrth","yng","yn","gyda","hefo","â"]);
-function getVal(row, names) {
-  const keys = Object.keys(row || {});
-  for (const key of keys) {
-    if (names.some(n => key.trim().toLowerCase() === n.trim().toLowerCase())) {
-      return (row[key] ?? "").toString().trim();
-    }
-  }
-  return "";
-}
-function familyFromOutcome(outcome) {
-  const o = (outcome || "").toUpperCase();
-  if (o === "SM") return "Soft";
-  if (o === "AM") return "Aspirate";
-  if (o === "NM") return "Nasal";
-  if (o === "NONE") return "None";
-  return "";
-}
-function coerceRow(row) {
-  const r = row || {};
-  const rawOutcome = getVal(r, ["Outcome","Result","Mutation","Mut"]);
-  const o = (rawOutcome || "").replace(/["']/g, "").toUpperCase();
-  const trig = getVal(r, ["Trigger","Trigger/Structure","Structure","Preposition"]);
-
-  let famRaw = getVal(r, ["RuleFamily","Rule Family","Family"]).trim();
-  if (!famRaw) famRaw = familyFromOutcome(o);
-  let fam = famRaw;
-  if (famRaw.includes(",")) fam = famRaw.split(",")[0].trim();
-
-  return {
-    CardId: getVal(r, ["CardId","Card ID","ID","Id","id","cardId","card_id"]) || "",
-    RuleFamily: fam,
-    RuleCategory: getVal(r, ["RuleCategory","Rule Category","Category"]) || (PREP.has((trig || "").toLowerCase()) ? "Preposition" : ""),
-    Trigger: trig,
-    Base: getVal(r, ["Base","Radical","Word","Base word","BaseWord"]),
-    WordCategory: getVal(r, ["WordCategory","Word Category","POS","Part of speech"]),
-    Before: getVal(r, ["Before","PromptBefore","Left","SentenceBefore"]),
-    After: getVal(r, ["After","PromptAfter","Right","SentenceAfter"]),
-    Answer: getVal(r, ["Answer","Expected","Mutated","Target"]),
-    Outcome: o,
-    Why: getVal(r, ["Why","Note","Rule","Explanation","Notes"]),
-    WhyCym: getVal(r, ["Why-Cym","WhyCym","Why Cym","Why (Cym)","Why Welsh","Why-Welsh"]),
-    Translate: getVal(r, ["Translate","Translation","Gloss","Meaning"]),
-  };
-}
-
-/* ========= App State ========= */
+/* ========= App state ========= */
+const PRACTICE_MODE_LS_KEY = "wv_practice_mode_v1";
 const state = {
   rows: [],
   filtered: [],
-  families: loadLS("wm_families", ["Soft","Aspirate","Nasal","None"]),
-  categories: loadLS("wm_categories", []),
-  outcomes: loadLS("wm_outcomes", ["SM","AM","NM","NONE"]),
-  triggerQuery: loadLS("wm_trig", ""),
-  nilOnly: loadLS("wm_nil", false),
-  mode: loadLS("wm_mode", "practice"),
-  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
-  leitner: loadLS(LEITNER_LS_KEY, {}),
-  smartIdx: null,
-  smartCount: 0,
-  smartQueue: [],
   deck: [],
   p: 0,
   guess: "",
   revealed: false,
   lastResult: null,
-  history: loadLS("wm_hist", []),
-  admin: getParam("admin") === "1",
-  freezeIdx: null,
-  freezePos: null,
-  lang: loadLS("wm_lang", "en"),
-  currentIdx: 0,
-  currentDeckPos: -1,
+
+  mode: loadLS("wv_mode", "practice"),
+  lang: loadLS("wv_lang", "en"),
+  practiceMode: loadLS(PRACTICE_MODE_LS_KEY, "shuffle"),
+
+  // Filters
+  course: loadLS("wv_course", "ALL"),
+  unit: loadLS("wv_unit", "ALL"),
+  wordCats: loadLS("wv_wordcats", []), // empty == all
+  tagQuery: loadLS("wv_tagq", ""),
+
+  // Stats
+  history: loadLS("wv_hist", []), // {t, ok, cardId, course, unit, baseEN, expected, got}
 };
 
-/* ========= UI Translations ========= */
-const LABEL = {
-  en: {
-    nav: { Learn:"Learn", Practice:"Practice", Browse:"Browse", Stats:"Stats", Filters:"Filters", Help:"Help" },
-    headings: { focus:"Focus", rulefamily:"RuleFamily", outcome:"Outcome", categories:"Categories", trigger:"Filter by Trigger", nilOnly:"Nil-cases only (no mutation expected)" },
-    categories: {
-      All:"All","Adjective+Noun":"Adjective+Noun",Article:"Article","Bod+yn":"Bod+Yn",Complement:"Complement",Conjunction:"Conjunction",
-      Deictic:"Deictic",Determiner:"Determiner",Intensifier:"Intensifier",Interrogative:"Interrogative",Idiom: "Idiom",Negation:"Negation",Numerals:"Numerals",
-      Particle:"Particle",PlaceName:"PlaceName",Possessive:"Possessive",Preposition:"Preposition",Presentative:"Presentative",Relative:"Relative",
-      SubjectBoundary:"SubjectBoundary",Subordinator:"Subordinator",TimeExpressions:"TimeExpressions"
-    },
-    rulefamily: { Soft:"Soft", Aspirate:"Aspirate", Nasal:"Nasal", None:"None", SM:"Soft", AM:"Aspirate", NM:"Nasal", NONE:"None" },
-    instruction: "Type the correct form. If no change is needed, repeat the base form.",
-    hint:"Hint", reveal:"Reveal", skip:"Skip", check:"Check", next:"Next",
-    shuffleModeDesc:"Random review: cards appear in a truly random order.",
-    smartModeDesc:"Smart review: adapts to your progress and focuses on mistakes, repeating those cards more often.",
-    shuffleNowDesc:"Reshuffle the current deck (useful if you are seeing the same cards repeatedly).",
-    shuffleNow:"Shuffle cards",
-    shuffleModeShort:"Random",
-    smartModeShort:"Smart",
-    cardLabel:"Card",
-    reviewedLabel:"Reviewed",
-    poolLabel:"Pool",
-    answerLabel:"Answer",
-    statuses:{ correct:"Correct!", wrong:"Not quite", skipped:"Skipped" },
-    youTyped:"You typed",
-    blank:"(blank)",
-    hear:"Hear",
-    meaningAria:"Meaning",
-  },
-  cy: {
-    nav: { Learn:"Dysgu", Practice:"Ymarfer", Browse:"Pori", Stats:"Ystadegau", Filters:"Hidiau", Help:"Cymorth" },
-    headings: { focus:"Ffocws", rulefamily:"Math Treiglad", outcome:"Canlyniad", categories:"Categorïau", trigger:"Hidlo yn ôl y sbardun", nilOnly:"Achosion dim-treiglad yn unig (dim treiglad disgwyliedig)" },
-    categories: {
-      All:"Pob un","Adjective+Noun":"Ansoddair+Enw",Article:"Erthygl","Bod+yn":"Bod+Yn",Complement:"Cyflenwad",Conjunction:"Cysylltair",
-      Deictic:"Deictig",Determiner:"Penderfyniadur",Idiom:"Idiom",Intensifier:"Dwysydd",Interrogative:"Holiadol",Negation:"Negydd",Numerals:"Rhifau",
-      Particle:"Gronyn",PlaceName:"Enw lle",Possessive:"Meddiannol",Preposition:"Arddodiad",Presentative:"Cyflwyniadur",Relative:"Perthynol",
-      SubjectBoundary:"Ar ôl pwnc",Subordinator:"Isgysylltair",TimeExpressions:"Mynegiadau Amser"
-    },
-    rulefamily: { Soft:"Meddal", Aspirate:"Llaes", Nasal:"Trwynol", None:"Dim", SM:"Meddal", AM:"Llaes", NM:"Trwynol", NONE:"Dim" },
-    instruction: "Teipiwch y ffurf gywir. Os nad oes treiglad, ailysgrifennwch y ffurf wreiddiol.",
-    hint:"Awgrym", reveal:"Datgelu", skip:"Hepgor", check:"Gwirio", next:"Nesaf",
-    shuffleModeDesc:"Adolygu ar hap: mae cardiau’n ymddangos mewn trefn wirioneddol ar hap.",
-    smartModeDesc:"Adolygu clyfar: addasu i’ch cynnydd a phwysleisio camgymeriadau; mae’n ailadrodd cardiau anghywir yn amlach.",
-    shuffleNowDesc:"Ailgymysgu’r dec presennol (yn ddefnyddiol os ydych chi’n gweld yr un cardiau dro ar ôl tro).",
-    shuffleNow:"Cymysgu cardiau",
-    shuffleModeShort:"Ar hap",
-    smartModeShort:"Clyfar",
-    cardLabel:"Cerdyn",
-    reviewedLabel:"Wedi adolygu",
-    poolLabel:"Set",
-    answerLabel:"Ateb",
-    statuses:{ correct:"Cywir!", wrong:"Dim yn hollol gywir", skipped:"Wedi ei hepgor" },
-    youTyped:"Teipioch chi",
-    blank:"(gwag)",
-    hear:"Gwrando",
-    meaningAria:"Ystyr",
-  }
-};
-function label(section, key) {
-  const lang = state.lang || "en";
-  return (LABEL?.[lang]?.[section]?.[key]) || key;
-}
-function applyLanguage() {
-  const lang = state.lang || "en";
-  const nav = LABEL[lang].nav;
-
-  const setBtn = (id, txt, title) => {
-    const el = $(id);
-    if (!el) return;
-    el.textContent = txt;
-    if (title) el.title = title;
-  };
-
-  setBtn("#btnPractice", nav.Practice, nav.Practice);
-  setBtn("#btnLearn", nav.Learn, nav.Learn);
-  setBtn("#btnBrowse", nav.Browse, nav.Browse);
-  setBtn("#btnStats", nav.Stats, nav.Stats);
-  setBtn("#btnFilters", nav.Filters, `${nav.Filters} (F)`);
-  setBtn("#btnHelp", nav.Help, nav.Help);
-
-  const langBtn = $("#btnLangToggle");
-  if (langBtn) {
-    const nextLang = (lang === "en") ? "CY" : "EN";
-    langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
-    langBtn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
-    langBtn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
-  }
-
-  if ($("#focusTitle")) $("#focusTitle").textContent = LABEL[lang].headings.focus;
-  if ($("#rulefamilyTitle")) $("#rulefamilyTitle").textContent = LABEL[lang].headings.rulefamily;
-  if ($("#outcomeTitle")) $("#outcomeTitle").textContent = LABEL[lang].headings.outcome;
-  if ($("#categoriesTitle")) $("#categoriesTitle").textContent = LABEL[lang].headings.categories;
-  if ($("#triggerLabel")) $("#triggerLabel").textContent = LABEL[lang].headings.trigger;
-  if ($("#nilOnlyText")) $("#nilOnlyText").textContent = LABEL[lang].headings.nilOnly;
-
-  const onboardInst = $("#onboard .font-medium.mb-1");
-  if (onboardInst) onboardInst.textContent = (lang === "cy")
-    ? "Croeso! Sut i ddefnyddio'r hyfforddwr hwn."
-    : "Welcome! How to use this trainer.";
-
-  if ($("#onboardFilters")) $("#onboardFilters").textContent = nav.Filters;
-  if ($("#onboardDismiss")) $("#onboardDismiss").textContent = (lang === "cy" ? "Iawn" : "Got it");
-
-  if ($("#btnResetStats")) $("#btnResetStats").textContent = (lang === "cy" ? "Ailosod ystadegau" : "Reset stats");
-  if ($("#btnResetStats2")) $("#btnResetStats2").textContent = (lang === "cy" ? "Ailosod ystadegau" : "Reset stats");
-  if ($("#btnTop")) $("#btnTop").textContent = (lang === "cy" ? "Yn ôl i’r brig" : "Back to top");
-
-  buildFilters();
-  render();
-}
-
-/* ========= Data loading (index list) ========= */
-/* EXACTLY as suggested: index path comes from body dataset */
-const INDEX_URL = document.body?.dataset?.index || "data/index.json";
-const FALLBACK_INDEX_URL = document.body?.dataset?.fallbackIndex
-  || "https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json";
+/* ========= Data loading (vocab index list) ========= */
+const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json";
 const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
 
 async function loadCsvUrl(u) {
@@ -537,15 +301,10 @@ async function loadAllDefault() {
   let usingFallbackRoot = false;
 
   try {
-    list = await fetchIndexList(INDEX_URL);
+    list = await fetchIndexList("data/vocab/index.json");
   } catch (e) {
-    try {
-      list = await fetchIndexList(FALLBACK_INDEX_URL);
-      usingFallbackRoot = true;
-    } catch (e2) {
-      console.warn("Failed to load both local and fallback index.json", e, e2);
-      return [];
-    }
+    list = await fetchIndexList(FALLBACK_INDEX_URL);
+    usingFallbackRoot = true;
   }
 
   const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL(".", location.href).toString();
@@ -553,36 +312,53 @@ async function loadAllDefault() {
   for (const p of list) {
     const url = resolveFromRoot(p, root);
     if (!url) continue;
-    try {
-      const d = await loadCsvUrl(url);
-      merged = merged.concat(d);
-    } catch (err) {
-      console.warn("Failed to load source:", url, err);
-    }
+    const d = await loadCsvUrl(url);
+    merged = merged.concat(d);
   }
   return merged;
 }
-async function initData() {
-  const sheet = getParam("sheet");
-  let rows = [];
-  try {
-    rows = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
-  } catch (e) {
-    console.warn("Data load failed; trying fallback", e);
-    rows = await loadAllDefault();
+
+/* ========= Row coercion (YOUR vocab schema) ========= */
+function getVal(row, names) {
+  const keys = Object.keys(row || {});
+  for (const key of keys) {
+    const k = key.trim().toLowerCase();
+    if (names.some(n => k === n.trim().toLowerCase())) {
+      return (row[key] ?? "").toString().trim();
+    }
   }
+  return "";
+}
+function coerceRow(row, idxFallback) {
+  const r = row || {};
+  const cardId = getVal(r, ["CardID","CardId","Card ID","ID","Id","id"]) || `row_${idxFallback}`;
 
-  const expected = ["CardId","RuleFamily","RuleCategory","Trigger","Base","WordCategory","Translate","Before","After","Answer","Outcome","Why","WhyCym"];
-  const cleaned = rows.map(r => {
-    const m = coerceRow(r);
-    const o = {};
-    for (const k of expected) o[k] = (m?.[k] ?? "").toString().trim();
-    return o;
-  });
+  return {
+    CardID: cardId,
+    Course: getVal(r, ["Course"]),
+    Unit: getVal(r, ["Unit"]),
+    WordCategory: getVal(r, ["WordCategory","Word Category","POS"]),
+    BaseEN: getVal(r, ["BaseEN","Base EN","English","Base"]),
+    HintEN: getVal(r, ["HintEN","Hint EN"]),
+    HintCY: getVal(r, ["HintCY","Hint CY","HintCY (Welsh)"]),
+    BeforeCY: getVal(r, ["BeforeCY","Before CY","Before"]),
+    AfterCY: getVal(r, ["AfterCY","After CY","After"]),
+    SentenceHelpEN: getVal(r, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]),
+    AnswerCY: getVal(r, ["AnswerCY","Answer CY","Answer"]),
+    AnswerArray: getVal(r, ["AnswerArray","Answer Array","Accepted","AcceptedAnswers"]),
+    WhyEN: getVal(r, ["WhyEN","Why EN","Why"]),
+    WhyCY: getVal(r, ["WhyCY","Why CY"]),
+    Tags: getVal(r, ["Tags","Tag"])
+  };
+}
 
-  state.rows = cleaned;
-  const itemCountEl = $("#itemCount");
-  if (itemCountEl) itemCountEl.textContent = `${state.rows.length} items`;
+async function initData() {
+  const sheet = getParam("sheet"); // optional override
+  const raw = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
+
+  state.rows = raw.map((r, i) => coerceRow(r, i)).filter(r => r.BaseEN && (r.AnswerCY || r.AnswerArray));
+  $("#itemCount")?.classList.remove("hidden");
+  $("#itemCount").textContent = `${state.rows.length} items`;
 
   applyFilters();
   rebuildDeck();
@@ -590,7 +366,7 @@ async function initData() {
   render();
 }
 
-/* ========= Filters & Deck ========= */
+/* ========= Filters ========= */
 function toggleBtn(text, active, onToggle) {
   const b = document.createElement("button");
   b.type = "button";
@@ -599,264 +375,201 @@ function toggleBtn(text, active, onToggle) {
   b.onclick = () => onToggle(!active);
   return b;
 }
+
 function buildFilters() {
-  const cats = new Set();
-  for (const r of state.rows) if (r.RuleCategory) cats.add(r.RuleCategory);
-  const outcomes = ["SM","AM","NM","NONE"];
+  // Course dropdown
+  const courses = Array.from(new Set(state.rows.map(r => r.Course).filter(Boolean))).sort();
+  const courseSel = $("#courseSelect");
+  if (courseSel) {
+    courseSel.innerHTML = "";
+    const optAll = document.createElement("option");
+    optAll.value = "ALL";
+    optAll.textContent = "All courses";
+    courseSel.appendChild(optAll);
 
-  const qs = $("#qs");
-  if (qs) { qs.innerHTML = ""; qs.classList.add("hidden"); }
-
-  const famEl = $("#familyBtns");
-  if (famEl) {
-    famEl.innerHTML = "";
-    for (const f of ["Soft","Aspirate","Nasal","None"]) {
-      const labelText = label("rulefamily", f);
-      const b = toggleBtn(labelText, state.families.includes(f), (on) => {
-        state.families = on ? Array.from(new Set([...state.families, f])) : state.families.filter(x => x !== f);
-        saveLS("wm_families", state.families);
-        applyFilters(); rebuildDeck(); buildFilters(); render();
-      });
-      b.dataset.key = f;
-      famEl.appendChild(b);
+    for (const c of courses) {
+      const o = document.createElement("option");
+      o.value = c;
+      o.textContent = c;
+      courseSel.appendChild(o);
     }
+    courseSel.value = state.course || "ALL";
+    courseSel.onchange = (e) => {
+      state.course = e.target.value || "ALL";
+      saveLS("wv_course", state.course);
+      // Reset unit when course changes (to avoid empty result traps)
+      state.unit = "ALL";
+      saveLS("wv_unit", state.unit);
+      applyFilters(); rebuildDeck(); buildFilters(); render();
+    };
   }
 
-  const outEl = $("#outcomeBtns");
-  if (outEl) {
-    outEl.innerHTML = "";
-    const outcomeCounts = {};
-    state.filtered.forEach(r => {
-      const o = (r.Outcome || "").toUpperCase();
-      if (!o) return;
-      outcomeCounts[o] = (outcomeCounts[o] || 0) + 1;
-    });
-    for (const o of outcomes) {
-      const count = outcomeCounts[o] || 0;
-      const txt = `${o} (${count})`;
-      outEl.appendChild(toggleBtn(txt, state.outcomes.includes(o), (on) => {
-        state.outcomes = on ? Array.from(new Set([...state.outcomes, o])) : state.outcomes.filter(x => x !== o);
-        saveLS("wm_outcomes", state.outcomes);
-        applyFilters(); rebuildDeck(); buildFilters(); render();
+  // Unit dropdown (dependent on course)
+  const unitSel = $("#unitSelect");
+  if (unitSel) {
+    unitSel.innerHTML = "";
+    const optAllU = document.createElement("option");
+    optAllU.value = "ALL";
+    optAllU.textContent = "All units";
+    unitSel.appendChild(optAllU);
+
+    const unitPool = state.rows
+      .filter(r => (state.course === "ALL" ? true : r.Course === state.course))
+      .map(r => r.Unit)
+      .filter(Boolean);
+    const units = Array.from(new Set(unitPool)).sort((a,b)=>a.localeCompare(b, undefined, {numeric:true}));
+
+    for (const u of units) {
+      const o = document.createElement("option");
+      o.value = u;
+      o.textContent = u;
+      unitSel.appendChild(o);
+    }
+    unitSel.value = state.unit || "ALL";
+    unitSel.onchange = (e) => {
+      state.unit = e.target.value || "ALL";
+      saveLS("wv_unit", state.unit);
+      applyFilters(); rebuildDeck(); render();
+    };
+  }
+
+  // WordCategory pills
+  const cats = Array.from(new Set(state.rows.map(r => r.WordCategory).filter(Boolean))).sort();
+  const host = $("#wordCatBtns");
+  if (host) {
+    host.innerHTML = "";
+    const allOn = !state.wordCats.length;
+    host.appendChild(toggleBtn("All", allOn, () => {
+      state.wordCats = [];
+      saveLS("wv_wordcats", state.wordCats);
+      applyFilters(); rebuildDeck(); buildFilters(); render();
+    }));
+    for (const c of cats) {
+      const active = state.wordCats.includes(c);
+      host.appendChild(toggleBtn(c, active, (on) => {
+        state.wordCats = on ? Array.from(new Set([...state.wordCats, c])) : state.wordCats.filter(x => x !== c);
+        saveLS("wv_wordcats", state.wordCats);
+        applyFilters(); rebuildDeck(); render();
       }));
     }
   }
 
-  const catEl = $("#catBtns");
-  if (catEl) {
-    catEl.innerHTML = "";
-    const allCatsActive = !state.categories.length;
-    const allLabel = label("categories", "All");
-    catEl.appendChild(toggleBtn(allLabel, allCatsActive, () => {
-      state.categories = [];
-      saveLS("wm_categories", state.categories);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
-    }));
-    for (const c of Array.from(cats).sort()) {
-      const active = state.categories.includes(c);
-      const cLabel = label("categories", c);
-      const b = toggleBtn(cLabel, active, (on) => {
-        state.categories = on ? Array.from(new Set([...state.categories, c])) : state.categories.filter(x => x !== c);
-        saveLS("wm_categories", state.categories);
-        applyFilters(); rebuildDeck(); buildFilters(); render();
-      });
-      b.dataset.key = c;
-      catEl.appendChild(b);
-    }
-  }
-
-  const trig = $("#triggerFilter");
-  if (trig) {
-    trig.value = state.triggerQuery;
-    trig.oninput = (e) => {
-      state.triggerQuery = e.target.value;
-      saveLS("wm_trig", state.triggerQuery);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
+  // Tag query
+  const q = $("#tagQuery");
+  if (q) {
+    q.value = state.tagQuery || "";
+    q.oninput = (e) => {
+      state.tagQuery = e.target.value || "";
+      saveLS("wv_tagq", state.tagQuery);
+      applyFilters(); rebuildDeck(); render();
     };
   }
 
-  const nil = $("#nilOnly");
-  if (nil) {
-    nil.checked = !!state.nilOnly;
-    nil.onchange = (e) => {
-      state.nilOnly = e.target.checked;
-      saveLS("wm_nil", state.nilOnly);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
-    };
-  }
+  $("#btnClearFilters")?.addEventListener("click", () => {
+    state.course = "ALL";
+    state.unit = "ALL";
+    state.wordCats = [];
+    state.tagQuery = "";
+    saveLS("wv_course", state.course);
+    saveLS("wv_unit", state.unit);
+    saveLS("wv_wordcats", state.wordCats);
+    saveLS("wv_tagq", state.tagQuery);
+    applyFilters(); rebuildDeck(); buildFilters(); render();
+  });
 }
+
 function applyFilters() {
-  const allowedOutcomes = (state.outcomes && state.outcomes.length) ? state.outcomes : ["SM","AM","NM","NONE"];
-  let list = state.rows.filter(r =>
-    (state.families.length ? state.families.includes(r.RuleFamily) : true) &&
-    (state.categories.length ? state.categories.includes(r.RuleCategory) : true) &&
-    (allowedOutcomes.includes((r.Outcome || "").toUpperCase()))
-  );
-  if (state.nilOnly) list = list.filter(r => (r.Outcome || "").toUpperCase() === "NONE");
-  if ((state.triggerQuery || "").trim()) {
-    const q = normalize(state.triggerQuery);
-    list = list.filter(r => normalize(r.Trigger).includes(q));
-  }
-  state.filtered = list;
+  const q = normalize(state.tagQuery || "");
+  state.filtered = state.rows.filter(r => {
+    if (state.course !== "ALL" && r.Course !== state.course) return false;
+    if (state.unit !== "ALL" && r.Unit !== state.unit) return false;
+    if (state.wordCats.length && !state.wordCats.includes(r.WordCategory)) return false;
+
+    if (q) {
+      const hay = normalize([r.Tags, r.BaseEN, r.SentenceHelpEN, r.BeforeCY, r.AfterCY].filter(Boolean).join(" "));
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
 }
+
 function rebuildDeck() {
   const n = state.filtered.length;
-  const d = Array.from({ length: n }, (_, i) => i);
-  for (let i = d.length - 1; i > 0; i--) {
+  state.deck = Array.from({length:n}, (_,i)=>i);
+  for (let i = state.deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [d[i], d[j]] = [d[j], d[i]];
+    [state.deck[i], state.deck[j]] = [state.deck[j], state.deck[i]];
   }
-  state.deck = d;
   state.p = 0;
   state.guess = "";
   state.revealed = false;
   state.lastResult = null;
-  state.freezeIdx = null;
-  state.freezePos = null;
-  state.smartQueue = [];
-
-  if (state.practiceMode === "smart") {
-    state.smartCount = 0;
-    state.smartIdx = pickNextSmartIdx();
-  } else {
-    state.smartIdx = null;
-    state.smartCount = 0;
-  }
 }
 
-/* ========= TTS (Polly via Lambda URL) ========= */
-const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
-const ttsCache = new Map();
-
-function buildCompleteSentence(card) {
-  const before = (card.Before || "").trimEnd();
-  const answer = (card.Answer || "").trim();
-  const after  = (card.After  || "").trimStart();
-  let s = [before, answer, after].filter(Boolean).join(" ");
-  s = s.replace(/\s+/g, " ").trim();
-  s = s.replace(/\s+([,.;:!?])/g, "$1");
-  return s;
+/* ========= Answer checking ========= */
+function acceptedAnswers(card) {
+  const raw = (card.AnswerArray || "").trim();
+  const list = raw ? raw.split("|").map(s => s.trim()).filter(Boolean) : [];
+  const fallback = (card.AnswerCY || "").trim();
+  if (fallback && !list.length) list.push(fallback);
+  if (fallback && list.length && !list.includes(fallback)) list.push(fallback);
+  // normalise duplicates
+  const uniq = [];
+  const seen = new Set();
+  for (const a of list) {
+    const k = normalize(a);
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    uniq.push(a);
+  }
+  return uniq;
 }
-async function playPollySentence(sentence) {
-  if (!sentence) throw new Error("No sentence to speak.");
-  if (!POLLY_FUNCTION_URL) throw new Error("POLLY_FUNCTION_URL isn't set.");
-
-  const cachedUrl = ttsCache.get(sentence);
-  if (cachedUrl) {
-    const audio = new Audio(cachedUrl);
-    await audio.play();
-    return;
-  }
-
-  const res = await fetch(POLLY_FUNCTION_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: sentence })
-  });
-
-  if (!res.ok) {
-    const msg = await res.text().catch(() => "");
-    throw new Error(msg || `TTS failed (${res.status})`);
-  }
-
-  const ct = (res.headers.get("content-type") || "").toLowerCase();
-  let url = null;
-
-  if (ct.includes("audio") || ct.includes("octet-stream")) {
-    const buf = await res.arrayBuffer();
-    const blob = new Blob([buf], { type: "audio/mpeg" });
-    url = URL.createObjectURL(blob);
-  } else {
-    const j = await res.json();
-    if (j.url) url = j.url;
-    else if (j.audioBase64 || j.audioContent) {
-      const b64 = j.audioBase64 || j.audioContent;
-      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-      const blob = new Blob([bytes], { type: "audio/mpeg" });
-      url = URL.createObjectURL(blob);
-    } else {
-      throw new Error("TTS response wasn't audio and didn't include url/audioBase64/audioContent.");
-    }
-  }
-
-  ttsCache.set(sentence, url);
-  const audio = new Audio(url);
-  await audio.play();
+function isCorrect(guess, card) {
+  const g = normalize(guess);
+  if (!g) return false;
+  return acceptedAnswers(card).some(a => normalize(a) === g);
 }
 
-/* ========= Base word “?” translation UI ========= */
-function mountBaseTranslationUI(capsuleEl, card) {
-  if (!capsuleEl) return;
+/* ========= Popovers ========= */
+function mountPopover(anchorEl, kindLabel, bodyText) {
+  if (!anchorEl) return;
+  if (!bodyText) return;
 
-  const meaning = (card?.Translate || "").trim();
-  if (!meaning) return;
-
-  capsuleEl.style.position = "relative";
+  anchorEl.style.position = "relative";
 
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "base-info-btn";
+  btn.className = "info-btn";
   btn.textContent = "?";
-  btn.setAttribute("aria-label", LABEL[state.lang || "en"].meaningAria || "Meaning");
-  btn.setAttribute("title", LABEL[state.lang || "en"].meaningAria || "Meaning");
+  btn.title = kindLabel;
 
   const pop = document.createElement("div");
-  pop.className = "base-info-popover hidden animate-pop";
-  pop.setAttribute("role", "dialog");
-
-  const close = document.createElement("button");
-  close.type = "button";
-  close.className = "base-info-close";
-  close.setAttribute("aria-label", "Close");
-  close.textContent = "×";
-
-  const cat = (card?.WordCategory || "").trim();
+  pop.className = "info-pop hidden";
   pop.innerHTML = `
-    <div class="base-info-meaning">${esc(meaning)}</div>
-    <div class="base-info-meta">
-      ${cat ? `<span>${esc(state.lang === "cy" ? "Categori:" : "Category:")}</span><span class="base-info-tag">${esc(cat)}</span>` : ""}
+    <button class="close" aria-label="Close" type="button">×</button>
+    <div class="text-sm text-slate-700 pr-6">
+      <div class="font-semibold mb-1">${esc(kindLabel)}</div>
+      <div class="leading-relaxed whitespace-pre-wrap">${esc(bodyText)}</div>
     </div>
   `;
-  pop.appendChild(close);
+
+  const close = $(".close", pop);
+  const hide = () => pop.classList.add("hidden");
 
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
-    const isHidden = pop.classList.contains("hidden");
-    $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
-    if (isHidden) pop.classList.remove("hidden");
-    else pop.classList.add("hidden");
+    $$(".info-pop").forEach(p => p.classList.add("hidden"));
+    pop.classList.toggle("hidden");
   });
-
-  close.addEventListener("click", (e) => {
-    e.stopPropagation();
-    pop.classList.add("hidden");
-  });
-
+  close.addEventListener("click", (e) => { e.stopPropagation(); hide(); });
   pop.addEventListener("click", (e) => e.stopPropagation());
 
-  capsuleEl.appendChild(btn);
-  capsuleEl.appendChild(pop);
+  anchorEl.appendChild(btn);
+  anchorEl.appendChild(pop);
 }
 
-/* Close popovers globally */
-document.addEventListener("click", () => {
-  $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
-  }
-});
-
-/* ========= Render helpers ========= */
-function btn(labelText, extraClass, onClick) {
-  const b = document.createElement("button");
-  b.className = `btn ${extraClass}`.trim();
-  b.type = "button";
-  b.textContent = labelText;
-  b.onclick = onClick;
-  return b;
-}
+document.addEventListener("click", () => $$(".info-pop").forEach(p => p.classList.add("hidden")));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".info-pop").forEach(p => p.classList.add("hidden")); });
 
 /* ========= Render ========= */
 function renderPractice() {
@@ -864,389 +577,184 @@ function renderPractice() {
   if (!host) return;
   host.innerHTML = "";
 
-  const lang = state.lang || "en";
-  const t = LABEL[lang] || LABEL.en;
   const n = state.filtered.length;
-
   if (!n) {
     host.innerHTML = `
       <div class="text-slate-700 panel rounded-xl p-4">
         No cards match your filters.
-        <button id="btnClearFilters" class="ml-2 btn btn-ghost px-2 py-1">Clear filters</button>
+        <button id="btnOpenFilters" class="ml-2 btn btn-primary px-3 py-1.5">Open filters</button>
+        <button id="btnResetAll" class="ml-2 btn btn-ghost px-3 py-1.5">Clear</button>
       </div>`;
-    $("#btnClearFilters")?.addEventListener("click", () => {
-      state.families = ["Soft","Aspirate","Nasal","None"];
-      state.categories = [];
-      state.outcomes = ["SM","AM","NM","NONE"];
-      state.triggerQuery = "";
-      state.nilOnly = false;
-      saveLS("wm_families", state.families);
-      saveLS("wm_categories", state.categories);
-      saveLS("wm_outcomes", state.outcomes);
-      saveLS("wm_trig", state.triggerQuery);
-      saveLS("wm_nil", state.nilOnly);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
-    });
+    $("#btnOpenFilters")?.addEventListener("click", () => $("#filtersPanel")?.classList.remove("hidden"));
+    $("#btnResetAll")?.addEventListener("click", () => $("#btnClearFilters")?.click());
+    $("#cardPos") && ($("#cardPos").textContent = "Card 0 / 0");
     return;
   }
 
-  let idxNow;
-  let posText = "";
-  if (state.practiceMode === "smart") {
-    if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
-    idxNow = state.smartIdx;
-    state.currentDeckPos = -1;
-    const reviewed = (state.smartCount || 0) + 1;
-    posText = `${t.reviewedLabel} ${reviewed} · ${t.poolLabel} ${n}`;
-    const cp = $("#cardPos");
-    if (cp) cp.textContent = `${t.smartModeShort} · ${posText}`;
-  } else {
-    const deckIdx = state.p % state.deck.length;
-    idxNow = state.deck[deckIdx];
-    state.currentDeckPos = deckIdx;
-    const pos = state.deck.length ? (deckIdx + 1) : 0;
-    posText = `${t.cardLabel} ${pos} / ${state.deck.length || 0}`;
-    const cp = $("#cardPos");
-    if (cp) cp.textContent = posText;
-  }
+  const deckIdx = state.p % state.deck.length;
+  const idxNow = state.deck[deckIdx];
+  const card = state.filtered[idxNow];
 
-  const idxShown = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
-  const card = state.filtered[idxShown];
-  state.currentIdx = idxNow;
+  $("#cardPos") && ($("#cardPos").textContent = `Card ${deckIdx + 1} / ${state.deck.length}`);
 
   const wrap = document.createElement("div");
 
-  const header = document.createElement("div");
-  header.className = "flex flex-wrap items-center justify-between gap-2 mb-2";
+  // English prompt (BaseEN)
+  const prompt = document.createElement("div");
+  prompt.className = "mb-4";
 
-  const headerLeft = document.createElement("div");
-  headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
-  const posSpan = document.createElement("span");
-  posSpan.textContent = posText;
-  headerLeft.appendChild(posSpan);
+  const baseBox = document.createElement("div");
+  baseBox.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-3 shadow-sm";
+  baseBox.style.position = "relative";
 
-  const headerRight = document.createElement("div");
-  headerRight.className = "flex items-center gap-2";
+  const base = document.createElement("div");
+  base.className = "text-3xl md:text-4xl font-bold tracking-tight text-indigo-900";
+  base.textContent = card.BaseEN || "—";
 
-  const seg = document.createElement("div");
-  seg.className = "seg";
+  baseBox.appendChild(base);
 
-  const mkSegBtn = (labelText, value) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    const on = state.practiceMode === value;
-    b.className = `seg-btn ${on ? "is-on" : ""}`;
-    b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.title = (value === "shuffle") ? (t.shuffleModeDesc || "") : (t.smartModeDesc || "");
-    b.textContent = String(labelText).toUpperCase();
+  const hintText = (state.lang === "cy" ? (card.HintCY || card.HintEN) : (card.HintEN || card.HintCY)) || "";
+  mountPopover(baseBox, "Hint", hintText);
 
-    b.onclick = () => {
-      if (state.practiceMode === value) return;
-      state.practiceMode = value;
-      saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
-      rebuildDeck();
-      render();
-    };
-    return b;
+  const meta = document.createElement("div");
+  meta.className = "mt-2 flex flex-wrap gap-2 text-xs text-slate-600";
+  const chip = (t) => {
+    const s = document.createElement("span");
+    s.className = "chip";
+    s.textContent = t;
+    return s;
   };
+  if (card.Course) meta.appendChild(chip(card.Course));
+  if (card.Unit) meta.appendChild(chip(`Unit ${card.Unit}`));
+  if (card.WordCategory) meta.appendChild(chip(card.WordCategory));
 
-  seg.append(
-    mkSegBtn(t.shuffleModeShort, "shuffle"),
-    mkSegBtn(t.smartModeShort, "smart")
-  );
+  prompt.appendChild(baseBox);
+  prompt.appendChild(meta);
 
-  headerRight.appendChild(seg);
-  header.append(headerLeft, headerRight);
+  // Welsh sentence line with input
+  const sentenceWrap = document.createElement("div");
+  sentenceWrap.className = "practice-sentence";
+  sentenceWrap.style.position = "relative";
 
-  const summary = document.createElement("div");
-  summary.className = "flex flex-wrap items-center gap-2 mb-4";
-
-  const addChip = (text, onClear) => {
-    const c = document.createElement("button");
-    c.type = "button";
-    c.className = "chip";
-    c.innerHTML = `<span>${esc(text)}</span>`;
-    if (onClear) {
-      const x = document.createElement("span");
-      x.className = "ml-1";
-      x.textContent = "✕";
-      c.appendChild(x);
-      c.onclick = onClear;
-      c.style.cursor = "pointer";
-    } else {
-      c.style.cursor = "default";
-    }
-    return c;
-  };
-
-  const anyRestriction =
-    (state.families.length && state.families.length < 4) ||
-    (state.outcomes.length && state.outcomes.length < 4) ||
-    state.categories.length ||
-    (state.triggerQuery && state.triggerQuery.trim()) ||
-    state.nilOnly;
-
-  if (anyRestriction) {
-    if (state.families.length && state.families.length < 4) {
-      state.families.forEach(f => summary.appendChild(addChip(label("rulefamily", f))));
-    }
-    if (state.outcomes.length && state.outcomes.length < 4) {
-      state.outcomes.forEach(o => summary.appendChild(addChip(label("rulefamily", o))));
-    }
-    if (state.categories.length) {
-      state.categories.forEach(ca => summary.appendChild(addChip(label("categories", ca))));
-    }
-    if (state.triggerQuery && state.triggerQuery.trim()) {
-      const trigLabel = (lang === "cy" ? "Sbardun" : "Trigger");
-      summary.appendChild(addChip(`${trigLabel}: ${state.triggerQuery.trim()}`));
-    }
-    if (state.nilOnly) summary.appendChild(addChip(label("headings", "nilOnly")));
-
-    summary.appendChild(addChip(lang === "cy" ? "Clirio" : "Clear", () => {
-      state.families = ["Soft","Aspirate","Nasal","None"];
-      state.categories = [];
-      state.outcomes = ["SM","AM","NM","NONE"];
-      state.triggerQuery = "";
-      state.nilOnly = false;
-      saveLS("wm_families", state.families);
-      saveLS("wm_categories", state.categories);
-      saveLS("wm_outcomes", state.outcomes);
-      saveLS("wm_trig", state.triggerQuery);
-      saveLS("wm_nil", state.nilOnly);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
-    }));
-  } else {
-    summary.classList.add("hidden");
-  }
-
-  const instruction = document.createElement("div");
-  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-6";
-  instruction.textContent = t.instruction;
-
-  const chips = document.createElement("div");
-  chips.className = "practice-base text-2xl md:text-3xl font-medium";
-
-  const capsule = document.createElement("div");
-  capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm";
-  capsule.style.position = "relative";
-
-  const baseSpan = document.createElement("span");
-  baseSpan.className = "base-word-text text-indigo-900 text-3xl md:text-4xl font-bold tracking-tight";
-  baseSpan.textContent = (card.Base || "—");
-
-  capsule.appendChild(baseSpan);
-  chips.appendChild(capsule);
-
-  mountBaseTranslationUI(capsule, card);
-
-  const row = document.createElement("div");
-  row.className = "practice-sentence";
-  row.innerHTML = `
+  sentenceWrap.innerHTML = `
     <div class="practice-sentenceLine flex flex-wrap items-baseline gap-2 text-xl md:text-2xl">
-      <span class="text-slate-600">${esc(card.Before || "")}</span>
+      <span class="text-slate-700">${esc(card.BeforeCY || "")}</span>
       <input id="answerBox"
-             class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-60 flex-shrink-0"
-             placeholder="${esc(t.answerLabel)}"
-             aria-label="${esc(t.answerLabel)}" />
-      <span class="text-slate-600">${esc(card.After || "")}</span>
+             class="border-2 border-slate-300 focus:border-cyan-600 outline-none bg-amber-50 px-3 py-2 rounded-xl text-2xl md:text-3xl leading-tight shadow-sm w-auto md:w-64 flex-shrink-0"
+             placeholder="Type Welsh"
+             aria-label="Answer" />
+      <span class="text-slate-700">${esc(card.AfterCY || "")}</span>
     </div>
   `;
 
+  mountPopover(sentenceWrap, "Sentence help", card.SentenceHelpEN || "");
+
+  // Actions
   const actions = document.createElement("div");
-  actions.className = "practice-actions flex flex-wrap gap-3";
+  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
 
-  const main = document.createElement("div");
-  main.className = "practice-actions-main";
-
-  const aux = document.createElement("div");
-  aux.className = "practice-actions-aux";
-
-  const onCheck = () => {
-    const ok = normalize(state.guess) === normalize(card.Answer);
-    state.revealed = true;
-    state.lastResult = ok ? "correct" : "wrong";
-    state.freezeIdx = idxNow;
-    state.freezePos = state.currentDeckPos;
-
-    const shownIdx = idxShown;
-    const shownCard = state.filtered[shownIdx];
-    const cardId = getCardId(shownCard, shownIdx);
-
-    const rec = {
-      t: Date.now(),
-      ok,
-      key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
-      cardId,
-      expected: shownCard.Answer,
-      got: state.guess,
-      mode: state.practiceMode
-    };
-    state.history = [rec, ...state.history].slice(0, 500);
-    saveLS("wm_hist", state.history);
-
-    updateLeitner(cardId, ok ? "correct" : "wrong");
-    if (!ok && state.practiceMode === "smart") {
-      state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
-    }
-
-    const ab2 = $("#answerBox");
-    if (ab2) {
-      ab2.disabled = true;
-      ab2.classList.add("opacity-70", "cursor-not-allowed");
-    }
-    render();
-    setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
+  const btn = (txt, cls, fn) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = `btn ${cls}`.trim();
+    b.textContent = txt;
+    b.onclick = fn;
+    return b;
   };
 
-  const btnCheck = btn(t.check, "btn-primary shadow", onCheck);
-  btnCheck.id = "btnCheck";
-  btnCheck.title = `${t.check} (Enter)`;
-
-  const hint = document.createElement("div");
-  hint.className = "hidden practice-hint text-sm text-slate-600";
-  hint.innerHTML = `${esc(t.hint)}: starts with <b>${esc((card.Answer || "").slice(0, 1) || "?")}</b>`;
-
-  const btnHint = btn(t.hint, "btn-ghost", () => {
-    hint.classList.toggle("hidden");
-    $("#answerBox")?.focus();
-  });
-  btnHint.id = "btnHint";
-  btnHint.title = `${t.hint} (H)`;
-
-  const btnReveal = btn(t.reveal, "btn-ghost", () => {
-    state.revealed = !state.revealed;
-    render();
-  });
-
-  const btnSkip = btn(t.skip, "btn-ghost", () => {
-    state.guess = "";
+  const onCheck = () => {
+    const ok = isCorrect(state.guess, card);
     state.revealed = true;
-    state.lastResult = "skipped";
-    state.freezeIdx = idxNow;
-    state.freezePos = state.currentDeckPos;
+    state.lastResult = ok ? "correct" : "wrong";
+    // freeze input
+    const ab = $("#answerBox");
+    if (ab) { ab.disabled = true; ab.classList.add("opacity-70","cursor-not-allowed"); }
 
-    const shownIdx = idxShown;
-    const shownCard = state.filtered[shownIdx];
-    const cardId = getCardId(shownCard, shownIdx);
-
-    state.history.push({
+    state.history = [{
       t: Date.now(),
-      ok: false,
-      key: `${shownCard.RuleCategory}:${shownCard.Trigger}:${shownCard.Base}`,
-      cardId,
-      expected: shownCard.Answer,
-      got: "",
-      mode: state.practiceMode,
-      skipped: true,
-    });
-    saveLS("wm_hist", state.history);
+      ok,
+      cardId: card.CardID,
+      course: card.Course,
+      unit: card.Unit,
+      baseEN: card.BaseEN,
+      expected: acceptedAnswers(card).join(" | "),
+      got: state.guess
+    }, ...state.history].slice(0, 500);
 
-    updateLeitner(cardId, "skipped");
-    if (state.practiceMode === "smart") {
-      state.smartQueue.push({ idx: shownIdx, dueAfter: 2 });
-    }
-
-    const ab2 = $("#answerBox");
-    if (ab2) {
-      ab2.disabled = true;
-      ab2.classList.add("opacity-70", "cursor-not-allowed");
-    }
-
+    saveLS("wv_hist", state.history);
     render();
-  });
+  };
 
-  const btnShuffle = document.createElement("button");
-  btnShuffle.type = "button";
-  btnShuffle.className = "btn btn-shuffle";
-  btnShuffle.title = t.shuffleNowDesc || "";
-  btnShuffle.innerHTML = `<span aria-hidden="true">🔀</span><span>${esc(t.shuffleNow)}</span>`;
-  btnShuffle.onclick = () => { rebuildDeck(); render(); };
+  const onNext = () => {
+    state.p = (state.p + 1) % state.deck.length;
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
+    render();
+  };
 
-  main.append(btnCheck, btnHint, btnReveal, btnSkip);
-  aux.append(btnShuffle);
-  actions.append(main, aux);
+  const onHint = () => {
+    // open the base hint popover
+    // (clicking the first info button inside baseBox)
+    baseBox.querySelector(".info-btn")?.click();
+    $("#answerBox")?.focus();
+  };
 
+  actions.append(
+    btn("Check","btn-primary shadow", onCheck),
+    btn("Hint","btn-ghost", onHint),
+    btn("Next","btn-ghost", onNext)
+  );
+
+  // Feedback
   const feedback = document.createElement("div");
-  feedback.className = "practice-feedback";
-  feedback.setAttribute("aria-live", "polite");
+  feedback.className = "practice-feedback mt-4";
+  feedback.setAttribute("aria-live","polite");
 
   if (state.revealed) {
     const ok = state.lastResult === "correct";
-    const skipped = state.lastResult === "skipped";
-
-    const statusIcon = skipped ? "⏭️" : (ok ? "✅" : "❌");
-    const statusColor = skipped ? "text-slate-800" : (ok ? "text-indigo-900" : "text-rose-900");
-    const statusText = skipped ? t.statuses.skipped : (ok ? t.statuses.correct : t.statuses.wrong);
+    const status = ok ? "✅ Correct!" : "❌ Not quite";
+    const why = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
+    const accepted = acceptedAnswers(card);
 
     feedback.innerHTML = `
       <div class="feedback-box">
-        <div class="flex items-center gap-2 ${statusColor} text-2xl md:text-3xl font-semibold">
-          ${statusIcon} ${esc(statusText)}
-        </div>
-
-        ${(!ok && !skipped)
-          ? `<div class="mt-1 text-slate-700">${esc(t.youTyped)}: <b>${esc(state.guess) || esc(t.blank)}</b></div>`
-          : ""
-        }
+        <div class="text-2xl md:text-3xl font-semibold ${ok ? "text-indigo-900" : "text-rose-900"}">${esc(status)}</div>
+        ${ok ? "" : `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess || "(blank)")}</b></div>`}
 
         <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
-          <span>${esc(card.Before || "")}</span>
-          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
-          <span>${esc(card.After || "")}</span>
-
-          <button id="btnHear" class="btn-hear" type="button">
-            <span class="icon" aria-hidden="true">▶︎</span>
-            <span>${esc(t.hear)}</span>
-          </button>
+          <span>${esc(card.BeforeCY || "")}</span>
+          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(accepted[0] || "")}</span>
+          <span>${esc(card.AfterCY || "")}</span>
         </div>
 
-        ${(() => {
-          const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
-          return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
-        })()}
+        ${accepted.length > 1 ? `<div class="mt-2 text-slate-700 text-sm">Also accepted: <b>${esc(accepted.slice(1).join(" · "))}</b></div>` : ""}
+
+        ${why ? `<div class="mt-4 text-slate-700">${esc(why)}</div>` : ""}
 
         <div class="mt-4 flex justify-end">
-          <button id="inlineNext"
-                  class="btn btn-primary shadow transition"
-                  type="button"
-                  title="${esc(t.next)} (Enter)">
-            ${esc(t.next)}
-          </button>
+          <button id="inlineNext" class="btn btn-primary shadow" type="button">Next</button>
         </div>
       </div>
     `;
-
-    setTimeout(() => {
-      const hearBtn = $("#btnHear");
-      if (hearBtn) {
-        hearBtn.onclick = async () => {
-          try {
-            const sentence = buildCompleteSentence({ Before: card.Before, Answer: card.Answer, After: card.After });
-            await playPollySentence(sentence);
-          } catch (e) {
-            alert("Couldn't play audio: " + (e?.message || e));
-          }
-        };
-      }
-      $("#inlineNext")?.addEventListener("click", () => nextCard(1));
-    }, 0);
+    setTimeout(() => $("#inlineNext")?.addEventListener("click", onNext), 0);
   }
 
-  const answerBlock = document.createElement("div");
-  answerBlock.className = "practice-answerBlock";
-  answerBlock.append(row, actions, hint, feedback);
-
-  wrap.append(header, summary, instruction, chips, answerBlock);
+  wrap.append(prompt, sentenceWrap, actions, feedback);
   host.appendChild(wrap);
 
   const ab = $("#answerBox");
   if (ab) {
     ab.value = state.guess;
     ab.focus();
+    ab.addEventListener("input", (e) => state.guess = e.target.value);
     ab.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); onCheck(); }
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!state.revealed) onCheck();
+        else onNext();
+      }
     });
-    ab.addEventListener("input", (e) => { state.guess = e.target.value; });
   }
 }
 
@@ -1257,7 +765,7 @@ function renderBrowse() {
 
   head.innerHTML = "";
   body.innerHTML = "";
-  const cols = ["RuleFamily","RuleCategory","Trigger","Base","WordCategory","Before","After","Answer","Outcome","Why"];
+  const cols = ["Course","Unit","WordCategory","BaseEN","BeforeCY","AfterCY","AnswerCY","AnswerArray","Tags"];
 
   for (const h of cols) {
     const th = document.createElement("th");
@@ -1272,9 +780,7 @@ function renderBrowse() {
     for (const k of cols) {
       const td = document.createElement("td");
       td.className = "p-2 align-top";
-      td.textContent = (k === "Outcome" ? (r[k] || "").toUpperCase() : (r[k] || ""));
-      if (k === "Answer") td.classList.add("font-semibold");
-      if (k === "Why") td.classList.add("text-slate-600");
+      td.textContent = r[k] || "";
       tr.appendChild(td);
     }
     body.appendChild(tr);
@@ -1286,41 +792,41 @@ function computeStats() {
   const correct = state.history.filter(h => h.ok).length;
   const acc = total ? Math.round((correct / total) * 100) : 0;
 
-  const by = {};
+  const byCourse = {};
   for (const h of state.history) {
-    const r = state.rows.find(r => `${r.RuleCategory}:${r.Trigger}:${r.Base}` === h.key);
-    const out = (r?.Outcome || "?").toUpperCase();
-    by[out] = by[out] || { total: 0, ok: 0 };
-    by[out].total++;
-    if (h.ok) by[out].ok++;
+    const c = h.course || "(none)";
+    byCourse[c] = byCourse[c] || { total: 0, ok: 0 };
+    byCourse[c].total++;
+    if (h.ok) byCourse[c].ok++;
   }
-  return { total, correct, acc, by };
+  return { total, correct, acc, byCourse };
 }
 
 function renderStatsPanels() {
   const s = computeStats();
+  $("#accBig") && ($("#accBig").textContent = `${s.acc}%`);
+  $("#accText") && ($("#accText").textContent = `${s.correct} / ${s.total} correct`);
+  $("#statsAcc") && ($("#statsAcc").textContent = `${s.acc}%`);
+  $("#statsText") && ($("#statsText").textContent = `${s.correct} correct out of ${s.total}`);
 
-  if ($("#accBig")) $("#accBig").textContent = `${s.acc}%`;
-  if ($("#accText")) $("#accText").textContent = `${s.correct} / ${s.total} correct`;
-  if ($("#statsAcc")) $("#statsAcc").textContent = `${s.acc}%`;
-  if ($("#statsText")) $("#statsText").textContent = `${s.correct} correct out of ${s.total}`;
-
-  const ul1 = $("#byOutcome");
-  const ul2 = $("#statsByOutcome");
+  const ul1 = $("#byCourse");
+  const ul2 = $("#statsByCourse");
   if (ul1) ul1.innerHTML = "";
   if (ul2) ul2.innerHTML = "";
 
-  for (const [k, v] of Object.entries(s.by)) {
-    const li1 = document.createElement("li");
-    li1.className = "flex justify-between";
-    li1.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
-    ul1?.appendChild(li1);
+  Object.entries(s.byCourse)
+    .sort((a,b) => (b[1].total - a[1].total))
+    .forEach(([k,v]) => {
+      const li1 = document.createElement("li");
+      li1.className = "flex justify-between";
+      li1.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul1?.appendChild(li1);
 
-    const li2 = document.createElement("li");
-    li2.className = "flex justify-between";
-    li2.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
-    ul2?.appendChild(li2);
-  }
+      const li2 = document.createElement("li");
+      li2.className = "flex justify-between";
+      li2.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul2?.appendChild(li2);
+    });
 }
 
 function render() {
@@ -1333,57 +839,27 @@ function render() {
   renderStatsPanels();
 }
 
-function nextCard(offset = 1) {
-  if (state.practiceMode === "smart") {
-    if (!state.filtered.length) return;
-    state.freezeIdx = null;
-    state.freezePos = null;
-    state.smartIdx = pickNextSmartIdx();
-    state.smartCount = (state.smartCount || 0) + 1;
-    state.guess = "";
-    state.revealed = false;
-    state.lastResult = null;
-    render();
-    return;
-  }
-
-  if (!state.deck.length) return;
-
-  if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
-    const idxVal = state.freezeIdx;
-    let deckPos = state.freezePos;
-    if (state.deck[deckPos] !== idxVal) deckPos = state.deck.indexOf(idxVal);
-    if (deckPos >= 0) {
-      const newDeck = state.deck.slice();
-      newDeck.splice(deckPos, 1);
-      const insertAt = Math.min(deckPos + 3, newDeck.length);
-      newDeck.splice(insertAt, 0, idxVal);
-      state.deck = newDeck;
-    }
-  }
-
-  state.freezeIdx = null;
-  state.freezePos = null;
-  state.p = (state.p + offset + state.deck.length) % state.deck.length;
-  state.guess = "";
-  state.revealed = false;
-  state.lastResult = null;
-  render();
+/* ========= UI wiring ========= */
+function applyLanguageButton() {
+  const langBtn = $("#btnLangToggle");
+  if (!langBtn) return;
+  const nextLang = (state.lang === "en") ? "CY" : "EN";
+  langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
+  langBtn.title = (state.lang === "en") ? "Switch to Cymraeg" : "Switch to English";
 }
-
-/* ========= Event wiring ========= */
 function wireUi() {
-  $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("wm_mode", state.mode); render(); });
-  $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("wm_mode", state.mode); render(); });
-  $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("wm_mode", state.mode); render(); });
+  $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("wv_mode", state.mode); render(); });
+  $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("wv_mode", state.mode); render(); });
+  $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("wv_mode", state.mode); render(); });
 
   $("#btnFilters")?.addEventListener("click", () => { $("#filtersPanel")?.classList.toggle("hidden"); });
   $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
 
   $("#btnLangToggle")?.addEventListener("click", () => {
     state.lang = (state.lang === "en") ? "cy" : "en";
-    saveLS("wm_lang", state.lang);
-    applyLanguage();
+    saveLS("wv_lang", state.lang);
+    applyLanguageButton();
+    render();
   });
 
   $("#onboardFilters")?.addEventListener("click", () => {
@@ -1393,8 +869,8 @@ function wireUi() {
   });
   $("#onboardDismiss")?.addEventListener("click", () => $("#onboard")?.classList.add("hidden"));
 
-  $("#btnResetStats")?.addEventListener("click", () => { state.history = []; saveLS("wm_hist", state.history); render(); });
-  $("#btnResetStats2")?.addEventListener("click", () => { state.history = []; saveLS("wm_hist", state.history); render(); });
+  $("#btnResetStats")?.addEventListener("click", () => { state.history = []; saveLS("wv_hist", state.history); render(); });
+  $("#btnResetStats2")?.addEventListener("click", () => { state.history = []; saveLS("wv_hist", state.history); render(); });
 
   $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
@@ -1405,85 +881,33 @@ function wireUi() {
 
     if (e.key === "Enter") {
       e.preventDefault();
-      if (!state.revealed) $("#btnCheck")?.click();
+      if (!state.revealed) $("#practiceCard #answerBox")?.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter"}));
       else $("#inlineNext")?.click();
-    } else if (e.key.toLowerCase() === "n") {
-      $("#inlineNext")?.click();
-    } else if (e.key.toLowerCase() === "h") {
-      $("#btnHint")?.click();
-    } else if (e.key.toLowerCase() === "s") {
-      nextCard(1);
-    } else if (e.key.toLowerCase() === "f") {
-      $("#btnFilters")?.click();
     }
   });
 
-  $("#mbCheck")?.addEventListener("click", () => $("#btnCheck")?.click());
-  $("#mbNext")?.addEventListener("click", () => $("#inlineNext")?.click() || nextCard(1));
-  $("#mbHint")?.addEventListener("click", () => $("#btnHint")?.click());
+  $("#mbCheck")?.addEventListener("click", () => {
+    const ab = $("#answerBox");
+    if (!ab) return;
+    ab.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter"}));
+  });
+  $("#mbNext")?.addEventListener("click", () => $("#inlineNext")?.click() || (() => {})());
+  $("#mbHint")?.addEventListener("click", () => {
+    // open hint
+    $("#practiceCard .info-btn")?.click();
+    $("#answerBox")?.focus();
+  });
 
-  if (state.admin) {
-    $("#adminBadge")?.classList.remove("hidden");
-    $("#adminPanel")?.classList.remove("hidden");
-
-    const dataUrl = $("#dataUrl");
-    if (dataUrl) dataUrl.value = getParam("sheet") || "";
-
-    $("#btnLoadUrl")?.addEventListener("click", async () => {
-      const u = ($("#dataUrl")?.value || "").trim();
-      if (!u) return;
-      const d = await loadCsvUrl(u);
-      state.rows = d.map(coerceRow);
-      applyFilters(); rebuildDeck(); buildFilters(); render();
-    });
-
-    $("#btnShareable")?.addEventListener("click", () => {
-      const u = ($("#dataUrl")?.value || "").trim();
-      if (!u) return alert("Enter a URL first.");
-      const link = location.origin + location.pathname + `?sheet=${encodeURIComponent(u)}`;
-      navigator.clipboard?.writeText(link);
-      alert("Copied: " + link);
-    });
-
-    $("#btnExportMisses")?.addEventListener("click", () => {
-      const misses = state.history.filter(h => !h.ok);
-      const lines = ["RuleCategory,Trigger,Base,Expected,Got,When"];
-      for (const m of misses) {
-        const [cat, trig, base] = (m.key || "").split(":");
-        lines.push([cat, trig, base, m.expected, m.got, new Date(m.t).toISOString()]
-          .map(s => `"${(s || "").replaceAll('"','""')}"`).join(","));
-      }
-      download(lines.join("\n"), "trainer-misses.csv", "text/csv");
-    });
-
-    $("#fileCsv")?.addEventListener("change", (e) => {
-      const f = e.target.files?.[0];
-      if (!f) return;
-      Papa.parse(f, {
-        header: true,
-        skipEmptyLines: true,
-        complete: (res) => {
-          state.rows = res.data.map(coerceRow);
-          applyFilters(); rebuildDeck(); buildFilters(); render();
-        }
-      });
-    });
-  }
-
-  if (getParam("preset") === "prepositions") {
-    state.categories = ["Preposition"];
-    saveLS("wm_categories", state.categories);
-  }
+  applyLanguageButton();
 }
 
 /* ========= Boot ========= */
 (async function boot() {
   wireUi();
   await initData();
-  applyLanguage();
 })();
 </script>
-
 </body>
 </html>
+
 
