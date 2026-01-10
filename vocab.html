@@ -992,6 +992,362 @@ function renderPractice() {
   btnCheck.id = "btnCheck";
   btnCheck.className = "btn btn-primary shadow";
   btnCheck.textContent = "Check";
-  btn
+  btnCheck.onclick = onCheck;
+
+  const btnHint = document.createElement("button");
+  btnHint.type = "button";
+  btnHint.id = "btnHint";
+  btnHint.className = "btn btn-ghost";
+  btnHint.textContent = "Hint";
+  btnHint.onclick = showHint;
+
+  const btnNext = document.createElement("button");
+  btnNext.type = "button";
+  btnNext.className = "btn btn-ghost";
+  btnNext.textContent = "Next";
+  btnNext.onclick = () => {
+    // If they hit Next without checking, treat as skipped (keeps flow similar to your current UI)
+    if (!state.revealed) {
+      state.guess = "";
+      state.revealed = true;
+      state.lastResult = "skipped";
+      state.freezeIdx = idxNow;
+      state.freezePos = state.currentDeckPos;
+
+      const cardId = card.CardID || `row_${idxShown}`;
+      state.history = [{
+        t: Date.now(),
+        ok: false,
+        skipped: true,
+        cardId,
+        course: card.Course || "",
+        expected: acceptedAnswers.join("|"),
+        got: "",
+        mode: state.practiceMode
+      }, ...state.history].slice(0, 1000);
+      saveLS("vocab_hist", state.history);
+
+      updateLeitner(cardId, "skipped");
+      if (state.practiceMode === "smart") state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
+
+      nextCard(1);
+      return;
+    }
+    nextCard(1);
+  };
+
+  main.append(btnCheck, btnHint, btnNext);
+  actions.append(main);
+
+  // Feedback block with HEAR button restored (same markup/class as your index page)
+  const feedback = document.createElement("div");
+  feedback.className = "practice-feedback mt-4";
+  feedback.setAttribute("aria-live", "polite");
+
+  if (state.revealed) {
+    const ok = state.lastResult === "correct";
+    const skipped = state.lastResult === "skipped";
+
+    const statusIcon = skipped ? "⏭️" : (ok ? "✅" : "❌");
+    const statusText = skipped ? "Skipped" : (ok ? "Correct!" : "Not quite");
+
+    const fullSentence = buildCompleteSentence(card, canonicalAnswer);
+    const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
+
+    feedback.innerHTML = `
+      <div class="feedback-box">
+        <div class="flex items-center gap-2 ${ok ? "text-indigo-900" : "text-rose-900"} text-2xl md:text-3xl font-semibold">
+          ${statusIcon} ${esc(statusText)}
+        </div>
+
+        ${(!ok && !skipped)
+          ? `<div class="mt-1 text-slate-700">You typed: <b>${esc(state.guess) || "(blank)"}</b></div>`
+          : ""
+        }
+
+        <div class="mt-4 text-slate-800 text-xl md:text-2xl flex items-baseline flex-wrap gap-x-3 gap-y-2">
+          <span>${esc(card.BeforeCY || "")}</span>
+          <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(canonicalAnswer)}</span>
+          <span>${esc(card.AfterCY || "")}</span>
+
+          <button id="btnHear" class="btn-hear" type="button">
+            <span class="icon" aria-hidden="true">▶︎</span>
+            <span>Hear</span>
+          </button>
+        </div>
+
+        ${whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : ""}
+
+        <div class="mt-4 flex justify-end">
+          <button id="inlineNext" class="btn btn-primary shadow transition" type="button" title="Next (Enter)">
+            Next
+          </button>
+        </div>
+      </div>
+    `;
+
+    setTimeout(() => {
+      $("#btnHear")?.addEventListener("click", async () => {
+        try {
+          await playPollySentence(fullSentence);
+        } catch (e) {
+          alert("Couldn't play audio: " + (e?.message || e));
+        }
+      });
+      $("#inlineNext")?.addEventListener("click", () => nextCard(1));
+    }, 0);
+  }
+
+  wrap.append(header, instruction, baseBlock, sentenceWrap, actions, hintBox, feedback);
+  host.appendChild(wrap);
+
+  const ab = $("#answerBox");
+  if (ab) {
+    ab.value = state.guess;
+    ab.focus();
+    ab.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); e.stopPropagation(); onCheck(); }
+    });
+    ab.addEventListener("input", (e) => { state.guess = e.target.value; });
+  }
+}
+
+function renderBrowse() {
+  const head = $("#browseHead");
+  const body = $("#browseBody");
+  if (!head || !body) return;
+
+  head.innerHTML = "";
+  body.innerHTML = "";
+
+  const cols = ["Course","Unit","WordCategory","BaseEN","BeforeCY","AfterCY","AnswerCY","AnswerArray","Tags","WhyEN"];
+  cols.forEach(h => {
+    const th = document.createElement("th");
+    th.className = "text-left p-2 border-b";
+    th.textContent = h;
+    head.appendChild(th);
+  });
+
+  state.filtered.forEach((r, i) => {
+    const tr = document.createElement("tr");
+    tr.className = (i % 2 ? "bg-white" : "bg-slate-50");
+    cols.forEach(k => {
+      const td = document.createElement("td");
+      td.className = "p-2 align-top";
+      let val = r[k] || "";
+      if (k === "AnswerArray") val = Array.isArray(r.AnswerArray) ? r.AnswerArray.join(" | ") : "";
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+}
+
+function computeStats() {
+  const total = state.history.length;
+  const correct = state.history.filter(h => h.ok).length;
+  const acc = total ? Math.round((correct / total) * 100) : 0;
+
+  const by = {};
+  for (const h of state.history) {
+    const c = h.course || "(unknown)";
+    by[c] = by[c] || { total: 0, ok: 0 };
+    by[c].total++;
+    if (h.ok) by[c].ok++;
+  }
+  return { total, correct, acc, by };
+}
+
+function renderStatsPanels() {
+  const s = computeStats();
+  $("#accBig").textContent = `${s.acc}%`;
+  $("#accText").textContent = `${s.correct} / ${s.total} correct`;
+  $("#statsAcc").textContent = `${s.acc}%`;
+  $("#statsText").textContent = `${s.correct} correct out of ${s.total}`;
+
+  const ul1 = $("#byCourse");
+  const ul2 = $("#statsByCourse");
+  if (ul1) ul1.innerHTML = "";
+  if (ul2) ul2.innerHTML = "";
+
+  Object.entries(s.by)
+    .sort((a,b) => (b[1].total - a[1].total))
+    .forEach(([k, v]) => {
+      const li1 = document.createElement("li");
+      li1.className = "flex justify-between";
+      li1.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul1.appendChild(li1);
+
+      const li2 = document.createElement("li");
+      li2.className = "flex justify-between";
+      li2.innerHTML = `<span>${esc(k)}</span><span class="text-slate-600">${v.ok}/${v.total}</span>`;
+      ul2.appendChild(li2);
+    });
+}
+
+function render() {
+  $("#practiceView")?.classList.toggle("hidden", state.mode !== "practice");
+  $("#browseView")?.classList.toggle("hidden", state.mode !== "browse");
+  $("#statsView")?.classList.toggle("hidden", state.mode !== "stats");
+
+  if (state.mode === "practice") renderPractice();
+  if (state.mode === "browse") renderBrowse();
+  renderStatsPanels();
+}
+
+function nextCard(offset = 1) {
+  if (state.practiceMode === "smart") {
+    if (!state.filtered.length) return;
+    state.freezeIdx = null;
+    state.freezePos = null;
+    state.smartIdx = pickNextSmartIdx();
+    state.smartCount = (state.smartCount || 0) + 1;
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
+    render();
+    return;
+  }
+
+  if (!state.deck.length) return;
+
+  // In random mode, if wrong: push same card a few steps later
+  if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
+    const idxVal = state.freezeIdx;
+    let deckPos = state.freezePos;
+    if (state.deck[deckPos] !== idxVal) deckPos = state.deck.indexOf(idxVal);
+    if (deckPos >= 0) {
+      const newDeck = state.deck.slice();
+      newDeck.splice(deckPos, 1);
+      const insertAt = Math.min(deckPos + 3, newDeck.length);
+      newDeck.splice(insertAt, 0, idxVal);
+      state.deck = newDeck;
+    }
+  }
+
+  state.freezeIdx = null;
+  state.freezePos = null;
+  state.p = (state.p + offset + state.deck.length) % state.deck.length;
+  state.guess = "";
+  state.revealed = false;
+  state.lastResult = null;
+  render();
+}
+
+/* ========= Event wiring ========= */
+function wireUi() {
+  $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("vocab_mode", state.mode); render(); });
+  $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("vocab_mode", state.mode); render(); });
+  $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("vocab_mode", state.mode); render(); });
+
+  $("#btnFilters")?.addEventListener("click", () => { $("#filtersPanel")?.classList.toggle("hidden"); });
+  $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
+
+  $("#btnLangToggle")?.addEventListener("click", () => {
+    state.lang = (state.lang === "en") ? "cy" : "en";
+    saveLS("vocab_lang", state.lang);
+    render();
+    applyLanguage();
+  });
+
+  $("#onboardFilters")?.addEventListener("click", () => {
+    $("#onboard")?.classList.add("hidden");
+    $("#filtersPanel")?.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  $("#onboardDismiss")?.addEventListener("click", () => $("#onboard")?.classList.add("hidden"));
+
+  $("#btnResetStats")?.addEventListener("click", () => { state.history = []; saveLS("vocab_hist", state.history); render(); });
+  $("#btnResetStats2")?.addEventListener("click", () => { state.history = []; saveLS("vocab_hist", state.history); render(); });
+
+  $("#btnTop")?.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    if (["INPUT", "TEXTAREA", "SELECT"].includes(tag.toUpperCase())) return;
+    if (state.mode !== "practice") return;
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (!state.revealed) $("#btnCheck")?.click();
+      else $("#inlineNext")?.click();
+    } else if (e.key.toLowerCase() === "h") {
+      $("#btnHint")?.click();
+    } else if (e.key.toLowerCase() === "f") {
+      $("#btnFilters")?.click();
+    } else if (e.key.toLowerCase() === "n") {
+      $("#inlineNext")?.click() || nextCard(1);
+    }
+  });
+
+  $("#mbCheck")?.addEventListener("click", () => $("#btnCheck")?.click());
+  $("#mbNext")?.addEventListener("click", () => $("#inlineNext")?.click() || nextCard(1));
+  $("#mbHint")?.addEventListener("click", () => $("#btnHint")?.click());
+
+  if (state.admin) {
+    $("#adminBadge")?.classList.remove("hidden");
+    $("#adminPanel")?.classList.remove("hidden");
+
+    const dataUrl = $("#dataUrl");
+    if (dataUrl) dataUrl.value = getParam("sheet") || "";
+
+    $("#btnLoadUrl")?.addEventListener("click", async () => {
+      const u = ($("#dataUrl")?.value || "").trim();
+      if (!u) return;
+      const d = await loadCsvUrl(u);
+      state.rows = d.map(coerceRow);
+      applyFilters(); rebuildDeck(); buildFilterControls(); render();
+    });
+
+    $("#fileCsv")?.addEventListener("change", (e) => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      Papa.parse(f, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (res) => {
+          state.rows = res.data.map(coerceRow);
+          applyFilters(); rebuildDeck(); buildFilterControls(); render();
+        }
+      });
+    });
+  }
+}
+
+/* ========= Boot ========= */
+async function initData() {
+  const sheet = getParam("sheet");
+  let rows = [];
+  try {
+    rows = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
+  } catch (e) {
+    console.warn("Data load failed; trying fallback", e);
+    rows = await loadAllDefault();
+  }
+
+  state.rows = rows.map(coerceRow).filter(r => r.BaseEN && r.BeforeCY);
+
+  const itemCountEl = $("#itemCount");
+  if (itemCountEl) {
+    itemCountEl.textContent = `${state.rows.length} items`;
+    itemCountEl.classList.remove("hidden");
+  }
+
+  applyFilters();
+  rebuildDeck();
+  buildFilterControls();
+  render();
+}
+
+(async function boot() {
+  wireUi();
+  applyLanguage();
+  await initData();
+})();
+</script>
+
+</body>
+</html>
+
 
 
