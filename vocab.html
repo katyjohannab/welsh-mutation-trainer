@@ -14,6 +14,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Learn mode flip card (minimal, matches site aesthetic) ===== */
+    .learn-scene { perspective: 1200px; }
+    .learn-card3d {
+      display: grid;
+      transform-style: preserve-3d;
+      transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+      will-change: transform;
+    }
+    .learn-card3d.is-flipped { transform: rotateY(180deg); }
+    .learn-face {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+    .learn-back { transform: rotateY(180deg); }
+    .learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
+    .learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
+    @media (prefers-reduced-motion: reduce) {
+      .learn-card3d { transition: none; }
+      .learn-front-text { transition: none; }
+    }
+  </style>
+
 </head>
 
 <body class="min-h-screen text-slate-900">
@@ -66,7 +91,7 @@
         <div class="text-sm text-slate-700">
           <div class="font-medium mb-1">Vocab mode (English → Welsh)</div>
           <ol class="list-decimal ml-5 leading-relaxed">
-            <li>Use <b>Random</b> or <b>Smart</b> review at the top of the card.</li>
+            <li>Open <b>Filters</b> to set <b>Review order</b> (Random/Smart) and <b>Input</b> (Easy/Hard).</li>
             <li>Click <b>Filters</b> to pick Course, Unit, Word category, or search by tags.</li>
             <li>Read the Welsh sentence and type the matching Welsh word.</li>
             <li>Use the <b>?</b> next to the base word for a hint. Use the <b>?</b> by the sentence for word glosses.</li>
@@ -109,7 +134,40 @@
 
             <div class="text-sm font-medium mb-2">Filters</div>
 
-            <!-- Quick difficulty toggle (doesn't replace Course/Unit, just a quick preset) -->
+<!-- Study / mode controls (kept inside Filters to reduce card clutter) -->
+<div class="mb-4">
+  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Study mode</div>
+  <div class="seg">
+    <button id="studyTest" class="seg-btn">TEST</button>
+    <button id="studyLearn" class="seg-btn">LEARN</button>
+  </div>
+</div>
+
+<div class="mb-4" data-show-for="learn">
+  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Learn order</div>
+  <div class="seg">
+    <button id="reviewRandom" class="seg-btn">RANDOM</button>
+    <button id="reviewSmart" class="seg-btn">SMART</button>
+  </div>
+  <div class="mt-1 text-xs text-slate-500">Smart uses your Leitner boxes (Again/Good) to prioritise review.</div>
+</div>
+
+<div class="mb-4" data-show-for="learn">
+  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Front of card</div>
+  <div class="seg">
+    <button id="frontWelsh" class="seg-btn">WELSH</button>
+    <button id="frontEnglish" class="seg-btn">ENGLISH</button>
+  </div>
+</div>
+
+<div class="mb-4" data-show-for="test">
+  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Input</div>
+  <div class="seg">
+    <button id="inputHard" class="seg-btn">HARD</button>
+    <button id="inputEasy" class="seg-btn">EASY</button>
+  </div>
+</div>
+<!-- Quick difficulty toggle (doesn't replace Course/Unit, just a quick preset) -->
             <div class="mb-3">
               <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Difficulty</div>
               <div class="seg">
@@ -561,6 +619,15 @@ const state = {
   rows: [],
   filtered: [],
   mode: loadLS("vocab_mode", "practice"),
+  studyMode: loadLS("vocab_study_mode_v1", "test"),
+  learnFront: loadLS("vocab_learn_front_v1", "cy"),
+  learnFlipped: false,
+  learnFrontReady: false,
+  learnAutoplayBlocked: false,
+  learnActiveKey: null,
+  learnToken: 0,
+  currentShownIdx: 0,
+
 
   diffPreset: loadLS("vocab_diff", "all"),
   course: loadLS("vocab_course", ""),
@@ -665,6 +732,172 @@ function applyLanguage() {
 
 /* ========= Filters UI build ========= */
 function buildFilterControls() {
+
+  // ===== Study mode (Learn/Test) =====
+  const setStudyBtnState = () => {
+    const map = { test: "#studyTest", learn: "#studyLearn" };
+    Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
+    const activeId = map[state.studyMode] || "#studyTest";
+    $(activeId)?.classList.add("is-on");
+    [$("#studyTest"), $("#studyLearn")].forEach(b => {
+      if (!b) return;
+      b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
+    });
+  };
+
+  const applyStudyVisibility = () => {
+    const m = state.studyMode || "test";
+    $$('[data-show-for]').forEach(el => {
+      const showFor = (el.getAttribute('data-show-for') || '').trim();
+      el.classList.toggle('hidden', showFor && showFor !== m);
+    });
+  };
+
+  const resetModeSpecificState = () => {
+    // Test-mode state
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
+    state.freezeIdx = null;
+    state.freezePos = null;
+    state.easyOpt = { cardKey: null, options: [] };
+
+    // Learn-mode state
+    state.learnFlipped = false;
+    state.learnFrontReady = false;
+    state.learnAutoplayBlocked = false;
+    state.learnActiveKey = null;
+  };
+
+  const studyTestBtn = $("#studyTest");
+  if (studyTestBtn) {
+    studyTestBtn.onclick = () => {
+      if (state.studyMode === "test") return;
+      state.studyMode = "test";
+      saveLS("vocab_study_mode_v1", state.studyMode);
+      resetModeSpecificState();
+      rebuildDeck();
+      applyStudyVisibility();
+      setStudyBtnState();
+      render();
+      setTimeout(() => $("#answerBox")?.focus(), 0);
+    };
+  }
+
+  const studyLearnBtn = $("#studyLearn");
+  if (studyLearnBtn) {
+    studyLearnBtn.onclick = () => {
+      if (state.studyMode === "learn") return;
+      state.studyMode = "learn";
+      saveLS("vocab_study_mode_v1", state.studyMode);
+      resetModeSpecificState();
+      rebuildDeck();
+      applyStudyVisibility();
+      setStudyBtnState();
+      render();
+    };
+  }
+
+  setStudyBtnState();
+  applyStudyVisibility();
+
+  // ===== Learn-only: front language toggle =====
+  const setFrontBtnState = () => {
+    const w = $("#frontWelsh"), e = $("#frontEnglish");
+    if (w) w.classList.toggle("is-on", state.learnFront === "cy");
+    if (e) e.classList.toggle("is-on", state.learnFront === "en");
+    [w, e].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
+  };
+
+  const frontWelshBtn = $("#frontWelsh");
+  if (frontWelshBtn) {
+    frontWelshBtn.onclick = () => {
+      if (state.learnFront === "cy") return;
+      state.learnFront = "cy";
+      saveLS("vocab_learn_front_v1", state.learnFront);
+      render();
+    };
+  }
+  const frontEnglishBtn = $("#frontEnglish");
+  if (frontEnglishBtn) {
+    frontEnglishBtn.onclick = () => {
+      if (state.learnFront === "en") return;
+      state.learnFront = "en";
+      saveLS("vocab_learn_front_v1", state.learnFront);
+      render();
+    };
+  }
+  setFrontBtnState();
+
+  // ===== Test-mode controls moved from top-of-card into Filters
+
+const setInputBtnState = () => {
+  const hard = $("#inputHard"), easy = $("#inputEasy");
+  if (hard) hard.classList.toggle("is-on", state.inputMode === "hard");
+  if (easy) easy.classList.toggle("is-on", state.inputMode === "easy");
+  [hard, easy].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
+};
+const inputHardBtn = $("#inputHard");
+if (inputHardBtn) {
+  inputHardBtn.onclick = () => {
+    if (state.inputMode === "hard") return;
+    state.inputMode = "hard";
+    saveLS("vocab_input_mode_v1", state.inputMode);
+    state.easyOpt = { cardKey: null, options: [] };
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
+    setInputBtnState();
+    render();
+    setTimeout(() => $("#answerBox")?.focus(), 0);
+  };
+}
+const inputEasyBtn = $("#inputEasy");
+if (inputEasyBtn) {
+  inputEasyBtn.onclick = () => {
+    if (state.inputMode === "easy") return;
+    state.inputMode = "easy";
+    saveLS("vocab_input_mode_v1", state.inputMode);
+    state.easyOpt = { cardKey: null, options: [] };
+    state.guess = "";
+    state.revealed = false;
+    state.lastResult = null;
+    setInputBtnState();
+    render();
+  };
+}
+setInputBtnState();
+
+const setReviewBtnState = () => {
+  const r = $("#reviewRandom"), s = $("#reviewSmart");
+  if (r) r.classList.toggle("is-on", state.practiceMode === "shuffle");
+  if (s) s.classList.toggle("is-on", state.practiceMode === "smart");
+  [r, s].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
+};
+const reviewRandomBtn = $("#reviewRandom");
+if (reviewRandomBtn) {
+  reviewRandomBtn.onclick = () => {
+    if (state.practiceMode === "shuffle") return;
+    state.practiceMode = "shuffle";
+    saveLS("vocab_practice_mode_v1", state.practiceMode);
+    rebuildDeck();
+    setReviewBtnState();
+    render();
+  };
+}
+const reviewSmartBtn = $("#reviewSmart");
+if (reviewSmartBtn) {
+  reviewSmartBtn.onclick = () => {
+    if (state.practiceMode === "smart") return;
+    state.practiceMode = "smart";
+    saveLS("vocab_practice_mode_v1", state.practiceMode);
+    rebuildDeck();
+    setReviewBtnState();
+    render();
+  };
+}
+setReviewBtnState();
+
   const setDiffBtnState = () => {
     const map = { all:"#diffAll", easy:"#diffEasy", hard:"#diffHard" };
     Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
@@ -676,27 +909,32 @@ function buildFilterControls() {
     });
   };
 
-  $("#diffAll")?.addEventListener("click", () => {
+  const diffAllBtn = $("#diffAll");
+  if (diffAllBtn) diffAllBtn.onclick = () => {
     state.diffPreset = "all";
     saveLS("vocab_diff", state.diffPreset);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  });
-  $("#diffEasy")?.addEventListener("click", () => {
+  };
+
+  const diffEasyBtn = $("#diffEasy");
+  if (diffEasyBtn) diffEasyBtn.onclick = () => {
     state.diffPreset = "easy";
     state.course = ""; state.unit = "";
     saveLS("vocab_diff", state.diffPreset);
     saveLS("vocab_course", state.course);
     saveLS("vocab_unit", state.unit);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  });
-  $("#diffHard")?.addEventListener("click", () => {
+  };
+
+  const diffHardBtn = $("#diffHard");
+  if (diffHardBtn) diffHardBtn.onclick = () => {
     state.diffPreset = "hard";
     state.course = ""; state.unit = "";
     saveLS("vocab_diff", state.diffPreset);
     saveLS("vocab_course", state.course);
     saveLS("vocab_unit", state.unit);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  });
+  };
 
   setDiffBtnState();
 
@@ -783,7 +1021,8 @@ function buildFilterControls() {
     };
   }
 
-  $("#btnClearFilters")?.addEventListener("click", () => {
+  const clearFiltersBtn = $("#btnClearFilters");
+  if (clearFiltersBtn) clearFiltersBtn.onclick = () => {
     state.diffPreset = "all";
     state.course = "";
     state.unit = "";
@@ -795,10 +1034,120 @@ function buildFilterControls() {
     saveLS("vocab_wc", state.wordCats);
     saveLS("vocab_search", state.search);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  });
+  };
 }
 
 /* ========= Render ========= */
+
+function isSmartActive() {
+  return (state.studyMode === "learn") && (state.practiceMode === "smart");
+}
+
+function getShownCard() {
+  const i = state.currentShownIdx || 0;
+  return state.filtered[i];
+}
+
+function resetLearnStateForNewCard() {
+  state.learnFlipped = false;
+  state.learnFrontReady = false;
+  state.learnAutoplayBlocked = false;
+  state.learnActiveKey = null;
+}
+
+function setMobileBarForMode() {
+  const bHint = $("#mbHint");
+  const bCheck = $("#mbCheck");
+  const bNext = $("#mbNext");
+  if (!bHint || !bCheck || !bNext) return;
+
+  if (state.mode === "practice" && state.studyMode === "learn") {
+    bHint.textContent = "Hear";
+    bCheck.textContent = "Again";
+    bNext.textContent = "Good";
+  } else {
+    bHint.textContent = "Hint";
+    bCheck.textContent = "Check";
+    bNext.textContent = "Next";
+  }
+}
+
+async function startLearnAutoplay(cardKey, speakText) {
+  // Avoid retriggering autoplay if we're just rerendering the same card
+  if (!cardKey) return;
+  if (state.learnActiveKey === cardKey && state.learnFrontReady) return;
+
+  state.learnActiveKey = cardKey;
+  state.learnFrontReady = false;
+  state.learnAutoplayBlocked = false;
+
+  const token = ++state.learnToken;
+  const frontTextEl = $("#learnFrontText");
+  const statusEl = $("#learnStatus");
+
+  if (frontTextEl) frontTextEl.classList.add("is-hidden");
+  if (statusEl) statusEl.textContent = "";
+
+  try {
+    await playPollySentence(speakText);
+    if (token !== state.learnToken) return;
+    state.learnFrontReady = true;
+    if (frontTextEl) frontTextEl.classList.remove("is-hidden");
+  } catch (e) {
+    if (token !== state.learnToken) return;
+    // Autoplay often fails until the user clicks once. Requirement: show Welsh immediately on failure.
+    state.learnAutoplayBlocked = true;
+    state.learnFrontReady = true;
+
+    // Force Welsh on front if autoplay failed, so the learner isn't staring at a blank card.
+    const card = getShownCard();
+    if (frontTextEl && card?.AnswerCY) frontTextEl.textContent = card.AnswerCY;
+
+    if (frontTextEl) frontTextEl.classList.remove("is-hidden");
+    if (statusEl) statusEl.textContent = "Autoplay blocked. Tap Hear to enable audio.";
+  }
+}
+
+function toggleLearnFlip(forceTo = null) {
+  const cardEl = $("#learnCard3d");
+  const next = (forceTo == null) ? !state.learnFlipped : !!forceTo;
+  state.learnFlipped = next;
+  if (cardEl) cardEl.classList.toggle("is-flipped", next);
+}
+
+function learnRate(isGood) {
+  const card = getShownCard();
+  if (!card) return;
+
+  const idForStats = card.CardID || `row_${state.currentShownIdx}`;
+  const ok = !!isGood;
+
+  // Record into history (self-reported)
+  state.history = [{
+    t: Date.now(),
+    ok,
+    cardId: idForStats,
+    course: card.Course || "",
+    expected: (card.AnswerCY || ""),
+    got: ok ? "GOOD" : "AGAIN",
+    mode: state.practiceMode,
+    input: "learn",
+    study: "learn"
+  }, ...state.history].slice(0, 1000);
+  saveLS("vocab_hist", state.history);
+
+  updateLeitner(idForStats, ok ? "correct" : "wrong");
+
+  if (!ok && isSmartActive()) {
+    state.smartQueue.push({ idx: state.currentShownIdx, dueAfter: 2 });
+  }
+
+  // Advance
+  resetLearnStateForNewCard();
+  nextCard(1);
+}
+
+
 function renderPractice() {
   const host = $("#practiceCard");
   if (!host) return;
@@ -815,10 +1164,12 @@ function renderPractice() {
     return;
   }
 
+
+  const useSmart = isSmartActive();
   let idxNow;
   let posText = "";
 
-  if (state.practiceMode === "smart") {
+  if (useSmart) {
     if (state.smartIdx == null) state.smartIdx = pickNextSmartIdx();
     idxNow = state.smartIdx;
     state.currentDeckPos = -1;
@@ -831,86 +1182,31 @@ function renderPractice() {
     state.currentDeckPos = deckIdx;
     const pos = state.deck.length ? (deckIdx + 1) : 0;
     posText = `Card ${pos} / ${state.deck.length || 0}`;
-    $("#cardPos").textContent = posText;
+    $("#cardPos").textContent = (state.studyMode === "learn") ? `Learn · ${posText}` : posText;
   }
 
-  const idxShown = (state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
+
+  const idxShown = (state.studyMode === "test" && state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
   const card = state.filtered[idxShown];
   state.currentIdx = idxNow;
+  state.currentShownIdx = idxShown;
 
   const cardKey = card.CardID || `row_${idxShown}`;
 
   const wrap = document.createElement("div");
 
-  // ===== TOP: header controls (Random/Smart + Easy/Hard) =====
-  const header = document.createElement("div");
-  header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
+  
+// ===== TOP: header (controls live in Filters) =====
+const header = document.createElement("div");
+header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
 
-  const headerLeft = document.createElement("div");
-  headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
-  headerLeft.textContent = posText;
+const headerLeft = document.createElement("div");
+headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
+headerLeft.textContent = posText;
 
-  const headerRight = document.createElement("div");
-  headerRight.className = "flex flex-wrap items-center gap-2";
+header.append(headerLeft);
 
-  const segReview = document.createElement("div");
-  segReview.className = "seg";
-
-  const mkSegBtn = (labelText, value) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    const on = state.practiceMode === value;
-    b.className = `seg-btn ${on ? "is-on" : ""}`;
-    b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.textContent = String(labelText).toUpperCase();
-    b.onclick = () => {
-      if (state.practiceMode === value) return;
-      state.practiceMode = value;
-      saveLS(PRACTICE_MODE_LS_KEY, state.practiceMode);
-      rebuildDeck();
-      render();
-    };
-    return b;
-  };
-
-  segReview.append(
-    mkSegBtn("Random", "shuffle"),
-    mkSegBtn("Smart", "smart")
-  );
-
-  const segInput = document.createElement("div");
-  segInput.className = "seg";
-
-  const mkInputBtn = (labelText, value) => {
-    const b = document.createElement("button");
-    b.type = "button";
-    const on = state.inputMode === value;
-    b.className = `seg-btn ${on ? "is-on" : ""}`;
-    b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.textContent = String(labelText).toUpperCase();
-    b.onclick = () => {
-      if (state.inputMode === value) return;
-      state.inputMode = value;
-      saveLS("vocab_input_mode_v1", state.inputMode);
-      state.easyOpt = { cardKey: null, options: [] };
-      state.guess = "";
-      state.revealed = false;
-      state.lastResult = null;
-      render();
-      setTimeout(() => $("#answerBox")?.focus(), 0);
-    };
-    return b;
-  };
-
-  segInput.append(
-    mkInputBtn("Hard", "hard"),
-    mkInputBtn("Easy", "easy")
-  );
-
-  headerRight.append(segReview, segInput);
-  header.append(headerLeft, headerRight);
-
-  // ===== Active filters row (TOP OF CARD) =====
+// ===== Active filters row (TOP OF CARD) =====
   const activeFilters = document.createElement("div");
   activeFilters.className = "flex flex-wrap gap-2 mb-4";
 
@@ -929,12 +1225,152 @@ function renderPractice() {
 
   const hasAnyFilters = activeFilters.childElementCount > 0;
 
+
+  // ===== LEARN MODE (flashcards) =====
+  if (state.studyMode === "learn") {
+    const instruction = document.createElement("div");
+    instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
+    instruction.textContent = "Listen first. Then flip (click or Space) to check the meaning.";
+
+    const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
+
+    const pills = document.createElement("div");
+    pills.className = "flex flex-wrap gap-2 mt-4";
+    const pill = (t) => {
+      const s = document.createElement("span");
+      s.className = "pill";
+      s.textContent = t;
+      return s;
+    };
+    if (card.WordCategory) pills.appendChild(pill(card.WordCategory));
+    if (card.Course) pills.appendChild(pill(card.Course));
+    if (card.Unit) pills.appendChild(pill(card.Unit));
+
+    const speakText = (card.AnswerCY || "").trim();
+    const frontPreferred = (state.learnFront === "en") ? (card.BaseEN || "—") : (card.AnswerCY || "—");
+    const backText = (state.learnFront === "en") ? (card.AnswerCY || "—") : (card.BaseEN || "—");
+
+    const hideFront = !(state.learnActiveKey === cardKey && state.learnFrontReady);
+
+    const scene = document.createElement("div");
+    scene.className = "learn-scene";
+
+    const card3d = document.createElement("div");
+    card3d.id = "learnCard3d";
+    card3d.className = `learn-card3d panel rounded-2xl p-6 md:p-8 shadow-sm ${state.learnFlipped ? "is-flipped" : ""}`;
+    card3d.setAttribute("role", "button");
+    card3d.setAttribute("tabindex", "0");
+    card3d.setAttribute("aria-label", "Flashcard (click or Space to flip)");
+
+    const front = document.createElement("div");
+    front.className = "learn-face learn-front";
+
+    front.innerHTML = `
+      <div class="flex items-center justify-between gap-3">
+        <div class="text-xs uppercase tracking-wide text-slate-500">Front</div>
+        <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
+          <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
+        </button>
+      </div>
+
+      <div id="learnFrontText" class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
+        ${esc(frontPreferred)}
+      </div>
+
+      <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
+
+      <div class="mt-6">
+        ${pills.outerHTML}
+      </div>
+
+      ${whyText ? `<div class="mt-5 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
+      <div class="mt-6 text-xs text-slate-500">Flip to see the other side</div>
+    `;
+
+    const back = document.createElement("div");
+    back.className = "learn-face learn-back";
+
+    back.innerHTML = `
+      <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
+      <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">${esc(backText)}</div>
+      ${whyText ? `<div class="mt-4 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
+        <button id="btnLearnGood" class="btn btn-primary shadow" type="button" title="Good (2)">Good</button>
+      </div>
+
+      <div class="mt-4 text-xs text-slate-500">Again/Good updates Smart review</div>
+    `;
+
+    card3d.append(front, back);
+    scene.appendChild(card3d);
+
+    // Click anywhere to flip (but don't flip when pressing buttons)
+    card3d.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t && (t.closest && t.closest("button"))) return;
+      toggleLearnFlip();
+    });
+
+    card3d.addEventListener("keydown", (e) => {
+      if (e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        toggleLearnFlip();
+      }
+    });
+
+    wrap.append(header);
+    if (hasAnyFilters) wrap.append(activeFilters);
+    wrap.append(instruction, scene);
+    host.appendChild(wrap);
+
+    // Wire buttons
+    setTimeout(() => {
+      $("#learnHearBtn")?.addEventListener("click", async (e) => {
+        e.stopPropagation();
+        try {
+          await playPollySentence(speakText);
+          // If user manually triggers audio, reveal preferred front text
+          const ft = $("#learnFrontText");
+          if (ft) {
+            ft.textContent = frontPreferred;
+            ft.classList.remove("is-hidden");
+          }
+          const st = $("#learnStatus");
+          if (st) st.textContent = "";
+          state.learnFrontReady = true;
+          state.learnAutoplayBlocked = false;
+        } catch (err) {
+          const st = $("#learnStatus");
+          if (st) st.textContent = "Couldn't play audio.";
+        }
+      });
+
+      $("#btnLearnAgain")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(false); });
+      $("#btnLearnGood")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(true); });
+
+      // Autoplay on first render of a new card
+      if (speakText) startLearnAutoplay(cardKey, speakText);
+    }, 0);
+
+    return;
+  }
+
   // Instruction
+  const hasContext = !!(((card.BeforeCY || "").trim()) || ((card.AfterCY || "").trim()));
+
   const instruction = document.createElement("div");
   instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
-  instruction.textContent = (state.inputMode === "easy")
-    ? "Choose the correct Welsh word (multiple choice)."
-    : "Type the Welsh word that matches the English base word.";
+  if (hasContext) {
+    instruction.textContent = (state.inputMode === "easy")
+      ? "Choose the missing Welsh word (multiple choice)."
+      : "Type the missing Welsh word.";
+  } else {
+    instruction.textContent = (state.inputMode === "easy")
+      ? "Choose the correct Welsh translation (multiple choice)."
+      : "Type the Welsh translation.";
+  }
 
   // Base capsule (English)
   const baseBlock = document.createElement("div");
@@ -1340,6 +1776,7 @@ function renderStatsPanels() {
 }
 
 function render() {
+  setMobileBarForMode();
   $("#practiceView")?.classList.toggle("hidden", state.mode !== "practice");
   $("#browseView")?.classList.toggle("hidden", state.mode !== "browse");
   $("#statsView")?.classList.toggle("hidden", state.mode !== "stats");
@@ -1352,7 +1789,9 @@ function render() {
 function nextCard(offset = 1) {
   state.easyOpt = { cardKey: null, options: [] };
 
-  if (state.practiceMode === "smart") {
+  const useSmart = isSmartActive();
+
+  if (useSmart) {
     if (!state.filtered.length) return;
     state.freezeIdx = null;
     state.freezePos = null;
@@ -1361,13 +1800,15 @@ function nextCard(offset = 1) {
     state.guess = "";
     state.revealed = false;
     state.lastResult = null;
+    resetLearnStateForNewCard();
     render();
     return;
   }
 
   if (!state.deck.length) return;
 
-  if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
+  // In TEST mode only: if wrong, keep the same card and then bring it back again soon.
+  if (state.studyMode === "test" && state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
     const idxVal = state.freezeIdx;
     let deckPos = state.freezePos;
     if (state.deck[deckPos] !== idxVal) deckPos = state.deck.indexOf(idxVal);
@@ -1386,8 +1827,11 @@ function nextCard(offset = 1) {
   state.guess = "";
   state.revealed = false;
   state.lastResult = null;
+
+  resetLearnStateForNewCard();
   render();
 }
+
 
 /* ========= Event wiring ========= */
 function wireUi() {
@@ -1422,6 +1866,44 @@ function wireUi() {
     if (["INPUT", "TEXTAREA", "SELECT"].includes(tag.toUpperCase())) return;
     if (state.mode !== "practice") return;
 
+    // Learn-mode keyboard (no inputs)
+    if (state.studyMode === "learn") {
+      const k = e.key;
+
+      if (k === " " || k === "Spacebar") {
+        e.preventDefault();
+        toggleLearnFlip();
+        return;
+      }
+      if (k.toLowerCase() === "a") {
+        e.preventDefault();
+        $("#learnHearBtn")?.click();
+        return;
+      }
+      if (k === "1") {
+        e.preventDefault();
+        learnRate(false);
+        return;
+      }
+      if (k === "2") {
+        e.preventDefault();
+        learnRate(true);
+        return;
+      }
+      if (k === "Enter" || k === "ArrowRight" || k.toLowerCase() === "n") {
+        e.preventDefault();
+        nextCard(1);
+        return;
+      }
+      if (k.toLowerCase() === "f") {
+        e.preventDefault();
+        $("#btnFilters")?.click();
+        return;
+      }
+      return;
+    }
+
+    // Test-mode keyboard (existing behaviour)
     if (e.key === "Enter") {
       e.preventDefault();
       if (!state.revealed) $("#btnCheck")?.click();
@@ -1435,9 +1917,20 @@ function wireUi() {
     }
   });
 
-  $("#mbCheck")?.addEventListener("click", () => $("#btnCheck")?.click());
-  $("#mbNext")?.addEventListener("click", () => $("#inlineNext")?.click() || nextCard(1));
-  $("#mbHint")?.addEventListener("click", () => $("#btnHint")?.click());
+  $("#mbHint")?.addEventListener("click", () => {
+    if (state.studyMode === "learn") $("#learnHearBtn")?.click();
+    else $("#btnHint")?.click();
+  });
+
+  $("#mbCheck")?.addEventListener("click", () => {
+    if (state.studyMode === "learn") learnRate(false);
+    else $("#btnCheck")?.click();
+  });
+
+  $("#mbNext")?.addEventListener("click", () => {
+    if (state.studyMode === "learn") learnRate(true);
+    else $("#inlineNext")?.click() || nextCard(1);
+  });
 
   if (state.admin) {
     $("#adminBadge")?.classList.remove("hidden");
@@ -1450,7 +1943,7 @@ function wireUi() {
       const u = ($("#dataUrl")?.value || "").trim();
       if (!u) return;
       const d = await loadCsvUrl(u);
-      state.rows = d.map(coerceRow);
+      state.rows = d.map(coerceRow).filter(r => r.BaseEN && r.AnswerCY);
       applyFilters(); rebuildDeck(); buildFilterControls(); render();
     });
 
@@ -1461,7 +1954,7 @@ function wireUi() {
         header: true,
         skipEmptyLines: true,
         complete: (res) => {
-          state.rows = res.data.map(coerceRow);
+          state.rows = res.data.map(coerceRow).filter(r => r.BaseEN && r.AnswerCY);
           applyFilters(); rebuildDeck(); buildFilterControls(); render();
         }
       });
@@ -1480,7 +1973,7 @@ async function initData() {
     rows = await loadAllDefault();
   }
 
-  state.rows = rows.map(coerceRow).filter(r => r.BaseEN && r.BeforeCY);
+  state.rows = rows.map(coerceRow).filter(r => r.BaseEN && r.AnswerCY);
 
   const itemCountEl = $("#itemCount");
   if (itemCountEl) {
@@ -1503,6 +1996,8 @@ async function initData() {
 
 </body>
 </html>
+
+
 
 
 
