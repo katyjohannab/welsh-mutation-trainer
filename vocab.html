@@ -1101,38 +1101,75 @@ function renderPractice() {
     card3d.setAttribute("tabindex", "0");
     card3d.setAttribute("aria-label", "Flashcard (click or Space to flip)");
 
-    const front = document.createElement("div");
-    front.className = "learn-face learn-front";
-    front.innerHTML = `
+    // ========= Learn card: language helper (navbar data-lang) =========
+function getUiLang() {
+  // Your navbar sets data-lang="cy" or "en" (sometimes "eng" per your note)
+  const navLang =
+    document.documentElement?.getAttribute("data-lang") ||
+    document.body?.getAttribute("data-lang") ||
+    document.querySelector("[data-lang]")?.getAttribute("data-lang") ||
+    "";
+
+  const norm = (navLang || "").toLowerCase().trim();
+
+  if (norm === "cy" || norm === "cymraeg" || norm === "welsh") return "cy";
+  if (norm === "en" || norm === "eng" || norm === "english") return "en";
+
+  // Fallback to your app state if present
+  return (typeof state !== "undefined" && state.lang) ? state.lang : "en";
+}
+
+function pickByLang({ en, cy }) {
+  const lang = getUiLang();
+  const primary = (lang === "cy") ? cy : en;
+  const fallback = (lang === "cy") ? en : cy;
+  return (primary && String(primary).trim()) ? primary : (fallback || "");
+}
+    
+// ========= Learn card: build front/back + inner wrapper =========
+// Assumes you already have: card, hideFront, pills, card3d, scene, esc(), etc.
+
+const front = document.createElement("div");
+front.className = "learn-face learn-front";
+
+// FRONT: Welsh + autoplay/Hear only
+front.innerHTML = `
   <div class="learn-inner">
-    <div class="flex items-center justify-between gap-3">
-      <div class="text-xs uppercase tracking-wide text-slate-500">Front</div>
+    <div class="flex items-center justify-end">
       <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
         <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
       </button>
     </div>
 
-    <div id="learnFrontText" class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
-      ${esc(frontPreferred)}
+    <div id="learnFrontText"
+         class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
+      ${esc(card.BaseCY || "—")}
     </div>
 
     <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
-
-    <div class="mt-6">${pills.outerHTML}</div>
-
-    ${whyText ? `<div class="mt-5 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
-    <div class="mt-6 text-xs text-slate-500">Flip to see the other side</div>
   </div>
 `;
 
+const back = document.createElement("div");
+back.className = "learn-face learn-back";
 
-    const back = document.createElement("div");
-    back.className = "learn-face learn-back";
-    back.innerHTML = `
+// BACK: English meaning + Notes (language-sensitive) + buttons
+const notesText = pickByLang({ en: card.NotesEN, cy: card.NotesCY });
+const meaningEN = (card.BaseEN || "—"); // you asked for BaseEN on the back
+
+back.innerHTML = `
   <div class="learn-inner">
     <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
-    <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">${esc(backText)}</div>
-    ${whyText ? `<div class="mt-4 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
+
+    <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">
+      ${esc(meaningEN)}
+    </div>
+
+    ${
+      notesText
+        ? `<div class="mt-4 text-sm text-slate-700 whitespace-pre-line">${esc(notesText)}</div>`
+        : ""
+    }
 
     <div class="mt-7 flex flex-wrap gap-3">
       <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
@@ -1143,8 +1180,11 @@ function renderPractice() {
   </div>
 `;
 
-// IMPORTANT: mount the card faces into the card, and the card into the scene
-card3d.append(front, back);
+const inner = document.createElement("div");
+inner.className = "learn-card-inner";
+inner.append(front, back);
+
+card3d.appendChild(inner);
 scene.appendChild(card3d);
 
 //  Click to flip (gnore clicks on buttons inside the card)
