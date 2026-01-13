@@ -20,3 +20,14 @@
 .nav-dd-item{
   padding: .45rem .6rem;
 }
+
+.nav-dd-panel{
+  min-width: 13.5rem;       /* less wide */
+  padding: .4rem;           /* less padding */
+  border-radius: 1rem;
+}
+
+.nav-dd-item{
+  font-size: inherit;        /* respect the text-sm you set in HTML */
+  border-radius: .85rem;
+}
