@@ -1072,173 +1072,166 @@ function renderPractice() {
 
   /* ===== LEARN MODE ===== */
   if (state.studyMode === "learn") {
-    const instruction = document.createElement("div");
-    instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
-    instruction.textContent = "Listen first. Then flip (click or Space) to check the meaning.";
+  const instruction = document.createElement("div");
+  instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
+  instruction.textContent = "Listen first. Then flip (click or Space) to check the meaning.";
 
-    const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
+  // FRONT is ALWAYS Welsh word + audio only
+  const speakText = (card.BaseCY || "").trim();
 
-    const pills = document.createElement("div");
-    pills.className = "flex flex-wrap gap-2 mt-4";
-    const pill = (t) => { const s = document.createElement("span"); s.className = "pill"; s.textContent = t; return s; };
-    if (card.WordCategory) pills.appendChild(pill(card.WordCategory));
-    if (card.Course) pills.appendChild(pill(card.Course));
-    if (card.Unit) pills.appendChild(pill(card.Unit));
+  // Hide Welsh until autoplay has played (or user enables audio)
+  const hideFront = !(state.learnActiveKey === cardKey && state.learnFrontReady);
 
-    const speakText = (card.BaseCY|| "").trim();
-    const frontPreferred = (state.learnFront === "en") ? (card.BaseEN || "—") : (card.BaseCY || "—");
-    const backText = (state.learnFront === "en") ? (card.BaseCY || "—") : (card.BaseEN || "—");
+  // Notes language follows NAVBAR toggle (wm_lang)
+  const uiLang = (function () {
+    const raw = localStorage.getItem("wm_lang");
+    if (!raw) return "en";
+    try {
+      const v = JSON.parse(raw);
+      return (v === "cy" || v === "en") ? v : "en";
+    } catch {
+      return (raw === "cy" || raw === "en") ? raw : "en";
+    }
+  })();
 
-    const hideFront = !(state.learnActiveKey === cardKey && state.learnFrontReady);
+  const notesText =
+    (uiLang === "cy"
+      ? (card.NotesCY || card.NotesEN)
+      : (card.NotesEN || card.NotesCY)
+    ) || "";
 
-    const scene = document.createElement("div");
-    scene.className = "learn-scene";
+  const scene = document.createElement("div");
+  scene.className = "learn-scene";
 
-    const card3d = document.createElement("div");
-    card3d.id = "learnCard3d";
-    card3d.className = `learn-card3d panel rounded-2xl p-6 md:p-8 shadow-sm ${state.learnFlipped ? "is-flipped" : ""}`;
-    card3d.setAttribute("role", "button");
-    card3d.setAttribute("tabindex", "0");
-    card3d.setAttribute("aria-label", "Flashcard (click or Space to flip)");
+  const card3d = document.createElement("div");
+  card3d.id = "learnCard3d";
+  card3d.className = `learn-card3d ${state.learnFlipped ? "is-flipped" : ""}`;
+  card3d.setAttribute("role", "button");
+  card3d.setAttribute("tabindex", "0");
+  card3d.setAttribute("aria-label", "Flashcard (click or Space to flip)");
 
-    // ========= Learn card: language helper (navbar data-lang) =========
-function getUiLang() {
-  // Your navbar sets data-lang="cy" or "en" (sometimes "eng" per your note)
-  const navLang =
-    document.documentElement?.getAttribute("data-lang") ||
-    document.body?.getAttribute("data-lang") ||
-    document.querySelector("[data-lang]")?.getAttribute("data-lang") ||
-    "";
+  const inner = document.createElement("div");
+  inner.className = "learn-card-inner";
 
-  const norm = (navLang || "").toLowerCase().trim();
+  // ---------- FRONT (ONLY Welsh + Hear) ----------
+  const front = document.createElement("div");
+  front.className = "learn-face learn-front";
+  front.innerHTML = `
+    <div class="learn-inner">
+      <div class="flex items-center justify-end">
+        <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
+          <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
+        </button>
+      </div>
 
-  if (norm === "cy" || norm === "cymraeg" || norm === "welsh") return "cy";
-  if (norm === "en" || norm === "eng" || norm === "english") return "en";
+      <div id="learnFrontText"
+           class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
+        ${esc(card.BaseCY || "—")}
+      </div>
 
-  // Fallback to your app state if present
-  return (typeof state !== "undefined" && state.lang) ? state.lang : "en";
-}
+      <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
 
-function pickByLang({ en, cy }) {
-  const lang = getUiLang();
-  const primary = (lang === "cy") ? cy : en;
-  const fallback = (lang === "cy") ? en : cy;
-  return (primary && String(primary).trim()) ? primary : (fallback || "");
-}
-    
-// ========= Learn card: build front/back + inner wrapper =========
-// Assumes you already have: card, hideFront, pills, card3d, scene, esc(), etc.
-
-const front = document.createElement("div");
-front.className = "learn-face learn-front";
-
-// FRONT: Welsh + autoplay/Hear only
-front.innerHTML = `
-  <div class="learn-inner">
-    <div class="flex items-center justify-end">
-      <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
-        <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
-      </button>
+      <div class="mt-8 text-xs text-slate-500">Flip to see the meaning</div>
     </div>
+  `;
 
-    <div id="learnFrontText"
-         class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
-      ${esc(card.BaseCY || "—")}
-    </div>
+  // ---------- BACK (BaseEN + Notes in navbar language) ----------
+  const back = document.createElement("div");
+  back.className = "learn-face learn-back";
+  back.innerHTML = `
+    <div class="learn-inner">
+      <div class="text-xs uppercase tracking-wide text-slate-500">Meaning</div>
 
-    <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
-  </div>
-`;
+      <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">
+        ${esc(card.BaseEN || "—")}
+      </div>
 
-const back = document.createElement("div");
-back.className = "learn-face learn-back";
-
-// BACK: English meaning + Notes (language-sensitive) + buttons
-const notesText = pickByLang({ en: card.NotesEN, cy: card.NotesCY });
-const meaningEN = (card.BaseEN || "—"); // you asked for BaseEN on the back
-
-back.innerHTML = `
-  <div class="learn-inner">
-    <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
-
-    <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">
-      ${esc(meaningEN)}
-    </div>
-
-    ${
-      notesText
+      ${notesText
         ? `<div class="mt-4 text-sm text-slate-700 whitespace-pre-line">${esc(notesText)}</div>`
         : ""
-    }
+      }
 
-    <div class="mt-7 flex flex-wrap gap-3">
-      <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
-      <button id="btnLearnGood" class="btn btn-primary shadow" type="button" title="Good (2)">Good</button>
+      <div class="mt-7 flex flex-wrap gap-3">
+        <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
+        <button id="btnLearnGood" class="btn btn-primary shadow" type="button" title="Good (2)">Good</button>
+        <button id="btnLearnNext" class="btn btn-ghost" type="button" title="Next (→)">Next</button>
+        <button id="btnLearnPrev" class="btn btn-ghost" type="button" title="Prev (←)">Prev</button>
+      </div>
+
+      <div class="mt-4 text-xs text-slate-500">Again/Good updates Smart review</div>
     </div>
+  `;
 
-    <div class="mt-4 text-xs text-slate-500">Again/Good updates Smart review</div>
-  </div>
-`;
+  inner.append(front, back);
+  card3d.appendChild(inner);
+  scene.appendChild(card3d);
 
-const inner = document.createElement("div");
-inner.className = "learn-card-inner";
-inner.append(front, back);
-
-card3d.appendChild(inner);
-scene.appendChild(card3d);
-
-//  Click to flip (gnore clicks on buttons inside the card)
-card3d.addEventListener("click", (e) => {
-  if (e.target.closest("button")) return;
-  toggleLearnFlip();
-});
-
-// Enter flips when the card has focus
-card3d.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
+  // Click flips (ignore clicks on buttons)
+  card3d.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
     toggleLearnFlip();
-  }
-});
+  });
 
-    wrap.append(header);
-    if (hasAnyFilters) wrap.append(activeFilters);
-    wrap.append(instruction, scene);
-    host.appendChild(wrap);
+  // Keyboard when card is focused
+  card3d.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); toggleLearnFlip(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); $("#btnLearnNext")?.click(); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); $("#btnLearnPrev")?.click(); }
+  });
 
-    setTimeout(() => {
-      // Ensure Space works even if focus drifted
-      card3d.focus({ preventScroll: true });
+  wrap.append(header);
+  if (hasAnyFilters) wrap.append(activeFilters);
+  wrap.append(instruction, scene);
+  host.appendChild(wrap);
 
-      $("#learnHearBtn")?.addEventListener("click", async (e) => {
-        e.stopPropagation();
-        try {
-          await playPollySentence(speakText);
+  setTimeout(() => {
+    card3d.focus({ preventScroll: true });
 
-          // After a user-initiated successful play, allow autoplay for the session (persisted)
-          state.audioEnabled = true;
-          saveLS("vocab_audio_enabled_v1", state.audioEnabled);
+    // Hear button: enables audio + reveals front text
+    $("#learnHearBtn")?.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      try {
+        await playPollySentence(speakText);
 
-          const ft = $("#learnFrontText");
-          if (ft) { ft.textContent = frontPreferred; ft.classList.remove("is-hidden"); }
-          const st = $("#learnStatus");
-          if (st) st.textContent = "";
-          state.learnFrontReady = true;
-          state.learnAutoplayBlocked = false;
-        } catch (err) {
-          const st = $("#learnStatus");
-          if (st) st.textContent = "Couldn't play audio.";
-        }
-      });
+        state.audioEnabled = true;
+        saveLS("vocab_audio_enabled_v1", state.audioEnabled);
 
-      $("#btnLearnAgain")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(false); });
-      $("#btnLearnGood")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(true); });
+        state.learnActiveKey = cardKey;
+        state.learnFrontReady = true;
+        state.learnAutoplayBlocked = false;
 
-      if (speakText) startLearnAutoplay(cardKey, speakText);
-    }, 0);
+        $("#learnFrontText")?.classList.remove("is-hidden");
+        const st = $("#learnStatus");
+        if (st) st.textContent = "";
+      } catch {
+        const st = $("#learnStatus");
+        if (st) st.textContent = "Couldn't play audio.";
+      }
+    });
 
-    return;
-  }
+    // Ratings
+    $("#btnLearnAgain")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(false); });
+    $("#btnLearnGood")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(true); });
+
+    // Next/Prev navigation
+    $("#btnLearnNext")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (isSmartActive()) learnRate(true);
+      else nextCard(1);
+    });
+
+    $("#btnLearnPrev")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (!isSmartActive()) nextCard(-1);
+    });
+
+    // Autoplay (only after user has successfully enabled audio once)
+    if (speakText) startLearnAutoplay(cardKey, speakText);
+  }, 0);
+
+  return;
+}
+
 
   /* ===== TEST MODE ===== */
   const hasContext = !!(((card.BeforeCY || "").trim()) || ((card.AfterCY || "").trim()));
