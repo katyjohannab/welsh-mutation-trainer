@@ -56,3 +56,40 @@
   .learn-front-text { transition: none; }
 }
 
+/* ========= Learn flashcard flip  ========= */
+
+.learn-scene {
+  perspective: 1200px;
+}
+
+.learn-card3d {
+  display: grid;                 /* faces overlap and still contribute to height */
+  transform-style: preserve-3d;
+  transition: transform 420ms cubic-bezier(.2,.8,.2,1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.learn-card3d.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.learn-face {
+  grid-area: 1 / 1;              /* overlap in the same grid cell */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* back face starts rotated, becomes readable when parent flips */
+.learn-back {
+  transform: rotateY(180deg);
+}
+
+/* prevent clicking buttons on the hidden face */
+.learn-card3d:not(.is-flipped) .learn-back {
+  pointer-events: none;
+}
+.learn-card3d.is-flipped .learn-front {
+  pointer-events: none;
+}
+
