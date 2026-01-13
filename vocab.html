@@ -27,7 +27,7 @@
     }
     .learn-card3d.is-flipped { transform: rotateY(180deg); }
 
-    /* Safari/WebKit mirroring fix: hide backface AND give each face a tiny Z */
+    /* Safari/WebKit mirroring fix: hide backface AND apply to descendants */
     .learn-face {
       grid-area: 1 / 1;
       backface-visibility: hidden;
@@ -35,8 +35,12 @@
       transform-style: preserve-3d;
       -webkit-transform-style: preserve-3d;
     }
-    .learn-front { transform: rotateY(0deg) translateZ(1px); }
-    .learn-back  { transform: rotateY(180deg) translateZ(1px); }
+    .learn-face *{
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .learn-front { transform: rotateY(0deg) translateZ(0); }
+    .learn-back  { transform: rotateY(180deg) translateZ(0); }
 
     .learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
     .learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
@@ -394,6 +398,10 @@ function pickNextSmartIdx() {
 const POLLY_FUNCTION_URL = "https://pl6xqfeht2hhbruzlhm3imcpya0upied.lambda-url.eu-west-2.on.aws/";
 const ttsCache = new Map();
 
+/* Reusable audio element = better autoplay behaviour + no overlaps */
+const ttsAudio = new Audio();
+ttsAudio.preload = "auto";
+
 function buildCompleteSentence(card, answerOverride = null) {
   const before = (card.BeforeCY || "").trimEnd();
   const answer = (answerOverride != null ? answerOverride : (card.AnswerCY || "")).trim();
@@ -403,49 +411,55 @@ function buildCompleteSentence(card, answerOverride = null) {
   s = s.replace(/\s+([,.;:!?])/g, "$1");
   return s;
 }
+
 async function playPollySentence(sentence) {
   if (!sentence) throw new Error("No sentence to speak.");
-  const cachedUrl = ttsCache.get(sentence);
-  if (cachedUrl) {
-    const audio = new Audio(cachedUrl);
-    await audio.play();
-    return;
-  }
 
-  const res = await fetch(POLLY_FUNCTION_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: sentence })
-  });
+  // Stop any previous playback
+  try { ttsAudio.pause(); } catch(e) {}
+  try { ttsAudio.currentTime = 0; } catch(e) {}
 
-  if (!res.ok) {
-    const msg = await res.text().catch(() => "");
-    throw new Error(msg || `TTS failed (${res.status})`);
-  }
+  let url = ttsCache.get(sentence) || null;
 
-  const ct = (res.headers.get("content-type") || "").toLowerCase();
-  let url = null;
+  if (!url) {
+    const res = await fetch(POLLY_FUNCTION_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: sentence })
+    });
 
-  if (ct.includes("audio") || ct.includes("octet-stream")) {
-    const buf = await res.arrayBuffer();
-    const blob = new Blob([buf], { type: "audio/mpeg" });
-    url = URL.createObjectURL(blob);
-  } else {
-    const j = await res.json();
-    if (j.url) url = j.url;
-    else if (j.audioBase64 || j.audioContent) {
-      const b64 = j.audioBase64 || j.audioContent;
-      const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
-      const blob = new Blob([bytes], { type: "audio/mpeg" });
+    if (!res.ok) {
+      const msg = await res.text().catch(() => "");
+      throw new Error(msg || `TTS failed (${res.status})`);
+    }
+
+    const ct = (res.headers.get("content-type") || "").toLowerCase();
+
+    if (ct.includes("audio") || ct.includes("octet-stream")) {
+      const buf = await res.arrayBuffer();
+      const blob = new Blob([buf], { type: "audio/mpeg" });
       url = URL.createObjectURL(blob);
     } else {
-      throw new Error("TTS response didn't include audio.");
+      const j = await res.json();
+      if (j.url) url = j.url;
+      else if (j.audioBase64 || j.audioContent) {
+        const b64 = j.audioBase64 || j.audioContent;
+        const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+        const blob = new Blob([bytes], { type: "audio/mpeg" });
+        url = URL.createObjectURL(blob);
+      } else {
+        throw new Error("TTS response didn't include audio.");
+      }
     }
+
+    ttsCache.set(sentence, url);
   }
 
-  ttsCache.set(sentence, url);
-  const audio = new Audio(url);
-  await audio.play();
+  ttsAudio.src = url;
+  ttsAudio.load();
+
+  // If autoplay is blocked, this throws NotAllowedError
+  await ttsAudio.play();
 }
 
 /* ========= “?” popover UI ========= */
@@ -584,6 +598,9 @@ const state = {
   learnActiveKey: null,
   learnToken: 0,
   currentShownIdx: 0,
+
+  /* NEW: autoplay gate (audio only after user gesture succeeds once) */
+  audioEnabled: loadLS("vocab_audio_enabled_v1", false),
 
   diffPreset: loadLS("vocab_diff", "all"),
   course: loadLS("vocab_course", ""),
@@ -991,6 +1008,20 @@ async function startLearnAutoplay(cardKey, speakText) {
   if (!cardKey) return;
   if (state.learnActiveKey === cardKey && state.learnFrontReady) return;
 
+  // Browser policy: only autoplay after a user-initiated play has succeeded once.
+  if (!state.audioEnabled) {
+    state.learnActiveKey = cardKey;
+    state.learnFrontReady = true;
+    state.learnAutoplayBlocked = true;
+
+    const frontTextEl = $("#learnFrontText");
+    const statusEl = $("#learnStatus");
+
+    if (frontTextEl) frontTextEl.classList.remove("is-hidden");
+    if (statusEl) statusEl.textContent = "Press Hear (or A) once to enable autoplay.";
+    return;
+  }
+
   state.learnActiveKey = cardKey;
   state.learnFrontReady = false;
   state.learnAutoplayBlocked = false;
@@ -1009,13 +1040,16 @@ async function startLearnAutoplay(cardKey, speakText) {
     if (frontTextEl) frontTextEl.classList.remove("is-hidden");
   } catch (e) {
     if (token !== state.learnToken) return;
+
     state.learnAutoplayBlocked = true;
     state.learnFrontReady = true;
 
-    const card = getShownCard();
-    if (frontTextEl && card?.AnswerCY) frontTextEl.textContent = card.AnswerCY;
+    // If autoplay got blocked again, treat audio as locked until user clicks Hear.
+    state.audioEnabled = false;
+    saveLS("vocab_audio_enabled_v1", state.audioEnabled);
+
     if (frontTextEl) frontTextEl.classList.remove("is-hidden");
-    if (statusEl) statusEl.textContent = "Autoplay blocked. Tap Hear to enable audio.";
+    if (statusEl) statusEl.textContent = "Autoplay blocked. Press Hear (or A) to enable audio.";
   }
 }
 
@@ -1205,6 +1239,11 @@ function renderPractice() {
         e.stopPropagation();
         try {
           await playPollySentence(speakText);
+
+          // After a user-initiated successful play, allow autoplay for the session (persisted)
+          state.audioEnabled = true;
+          saveLS("vocab_audio_enabled_v1", state.audioEnabled);
+
           const ft = $("#learnFrontText");
           if (ft) { ft.textContent = frontPreferred; ft.classList.remove("is-hidden"); }
           const st = $("#learnStatus");
@@ -1706,15 +1745,17 @@ function wireUi() {
 
   document.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || "";
-    if (["INPUT", "TEXTAREA", "SELECT"].includes(tag.toUpperCase())) return;
+    if (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(tag.toUpperCase())) return;
     if (state.mode !== "practice") return;
 
     if (state.studyMode === "learn") {
       const k = e.key;
 
+      // NEW: Space = flip if not flipped; if already flipped, mark Good + next (Anki-like flow)
       if (k === " " || k === "Spacebar") {
         e.preventDefault();
-        toggleLearnFlip();
+        if (!state.learnFlipped) toggleLearnFlip(true);
+        else learnRate(true);
         return;
       }
       if (k.toLowerCase() === "a") {
@@ -1846,6 +1887,4 @@ async function initData() {
 
 </body>
 </html>
-
-
 
