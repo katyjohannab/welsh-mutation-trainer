@@ -1,0 +1,22 @@
+
+#siteHeader{
+  position: sticky;
+  top: 0;
+  z-index: 10000; /* on top */
+}
+
+/* shadow toggle */
+#siteHeader.is-scrolled{
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.10);
+}
+
+/* dropdown sizing */
+.nav-dd-panel{
+  font-size: 0.92rem;
+  padding: .4rem;
+  min-width: 13.5rem;
+}
+
+.nav-dd-item{
+  padding: .45rem .6rem;
+}
