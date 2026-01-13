@@ -1,39 +1,48 @@
 
-    /* ===== Learn mode flip card ===== */
-    .learn-scene { perspective: 1200px; }
-    .learn-card3d {
-      display: grid;
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-      transition: transform 600ms cubic-bezier(.2,.8,.2,1);
-      will-change: transform;
-    }
-    .learn-card3d.is-flipped { transform: rotateY(180deg); }
+  /* ===== Learn mode flip card ===== */
+.learn-scene { perspective: 1200px; }
 
-    /* Safari/WebKit mirroring fix: hide backface AND apply to descendants */
-    .learn-face {
-      grid-area: 1 / 1;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-    }
-    .learn-face *{
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-.learn-front { transform: rotateY(0deg) translateZ(0); }
-.learn-back  { transform: rotateY(180deg) translateZ(0); }
+.learn-card3d{
+  display: grid;
+  position: relative;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+  will-change: transform;
+}
+.learn-card3d.is-flipped{ transform: rotateY(180deg); }
 
+/* Hide backfaces INCLUDING text descendants (Safari/Chrome “ghost text” fix) */
+.learn-face{
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+.learn-face *{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
 
-    .learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
-    .learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
+/* Faces */
+.learn-front{ transform: rotateY(0deg) translateZ(1px); z-index: 2; }
+.learn-back { transform: rotateY(180deg) translateZ(1px); z-index: 1; }
 
-    @media (prefers-reduced-motion: reduce) {
-      .learn-card3d { transition: none; }
-      .learn-front-text { transition: none; }
-    }
+/* Only the visible face should be clickable */
+.learn-card3d:not(.is-flipped) .learn-front{ pointer-events: auto; }
+.learn-card3d:not(.is-flipped) .learn-back { pointer-events: none; }
+.learn-card3d.is-flipped .learn-front{ pointer-events: none; z-index: 1; }
+.learn-card3d.is-flipped .learn-back { pointer-events: auto; z-index: 2; }
 
+/* Front text reveal animation */
+.learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
+.learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-card3d { transition: none; }
+  .learn-front-text { transition: none; }
+}
 
 
 
