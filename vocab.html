@@ -989,7 +989,7 @@ function learnRate(isGood) {
     ok,
     cardId: idForStats,
     course: card.Course || "",
-    expected: (card.AnswerCY || ""),
+    expected: (card.BaseCY|| ""),
     got: ok ? "GOOD" : "AGAIN",
     mode: state.practiceMode,
     input: "learn",
@@ -1080,9 +1080,9 @@ function renderPractice() {
     if (card.Course) pills.appendChild(pill(card.Course));
     if (card.Unit) pills.appendChild(pill(card.Unit));
 
-    const speakText = (card.AnswerCY || "").trim();
-    const frontPreferred = (state.learnFront === "en") ? (card.BaseEN || "—") : (card.AnswerCY || "—");
-    const backText = (state.learnFront === "en") ? (card.AnswerCY || "—") : (card.BaseEN || "—");
+    const speakText = (card.BaseCY|| "").trim();
+    const frontPreferred = (state.learnFront === "en") ? (card.BaseEN || "—") : (card.BaseCY || "—");
+    const backText = (state.learnFront === "en") ? (card.BaseCY || "—") : (card.BaseEN || "—");
 
     const hideFront = !(state.learnActiveKey === cardKey && state.learnFrontReady);
 
