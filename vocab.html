@@ -7,6 +7,7 @@
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="vocabstyles.css" />
 
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
@@ -15,41 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-  <style>
-    /* ===== Learn mode flip card (minimal, matches site aesthetic) ===== */
-    .learn-scene { perspective: 1200px; }
-    .learn-card3d {
-      display: grid;
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-      transition: transform 600ms cubic-bezier(.2,.8,.2,1);
-      will-change: transform;
-    }
-    .learn-card3d.is-flipped { transform: rotateY(180deg); }
-
-    /* Safari/WebKit mirroring fix: hide backface AND apply to descendants */
-    .learn-face {
-      grid-area: 1 / 1;
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-    }
-    .learn-face *{
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-    }
-    .learn-front { transform: rotateY(0deg) translateZ(0); }
-    .learn-back  { transform: rotateY(180deg) translateZ(0); }
-
-    .learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
-    .learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
-
-    @media (prefers-reduced-motion: reduce) {
-      .learn-card3d { transition: none; }
-      .learn-front-text { transition: none; }
-    }
-  </style>
+ 
 </head>
 
 <body class="min-h-screen text-slate-900">
