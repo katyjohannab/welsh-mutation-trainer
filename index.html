@@ -4,80 +4,79 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welsh Mutation Trainer</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles.css" />
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Inconsolata:wght@200;300&family=Josefin+Sans:wght@300;400&family=Karla:wght@200;300;500;600&family=Merriweather:ital,wght@1,900&family=Poppins:ital,wght@0,100;0,200;0,400;1,100&family=Slabo+13px&family=Slabo+27px&family=Ultra&family=Yeseva+One&display=swap');
   </style>
-<!-- Tailwind via CDN -->
-  
+
   <!-- PapaParse for CSV loading -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=BBH+Bogle&family=BBH+Hegarty&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Slab:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <script src="./navbar.js" defer></script>
 
-  
+  <!-- External navbar loader -->
+  <script src="./navbar.js" defer></script>
 </head>
 
 <body class="min-h-screen text-slate-900" data-current="practice">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-   <!-- External navbar mounts here -->
-<div id="navbarMount"></div>
-
+    <!-- External navbar mounts here -->
+    <div id="navbarMount"></div>
 
     <!-- Onboarding -->
-<section id="onboard" class="max-w-6xl mx-auto p-4 mt-3">
-  <div class="panel rounded-2xl p-4 flex items-start gap-3">
-    <div class="text-2xl">💡</div>
+    <section id="onboard" class="max-w-6xl mx-auto p-4 mt-3">
+      <div class="panel rounded-2xl p-4 flex items-start gap-3">
+        <div class="text-2xl">💡</div>
 
-    <div class="text-sm text-slate-700">
-      <!-- EN -->
-      <div data-lang="en">
-        <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
-        <ol class="list-decimal ml-5 leading-relaxed">
-          <li>
-            Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle
-            the deck at any time. <b>Smart review</b> adapts to your progress using a spaced-repetition (Leitner)
-            system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at
-            the top of the card to switch modes.
-          </li>
-          <li>Choose a <b>Filter</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
-          <li>Read the sentence and type the correct form in the box.</li>
-          <li>Press <b>Check</b> to mark your answer.</li>
-          <li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li>
-        </ol>
+        <div class="text-sm text-slate-700">
+          <!-- EN -->
+          <div data-lang="en">
+            <div class="font-medium mb-1">Welcome! How to use this trainer.</div>
+            <ol class="list-decimal ml-5 leading-relaxed">
+              <li>
+                Select a practice mode. <b>Random review</b> presents cards in a truly random order, and you can reshuffle
+                the deck at any time. <b>Smart review</b> adapts to your progress using a spaced-repetition (Leitner)
+                system: cards you get wrong reappear sooner and cards you get right appear less often. Use the toggle at
+                the top of the card to switch modes.
+              </li>
+              <li>Choose a <b>Filter</b> to pick what to practise (Prepositions, Numerals, Possessive, etc.).</li>
+              <li>Read the sentence and type the correct form in the box.</li>
+              <li>Press <b>Check</b> to mark your answer.</li>
+              <li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li>
+            </ol>
+          </div>
+
+          <!-- CY -->
+          <div data-lang="cy">
+            <div class="font-medium mb-1">Croeso! Sut i ddefnyddio’r hyfforddwr.</div>
+            <ol class="list-decimal ml-5 leading-relaxed">
+              <li>
+                Dewiswch fodd ymarfer. Mae <b>Adolygu ar hap</b> yn dangos cardiau mewn trefn ar hap go iawn, ac mae modd
+                ailgymysgu’r pecyn unrhyw bryd. Mae <b>Adolygu clyfar</b> yn addasu i’ch cynnydd gan ddefnyddio system
+                ailadrodd bylchog (Leitner): bydd cardiau rydych chi’n eu cael yn anghywir yn dod yn ôl yn gynt, a bydd
+                cardiau rydych chi’n eu cael yn gywir yn dod yn ôl yn llai aml. Defnyddiwch y toglo ar frig y cerdyn i
+                newid modd.
+              </li>
+              <li>Dewiswch <b>Hidlydd</b> i benderfynu beth i’w ymarfer (Arddodiaid, Rhifau, Meddiannol, ac ati).</li>
+              <li>Darllenwch y frawddeg a theipiwch y ffurf gywir yn y blwch.</li>
+              <li>Pwyswch <b>Gwirio</b> i farcio’ch ateb.</li>
+              <li>Darllenwch yr esboniad <b>Pam</b>, yna cliciwch <b>Nesaf</b>.</li>
+            </ol>
+          </div>
+
+          <div class="mt-3 flex gap-2">
+            <!-- IMPORTANT: only ONE dismiss button, unique id -->
+            <button id="onboardDismiss" class="btn btn-ghost"></button>
+          </div>
+        </div>
       </div>
-
-      <!-- CY -->
-      <div data-lang="cy">
-        <div class="font-medium mb-1">Croeso! Sut i ddefnyddio’r hyfforddwr.</div>
-        <ol class="list-decimal ml-5 leading-relaxed">
-          <li>
-            Dewiswch fodd ymarfer. Mae modd <b>ar hap</b> yn dangos cardiau mewn trefn ar hap go iawn, ac mae modd
-            ailgymysgu’r pecyn unrhyw bryd. Mae modd <b>clyfar</b> yn addasu i’ch cynnydd gan ddefnyddio system
-            ailadrodd bylchog (Leitner): bydd cardiau rydych chi’n eu cael yn anghywir yn dod yn ôl yn gynt, a bydd
-            cardiau rydych chi’n eu cael yn gywir yn dod yn ôl yn llai aml. Defnyddiwch y toglo ar frig y cerdyn i
-            newid modd.
-          </li>
-          <li>Dewiswch hidlydd <b>ffocws</b> i benderfynu beth i’w ymarfer (Pob Un, Arddodiaid, Rhifau, Meddiannol, ac ati).</li>
-          <li>Darllenwch y frawddeg a theipiwch y ffurf gywir yn y blwch.</li>
-          <li>Pwyswch <b>Gwirio</b> i farcio’ch ateb.</li>
-          <li>Darllenwch yr esboniad <b>Pam</b>, yna cliciwch <b>Nesaf</b>.</li>
-        </ol>
-      </div>
-
-      <!-- button -->
-      <div class="mt-3 flex gap-2">
-        <button id="onboardDismiss" class="btn btn-ghost"></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-
+    </section>
 
     <!-- Main panels -->
     <main id="main" class="grow max-w-6xl mx-auto p-4 pb-24 md:pb-4">
@@ -87,11 +86,9 @@
           <div id="practiceCard"></div>
         </div>
 
-        <!-- Right: filters + session (stacked so layout never "jumps" when filters are hidden) -->
+        <!-- Right: filters + session -->
         <div class="md:col-span-1 flex flex-col gap-4">
-          <!-- Filter controls -->
-          <div id="filtersPanel" class="panel rounded-2xl p-4 ">
-            <!-- Admin / Data panel: only visible when admin=1 -->
+          <div id="filtersPanel" class="panel rounded-2xl p-4">
             <div id="adminPanel" class="hidden mb-4">
               <div class="text-sm font-medium mb-2">Admin tools</div>
               <label class="text-sm font-medium">Data URL </label>
@@ -109,33 +106,36 @@
               </div>
               <hr class="my-4" />
             </div>
-            <!-- Focus filters -->
+
             <div id="focusTitle" class="text-sm font-medium mb-2">Focus</div>
             <div class="grid grid-cols-2 gap-2 text-sm">
               <div id="familyCol">
                 <div id="rulefamilyTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">RuleFamily</div>
                 <div id="familyBtns" class="flex flex-wrap gap-1"></div>
               </div>
+
               <div id="outcomeCol">
                 <div id="outcomeTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Outcome</div>
                 <div id="outcomeBtns" class="flex flex-wrap gap-1"></div>
               </div>
+
               <div class="col-span-2">
                 <div id="categoriesTitle" class="text-xs uppercase tracking-wide text-slate-500 mb-1">Categories</div>
                 <div id="catBtns" class="flex flex-wrap gap-1"></div>
               </div>
+
               <div class="col-span-2">
                 <label id="triggerLabel" class="text-xs uppercase tracking-wide text-slate-500">Filter by Trigger</label>
                 <input id="triggerFilter" class="mt-1 w-full border rounded-xl px-3 py-1.5" placeholder="e.g. i, o, dwy, tri, y (article), neu" />
               </div>
+
               <label class="col-span-2 inline-flex items-center gap-2 text-sm mt-1">
                 <input id="nilOnly" type="checkbox" />
-                <span id="nilOnlyText">Nil‑cases only (no mutation expected)</span>
+                <span id="nilOnlyText">Nil-cases only (no mutation expected)</span>
               </label>
             </div>
           </div>
 
-          <!-- Session / stats panel -->
           <aside id="sessionPanel" class="panel rounded-2xl p-4">
             <div class="text-sm font-medium mb-2">Session</div>
             <div id="accBig" class="text-5xl md:text-6xl font-semibold">0%</div>
@@ -224,6 +224,18 @@ function getParam(k) { return new URLSearchParams(location.search).get(k); }
 function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 function loadLS(k, d) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch (e) { return d; } }
 
+/* Robust language getter (matches navbar.js behaviour) */
+function wmGetLangLocal() {
+  const raw = localStorage.getItem("wm_lang");
+  if (!raw) return "en";
+  try {
+    const v = JSON.parse(raw);
+    return (v === "cy" || v === "en") ? v : "en";
+  } catch {
+    return (raw === "cy" || raw === "en") ? raw : "en";
+  }
+}
+
 /* ========= Smart review (Leitner) ========= */
 const LEITNER_LS_KEY = "wm_leitner_boxes_v1";
 const PRACTICE_MODE_LS_KEY = "wm_practice_mode_v1";
@@ -249,7 +261,6 @@ function setBoxFor(cardId, box) {
   saveLS(LEITNER_LS_KEY, state.leitner);
 }
 function updateLeitner(cardId, result) {
-  // result: 'correct' | 'wrong' | 'skipped'
   const cur = getBoxFor(cardId);
   const next = (result === "correct") ? Math.min(LEITNER_MAX_BOX, cur + 1) : 1;
   setBoxFor(cardId, next);
@@ -274,7 +285,6 @@ function pickNextSmartIdx() {
 
   if (!Array.isArray(state.smartQueue)) state.smartQueue = [];
 
-  // decrement retry timers, serve first due that's not the current one
   if (state.smartQueue.length) {
     state.smartQueue.forEach(item => item.dueAfter = Math.max(0, (item.dueAfter || 0) - 1));
     const duePos = state.smartQueue.findIndex(item => (item.dueAfter || 0) === 0 && item.idx !== state.smartIdx);
@@ -379,7 +389,7 @@ const state = {
   admin: getParam("admin") === "1",
   freezeIdx: null,
   freezePos: null,
-  lang: loadLS("wm_lang", "en"),
+  lang: wmGetLangLocal(),   // IMPORTANT: read same as navbar.js
   currentIdx: 0,
   currentDeckPos: -1,
 };
@@ -387,7 +397,6 @@ const state = {
 /* ========= UI Translations ========= */
 const LABEL = {
   en: {
-    nav: { Learn:"Learn", Practice:"Practice", Browse:"Browse", Stats:"Stats", Filters:"Filters", Help:"Help" },
     headings: { focus:"Focus", rulefamily:"RuleFamily", outcome:"Outcome", categories:"Categories", trigger:"Filter by Trigger", nilOnly:"Nil-cases only (no mutation expected)" },
     categories: {
       All:"All","Adjective+Noun":"Adjective+Noun",Article:"Article","Bod+yn":"Bod+Yn",Complement:"Complement",Conjunction:"Conjunction",
@@ -413,9 +422,11 @@ const LABEL = {
     blank:"(blank)",
     hear:"Hear",
     meaningAria:"Meaning",
+    onboardDismiss:"Got it",
+    resetStats:"Reset stats",
+    backToTop:"Back to top",
   },
   cy: {
-    nav: { Learn:"Dysgu", Practice:"Ymarfer", Browse:"Pori", Stats:"Ystadegau", Filters:"Hidiau", Help:"Cymorth" },
     headings: { focus:"Ffocws", rulefamily:"Math Treiglad", outcome:"Canlyniad", categories:"Categorïau", trigger:"Hidlo yn ôl y sbardun", nilOnly:"Achosion dim-treiglad yn unig (dim treiglad disgwyliedig)" },
     categories: {
       All:"Pob un","Adjective+Noun":"Ansoddair+Enw",Article:"Erthygl","Bod+yn":"Bod+Yn",Complement:"Cyflenwad",Conjunction:"Cysylltair",
@@ -441,37 +452,24 @@ const LABEL = {
     blank:"(gwag)",
     hear:"Gwrando",
     meaningAria:"Ystyr",
+    onboardDismiss:"Iawn",
+    resetStats:"Ailosod ystadegau",
+    backToTop:"Yn ôl i’r brig",
   }
 };
+
 function label(section, key) {
   const lang = state.lang || "en";
   return (LABEL?.[lang]?.[section]?.[key]) || key;
 }
+
+/* IMPORTANT: This does NOT toggle the navbar. navbar.js owns that.
+   This only updates YOUR dynamic UI and labels to match state.lang. */
 function applyLanguage() {
-  const lang = state.lang || "en";
-  const nav = LABEL[lang].nav;
+  const lang = (state.lang === "cy" ? "cy" : "en");
 
-  const setBtn = (id, txt, title) => {
-    const el = $(id);
-    if (!el) return;
-    el.textContent = txt;
-    if (title) el.title = title;
-  };
-
-  setBtn("#btnPractice", nav.Practice, nav.Practice);
-  setBtn("#btnLearn", nav.Learn, nav.Learn);
-  setBtn("#btnBrowse", nav.Browse, nav.Browse);
-  setBtn("#btnStats", nav.Stats, nav.Stats);
-  setBtn("#btnFilters", nav.Filters, `${nav.Filters} (F)`);
-  setBtn("#btnHelp", nav.Help, nav.Help);
-
-  const langBtn = $("#btnLangToggle");
-  if (langBtn) {
-    const nextLang = (lang === "en") ? "CY" : "EN";
-    langBtn.innerHTML = `<span aria-hidden="true">🔁</span><span class="langtag">${nextLang}</span>`;
-    langBtn.title = (lang === "en") ? "Switch to Cymraeg" : "Switch to English";
-    langBtn.setAttribute("aria-label", (lang === "en") ? "Switch language to Cymraeg" : "Switch language to English");
-  }
+  // keep html lang in sync (navbar.js also sets it, but harmless)
+  document.documentElement.setAttribute("lang", lang);
 
   if ($("#focusTitle")) $("#focusTitle").textContent = LABEL[lang].headings.focus;
   if ($("#rulefamilyTitle")) $("#rulefamilyTitle").textContent = LABEL[lang].headings.rulefamily;
@@ -480,21 +478,25 @@ function applyLanguage() {
   if ($("#triggerLabel")) $("#triggerLabel").textContent = LABEL[lang].headings.trigger;
   if ($("#nilOnlyText")) $("#nilOnlyText").textContent = LABEL[lang].headings.nilOnly;
 
-  const onboardInst = $("#onboard .font-medium.mb-1");
-  if (onboardInst) onboardInst.textContent = (lang === "cy")
-    ? "Croeso! Sut i ddefnyddio'r hyfforddwr hwn."
-    : "Welcome! How to use this trainer.";
+  const dismiss = $("#onboardDismiss");
+  if (dismiss) dismiss.textContent = LABEL[lang].onboardDismiss;
 
-  if ($("#onboardFilters")) $("#onboardFilters").textContent = nav.Filters;
-  if ($("#onboardDismiss")) $("#onboardDismiss").textContent = (lang === "cy" ? "Iawn" : "Got it");
-
-  if ($("#btnResetStats")) $("#btnResetStats").textContent = (lang === "cy" ? "Ailosod ystadegau" : "Reset stats");
-  if ($("#btnResetStats2")) $("#btnResetStats2").textContent = (lang === "cy" ? "Ailosod ystadegau" : "Reset stats");
-  if ($("#btnTop")) $("#btnTop").textContent = (lang === "cy" ? "Yn ôl i’r brig" : "Back to top");
+  if ($("#btnResetStats")) $("#btnResetStats").textContent = LABEL[lang].resetStats;
+  if ($("#btnResetStats2")) $("#btnResetStats2").textContent = LABEL[lang].resetStats;
+  if ($("#btnTop")) $("#btnTop").textContent = LABEL[lang].backToTop;
 
   buildFilters();
   render();
 }
+
+/* Listen for navbar.js language changes */
+window.addEventListener("wm:langchange", (e) => {
+  const lang = e?.detail?.lang;
+  if (lang !== "en" && lang !== "cy") return;
+  state.lang = lang;
+  saveLS("wm_lang", state.lang);
+  applyLanguage();
+});
 
 /* ========= Data loading (index list) ========= */
 const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json";
@@ -574,8 +576,6 @@ async function initData() {
   });
 
   state.rows = cleaned;
-  const itemCountEl = $("#itemCount");
-  if (itemCountEl) itemCountEl.textContent = `${state.rows.length} items`;
 
   applyFilters();
   rebuildDeck();
@@ -596,9 +596,6 @@ function buildFilters() {
   const cats = new Set();
   for (const r of state.rows) if (r.RuleCategory) cats.add(r.RuleCategory);
   const outcomes = ["SM","AM","NM","NONE"];
-
-  const qs = $("#qs");
-  if (qs) { qs.innerHTML = ""; qs.classList.add("hidden"); }
 
   const famEl = $("#familyBtns");
   if (famEl) {
@@ -784,7 +781,6 @@ function mountBaseTranslationUI(capsuleEl, card) {
   const meaning = (card?.Translate || "").trim();
   if (!meaning) return;
 
-  // CRITICAL: anchor absolute-positioned “?” to the capsule (fixes your screenshot bug)
   capsuleEl.style.position = "relative";
 
   const btn = document.createElement("button");
@@ -813,11 +809,9 @@ function mountBaseTranslationUI(capsuleEl, card) {
   `;
   pop.appendChild(close);
 
-  // Toggle behaviour
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
     const isHidden = pop.classList.contains("hidden");
-    // close any other open popovers
     $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
     if (isHidden) pop.classList.remove("hidden");
     else pop.classList.add("hidden");
@@ -828,14 +822,12 @@ function mountBaseTranslationUI(capsuleEl, card) {
     pop.classList.add("hidden");
   });
 
-  // Keep clicks inside the capsule from bubbling to the global closer
   pop.addEventListener("click", (e) => e.stopPropagation());
 
   capsuleEl.appendChild(btn);
   capsuleEl.appendChild(pop);
 }
 
-/* Close popovers globally (single listener; no render-leaks) */
 document.addEventListener("click", () => {
   $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
 });
@@ -887,7 +879,6 @@ function renderPractice() {
     return;
   }
 
-  // pick current card
   let idxNow;
   let posText = "";
   if (state.practiceMode === "smart") {
@@ -914,7 +905,6 @@ function renderPractice() {
 
   const wrap = document.createElement("div");
 
-  /* Header row */
   const header = document.createElement("div");
   header.className = "flex flex-wrap items-center justify-between gap-2 mb-2";
 
@@ -937,11 +927,7 @@ function renderPractice() {
     b.className = `seg-btn ${on ? "is-on" : ""}`;
     b.setAttribute("aria-pressed", on ? "true" : "false");
     b.title = (value === "shuffle") ? (t.shuffleModeDesc || "") : (t.smartModeDesc || "");
-
-    // Typography fix: feed the CSS what it expects (your CSS handles styling)
-    // If you want caps, you’ll get them here without fighting CSS.
     b.textContent = String(labelText).toUpperCase();
-
     b.onclick = () => {
       if (state.practiceMode === value) return;
       state.practiceMode = value;
@@ -960,7 +946,6 @@ function renderPractice() {
   headerRight.appendChild(seg);
   header.append(headerLeft, headerRight);
 
-  /* Active filters summary chips */
   const summary = document.createElement("div");
   summary.className = "flex flex-wrap items-center gap-2 mb-4";
 
@@ -1022,18 +1007,15 @@ function renderPractice() {
     summary.classList.add("hidden");
   }
 
-  /* Instruction */
   const instruction = document.createElement("div");
   instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-6";
   instruction.textContent = t.instruction;
 
-  /* Base capsule */
   const chips = document.createElement("div");
   chips.className = "practice-base text-2xl md:text-3xl font-medium";
 
   const capsule = document.createElement("div");
   capsule.className = "inline-flex items-baseline bg-indigo-100 ring-1 ring-indigo-300 rounded-2xl px-5 py-2.5 shadow-sm";
-  // anchor ? to the capsule (fixes your “?” drifting to card corner)
   capsule.style.position = "relative";
 
   const baseSpan = document.createElement("span");
@@ -1042,11 +1024,8 @@ function renderPractice() {
 
   capsule.appendChild(baseSpan);
   chips.appendChild(capsule);
-
-  // add the ? to the capsule (only when Translate exists)
   mountBaseTranslationUI(capsule, card);
 
-  /* Sentence row */
   const row = document.createElement("div");
   row.className = "practice-sentence";
   row.innerHTML = `
@@ -1060,7 +1039,6 @@ function renderPractice() {
     </div>
   `;
 
-  /* Actions row (matches YOUR CSS: main + aux) */
   const actions = document.createElement("div");
   actions.className = "practice-actions flex flex-wrap gap-3";
 
@@ -1074,7 +1052,7 @@ function renderPractice() {
     const ok = normalize(state.guess) === normalize(card.Answer);
     state.revealed = true;
     state.lastResult = ok ? "correct" : "wrong";
-    state.freezeIdx = idxNow;            // freeze the card that was shown (not the post-reveal re-pick)
+    state.freezeIdx = idxNow;
     state.freezePos = state.currentDeckPos;
 
     const shownIdx = idxShown;
@@ -1164,7 +1142,6 @@ function renderPractice() {
     render();
   });
 
-  // Shuffle button: use YOUR CSS class name (.btn-shuffle)
   const btnShuffle = document.createElement("button");
   btnShuffle.type = "button";
   btnShuffle.className = "btn btn-shuffle";
@@ -1176,7 +1153,6 @@ function renderPractice() {
   aux.append(btnShuffle);
   actions.append(main, aux);
 
-  /* Feedback */
   const feedback = document.createElement("div");
   feedback.className = "practice-feedback";
   feedback.setAttribute("aria-live", "polite");
@@ -1205,7 +1181,6 @@ function renderPractice() {
           <span class="font-semibold bg-indigo-100 text-indigo-900 px-1 rounded">${esc(card.Answer)}</span>
           <span>${esc(card.After || "")}</span>
 
-          <!-- HEAR button: ensure ONLY btn-hear class (so your CSS wins) -->
           <button id="btnHear" class="btn-hear" type="button">
             <span class="icon" aria-hidden="true">▶︎</span>
             <span>${esc(t.hear)}</span>
@@ -1213,9 +1188,9 @@ function renderPractice() {
         </div>
 
         ${(() => {
-        const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
-        return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
-      })()}
+          const whyText = (state.lang === "cy" ? (card.WhyCym || card.Why) : card.Why) || "";
+          return whyText ? `<div class="mt-4 text-slate-700">${esc(whyText)}</div>` : "";
+        })()}
 
         <div class="mt-4 flex justify-end">
           <button id="inlineNext"
@@ -1244,7 +1219,6 @@ function renderPractice() {
     }, 0);
   }
 
-  /* Assemble */
   const answerBlock = document.createElement("div");
   answerBlock.className = "practice-answerBlock";
   answerBlock.append(row, actions, hint, feedback);
@@ -1362,7 +1336,6 @@ function nextCard(offset = 1) {
 
   if (!state.deck.length) return;
 
-  // In shuffle mode, if wrong: push same card a few steps later
   if (state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
     const idxVal = state.freezeIdx;
     let deckPos = state.freezePos;
@@ -1387,24 +1360,8 @@ function nextCard(offset = 1) {
 
 /* ========= Event wiring ========= */
 function wireUi() {
-  $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("wm_mode", state.mode); render(); });
-  $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("wm_mode", state.mode); render(); });
-  $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("wm_mode", state.mode); render(); });
+  // NOTE: Do NOT bind #btnLangToggle here. navbar.js owns that button.
 
-  $("#btnFilters")?.addEventListener("click", () => { $("#filtersPanel")?.classList.toggle("hidden"); });
-  $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
-
-  $("#btnLangToggle")?.addEventListener("click", () => {
-    state.lang = (state.lang === "en") ? "cy" : "en";
-    saveLS("wm_lang", state.lang);
-    applyLanguage();
-  });
-
-  $("#onboardFilters")?.addEventListener("click", () => {
-    $("#onboard")?.classList.add("hidden");
-    $("#filtersPanel")?.classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
   $("#onboardDismiss")?.addEventListener("click", () => $("#onboard")?.classList.add("hidden"));
 
   $("#btnResetStats")?.addEventListener("click", () => { state.history = []; saveLS("wm_hist", state.history); render(); });
@@ -1427,8 +1384,6 @@ function wireUi() {
       $("#btnHint")?.click();
     } else if (e.key.toLowerCase() === "s") {
       nextCard(1);
-    } else if (e.key.toLowerCase() === "f") {
-      $("#btnFilters")?.click();
     }
   });
 
@@ -1437,7 +1392,6 @@ function wireUi() {
   $("#mbHint")?.addEventListener("click", () => $("#btnHint")?.click());
 
   if (state.admin) {
-    $("#adminBadge")?.classList.remove("hidden");
     $("#adminPanel")?.classList.remove("hidden");
 
     const dataUrl = $("#dataUrl");
@@ -1494,11 +1448,13 @@ function wireUi() {
 (async function boot() {
   wireUi();
   await initData();
-  applyLanguage(); // applies translations + builds filters + renders
+
+  // Apply current language immediately (navbar.js will hide/show [data-lang] too)
+  state.lang = wmGetLangLocal();
+  saveLS("wm_lang", state.lang);
+  applyLanguage();
 })();
 </script>
-
-
 </body>
 </html>
 
