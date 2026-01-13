@@ -1,7 +1,9 @@
-/* ========= Learn flashcard flip (inner rotates) ========= */
+/* ========= Learn flashcard flip (stable size, faces stacked) ========= */
 
 .learn-scene{
   perspective: 1200px;
+  max-width: 820px;
+  margin: 0 auto;
 }
 
 /* Outer shell = size/shape only (does NOT rotate) */
@@ -9,25 +11,29 @@
   position: relative;
   cursor: pointer;
   user-select: none;
+  border-radius: 1.25rem;
+  border: 2px solid rgba(15, 23, 42, 0.9);
+  background: #fff;
 }
 
 /* Inner = the thing that rotates */
 .learn-card-inner{
-  display: grid;                 /* faces overlap AND contribute to height */
   position: relative;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
-
   transition: transform 560ms cubic-bezier(.2,.8,.2,1);
   will-change: transform;
+  min-height: 360px; /* stable height so card doesn't "explode" */
 }
 
 .learn-card3d.is-flipped .learn-card-inner{
   transform: rotateY(180deg);
 }
 
+/* Faces are stacked absolutely so only ONE face affects layout */
 .learn-face{
-  grid-area: 1 / 1;              /* overlap in same grid cell */
+  position: absolute;
+  inset: 0;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
@@ -43,7 +49,15 @@
 .learn-card3d:not(.is-flipped) .learn-back{ pointer-events: none; }
 .learn-card3d.is-flipped .learn-front{ pointer-events: none; }
 
-/* Keep your front text reveal behaviour */
+/* Inner padding belongs on content wrapper, not the rotating shells */
+.learn-inner{
+  padding: 1.5rem;
+}
+@media (min-width: 768px){
+  .learn-inner{ padding: 2rem; }
+}
+
+/* Front text reveal behaviour */
 .learn-front-text{
   transition: opacity 240ms ease, transform 240ms ease;
 }
@@ -56,4 +70,3 @@
   .learn-card-inner{ transition: none; }
   .learn-front-text{ transition: none; }
 }
-
