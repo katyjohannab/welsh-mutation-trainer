@@ -35,17 +35,7 @@ body{
   font-variation-settings:"wdth" 100;
 }
 
-/*----NavBar------*/
-.site-header{
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
 
-/* shadow when scrolled */
-.site-header.is-scrolled{
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.10);
-}
 
 /* ---------- Theme tokens ---------- */
 :root{
