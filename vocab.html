@@ -1692,12 +1692,12 @@ function wireUi() {
 
   $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
 
-  $("#btnLangToggle")?.addEventListener("click", () => {
-    state.lang = (state.lang === "en") ? "cy" : "en";
-    saveLS("vocab_lang", state.lang);
-    render();
-    applyLanguage();
-  });
+document.addEventListener("click", (e) => {
+  if (!e.target.closest("#btnLangToggle")) return;
+  // navbar.js updates wm_lang; we just re-render after it flips
+  setTimeout(() => render(), 0);
+});
+
 
   $("#onboardFilters")?.addEventListener("click", () => {
     $("#onboard")?.classList.add("hidden");
