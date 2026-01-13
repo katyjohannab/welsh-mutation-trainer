@@ -1,59 +1,55 @@
-/* ===== Learn mode flip card (text always readable) ===== */
-.learn-scene { perspective: 1200px; }
+/* ========= Learn flashcard flip (single implementation, no mirroring) ========= */
 
-/* Outer card flips */
+.learn-scene{
+  perspective: 1200px;
+}
+
 .learn-card3d{
-  --flip-dur: 560ms;
-  --flip-half: 280ms;
-  --flip-ease: cubic-bezier(.2,.8,.2,1);
-
-  display: grid;
+  display: grid;                 /* faces overlap */
   position: relative;
-
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
 
-  transition: transform var(--flip-dur) var(--flip-ease);
+  transition: transform 560ms cubic-bezier(.2,.8,.2,1);
   will-change: transform;
-}
-.learn-card3d.is-flipped{ transform: rotateY(180deg); }
 
-/* Faces overlap in same grid cell */
+  cursor: pointer;
+  user-select: none;
+}
+
+.learn-card3d.is-flipped{
+  transform: rotateY(180deg);
+}
+
 .learn-face{
-  grid-area: 1 / 1;
-}
-
-/* Inner wrapper counter-rotates so text never mirrors */
-.learn-inner{
-  height: 100%;
-  transform: rotateY(0deg);
-  transition: transform var(--flip-dur) var(--flip-ease);
+  grid-area: 1 / 1;              /* overlap in same grid cell */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
 }
-.learn-card3d.is-flipped .learn-inner{ transform: rotateY(-180deg); }
 
-/* Swap which face is shown at the halfway point */
-.learn-front,
+/* Back face starts rotated so it reads correctly when the parent flips */
 .learn-back{
-  transition: opacity 120ms ease var(--flip-half);
+  transform: rotateY(180deg);
 }
 
-.learn-front{ opacity: 1; pointer-events: auto; }
-.learn-back { opacity: 0; pointer-events: none; }
+/* Prevent clicking buttons/controls on the hidden face */
+.learn-card3d:not(.is-flipped) .learn-back{ pointer-events: none; }
+.learn-card3d.is-flipped .learn-front{ pointer-events: none; }
 
-.learn-card3d.is-flipped .learn-front{ opacity: 0; pointer-events: none; }
-.learn-card3d.is-flipped .learn-back { opacity: 1; pointer-events: auto; }
+/* Keep your front text reveal behaviour */
+.learn-front-text{
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+.learn-front-text.is-hidden{
+  opacity: 0;
+  transform: translateY(6px);
+}
 
-/* Keep your front text reveal */
-.learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
-.learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
-
-@media (prefers-reduced-motion: reduce) {
-  .learn-card3d { transition: none; }
-  .learn-inner { transition: none; }
-  .learn-front, .learn-back { transition: none; }
-  .learn-front-text { transition: none; }
+@media (prefers-reduced-motion: reduce){
+  .learn-card3d{ transition: none; }
+  .learn-front-text{ transition: none; }
 }
 
 /* ========= Learn flashcard flip  ========= */
@@ -91,5 +87,10 @@
 }
 .learn-card3d.is-flipped .learn-front {
   pointer-events: none;
+}
+
+.learn-inner{
+  transform: none !important;
+  transition: none !important;
 }
 
