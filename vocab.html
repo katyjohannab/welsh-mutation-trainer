@@ -1149,49 +1149,45 @@ function renderPractice() {
     const front = document.createElement("div");
     front.className = "learn-face learn-front";
     front.innerHTML = `
-      <div class="flex items-center justify-between gap-3">
-        <div class="text-xs uppercase tracking-wide text-slate-500">Front</div>
-        <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
-          <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
-        </button>
-      </div>
+  <div class="learn-inner">
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-xs uppercase tracking-wide text-slate-500">Front</div>
+      <button id="learnHearBtn" class="btn-hear" type="button" title="Hear (A)">
+        <span class="icon" aria-hidden="true">▶︎</span><span>Hear</span>
+      </button>
+    </div>
 
-      <div id="learnFrontText" class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
-        ${esc(frontPreferred)}
-      </div>
+    <div id="learnFrontText" class="learn-front-text mt-6 text-4xl md:text-5xl font-bold tracking-tight text-slate-900 ${hideFront ? "is-hidden" : ""}">
+      ${esc(frontPreferred)}
+    </div>
 
-      <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
+    <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
 
-      <div class="mt-6">${pills.outerHTML}</div>
+    <div class="mt-6">${pills.outerHTML}</div>
 
-      ${whyText ? `<div class="mt-5 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
-      <div class="mt-6 text-xs text-slate-500">Flip to see the other side</div>
-    `;
+    ${whyText ? `<div class="mt-5 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
+    <div class="mt-6 text-xs text-slate-500">Flip to see the other side</div>
+  </div>
+`;
+
 
     const back = document.createElement("div");
     back.className = "learn-face learn-back";
     back.innerHTML = `
-      <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
-      <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">${esc(backText)}</div>
-      ${whyText ? `<div class="mt-4 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
+  <div class="learn-inner">
+    <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
+    <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">${esc(backText)}</div>
+    ${whyText ? `<div class="mt-4 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
 
-      <div class="mt-7 flex flex-wrap gap-3">
-        <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
-        <button id="btnLearnGood" class="btn btn-primary shadow" type="button" title="Good (2)">Good</button>
-      </div>
+    <div class="mt-7 flex flex-wrap gap-3">
+      <button id="btnLearnAgain" class="btn btn-ghost" type="button" title="Again (1)">Again</button>
+      <button id="btnLearnGood" class="btn btn-primary shadow" type="button" title="Good (2)">Good</button>
+    </div>
 
-      <div class="mt-4 text-xs text-slate-500">Again/Good updates Smart review</div>
-    `;
+    <div class="mt-4 text-xs text-slate-500">Again/Good updates Smart review</div>
+  </div>
+`;
 
-    card3d.append(front, back);
-    scene.appendChild(card3d);
-
-    // Click anywhere to flip (but don't flip when pressing buttons)
-    card3d.addEventListener("click", (e) => {
-      const t = e.target;
-      if (t && (t.closest && t.closest("button"))) return;
-      toggleLearnFlip();
-    });
 
     wrap.append(header);
     if (hasAnyFilters) wrap.append(activeFilters);
@@ -1715,43 +1711,46 @@ function wireUi() {
     if (["INPUT", "TEXTAREA", "SELECT", "BUTTON", "A"].includes(tag.toUpperCase())) return;
     if (state.mode !== "practice") return;
 
-    if (state.studyMode === "learn") {
-      const k = e.key;
+if (state.studyMode === "learn") {
+  const k = e.key;
 
-      // NEW: Space = flip if not flipped; if already flipped, mark Good + next (Anki-like flow)
-      if (k === " " || k === "Spacebar") {
-        e.preventDefault();
-        if (!state.learnFlipped) toggleLearnFlip(true);
-        else learnRate(true);
-        return;
-      }
-      if (k.toLowerCase() === "a") {
-        e.preventDefault();
-        $("#learnHearBtn")?.click();
-        return;
-      }
-      if (k === "1") {
-        e.preventDefault();
-        learnRate(false);
-        return;
-      }
-      if (k === "2") {
-        e.preventDefault();
-        learnRate(true);
-        return;
-      }
-      if (k === "Enter" || k === "ArrowRight" || k.toLowerCase() === "n") {
-        e.preventDefault();
-        nextCard(1);
-        return;
-      }
-      if (k.toLowerCase() === "f") {
-        e.preventDefault();
-        $("#btnFilters")?.click();
-        return;
-      }
-      return;
+  // Space: flip; if already flipped, advance
+  if (k === " " || k === "Spacebar") {
+    e.preventDefault();
+
+    if (!state.learnFlipped) {
+      toggleLearnFlip(true);
+    } else {
+      // If Smart is active, treat advance as "Good" so Leitner still works
+      if (isSmartActive()) learnRate(true);
+      else nextCard(1);
     }
+    return;
+  }
+
+  if (k.toLowerCase() === "a") { e.preventDefault(); $("#learnHearBtn")?.click(); return; }
+  if (k === "1") { e.preventDefault(); learnRate(false); return; }
+  if (k === "2") { e.preventDefault(); learnRate(true); return; }
+
+  if (k === "Enter" || k === "ArrowRight" || k.toLowerCase() === "n") {
+    e.preventDefault();
+    if (isSmartActive()) learnRate(true);
+    else nextCard(1);
+    return;
+  }
+
+  if (k === "ArrowLeft" || k.toLowerCase() === "p") {
+    e.preventDefault();
+    // No true "prev" in Smart mode
+    if (!isSmartActive()) nextCard(-1);
+    return;
+  }
+
+  if (k.toLowerCase() === "f") { e.preventDefault(); $("#btnFilters")?.click(); return; }
+  return;
+}
+
+
 
     // Test mode keyboard
     if (e.key === "Enter") {
