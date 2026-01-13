@@ -43,7 +43,6 @@
             <li>Read the <b>Why</b> explanation, then click <b>Next</b>.</li>
           </ol>
           <div class="mt-3 flex gap-2">
-            <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
             <button id="onboardDismiss" class="btn btn-ghost">Got it</button>
           </div>
         </div>
@@ -60,8 +59,8 @@
 
         <!-- Right: filters + session (stacked so layout never "jumps" when filters are hidden) -->
         <div class="md:col-span-1 flex flex-col gap-4">
-          <!-- Filter controls (hidden by default; toggled via Filters button) -->
-          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+          <!-- Filter controls -->
+          <div id="filtersPanel" class="panel rounded-2xl p-4 ">
             <!-- Admin / Data panel: only visible when admin=1 -->
             <div id="adminPanel" class="hidden mb-4">
               <div class="text-sm font-medium mb-2">Admin tools</div>
