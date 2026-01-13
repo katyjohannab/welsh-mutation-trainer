@@ -465,20 +465,25 @@ function coerceRow(r) {
     CardID: getVal(row, ["CardID","CardId","ID","Id"]).trim(),
     Course: getVal(row, ["Course"]).trim(),
     Unit: getVal(row, ["Unit"]).trim(),
-    WordCategory: getVal(row, ["WordCategory","Word Category"]).trim(),
-    BaseEN: getVal(row, ["BaseEN","Base EN","Base"]).trim(),
-    HintEN: getVal(row, ["HintEN","Hint EN"]).trim(),
+    WordCategoryEN: getVal(row, ["WordCategoryEN","WordCategoryEn"]).trim(),
+    WordCategoryCY: getVal(row, ["WordCategoryCY","WordCategoryCy"]).trim(),
+    BaseCY: getVal(row, ["BaseCY","Base CY","BaseCy"]).trim(),
+    BaseEN: getVal(row, ["BaseEN","Base EN","BaseCy"]).trim(),
+    NotesEN: getVal(row, ["NotesEN","NotesEn"]).trim(),
+    NotesCY: getVal(row, ["NotesCY","NotesCy"]).trim(),
     HintCY: getVal(row, ["HintCY","Hint CY"]).trim(),
     BeforeCY: getVal(row, ["BeforeCY","Before CY","Before"]).trim(),
     AfterCY: getVal(row, ["AfterCY","After CY","After"]).trim(),
-    SentenceHelpEN: getVal(row, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]).trim(),
+    SentenceHelpEN: getVal(row, ["SentenceHelpEN","Sentence Help EN","SentenceHelpEn","Sentence Help En"]).trim(),
+    SentenceHelpCY: getVal(row, ["SentenceHelpCY","Sentence Help CY","SentenceHelpCy","Sentence Help Cy"]).trim(),
     AnswerCY: answerCY,
     AcceptedAnswerArray: accepted,
     OptionsArray: options,
     AnswerArray: accepted, // back-compat
     WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
     WhyCY: getVal(row, ["WhyCY","Why CY"]).trim(),
-    Tags: getVal(row, ["Tags","Tag"]).trim()
+    TagsEN: getVal(row, ["TagsEN","TagsEn"]).trim(),
+    TagsCY: getVal(row, ["TagsCY","TagsCy"]).trim()
   };
 }
 
