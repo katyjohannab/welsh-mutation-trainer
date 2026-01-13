@@ -1188,6 +1188,23 @@ function renderPractice() {
   </div>
 `;
 
+// IMPORTANT: mount the card faces into the card, and the card into the scene
+card3d.append(front, back);
+scene.appendChild(card3d);
+
+//  Click to flip (gnore clicks on buttons inside the card)
+card3d.addEventListener("click", (e) => {
+  if (e.target.closest("button")) return;
+  toggleLearnFlip();
+});
+
+// Enter flips when the card has focus
+card3d.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    toggleLearnFlip();
+  }
+});
 
     wrap.append(header);
     if (hasAnyFilters) wrap.append(activeFilters);
