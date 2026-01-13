@@ -464,7 +464,7 @@ function label(section, key) {
 }
 
 /* IMPORTANT: This does NOT toggle the navbar. navbar.js owns that.
-   This only updates YOUR dynamic UI and labels to match state.lang. */
+   This only updates ynamic UI and labels to match state.lang. */
 function applyLanguage() {
   const lang = (state.lang === "cy" ? "cy" : "en");
 
@@ -489,14 +489,24 @@ function applyLanguage() {
   render();
 }
 
-/* Listen for navbar.js language changes */
-window.addEventListener("wm:langchange", (e) => {
-  const lang = e?.detail?.lang;
+function syncLangFromNavbar() {
+  const lang = wmGetLangLocal();
   if (lang !== "en" && lang !== "cy") return;
   state.lang = lang;
-  saveLS("wm_lang", state.lang);
-  applyLanguage();
-});
+  applyLanguage(); // this rebuilds your dynamic UI with the right labels
+}
+
+// Listen for clicks on the navbar language toggle.
+// Use CAPTURE so we can run after navbar.js has handled the click.
+document.addEventListener("click", (e) => {
+  const btn = e.target?.closest?.("#btnLangToggle");
+  if (!btn) return;
+
+  // navbar.js will update localStorage + hide/show [data-lang] immediately.
+  // Then we sync our dynamic UI right after.
+  setTimeout(syncLangFromNavbar, 0);
+}, true);
+
 
 /* ========= Data loading (index list) ========= */
 const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/index.json";
@@ -1449,10 +1459,9 @@ function wireUi() {
   wireUi();
   await initData();
 
-  // Apply current language immediately (navbar.js will hide/show [data-lang] too)
-  state.lang = wmGetLangLocal();
-  saveLS("wm_lang", state.lang);
-  applyLanguage();
+  // Apply current language immediately (navbar.js also applies [data-lang] visibility)
+  syncLangFromNavbar();
+
 })();
 </script>
 </body>
