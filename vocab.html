@@ -21,30 +21,37 @@
     .learn-card3d {
       display: grid;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
       transition: transform 600ms cubic-bezier(.2,.8,.2,1);
       will-change: transform;
     }
     .learn-card3d.is-flipped { transform: rotateY(180deg); }
+
+    /* Safari/WebKit mirroring fix: hide backface AND give each face a tiny Z */
     .learn-face {
       grid-area: 1 / 1;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
     }
-    .learn-back { transform: rotateY(180deg); }
+    .learn-front { transform: rotateY(0deg) translateZ(1px); }
+    .learn-back  { transform: rotateY(180deg) translateZ(1px); }
+
     .learn-front-text { transition: opacity 240ms ease, transform 240ms ease; }
     .learn-front-text.is-hidden { opacity: 0; transform: translateY(6px); }
+
     @media (prefers-reduced-motion: reduce) {
       .learn-card3d { transition: none; }
       .learn-front-text { transition: none; }
     }
   </style>
-
 </head>
 
 <body class="min-h-screen text-slate-900">
   <div id="app" class="min-h-screen flex flex-col text-[16px] md:text-[17px]">
 
-    <!-- Header: keep structure consistent with your index page -->
+    <!-- Header -->
     <header id="siteHeader" class="sticky top-0 z-10">
       <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
         <div class="brand-lockup grow min-w-0">
@@ -89,13 +96,13 @@
       <div class="panel rounded-2xl p-4 flex items-start gap-3">
         <div class="text-2xl">💡</div>
         <div class="text-sm text-slate-700">
-          <div class="font-medium mb-1">Vocab mode (English → Welsh)</div>
+          <div class="font-medium mb-1">Vocab practice</div>
           <ol class="list-decimal ml-5 leading-relaxed">
-            <li>Open <b>Filters</b> to set <b>Review order</b> (Random/Smart) and <b>Input</b> (Easy/Hard).</li>
-            <li>Click <b>Filters</b> to pick Course, Unit, Word category, or search by tags.</li>
-            <li>Read the Welsh sentence and type the matching Welsh word.</li>
-            <li>Use the <b>?</b> next to the base word for a hint. Use the <b>?</b> by the sentence for word glosses.</li>
-            <li>After checking, use <b>Hear</b> to play the completed Welsh sentence.</li>
+            <li>Use <b>Study mode</b> in <b>Filters</b> to switch between <b>Learn</b> (flashcards) and <b>Test</b>.</li>
+            <li>Use <b>Course</b>, <b>Unit</b>, <b>Word category</b>, or <b>Search</b> to narrow the set.</li>
+            <li>In <b>Test</b>, type the Welsh answer (or pick from options in Easy mode) then press <b>Check</b>.</li>
+            <li>Use <b>Skip</b> to reveal and move on (counts as wrong).</li>
+            <li>In <b>Learn</b>, audio plays first (when allowed), then flip (click or Space) and rate Again/Good.</li>
           </ol>
           <div class="mt-3 flex gap-2">
             <button id="onboardFilters" class="btn btn-primary shadow">Open filters</button>
@@ -116,11 +123,12 @@
         <!-- Right: filters + session -->
         <div class="md:col-span-1 flex flex-col gap-4">
 
-          <div id="filtersPanel" class="panel rounded-2xl p-4 hidden">
+          <!-- NOTE: filters are visible by default -->
+          <div id="filtersPanel" class="panel rounded-2xl p-4">
             <!-- Admin tools -->
             <div id="adminPanel" class="hidden mb-4">
               <div class="text-sm font-medium mb-2">Admin tools</div>
-              <label class="text-sm font-medium">Data URL </label>
+              <label class="text-sm font-medium">CSV URL </label>
               <div class="mt-2 flex gap-2">
                 <input id="dataUrl" class="w-full border rounded-xl px-3 py-2" placeholder="Paste CSV URL">
                 <button id="btnLoadUrl" class="btn btn-primary px-4 py-2">LOAD</button>
@@ -134,40 +142,41 @@
 
             <div class="text-sm font-medium mb-2">Filters</div>
 
-<!-- Study / mode controls (kept inside Filters to reduce card clutter) -->
-<div class="mb-4">
-  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Study mode</div>
-  <div class="seg">
-    <button id="studyTest" class="seg-btn">TEST</button>
-    <button id="studyLearn" class="seg-btn">LEARN</button>
-  </div>
-</div>
+            <!-- Study / mode controls -->
+            <div class="mb-4">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Study mode</div>
+              <div class="seg">
+                <button id="studyTest" class="seg-btn">TEST</button>
+                <button id="studyLearn" class="seg-btn">LEARN</button>
+              </div>
+            </div>
 
-<div class="mb-4" data-show-for="learn">
-  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Learn order</div>
-  <div class="seg">
-    <button id="reviewRandom" class="seg-btn">RANDOM</button>
-    <button id="reviewSmart" class="seg-btn">SMART</button>
-  </div>
-  <div class="mt-1 text-xs text-slate-500">Smart uses your Leitner boxes (Again/Good) to prioritise review.</div>
-</div>
+            <div class="mb-4" data-show-for="learn">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Learn order</div>
+              <div class="seg">
+                <button id="reviewRandom" class="seg-btn">RANDOM</button>
+                <button id="reviewSmart" class="seg-btn">SMART</button>
+              </div>
+              <div class="mt-1 text-xs text-slate-500">Smart uses your Leitner boxes (Again/Good) to prioritise review.</div>
+            </div>
 
-<div class="mb-4" data-show-for="learn">
-  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Front of card</div>
-  <div class="seg">
-    <button id="frontWelsh" class="seg-btn">WELSH</button>
-    <button id="frontEnglish" class="seg-btn">ENGLISH</button>
-  </div>
-</div>
+            <div class="mb-4" data-show-for="learn">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Front of card</div>
+              <div class="seg">
+                <button id="frontWelsh" class="seg-btn">WELSH</button>
+                <button id="frontEnglish" class="seg-btn">ENGLISH</button>
+              </div>
+            </div>
 
-<div class="mb-4" data-show-for="test">
-  <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Input</div>
-  <div class="seg">
-    <button id="inputHard" class="seg-btn">HARD</button>
-    <button id="inputEasy" class="seg-btn">EASY</button>
-  </div>
-</div>
-<!-- Quick difficulty toggle (doesn't replace Course/Unit, just a quick preset) -->
+            <div class="mb-4" data-show-for="test">
+              <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Input</div>
+              <div class="seg">
+                <button id="inputHard" class="seg-btn">HARD</button>
+                <button id="inputEasy" class="seg-btn">EASY</button>
+              </div>
+            </div>
+
+            <!-- Quick difficulty preset -->
             <div class="mb-3">
               <div class="text-xs uppercase tracking-wide text-slate-500 mb-1">Difficulty</div>
               <div class="seg">
@@ -249,9 +258,9 @@
     <!-- Mobile action bar -->
     <div id="mobileBar" class="fixed md:hidden bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t shadow-lg p-2">
       <div class="max-w-6xl mx-auto flex gap-2">
-        <button id="mbHint" title="Hint (H)" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
-        <button id="mbCheck" title="Check (Enter)" class="flex-1 btn btn-primary px-3 py-2">Check</button>
-        <button id="mbNext" title="Next (Enter)" class="flex-1 btn btn-ghost px-3 py-2">Next</button>
+        <button id="mbHint" title="Hint/Hear" class="flex-1 btn btn-ghost px-3 py-2">Hint</button>
+        <button id="mbCheck" title="Check/Next" class="flex-1 btn btn-primary px-3 py-2">Check</button>
+        <button id="mbNext" title="Skip" class="flex-1 btn btn-ghost px-3 py-2">Skip</button>
       </div>
     </div>
 
@@ -265,7 +274,6 @@
 
 <script>
 /* ========= Utilities ========= */
-
 function shuffleInPlace(arr) {
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -485,13 +493,8 @@ function mountInfoPopover(hostEl, htmlBody, ariaLabel = "Help") {
   hostEl.appendChild(btn);
   hostEl.appendChild(pop);
 }
-
-document.addEventListener("click", () => {
-  $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") $$(".base-info-popover").forEach(p => p.classList.add("hidden"));
-});
+document.addEventListener("click", () => $$(".base-info-popover").forEach(p => p.classList.add("hidden")));
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".base-info-popover").forEach(p => p.classList.add("hidden")); });
 
 /* ========= Data loading ========= */
 function getVal(row, names) {
@@ -521,14 +524,9 @@ function coerceRow(r) {
   const parsePipe = (raw) =>
     (raw ? raw.split("|") : []).map(s => (s || "").trim()).filter(Boolean);
 
-  // Accepted answers (what counts as correct)
   let accepted = parsePipe(acceptedRaw);
-  if (answerCY) {
-    // Ensure canonical answer is always first
-    accepted = [answerCY, ...accepted.filter(a => normalize(a) !== normalize(answerCY))];
-  }
+  if (answerCY) accepted = [answerCY, ...accepted.filter(a => normalize(a) !== normalize(answerCY))];
 
-  // Options (what shows in Easy / MCQ mode)
   let options = parsePipe(optionsRaw);
   if (answerCY && !options.map(normalize).includes(normalize(answerCY))) options.unshift(answerCY);
 
@@ -543,15 +541,10 @@ function coerceRow(r) {
     BeforeCY: getVal(row, ["BeforeCY","Before CY","Before"]).trim(),
     AfterCY: getVal(row, ["AfterCY","After CY","After"]).trim(),
     SentenceHelpEN: getVal(row, ["SentenceHelpEN","Sentence Help EN","SentenceHelp","Sentence Help"]).trim(),
-
     AnswerCY: answerCY,
-
     AcceptedAnswerArray: accepted,
     OptionsArray: options,
-
-    // Back-compat
-    AnswerArray: accepted,
-
+    AnswerArray: accepted, // back-compat
     WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
     WhyCY: getVal(row, ["WhyCY","Why CY"]).trim(),
     Tags: getVal(row, ["Tags","Tag"]).trim()
@@ -570,48 +563,12 @@ async function loadCsvUrl(u) {
   });
 }
 
-function isAbsUrl(u) { return /^https?:\/\//i.test(u || ""); }
-function resolveFromRoot(path, root) {
-  const p = (path || "").toString().trim();
-  if (!p) return "";
-  if (isAbsUrl(p)) return p;
-  return new URL(p.replace(/^\/+/, ""), root).toString();
-}
-async function fetchIndexList(url) {
-  const r = await fetch(url, { cache: "no-store" });
-  if (!r.ok) throw new Error("Failed to fetch index: " + url);
-  const j = await r.json();
-  if (!Array.isArray(j)) throw new Error("Index JSON is not an array: " + url);
-  return j;
-}
-
-const FALLBACK_INDEX_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/index.json";
-const FALLBACK_SITE_ROOT = "https://katyjohannab.github.io/welsh-mutation-trainer/";
-
-async function loadAllDefault() {
-  let list = null;
-  let usingFallbackRoot = false;
-
-  try {
-    list = await fetchIndexList("data/vocab/index.json");
-  } catch (e) {
-    list = await fetchIndexList(FALLBACK_INDEX_URL);
-    usingFallbackRoot = true;
-  }
-
-  const root = usingFallbackRoot ? FALLBACK_SITE_ROOT : new URL(".", location.href).toString();
-  let merged = [];
-  for (const p of list) {
-    const url = resolveFromRoot(p, root);
-    if (!url) continue;
-    try {
-      const d = await loadCsvUrl(url);
-      merged = merged.concat(d);
-    } catch (err) {
-      console.warn("Failed to load source:", url, err);
-    }
-  }
-  return merged;
+/* Default: single CSV (no index.json required) */
+const DEFAULT_CSV_URL = "data/vocab/cards.csv";
+const FALLBACK_CSV_URL = "https://katyjohannab.github.io/welsh-mutation-trainer/data/vocab/cards.csv";
+async function loadDefaultCsv() {
+  try { return await loadCsvUrl(DEFAULT_CSV_URL); }
+  catch (e) { return await loadCsvUrl(FALLBACK_CSV_URL); }
 }
 
 /* ========= App State ========= */
@@ -627,7 +584,6 @@ const state = {
   learnActiveKey: null,
   learnToken: 0,
   currentShownIdx: 0,
-
 
   diffPreset: loadLS("vocab_diff", "all"),
   course: loadLS("vocab_course", ""),
@@ -649,7 +605,6 @@ const state = {
   freezeIdx: null,
   freezePos: null,
 
-  // Easy-mode option order cache (so options don't reshuffle on incidental rerenders)
   easyOpt: { cardKey: null, options: [] },
 
   history: loadLS("vocab_hist", []),
@@ -672,7 +627,6 @@ function applyDiffPreset(list) {
 
 function applyFilters() {
   let list = state.rows.slice();
-
   list = applyDiffPreset(list);
 
   if (state.course) list = list.filter(r => r.Course === state.course);
@@ -696,10 +650,7 @@ function applyFilters() {
 function rebuildDeck() {
   const n = state.filtered.length;
   const d = Array.from({ length: n }, (_, i) => i);
-  for (let i = d.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [d[i], d[j]] = [d[j], d[i]];
-  }
+  shuffleInPlace(d);
   state.deck = d;
   state.p = 0;
   state.guess = "";
@@ -732,17 +683,12 @@ function applyLanguage() {
 
 /* ========= Filters UI build ========= */
 function buildFilterControls() {
-
-  // ===== Study mode (Learn/Test) =====
   const setStudyBtnState = () => {
     const map = { test: "#studyTest", learn: "#studyLearn" };
     Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
     const activeId = map[state.studyMode] || "#studyTest";
     $(activeId)?.classList.add("is-on");
-    [$("#studyTest"), $("#studyLearn")].forEach(b => {
-      if (!b) return;
-      b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
-    });
+    [$("#studyTest"), $("#studyLearn")].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
   };
 
   const applyStudyVisibility = () => {
@@ -754,7 +700,6 @@ function buildFilterControls() {
   };
 
   const resetModeSpecificState = () => {
-    // Test-mode state
     state.guess = "";
     state.revealed = false;
     state.lastResult = null;
@@ -762,84 +707,65 @@ function buildFilterControls() {
     state.freezePos = null;
     state.easyOpt = { cardKey: null, options: [] };
 
-    // Learn-mode state
     state.learnFlipped = false;
     state.learnFrontReady = false;
     state.learnAutoplayBlocked = false;
     state.learnActiveKey = null;
   };
 
-  const studyTestBtn = $("#studyTest");
-  if (studyTestBtn) {
-    studyTestBtn.onclick = () => {
-      if (state.studyMode === "test") return;
-      state.studyMode = "test";
-      saveLS("vocab_study_mode_v1", state.studyMode);
-      resetModeSpecificState();
-      rebuildDeck();
-      applyStudyVisibility();
-      setStudyBtnState();
-      render();
-      setTimeout(() => $("#answerBox")?.focus(), 0);
-    };
-  }
+  $("#studyTest")?.addEventListener("click", () => {
+    if (state.studyMode === "test") return;
+    state.studyMode = "test";
+    saveLS("vocab_study_mode_v1", state.studyMode);
+    resetModeSpecificState();
+    rebuildDeck();
+    applyStudyVisibility();
+    setStudyBtnState();
+    render();
+    setTimeout(() => $("#answerBox")?.focus(), 0);
+  });
 
-  const studyLearnBtn = $("#studyLearn");
-  if (studyLearnBtn) {
-    studyLearnBtn.onclick = () => {
-      if (state.studyMode === "learn") return;
-      state.studyMode = "learn";
-      saveLS("vocab_study_mode_v1", state.studyMode);
-      resetModeSpecificState();
-      rebuildDeck();
-      applyStudyVisibility();
-      setStudyBtnState();
-      render();
-    };
-  }
+  $("#studyLearn")?.addEventListener("click", () => {
+    if (state.studyMode === "learn") return;
+    state.studyMode = "learn";
+    saveLS("vocab_study_mode_v1", state.studyMode);
+    resetModeSpecificState();
+    rebuildDeck();
+    applyStudyVisibility();
+    setStudyBtnState();
+    render();
+  });
 
   setStudyBtnState();
   applyStudyVisibility();
 
-  // ===== Learn-only: front language toggle =====
   const setFrontBtnState = () => {
     const w = $("#frontWelsh"), e = $("#frontEnglish");
     if (w) w.classList.toggle("is-on", state.learnFront === "cy");
     if (e) e.classList.toggle("is-on", state.learnFront === "en");
     [w, e].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
   };
-
-  const frontWelshBtn = $("#frontWelsh");
-  if (frontWelshBtn) {
-    frontWelshBtn.onclick = () => {
-      if (state.learnFront === "cy") return;
-      state.learnFront = "cy";
-      saveLS("vocab_learn_front_v1", state.learnFront);
-      render();
-    };
-  }
-  const frontEnglishBtn = $("#frontEnglish");
-  if (frontEnglishBtn) {
-    frontEnglishBtn.onclick = () => {
-      if (state.learnFront === "en") return;
-      state.learnFront = "en";
-      saveLS("vocab_learn_front_v1", state.learnFront);
-      render();
-    };
-  }
+  $("#frontWelsh")?.addEventListener("click", () => {
+    if (state.learnFront === "cy") return;
+    state.learnFront = "cy";
+    saveLS("vocab_learn_front_v1", state.learnFront);
+    render();
+  });
+  $("#frontEnglish")?.addEventListener("click", () => {
+    if (state.learnFront === "en") return;
+    state.learnFront = "en";
+    saveLS("vocab_learn_front_v1", state.learnFront);
+    render();
+  });
   setFrontBtnState();
 
-  // ===== Test-mode controls moved from top-of-card into Filters
-
-const setInputBtnState = () => {
-  const hard = $("#inputHard"), easy = $("#inputEasy");
-  if (hard) hard.classList.toggle("is-on", state.inputMode === "hard");
-  if (easy) easy.classList.toggle("is-on", state.inputMode === "easy");
-  [hard, easy].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
-};
-const inputHardBtn = $("#inputHard");
-if (inputHardBtn) {
-  inputHardBtn.onclick = () => {
+  const setInputBtnState = () => {
+    const hard = $("#inputHard"), easy = $("#inputEasy");
+    if (hard) hard.classList.toggle("is-on", state.inputMode === "hard");
+    if (easy) easy.classList.toggle("is-on", state.inputMode === "easy");
+    [hard, easy].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
+  };
+  $("#inputHard")?.addEventListener("click", () => {
     if (state.inputMode === "hard") return;
     state.inputMode = "hard";
     saveLS("vocab_input_mode_v1", state.inputMode);
@@ -850,11 +776,8 @@ if (inputHardBtn) {
     setInputBtnState();
     render();
     setTimeout(() => $("#answerBox")?.focus(), 0);
-  };
-}
-const inputEasyBtn = $("#inputEasy");
-if (inputEasyBtn) {
-  inputEasyBtn.onclick = () => {
+  });
+  $("#inputEasy")?.addEventListener("click", () => {
     if (state.inputMode === "easy") return;
     state.inputMode = "easy";
     saveLS("vocab_input_mode_v1", state.inputMode);
@@ -864,78 +787,62 @@ if (inputEasyBtn) {
     state.lastResult = null;
     setInputBtnState();
     render();
-  };
-}
-setInputBtnState();
+  });
+  setInputBtnState();
 
-const setReviewBtnState = () => {
-  const r = $("#reviewRandom"), s = $("#reviewSmart");
-  if (r) r.classList.toggle("is-on", state.practiceMode === "shuffle");
-  if (s) s.classList.toggle("is-on", state.practiceMode === "smart");
-  [r, s].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
-};
-const reviewRandomBtn = $("#reviewRandom");
-if (reviewRandomBtn) {
-  reviewRandomBtn.onclick = () => {
+  const setReviewBtnState = () => {
+    const r = $("#reviewRandom"), s = $("#reviewSmart");
+    if (r) r.classList.toggle("is-on", state.practiceMode === "shuffle");
+    if (s) s.classList.toggle("is-on", state.practiceMode === "smart");
+    [r, s].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
+  };
+  $("#reviewRandom")?.addEventListener("click", () => {
     if (state.practiceMode === "shuffle") return;
     state.practiceMode = "shuffle";
     saveLS("vocab_practice_mode_v1", state.practiceMode);
     rebuildDeck();
     setReviewBtnState();
     render();
-  };
-}
-const reviewSmartBtn = $("#reviewSmart");
-if (reviewSmartBtn) {
-  reviewSmartBtn.onclick = () => {
+  });
+  $("#reviewSmart")?.addEventListener("click", () => {
     if (state.practiceMode === "smart") return;
     state.practiceMode = "smart";
     saveLS("vocab_practice_mode_v1", state.practiceMode);
     rebuildDeck();
     setReviewBtnState();
     render();
-  };
-}
-setReviewBtnState();
+  });
+  setReviewBtnState();
 
   const setDiffBtnState = () => {
     const map = { all:"#diffAll", easy:"#diffEasy", hard:"#diffHard" };
     Object.values(map).forEach(id => $(id)?.classList.remove("is-on"));
     const activeId = map[state.diffPreset] || "#diffAll";
     $(activeId)?.classList.add("is-on");
-    [$("#diffAll"), $("#diffEasy"), $("#diffHard")].forEach(b => {
-      if (!b) return;
-      b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false");
-    });
+    [$("#diffAll"), $("#diffEasy"), $("#diffHard")].forEach(b => b && b.setAttribute("aria-pressed", b.classList.contains("is-on") ? "true" : "false"));
   };
 
-  const diffAllBtn = $("#diffAll");
-  if (diffAllBtn) diffAllBtn.onclick = () => {
+  $("#diffAll")?.addEventListener("click", () => {
     state.diffPreset = "all";
     saveLS("vocab_diff", state.diffPreset);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  };
-
-  const diffEasyBtn = $("#diffEasy");
-  if (diffEasyBtn) diffEasyBtn.onclick = () => {
+  });
+  $("#diffEasy")?.addEventListener("click", () => {
     state.diffPreset = "easy";
     state.course = ""; state.unit = "";
     saveLS("vocab_diff", state.diffPreset);
     saveLS("vocab_course", state.course);
     saveLS("vocab_unit", state.unit);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  };
-
-  const diffHardBtn = $("#diffHard");
-  if (diffHardBtn) diffHardBtn.onclick = () => {
+  });
+  $("#diffHard")?.addEventListener("click", () => {
     state.diffPreset = "hard";
     state.course = ""; state.unit = "";
     saveLS("vocab_diff", state.diffPreset);
     saveLS("vocab_course", state.course);
     saveLS("vocab_unit", state.unit);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  };
-
+  });
   setDiffBtnState();
 
   const courseSel = $("#courseSelect");
@@ -1021,8 +928,7 @@ setReviewBtnState();
     };
   }
 
-  const clearFiltersBtn = $("#btnClearFilters");
-  if (clearFiltersBtn) clearFiltersBtn.onclick = () => {
+  $("#btnClearFilters")?.addEventListener("click", () => {
     state.diffPreset = "all";
     state.course = "";
     state.unit = "";
@@ -1034,20 +940,17 @@ setReviewBtnState();
     saveLS("vocab_wc", state.wordCats);
     saveLS("vocab_search", state.search);
     applyFilters(); rebuildDeck(); buildFilterControls(); render();
-  };
+  });
 }
 
 /* ========= Render ========= */
-
 function isSmartActive() {
   return (state.studyMode === "learn") && (state.practiceMode === "smart");
 }
-
 function getShownCard() {
   const i = state.currentShownIdx || 0;
   return state.filtered[i];
 }
-
 function resetLearnStateForNewCard() {
   state.learnFlipped = false;
   state.learnFrontReady = false;
@@ -1065,15 +968,26 @@ function setMobileBarForMode() {
     bHint.textContent = "Hear";
     bCheck.textContent = "Again";
     bNext.textContent = "Good";
+    bNext.disabled = false;
+    bHint.disabled = false;
   } else {
-    bHint.textContent = "Hint";
-    bCheck.textContent = "Check";
-    bNext.textContent = "Next";
+    // Test mode: before reveal -> Hint / Check / Skip ; after reveal -> Hear / Next / (Skip disabled)
+    if (state.revealed) {
+      bHint.textContent = "Hear";
+      bCheck.textContent = "Next";
+      bNext.textContent = "Skip";
+      bNext.disabled = true;
+    } else {
+      bHint.textContent = "Hint";
+      bCheck.textContent = "Check";
+      bNext.textContent = "Skip";
+      bNext.disabled = false;
+    }
+    bHint.disabled = false;
   }
 }
 
 async function startLearnAutoplay(cardKey, speakText) {
-  // Avoid retriggering autoplay if we're just rerendering the same card
   if (!cardKey) return;
   if (state.learnActiveKey === cardKey && state.learnFrontReady) return;
 
@@ -1095,14 +1009,11 @@ async function startLearnAutoplay(cardKey, speakText) {
     if (frontTextEl) frontTextEl.classList.remove("is-hidden");
   } catch (e) {
     if (token !== state.learnToken) return;
-    // Autoplay often fails until the user clicks once. Requirement: show Welsh immediately on failure.
     state.learnAutoplayBlocked = true;
     state.learnFrontReady = true;
 
-    // Force Welsh on front if autoplay failed, so the learner isn't staring at a blank card.
     const card = getShownCard();
     if (frontTextEl && card?.AnswerCY) frontTextEl.textContent = card.AnswerCY;
-
     if (frontTextEl) frontTextEl.classList.remove("is-hidden");
     if (statusEl) statusEl.textContent = "Autoplay blocked. Tap Hear to enable audio.";
   }
@@ -1122,7 +1033,6 @@ function learnRate(isGood) {
   const idForStats = card.CardID || `row_${state.currentShownIdx}`;
   const ok = !!isGood;
 
-  // Record into history (self-reported)
   state.history = [{
     t: Date.now(),
     ok,
@@ -1137,16 +1047,11 @@ function learnRate(isGood) {
   saveLS("vocab_hist", state.history);
 
   updateLeitner(idForStats, ok ? "correct" : "wrong");
+  if (!ok && isSmartActive()) state.smartQueue.push({ idx: state.currentShownIdx, dueAfter: 2 });
 
-  if (!ok && isSmartActive()) {
-    state.smartQueue.push({ idx: state.currentShownIdx, dueAfter: 2 });
-  }
-
-  // Advance
   resetLearnStateForNewCard();
   nextCard(1);
 }
-
 
 function renderPractice() {
   const host = $("#practiceCard");
@@ -1163,7 +1068,6 @@ function renderPractice() {
     $("#localClear")?.addEventListener("click", () => $("#btnClearFilters")?.click());
     return;
   }
-
 
   const useSmart = isSmartActive();
   let idxNow;
@@ -1185,48 +1089,32 @@ function renderPractice() {
     $("#cardPos").textContent = (state.studyMode === "learn") ? `Learn · ${posText}` : posText;
   }
 
-
   const idxShown = (state.studyMode === "test" && state.revealed && state.freezeIdx != null) ? state.freezeIdx : idxNow;
   const card = state.filtered[idxShown];
   state.currentIdx = idxNow;
   state.currentShownIdx = idxShown;
 
   const cardKey = card.CardID || `row_${idxShown}`;
-
   const wrap = document.createElement("div");
 
-  
-// ===== TOP: header (controls live in Filters) =====
-const header = document.createElement("div");
-header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
+  const header = document.createElement("div");
+  header.className = "flex flex-wrap items-center justify-between gap-2 mb-3";
+  const headerLeft = document.createElement("div");
+  headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
+  headerLeft.textContent = posText;
+  header.append(headerLeft);
 
-const headerLeft = document.createElement("div");
-headerLeft.className = "flex flex-wrap items-center gap-2 text-xs text-slate-500";
-headerLeft.textContent = posText;
-
-header.append(headerLeft);
-
-// ===== Active filters row (TOP OF CARD) =====
   const activeFilters = document.createElement("div");
   activeFilters.className = "flex flex-wrap gap-2 mb-4";
-
-  const chip = (txt) => {
-    const s = document.createElement("span");
-    s.className = "chip";
-    s.textContent = txt;
-    return s;
-  };
-
+  const chip = (txt) => { const s = document.createElement("span"); s.className = "chip"; s.textContent = txt; return s; };
   if (state.diffPreset && state.diffPreset !== "all") activeFilters.appendChild(chip(`Preset: ${state.diffPreset}`));
   if (state.course) activeFilters.appendChild(chip(state.course));
   if (state.unit) activeFilters.appendChild(chip(state.unit));
   if (state.wordCats?.length) state.wordCats.forEach(c => activeFilters.appendChild(chip(c)));
   if ((state.search || "").trim()) activeFilters.appendChild(chip(`Search: ${state.search.trim()}`));
-
   const hasAnyFilters = activeFilters.childElementCount > 0;
 
-
-  // ===== LEARN MODE (flashcards) =====
+  /* ===== LEARN MODE ===== */
   if (state.studyMode === "learn") {
     const instruction = document.createElement("div");
     instruction.className = "practice-instruction text-lg md:text-xl text-slate-700 mb-5";
@@ -1236,12 +1124,7 @@ header.append(headerLeft);
 
     const pills = document.createElement("div");
     pills.className = "flex flex-wrap gap-2 mt-4";
-    const pill = (t) => {
-      const s = document.createElement("span");
-      s.className = "pill";
-      s.textContent = t;
-      return s;
-    };
+    const pill = (t) => { const s = document.createElement("span"); s.className = "pill"; s.textContent = t; return s; };
     if (card.WordCategory) pills.appendChild(pill(card.WordCategory));
     if (card.Course) pills.appendChild(pill(card.Course));
     if (card.Unit) pills.appendChild(pill(card.Unit));
@@ -1264,7 +1147,6 @@ header.append(headerLeft);
 
     const front = document.createElement("div");
     front.className = "learn-face learn-front";
-
     front.innerHTML = `
       <div class="flex items-center justify-between gap-3">
         <div class="text-xs uppercase tracking-wide text-slate-500">Front</div>
@@ -1279,9 +1161,7 @@ header.append(headerLeft);
 
       <div id="learnStatus" class="mt-2 text-xs text-slate-500"></div>
 
-      <div class="mt-6">
-        ${pills.outerHTML}
-      </div>
+      <div class="mt-6">${pills.outerHTML}</div>
 
       ${whyText ? `<div class="mt-5 text-sm text-slate-700">${esc(whyText)}</div>` : ""}
       <div class="mt-6 text-xs text-slate-500">Flip to see the other side</div>
@@ -1289,7 +1169,6 @@ header.append(headerLeft);
 
     const back = document.createElement("div");
     back.className = "learn-face learn-back";
-
     back.innerHTML = `
       <div class="text-xs uppercase tracking-wide text-slate-500">Back</div>
       <div class="mt-6 text-3xl md:text-4xl font-semibold text-slate-900">${esc(backText)}</div>
@@ -1313,30 +1192,21 @@ header.append(headerLeft);
       toggleLearnFlip();
     });
 
-    card3d.addEventListener("keydown", (e) => {
-      if (e.key === " " || e.key === "Spacebar") {
-        e.preventDefault();
-        toggleLearnFlip();
-      }
-    });
-
     wrap.append(header);
     if (hasAnyFilters) wrap.append(activeFilters);
     wrap.append(instruction, scene);
     host.appendChild(wrap);
 
-    // Wire buttons
     setTimeout(() => {
+      // Ensure Space works even if focus drifted
+      card3d.focus({ preventScroll: true });
+
       $("#learnHearBtn")?.addEventListener("click", async (e) => {
         e.stopPropagation();
         try {
           await playPollySentence(speakText);
-          // If user manually triggers audio, reveal preferred front text
           const ft = $("#learnFrontText");
-          if (ft) {
-            ft.textContent = frontPreferred;
-            ft.classList.remove("is-hidden");
-          }
+          if (ft) { ft.textContent = frontPreferred; ft.classList.remove("is-hidden"); }
           const st = $("#learnStatus");
           if (st) st.textContent = "";
           state.learnFrontReady = true;
@@ -1350,14 +1220,13 @@ header.append(headerLeft);
       $("#btnLearnAgain")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(false); });
       $("#btnLearnGood")?.addEventListener("click", (e) => { e.stopPropagation(); learnRate(true); });
 
-      // Autoplay on first render of a new card
       if (speakText) startLearnAutoplay(cardKey, speakText);
     }, 0);
 
     return;
   }
 
-  // Instruction
+  /* ===== TEST MODE ===== */
   const hasContext = !!(((card.BeforeCY || "").trim()) || ((card.AfterCY || "").trim()));
 
   const instruction = document.createElement("div");
@@ -1387,10 +1256,9 @@ header.append(headerLeft);
   if (card.HintEN) hintParts.push(`<div class="base-info-meaning">${esc(card.HintEN)}</div>`);
   if (card.HintCY) hintParts.push(`<div class="base-info-meaning">${esc(card.HintCY)}</div>`);
   mountInfoPopover(capsule, hintParts.join(""), "Hint");
-
   baseBlock.appendChild(capsule);
 
-  // ===== Sentence line + input =====
+  // Sentence line + input (context optional)
   const sentenceWrap = document.createElement("div");
   sentenceWrap.className = "mt-5";
 
@@ -1415,20 +1283,16 @@ header.append(headerLeft);
   sentenceCapsule.append(beforeSpan, input, afterSpan);
 
   const sentHelp = (card.SentenceHelpEN || "").trim();
-  if (sentHelp) {
-    mountInfoPopover(sentenceCapsule, `<div class="base-info-meaning">${esc(sentHelp)}</div>`, "Sentence help");
-  }
+  if (sentHelp) mountInfoPopover(sentenceCapsule, `<div class="base-info-meaning">${esc(sentHelp)}</div>`, "Sentence help");
 
   sentenceWrap.appendChild(sentenceCapsule);
 
-  // ===== Accepted answers + canonical answer =====
   const acceptedAnswers = Array.isArray(card.AcceptedAnswerArray) ? card.AcceptedAnswerArray
     : (Array.isArray(card.AnswerArray) ? card.AnswerArray : []);
   const canonicalAnswer = (card.AnswerCY || acceptedAnswers[0] || "").trim();
 
-  // ===== EASY MODE: options =====
+  // Easy options
   let optionList = [];
-
   const uniqNorm = (arr) => {
     const out = [];
     const seen = new Set();
@@ -1458,14 +1322,12 @@ header.append(headerLeft);
 
       const pool = (poolSameCat.length >= 8) ? poolSameCat : poolAny;
       const candidates = uniqNorm(pool).filter(x => normalize(x) !== normalize(canonicalAnswer));
-
       shuffleInPlace(candidates);
       for (const c of candidates) {
         if (opts.length >= target) break;
         if (!opts.map(normalize).includes(normalize(c))) opts.push(c);
       }
     }
-
     opts = uniqNorm(opts);
     shuffleInPlace(opts);
     return opts;
@@ -1487,30 +1349,21 @@ header.append(headerLeft);
       b.type = "button";
       b.className = "btn btn-ghost px-3 py-2 text-left";
       b.textContent = opt;
-
       b.addEventListener("click", () => {
         state.guess = opt;
         const ab = $("#answerBox");
         if (ab) ab.value = opt;
         ab?.focus();
       });
-
       optWrap.appendChild(b);
     });
 
     sentenceWrap.appendChild(optWrap);
   }
 
-  // Actions + hint
-  const actions = document.createElement("div");
-  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
-
-  const main = document.createElement("div");
-  main.className = "practice-actions-main";
-
+  // Hint box (inline)
   const hintBox = document.createElement("div");
   hintBox.className = "hidden practice-hint text-sm text-slate-600 mt-3";
-
   const showHint = () => {
     const first = canonicalAnswer ? canonicalAnswer.slice(0,1) : "?";
     const extra = card.HintEN ? ` · ${card.HintEN}` : "";
@@ -1519,12 +1372,12 @@ header.append(headerLeft);
     $("#answerBox")?.focus();
   };
 
-  const onCheck = () => {
+  const onReveal = (resultLabel) => {
     const guess = state.guess || "";
-    const ok = acceptedAnswers.some(a => normalize(a) === normalize(guess));
+    const ok = resultLabel === "correct";
 
     state.revealed = true;
-    state.lastResult = ok ? "correct" : "wrong";
+    state.lastResult = resultLabel;          // "correct" | "wrong" | "skipped"
     state.freezeIdx = idxNow;
     state.freezePos = state.currentDeckPos;
 
@@ -1532,19 +1385,18 @@ header.append(headerLeft);
     state.history = [{
       t: Date.now(),
       ok,
+      skipped: (resultLabel === "skipped"),
       cardId: idForStats,
       course: card.Course || "",
       expected: acceptedAnswers.join("|"),
       got: guess,
       mode: state.practiceMode,
-      input: state.inputMode
+      input: state.inputMode,
+      study: "test"
     }, ...state.history].slice(0, 1000);
     saveLS("vocab_hist", state.history);
 
     updateLeitner(idForStats, ok ? "correct" : "wrong");
-    if (!ok && state.practiceMode === "smart") {
-      state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
-    }
 
     const ab = $("#answerBox");
     if (ab) {
@@ -1556,59 +1408,48 @@ header.append(headerLeft);
     setTimeout(() => $("#inlineNext")?.focus({ preventScroll: true }), 0);
   };
 
-  const btnCheck = document.createElement("button");
-  btnCheck.type = "button";
-  btnCheck.id = "btnCheck";
-  btnCheck.className = "btn btn-primary shadow";
-  btnCheck.textContent = "Check";
-  btnCheck.onclick = onCheck;
-
-  const btnHint = document.createElement("button");
-  btnHint.type = "button";
-  btnHint.id = "btnHint";
-  btnHint.className = "btn btn-ghost";
-  btnHint.textContent = "Hint";
-  btnHint.onclick = showHint;
-
-  const btnNext = document.createElement("button");
-  btnNext.type = "button";
-  btnNext.className = "btn btn-ghost";
-  btnNext.textContent = "Next";
-  btnNext.onclick = () => {
-    if (!state.revealed) {
-      state.guess = "";
-      state.revealed = true;
-      state.lastResult = "skipped";
-      state.freezeIdx = idxNow;
-      state.freezePos = state.currentDeckPos;
-
-      const idForStats = card.CardID || `row_${idxShown}`;
-      state.history = [{
-        t: Date.now(),
-        ok: false,
-        skipped: true,
-        cardId: idForStats,
-        course: card.Course || "",
-        expected: acceptedAnswers.join("|"),
-        got: "",
-        mode: state.practiceMode,
-        input: state.inputMode
-      }, ...state.history].slice(0, 1000);
-      saveLS("vocab_hist", state.history);
-
-      updateLeitner(idForStats, "skipped");
-      if (state.practiceMode === "smart") state.smartQueue.push({ idx: idxShown, dueAfter: 2 });
-
-      nextCard(1);
-      return;
-    }
-    nextCard(1);
+  const onCheck = () => {
+    const guess = (state.guess || "").trim();
+    const ok = acceptedAnswers.some(a => normalize(a) === normalize(guess));
+    onReveal(ok ? "correct" : "wrong");
   };
 
-  main.append(btnCheck, btnHint, btnNext);
-  actions.append(main);
+  const onSkip = () => {
+    // Skip counts as wrong: reveal answer, record wrong, then Next.
+    state.guess = "";
+    onReveal("skipped");
+  };
 
-  // Feedback (includes Hear)
+  // Actions: ONLY before reveal, so there is no confusing Next button.
+  const actions = document.createElement("div");
+  actions.className = "practice-actions flex flex-wrap gap-3 mt-4";
+
+  if (!state.revealed) {
+    const btnCheck = document.createElement("button");
+    btnCheck.type = "button";
+    btnCheck.id = "btnCheck";
+    btnCheck.className = "btn btn-primary shadow";
+    btnCheck.textContent = "Check";
+    btnCheck.onclick = onCheck;
+
+    const btnHint = document.createElement("button");
+    btnHint.type = "button";
+    btnHint.id = "btnHint";
+    btnHint.className = "btn btn-ghost";
+    btnHint.textContent = "Hint";
+    btnHint.onclick = showHint;
+
+    const btnSkip = document.createElement("button");
+    btnSkip.type = "button";
+    btnSkip.id = "btnSkip";
+    btnSkip.className = "btn btn-ghost";
+    btnSkip.textContent = "Skip";
+    btnSkip.onclick = onSkip;
+
+    actions.append(btnCheck, btnHint, btnSkip);
+  }
+
+  // Feedback (includes Hear + Next)
   const feedback = document.createElement("div");
   feedback.className = "practice-feedback mt-4";
   feedback.setAttribute("aria-live", "polite");
@@ -1618,7 +1459,7 @@ header.append(headerLeft);
     const skipped = state.lastResult === "skipped";
 
     const statusIcon = skipped ? "⏭️" : (ok ? "✅" : "❌");
-    const statusText = skipped ? "Skipped" : (ok ? "Correct!" : "Not quite");
+    const statusText = skipped ? "Skipped (counts as wrong)" : (ok ? "Correct!" : "Not quite");
 
     const fullSentence = buildCompleteSentence(card, canonicalAnswer);
     const whyText = (state.lang === "cy" ? (card.WhyCY || card.WhyEN) : (card.WhyEN || card.WhyCY)) || "";
@@ -1657,11 +1498,8 @@ header.append(headerLeft);
 
     setTimeout(() => {
       $("#btnHear")?.addEventListener("click", async () => {
-        try {
-          await playPollySentence(fullSentence);
-        } catch (e) {
-          alert("Couldn't play audio: " + (e?.message || e));
-        }
+        try { await playPollySentence(fullSentence); }
+        catch (e) { alert("Couldn't play audio: " + (e?.message || e)); }
       });
       $("#inlineNext")?.addEventListener("click", () => nextCard(1));
     }, 0);
@@ -1680,17 +1518,15 @@ header.append(headerLeft);
     ab.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         e.preventDefault(); e.stopPropagation();
-        onCheck();
+        if (!state.revealed) onCheck();
+        else $("#inlineNext")?.click();
       }
 
       if (state.inputMode === "easy") {
         const k = e.key;
         if (["1","2","3","4"].includes(k) && Array.isArray(optionList) && optionList.length) {
           const idx = Number(k) - 1;
-          if (optionList[idx]) {
-            state.guess = optionList[idx];
-            ab.value = optionList[idx];
-          }
+          if (optionList[idx]) { state.guess = optionList[idx]; ab.value = optionList[idx]; }
         }
       }
     });
@@ -1790,7 +1626,6 @@ function nextCard(offset = 1) {
   state.easyOpt = { cardKey: null, options: [] };
 
   const useSmart = isSmartActive();
-
   if (useSmart) {
     if (!state.filtered.length) return;
     state.freezeIdx = null;
@@ -1807,8 +1642,8 @@ function nextCard(offset = 1) {
 
   if (!state.deck.length) return;
 
-  // In TEST mode only: if wrong, keep the same card and then bring it back again soon.
-  if (state.studyMode === "test" && state.lastResult === "wrong" && state.freezeIdx != null && state.freezePos != null) {
+  // In TEST mode only: if wrong OR skipped, bring it back again soon.
+  if (state.studyMode === "test" && (state.lastResult === "wrong" || state.lastResult === "skipped") && state.freezeIdx != null && state.freezePos != null) {
     const idxVal = state.freezeIdx;
     let deckPos = state.freezePos;
     if (state.deck[deckPos] !== idxVal) deckPos = state.deck.indexOf(idxVal);
@@ -1832,14 +1667,22 @@ function nextCard(offset = 1) {
   render();
 }
 
-
 /* ========= Event wiring ========= */
 function wireUi() {
   $("#btnPractice")?.addEventListener("click", () => { state.mode = "practice"; saveLS("vocab_mode", state.mode); render(); });
   $("#btnBrowse")?.addEventListener("click",   () => { state.mode = "browse";   saveLS("vocab_mode", state.mode); render(); });
   $("#btnStats")?.addEventListener("click",    () => { state.mode = "stats";    saveLS("vocab_mode", state.mode); render(); });
 
-  $("#btnFilters")?.addEventListener("click", () => { $("#filtersPanel")?.classList.toggle("hidden"); });
+  $("#btnFilters")?.addEventListener("click", () => {
+    const p = $("#filtersPanel");
+    if (!p) return;
+    p.classList.toggle("hidden");
+    // If we just hid filters, return focus to flashcard so Space works
+    if (p.classList.contains("hidden") && state.mode === "practice" && state.studyMode === "learn") {
+      setTimeout(() => $("#learnCard3d")?.focus({ preventScroll: true }), 0);
+    }
+  });
+
   $("#btnHelp")?.addEventListener("click", () => { $("#onboard")?.classList.remove("hidden"); window.scrollTo({ top: 0, behavior: "smooth" }); });
 
   $("#btnLangToggle")?.addEventListener("click", () => {
@@ -1866,7 +1709,6 @@ function wireUi() {
     if (["INPUT", "TEXTAREA", "SELECT"].includes(tag.toUpperCase())) return;
     if (state.mode !== "practice") return;
 
-    // Learn-mode keyboard (no inputs)
     if (state.studyMode === "learn") {
       const k = e.key;
 
@@ -1903,7 +1745,7 @@ function wireUi() {
       return;
     }
 
-    // Test-mode keyboard (existing behaviour)
+    // Test mode keyboard
     if (e.key === "Enter") {
       e.preventDefault();
       if (!state.revealed) $("#btnCheck")?.click();
@@ -1912,24 +1754,32 @@ function wireUi() {
       $("#btnHint")?.click();
     } else if (e.key.toLowerCase() === "f") {
       $("#btnFilters")?.click();
-    } else if (e.key.toLowerCase() === "n") {
-      $("#inlineNext")?.click() || nextCard(1);
+    } else if (e.key.toLowerCase() === "s") {
+      // Skip shortcut
+      if (!state.revealed) $("#btnSkip")?.click();
     }
   });
 
+  // Mobile bar wiring
   $("#mbHint")?.addEventListener("click", () => {
     if (state.studyMode === "learn") $("#learnHearBtn")?.click();
-    else $("#btnHint")?.click();
+    else {
+      if (!state.revealed) $("#btnHint")?.click();
+      else $("#btnHear")?.click();
+    }
   });
-
   $("#mbCheck")?.addEventListener("click", () => {
     if (state.studyMode === "learn") learnRate(false);
-    else $("#btnCheck")?.click();
+    else {
+      if (!state.revealed) $("#btnCheck")?.click();
+      else $("#inlineNext")?.click();
+    }
   });
-
   $("#mbNext")?.addEventListener("click", () => {
     if (state.studyMode === "learn") learnRate(true);
-    else $("#inlineNext")?.click() || nextCard(1);
+    else {
+      if (!state.revealed) $("#btnSkip")?.click();
+    }
   });
 
   if (state.admin) {
@@ -1967,10 +1817,10 @@ async function initData() {
   const sheet = getParam("sheet");
   let rows = [];
   try {
-    rows = sheet ? await loadCsvUrl(sheet) : await loadAllDefault();
+    rows = sheet ? await loadCsvUrl(sheet) : await loadDefaultCsv();
   } catch (e) {
     console.warn("Data load failed; trying fallback", e);
-    rows = await loadAllDefault();
+    rows = await loadDefaultCsv();
   }
 
   state.rows = rows.map(coerceRow).filter(r => r.BaseEN && r.AnswerCY);
@@ -1996,8 +1846,6 @@ async function initData() {
 
 </body>
 </html>
-
-
 
 
 
