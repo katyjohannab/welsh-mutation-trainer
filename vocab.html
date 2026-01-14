@@ -468,7 +468,7 @@ function coerceRow(r) {
     WordCategoryEN: getVal(row, ["WordCategoryEN","WordCategoryEn"]).trim(),
     WordCategoryCY: getVal(row, ["WordCategoryCY","WordCategoryCy"]).trim(),
     BaseCY: getVal(row, ["BaseCY","Base CY","BaseCy"]).trim(),
-    BaseEN: getVal(row, ["BaseEN","Base EN","BaseCy"]).trim(),
+    BaseEN: getVal(row, ["BaseEN","Base EN","BaseEn"]).trim(),
     NotesEN: getVal(row, ["NotesEN","NotesEn"]).trim(),
     NotesCY: getVal(row, ["NotesCY","NotesCy"]).trim(),
     HintCY: getVal(row, ["HintCY","Hint CY"]).trim(),
@@ -483,6 +483,12 @@ function coerceRow(r) {
     WhyEN: getVal(row, ["WhyEN","Why EN","Why"]).trim(),
     WhyCY: getVal(row, ["WhyCY","Why CY"]).trim(),
     TagsEN: getVal(row, ["TagsEN","TagsEn"]).trim(),
+    WordCategory: getVal(row, ["WordCategory","WordCategoryEN","WordCategoryEn"]).trim()
+  || getVal(row, ["WordCategoryCY","WordCategoryCy"]).trim(),
+
+Tags: [getVal(row, ["TagsEN","TagsEn"]).trim(), getVal(row, ["TagsCY","TagsCy"]).trim()]
+  .filter(Boolean).join("|"),
+
     TagsCY: getVal(row, ["TagsCY","TagsCy"]).trim()
   };
 }
