@@ -30,8 +30,15 @@
   background: #fff;
 }
 
-.learn-card3d.is-flipped .learn-card-inner{
+/* Card rotates as a whole for a smoother flip */
+.learn-card3d.is-flipped{
   transform: rotateY(180deg);
+}
+
+/* Inner = faces container */
+.learn-card-inner{
+  position: relative;
+  min-height: 360px; /* stable height so card doesn't "explode" */
 }
 
 /* Faces are stacked absolutely so only ONE face affects layout */
@@ -84,6 +91,6 @@
 }
 
 @media (prefers-reduced-motion: reduce){
-  .learn-card-inner{ transition: none; }
+  .learn-card3d{ transition: none; }
   .learn-front-text{ transition: none; }
 }
