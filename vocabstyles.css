@@ -24,7 +24,7 @@
   transition: transform 820ms cubic-bezier(0.22, 0.61, 0.36, 1);
   will-change: transform;
   transform-origin: center center;
-  min-height: 360px; /* stable height so card doesn't "explode" */
+  min-height: 320px; /* stable height so card doesn't "explode" */
   border-radius: 1.25rem;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
@@ -39,7 +39,7 @@
 /* Inner = faces container */
 .learn-card-inner{
   position: relative;
-  min-height: 360px; /* stable height so card doesn't "explode" */
+  min-height: 320px; /* stable height so card doesn't "explode" */
 }
 
 /* Faces are stacked absolutely so only ONE face affects layout */
@@ -72,10 +72,10 @@
 
 /* Inner padding belongs on content wrapper, not the rotating shells */
 .learn-inner{
-  padding: 1.5rem;
+  padding: 1.25rem;
 }
 @media (min-width: 768px){
-  .learn-inner{ padding: 2rem; }
+  .learn-inner{ padding: 1.75rem; }
 }
 
 /* Front text reveal behaviour */
