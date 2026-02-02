@@ -51,14 +51,22 @@
   -webkit-transform-style: preserve-3d;
 }
 
+/* Ensure children never render their backfaces (prevents mirrored text) */
+.learn-face *,
+.learn-face *::before,
+.learn-face *::after{
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
 /* Front face stays unrotated to keep text readable during flip */
 .learn-front{
-  transform: rotateY(0deg);
+  transform: rotateY(0deg) translateZ(1px);
 }
 
 /* Back face is pre-rotated so it reads correctly after inner flips */
 .learn-back{
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(1px);
 }
 
 /* Prevent clicking controls on the hidden face */
