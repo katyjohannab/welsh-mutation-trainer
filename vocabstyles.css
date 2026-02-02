@@ -26,7 +26,8 @@
   transform-origin: center center;
   min-height: 360px; /* stable height so card doesn't "explode" */
   border-radius: 1.25rem;
-  border: 2px solid rgba(15, 23, 42, 0.9);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
   background: #fff;
 }
 
